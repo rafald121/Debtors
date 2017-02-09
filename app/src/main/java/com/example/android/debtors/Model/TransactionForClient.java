@@ -9,6 +9,6 @@ public class TransactionForClient extends Transaction {
 
     private Product transactionProduct; //co
 
-    
+
 
 }
