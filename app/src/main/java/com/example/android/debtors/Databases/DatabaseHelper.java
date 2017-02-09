@@ -10,6 +10,9 @@ import android.util.Log;
 
 import com.example.android.debtors.Model.Client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Rafaello on 2017-02-09.
  */
@@ -96,6 +99,35 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return client;
     }
 
+    public List<Client> getAllClient(){
+        List<Client> clientsList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                Client client = new Client();
+                client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                clientsList.add(client);
+            } while (c.moveToNext());
+        }
+
+        return clientsList;
+    }
+
+    public void deleteClient(long clientID){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_CLIENTS, CLIENT_ID + " = ?", new String[]{String.valueOf(clientID)});
+
+
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
