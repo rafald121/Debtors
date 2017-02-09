@@ -8,6 +8,7 @@ import com.example.android.debtors.Databases.DatabaseHelper;
 import com.example.android.debtors.Model.Client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     DatabaseHelper db;
+    String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
+            "maniek", "maniok", "chamiok"};
+    HashMap<Long,Client> clientsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
         db = new DatabaseHelper(getApplicationContext());
 
 //        Client client1 = new Client("rafal", 50);
-//        Client client2 = new Client("tomek", 100);
-//        Client client3 = new Client("konrad", 150);
-
-//        Log.i(TAG, "onCreate: info about added clients" + client1.toString());
-//        Log.i(TAG, "onCreate: info about added clients" + client2.toString());
+////        Client client2 = new Client("tomek", 100);
+////        Client client3 = new Client("konrad", 150);
 //
+////        Log.i(TAG, "onCreate: info about added clients" + client1.toString());
+////        Log.i(TAG, "onCreate: info about added clients" + client2.toString());
+////
 //        long client1_id = db.createClient(client1);
 //        long client2_id = db.createClient(client2);
 //        long client3_id = db.createClient(client3);
@@ -53,17 +57,30 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //        Log.i(TAG, "onCreate: before delete in range");
-        List<Client> list = new ArrayList<>();
-//        list = getAllClients();
-//
-//        db.deleteClientInRange(0,list.size());
-//
-//
-//        list = getAllClients();
-//        Log.i(TAG, "onCreate: after delete in range, size: " + list.size());
+        List<Client> listOfClient = new ArrayList<>();
+        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
+        List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 
-          list = getAllClients();
 
+//        for(int i = 0 ; i< 10; i++) {
+//            Client client = new Client();
+//            client.setClientName(names[i]);
+//            client.setClientLeftAmount(i*20+35);
+//
+////            listOfClient.add(client);
+//            long clientId = db.createClient(client);
+//
+//            clientsMap.put(clientId, client);
+//        }
+//        db.deleteClient(24);
+        listOfAllClientFromDatabase = getAllClients();
+//        db.deleteClientInRange(14,24);
+        listOfClientWithLeftAmountFromTo = db.getClientWithLeftAmountSorted(50,150);
+//        Log.i(TAG, "onCreate: id = 0 : " + db.getClient(0));
+        for(Client client : listOfClientWithLeftAmountFromTo){
+            Log.i(TAG, "onCreate: uzytkownik: " + client.toString());
+        }
+//                listOfClientWithLeftAmountFromTo.toString());
 
     }
 

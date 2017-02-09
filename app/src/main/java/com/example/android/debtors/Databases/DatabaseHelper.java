@@ -92,6 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             c.moveToFirst();
 
         Client client = new Client();
+
         client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
         client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
         client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
@@ -132,8 +133,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         Cursor c = db.rawQuery(query, null);
         if(c.moveToFirst())
             do {
-                if(     c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) > min &&
-                        c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) < max){
+                if(     c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) >= min &&
+                        c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) <= max){
                     Client client = new Client();
 
                     client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
