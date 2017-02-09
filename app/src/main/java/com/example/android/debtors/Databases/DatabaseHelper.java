@@ -129,6 +129,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     }
 
+    public int updateClient(Client client){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(CLIENT_NAME, client.getClientName());
+        values.put(CLIENT_LEFT_AMOUNT, client.getClientLeftAmount());
+
+        return db.update(TABLE_CLIENTS, values, CLIENT_ID + " = ?", new String[]{String.valueOf
+                (client.getClientId())});
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

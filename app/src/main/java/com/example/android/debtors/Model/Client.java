@@ -28,7 +28,7 @@ public class Client {
     public int getClientId() {
         return clientId;
     }
-
+//TODO chyba powinno byc private
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }

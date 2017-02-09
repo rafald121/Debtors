@@ -35,7 +35,22 @@ public class MainActivity extends AppCompatActivity {
 
 //        Client client001 = db.getClient(client1_id);
 //        Log.i(TAG, "onCreate: get client: "+ client001.toString());
-        deleteAllClients();
+
+
+
+//        deleteAllClients();
+
+
+//        client1.setClientLeftAmount(500);
+//        client1.setClientName("rafaellodp");
+
+        Client clientToEdit = db.getClient(1);
+        clientToEdit.setClientName("rafaellodp");
+        clientToEdit.setClientLeftAmount(1000);
+
+        int updatedID = db.updateClient(clientToEdit);
+
+
 
         getAllClients();
 
@@ -55,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAllClients() {
 
-
         List<Client> listOfClients = db.getAllClient();
         Log.i(TAG, "getAllClients: liczba klientów: " + listOfClients.size());
         for(Client c : listOfClients)
@@ -65,3 +79,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
