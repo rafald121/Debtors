@@ -31,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
         long client2_id = db.createClient(client2);
         long client3_id = db.createClient(client3);
 
+        Client client001 = db.getClient(client1_id);
+        Log.i(TAG, "onCreate: get client: "+ client001.toString());
 
 
-
+        
     }
 
 

@@ -38,9 +38,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String PRODUCT_NAME = "productName";
     private static final String PRODUCT_LEFT_QUANTITY = "productLeftQuantity";
 
-    private static final String CREATE_TABLE_CLIENT = "CREATE TABLE " + TABLE_CLIENTS + "(" +
-            CLIENT_ID + " INTEGER PRIMARY KEY, " + CLIENT_NAME + " TEXT, " + CLIENT_LEFT_AMOUNT +
-            " INTEGER, ";
+    private static final String CREATE_TABLE_CLIENT = "CREATE TABLE " + TABLE_CLIENTS
+            + "(" + CLIENT_ID + " INTEGER  PRIMARY KEY, "
+            + CLIENT_NAME + " TEXT,        "
+            + CLIENT_LEFT_AMOUNT + " INTEGER" + ")";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
