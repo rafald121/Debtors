@@ -17,6 +17,14 @@ public class Client {
     private List<TransactionForClient> listOfTransaction = new ArrayList<>(); //optional
     private List<Payment> listOfPayments = new ArrayList<>();
 
+    public Client() {
+    }
+
+    public Client(String clientName, int clientLeftAmount) {
+        this.clientName = clientName;
+        this.clientLeftAmount = clientLeftAmount;
+    }
+
     public int getClientId() {
         return clientId;
     }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.android.debtors.Model.Client;
 
@@ -16,7 +17,7 @@ import com.example.android.debtors.Model.Client;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     // Logcat tag
-    private static final String LOG = DatabaseHelper.class.getName();
+    private static final String TAG = DatabaseHelper.class.getName();
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -40,6 +41,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String CREATE_TABLE_CLIENT = "CREATE TABLE " + TABLE_CLIENTS + "(" +
             CLIENT_ID + " INTEGER PRIMARY KEY, " + CLIENT_NAME + " TEXT, " + CLIENT_LEFT_AMOUNT +
             " INTEGER, ";
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -65,6 +70,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(CLIENT_LEFT_AMOUNT, client.getClientLeftAmount());
 
         long clientID = db.insert(TABLE_CLIENTS, null, values);
+
+        Log.i(TAG, "createClient: before return clientID" + clientID);
 
         return clientID;
     }
