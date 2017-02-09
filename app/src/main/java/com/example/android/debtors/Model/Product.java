@@ -11,9 +11,12 @@ public class Product {
     private int productId;
     private String productName;
     private int productValue;
+    private int leftQuantity;
     List<Client> productBoughtBy = new ArrayList<>();
     List<TransactionForProduct> productTransationHistory = new ArrayList<>(); //lista tranzakcji
     // dla danego produktu, która zawiera kiedy, ile, kto kupił
+
+
 
 
 
