@@ -99,6 +99,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return client;
     }
 
+
+
     public List<Client> getAllClient(){
         List<Client> clientsList = new ArrayList<>();
 
@@ -121,12 +123,42 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return clientsList;
     }
 
+    public List<Client> getClientWithLeftAmountSorted(int min, int max){
+        List<Client> clientsList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+        if(c.moveToFirst())
+            do {
+                if(     c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) > min &&
+                        c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) < max){
+                    Client client = new Client();
+
+                    client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                    client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                    client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                    clientsList.add(client);
+                }
+            } while (c.moveToNext());
+
+        return clientsList;
+    }
+
     public void deleteClient(long clientID){
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_CLIENTS, CLIENT_ID + " = ?", new String[]{String.valueOf(clientID)});
+    }
 
+    public void deleteClientInRange(long minID, long maxID){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        for(long i = minID; i<maxID ; i++){
+            db.delete(TABLE_CLIENTS, CLIENT_ID + " = ?", new String[]{String.valueOf(i)});
+        }
     }
 
     public int updateClient(Client client){
@@ -141,9 +173,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 }
+
 

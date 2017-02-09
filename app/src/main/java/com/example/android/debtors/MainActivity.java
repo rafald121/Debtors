@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.android.debtors.Databases.DatabaseHelper;
 import com.example.android.debtors.Model.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,15 +45,24 @@ public class MainActivity extends AppCompatActivity {
 //        client1.setClientLeftAmount(500);
 //        client1.setClientName("rafaellodp");
 
-        Client clientToEdit = db.getClient(1);
-        clientToEdit.setClientName("rafaellodp");
-        clientToEdit.setClientLeftAmount(1000);
+//        Client clientToEdit = db.getClient(1);
+//        clientToEdit.setClientName("rafaellodp");
+//        clientToEdit.setClientLeftAmount(1000);
+//
+//        int updatedID = db.updateClient(clientToEdit);
+//
+//
+//        Log.i(TAG, "onCreate: before delete in range");
+        List<Client> list = new ArrayList<>();
+//        list = getAllClients();
+//
+//        db.deleteClientInRange(0,list.size());
+//
+//
+//        list = getAllClients();
+//        Log.i(TAG, "onCreate: after delete in range, size: " + list.size());
 
-        int updatedID = db.updateClient(clientToEdit);
-
-
-
-        getAllClients();
+          list = getAllClients();
 
 
     }
@@ -68,13 +78,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getAllClients() {
+    private List<Client> getAllClients() {
 
         List<Client> listOfClients = db.getAllClient();
         Log.i(TAG, "getAllClients: liczba klientów: " + listOfClients.size());
         for(Client c : listOfClients)
             Log.i(TAG, "getAllClients: client: " + c.toString());
 
+        return  listOfClients;
     }
 
 
