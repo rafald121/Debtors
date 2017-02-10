@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 //        listOfUserByName = getClientsByName("adfed");
 
-        Client wlasciciel = db.getClientByID(1);
-        wlasciciel.setClientName("wlasciciel");
-        db.updateClient(wlasciciel);
+//        Client wlasciciel = db.getClientByID(1);
+//        wlasciciel.setClientName("wlasciciel");
+//        db.updateClient(wlasciciel);
 //        Log.i(TAG, "onCreate: należność przed" + client.getClientLeftAmount() + " a teraz dodaje " +
 //                "hajsy");
 //        client.addClientLeftAmount(50);
@@ -56,13 +56,34 @@ public class MainActivity extends AppCompatActivity {
 //        Log.i(TAG, "onCreate: po zedytowaniu w bazie client wisi: " + db.getClientByID(1).getClientLeftAmount());
 //        Client client2 = new Client("jurek", 420);
 //        long clien2ID = db.createClient(client2);
-        Client clientJurand = db.getClientByID(14);
 
 
-        Payment payment = new Payment(getDateTime(), clientJurand, 50);//clientJurand płaci clientowi
+        Client wlasciciel = db.getClientByID(1); //sprzedajacy
+        Client clientJurand = db.getClientByID(14); //kupujacy
+
+        Log.i(TAG, "onCreate: przed tranzakcja");
+        Log.i(TAG, "onCreate: wlasciciel info: " + wlasciciel.toString());
+        Log.i(TAG, "onCreate: jurand info: " + clientJurand.toString());
+
+        // clientJurand to kto płaci,
+        Payment payment = new Payment(getDateTime(), clientJurand, 50);//tworzony obiekt payment,
+
+        //transakcja
         TransactionForClient transaction = new TransactionForClient(getDateTime(), 3, 50);
 
-        wlasciciel.payForTransaction(transaction);
+        //wlasciciel przyjmuje platnosc za tranzakcje,
+        //clientJurand - klient wlasciciela
+        // \/ wlasciciel aktualizuje kto zakupił
+        wlasciciel.acceptTransaction(transaction,clientJurand);
+        Log.i(TAG, "onCreate: wlasciciel sprzedal i teraz: " + wlasciciel.toString());
+
+
+
+        // clientJurand zakupił więc sie wykosztował za transaction
+        Log.i(TAG, "onCreate: ");
+        clientJurand.changeClientLeftAmount(transaction);
+        Log.i(TAG, "onCreate: jurand kupił i teraz: " + clientJurand.toString());
+
 
         wlasciciel.payForClient(payment);
         db.updateClient(wlasciciel);

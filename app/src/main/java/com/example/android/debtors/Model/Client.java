@@ -38,9 +38,11 @@ public class Client {
     }
 
     //TODO zmienic, aby value nalezalo do klasy Product
-    public void payForTransaction(TransactionForClient transaction){
+    public void acceptTransaction(TransactionForClient transaction, Client transactionWith){
         int amount = transaction.getTransactionQuantity();
         int value = transaction.getProductValue();
+        int totalValue = amount*value;
+        this.changeClientLeftAmount(totalValue);
     }
 
     public int getClientId() {
@@ -67,16 +69,15 @@ public class Client {
         this.clientLeftAmount = clientLeftAmount;
     }
 
-    public void addClientLeftAmount( int amount){
+
+    public void changeClientLeftAmount( int amount){
         this.clientLeftAmount += amount;
     }
-
-    public long getClientPhoneNumber() {
-        return clientPhoneNumber;
-    }
-
-    public void setClientPhoneNumber(long clientPhoneNumber) {
-        this.clientPhoneNumber = clientPhoneNumber;
+    public void changeClientLeftAmount(TransactionForClient transaction){
+        int value = transaction.getProductValue();
+        int quantity = transaction.getTransactionQuantity();
+        int totalValue = value * quantity;
+        this.clientLeftAmount += totalValue;
     }
 
     public List<TransactionForClient> getListOfTransaction() {
