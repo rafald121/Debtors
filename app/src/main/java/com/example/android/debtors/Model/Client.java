@@ -1,5 +1,7 @@
 package com.example.android.debtors.Model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  */
 
 public class Client {
+
+    private static final String TAG = Client.class.getSimpleName();
 
     private int clientId;
     private String clientName;
@@ -25,10 +29,24 @@ public class Client {
         this.clientLeftAmount = clientLeftAmount;
     }
 
+    public void payForClient(Payment payment){
+        if(this.equals(payment.getPaymentClient()))
+            Log.e(TAG, "changeLeftAmount: nie mozesz placic samemu sobie");
+
+        listOfPayments.add(payment);
+        this.clientLeftAmount += payment.getPaymentAmount();
+    }
+
+    //TODO zmienic, aby value nalezalo do klasy Product
+    public void payForTransaction(TransactionForClient transaction){
+        int amount = transaction.getTransactionQuantity();
+        int value = transaction.getProductValue();
+    }
+
     public int getClientId() {
         return clientId;
     }
-//TODO chyba powinno byc private
+
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
@@ -47,6 +65,10 @@ public class Client {
 
     public void setClientLeftAmount(int clientLeftAmount) {
         this.clientLeftAmount = clientLeftAmount;
+    }
+
+    public void addClientLeftAmount( int amount){
+        this.clientLeftAmount += amount;
     }
 
     public long getClientPhoneNumber() {

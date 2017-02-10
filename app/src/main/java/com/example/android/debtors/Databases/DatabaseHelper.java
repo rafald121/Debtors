@@ -81,10 +81,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     //ZWROC POJEDYNCZEGO KLIENTA
-    public Client getClient(long clientID){
+    public Client getClientByID(long clientID){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_ID + " = " + clientID;
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_ID + " = " +
+                clientID ;
 
         Cursor c = db.rawQuery(query,null);
 
@@ -98,6 +99,30 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
 
         return client;
+    }
+
+    public List<Client> getClientByName(String name){
+        List<Client> list = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_NAME + " = \"" +
+                name +"\"";
+
+        Cursor c = db.rawQuery(query,null);
+
+        if(c.moveToFirst())
+            do{
+                Client client = new Client();
+
+                client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                list.add(client);
+            } while (c.moveToNext());
+
+        return list;
     }
 
 

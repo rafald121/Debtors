@@ -6,10 +6,15 @@ import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseHelper;
 import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Payment;
+import com.example.android.debtors.Model.TransactionForClient;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,76 +32,74 @@ public class MainActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(getApplicationContext());
 
-//        Client client1 = new Client("rafal", 50);
-////        Client client2 = new Client("tomek", 100);
-////        Client client3 = new Client("konrad", 150);
-//
-////        Log.i(TAG, "onCreate: info about added clients" + client1.toString());
-////        Log.i(TAG, "onCreate: info about added clients" + client2.toString());
-////
-//        long client1_id = db.createClient(client1);
-//        long client2_id = db.createClient(client2);
-//        long client3_id = db.createClient(client3);
-
-//        Client client001 = db.getClient(client1_id);
-//        Log.i(TAG, "onCreate: get client: "+ client001.toString());
-
-
-
-//        deleteAllClients();
-
-
-//        client1.setClientLeftAmount(500);
-//        client1.setClientName("rafaellodp");
-
-//        Client clientToEdit = db.getClient(1);
-//        clientToEdit.setClientName("rafaellodp");
-//        clientToEdit.setClientLeftAmount(1000);
-//
-//        int updatedID = db.updateClient(clientToEdit);
-//
-//
-//        Log.i(TAG, "onCreate: before delete in range");
         List<Client> listOfClient = new ArrayList<>();
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
+        List<Client> listOfUserByName = new ArrayList<>();
 
-
-//        for(int i = 0 ; i< 10; i++) {
-//            Client client = new Client();
-//            client.setClientName(names[i]);
-//            client.setClientLeftAmount(i*20+35);
-//
-////            listOfClient.add(client);
-//            long clientId = db.createClient(client);
-//
-//            clientsMap.put(clientId, client);
-//        }
-//        db.deleteClient(24);
         listOfAllClientFromDatabase = getAllClients();
-//        db.deleteClientInRange(14,24);
-        listOfClientWithLeftAmountFromTo = db.getClientWithLeftAmountSorted(50,150);
-//        Log.i(TAG, "onCreate: id = 0 : " + db.getClient(0));
-        for(Client client : listOfClientWithLeftAmountFromTo){
-            Log.i(TAG, "onCreate: uzytkownik: " + client.toString());
-        }
-//                listOfClientWithLeftAmountFromTo.toString());
+        listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
+//        listOfUserByName = getClientsByName("adfed");
+
+        Client wlasciciel = db.getClientByID(1);
+        wlasciciel.setClientName("wlasciciel");
+        db.updateClient(wlasciciel);
+//        Log.i(TAG, "onCreate: należność przed" + client.getClientLeftAmount() + " a teraz dodaje " +
+//                "hajsy");
+//        client.addClientLeftAmount(50);
+//        Log.i(TAG, "onCreate: należność po dodaniu" + client.getClientLeftAmount() + " a teraz " +
+//                "odejmuje " +
+//                "hajsy");
+//        client.addClientLeftAmount(-90);
+//        Log.i(TAG, "onCreate: Ostatecznie hajsuw: " + client.getClientLeftAmount());
+//        db.updateClient(client);
+//        Log.i(TAG, "onCreate: po zedytowaniu w bazie client wisi: " + db.getClientByID(1).getClientLeftAmount());
+//        Client client2 = new Client("jurek", 420);
+//        long clien2ID = db.createClient(client2);
+        Client clientJurand = db.getClientByID(14);
+
+
+        Payment payment = new Payment(getDateTime(), clientJurand, 50);//clientJurand płaci clientowi
+        TransactionForClient transaction = new TransactionForClient(getDateTime(), 3, 50);
+
+        wlasciciel.payForTransaction(transaction);
+
+        wlasciciel.payForClient(payment);
+        db.updateClient(wlasciciel);
+        Log.i(TAG, "onCreate: client info: " + wlasciciel.toString());
+
+
+
+//        printList(listOfUserByName);
 
     }
 
+    private void printList(List<Client> list){
+        if(list.size() == 0 )
+            Log.i(TAG, "printList: LISTA PUSTA");
+        Log.i(TAG, "printList: hao");
+        for(Client c : list)
+            Log.i(TAG, "printList: drukuje klienta: " + c.toString());
+    }
+
     private void deleteAllClients() {
+        
         List<Client> listOfClients = db.getAllClient();
 
         int liczbaklientuw = listOfClients.size();
 
-        while(liczbaklientuw>0){
-            db.deleteClient(liczbaklientuw);
+//        while(liczbaklientuw>0){
+//            db.deleteClient(liczbaklientuw);
+//        }
+
+        for(int i = 0 ; i<liczbaklientuw;i++){
+            db.deleteClient(listOfClients.get(0).getClientId());
         }
 
     }
 
     private List<Client> getAllClients() {
-
+        Log.i(TAG, "getAllClients: WSZYSCY KLIENCI");
         List<Client> listOfClients = db.getAllClient();
         Log.i(TAG, "getAllClients: liczba klientów: " + listOfClients.size());
         for(Client c : listOfClients)
@@ -104,7 +107,36 @@ public class MainActivity extends AppCompatActivity {
 
         return  listOfClients;
     }
+    
+    private List<Client> getClientInLeftAmountRange(){
+        Log.i(TAG, "getClientInLeftAmountRange: Z ZAKRESU OD DO HAJSU");
+        
+        List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 
+        listOfClientWithLeftAmountFromTo = db.getClientWithLeftAmountSorted(50,150);
+
+
+        for(Client client : listOfClientWithLeftAmountFromTo){
+            Log.i(TAG, "onCreate: uzytkownik: " + client.toString());
+        }
+        
+        return listOfClientWithLeftAmountFromTo;
+    }
+
+    private List<Client> getClientsByName(String name){
+
+        List<Client> listOfUserByName = new ArrayList<>();
+
+        listOfUserByName =  db.getClientByName(name);
+        return listOfUserByName;
+    }
+
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 
 }
 

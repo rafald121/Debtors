@@ -9,4 +9,12 @@ public class TransactionForProduct extends Transaction {
 
     private Client transactionClient;  //kto
 
+    public TransactionForProduct(String transactionDate, int transactionQuantity) {
+        super(transactionDate, transactionQuantity);
+    }
+
+    public TransactionForProduct(String transactionDate, int transactionQuantity, Client transactionClient) {
+        super(transactionDate, transactionQuantity);
+        this.transactionClient = transactionClient;
+    }
 }
