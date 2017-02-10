@@ -66,20 +66,24 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: jurand info: " + clientJurand.toString());
 
         // clientJurand to kto płaci,
+//        TODO trzeba chyba dodać kto komu placi
         Payment payment = new Payment(getDateTime(), clientJurand, 50);//tworzony obiekt payment,
 
+
         //transakcja
+//        TODO dodac kupującego i sprzedającego w tranzakcji
         TransactionForClient transaction = new TransactionForClient(getDateTime(), 3, 50);
 
         //wlasciciel przyjmuje platnosc za tranzakcje,
         //clientJurand - klient wlasciciela
         // \/ wlasciciel aktualizuje kto zakupił
+//        TODO jesli "wlasciciel" akceptuje tranzakcje to jemu przybywa tyle ile tranzakcja
         wlasciciel.acceptTransaction(transaction,clientJurand);
         Log.i(TAG, "onCreate: wlasciciel sprzedal i teraz: " + wlasciciel.toString());
 
-
-
         // clientJurand zakupił więc sie wykosztował za transaction
+        //TODO jeśli tranzakcja będzie miała kupującego i sprzedającego to dodać
+        //TODO aby jurandowi usuwało
         Log.i(TAG, "onCreate: ");
         clientJurand.changeClientLeftAmount(transaction);
         Log.i(TAG, "onCreate: jurand kupił i teraz: " + clientJurand.toString());
