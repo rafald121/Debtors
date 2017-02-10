@@ -8,7 +8,44 @@ public class TransactionForClient extends Transaction {
 
 
     private Product transactionProduct; //co
+    int productValue;
+
+    public TransactionForClient(String transactionDate, int transactionQuantity) {
+        super(transactionDate, transactionQuantity);
+    }
+
+    public TransactionForClient(String transactionDate, int transactionQuantity, Product transactionProduct) {
+        super(transactionDate, transactionQuantity);
+        this.transactionProduct = transactionProduct;
+    }
+
+    public TransactionForClient(String transactionDate, int transactionQuantity, int
+            productValue) {
+        super(transactionDate, transactionQuantity);
+        this.productValue = productValue;
+    }
+
+    public String getTransactionDate(){
+        return super.getTransactionDate();
+    }
+    public void setTransactionDate(String transactionDate){
+        super.setTransactionDate(transactionDate);
+    }
+
+    public int getTransactionQuantity(){
+        return super.getTransactionQuantity();
+    }
+    public void setTransactionQuantity(int transactionQuantity){
+        super.setTransactionQuantity(transactionQuantity);
+    }
 
 
+    //TODO usunac\/ , a value musi należeć do transactionProduct
+    public int getProductValue() {
+        return productValue;
+    }
 
+    public void setProductValue(int productValue) {
+        this.productValue = productValue;
+    }
 }
