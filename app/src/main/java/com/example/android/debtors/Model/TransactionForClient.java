@@ -73,4 +73,21 @@ public class TransactionForClient extends Transaction {
     public void setTransactionClient(Client transactionClient) {
         this.transactionClient = transactionClient;
     }
+
+
+    @Override
+    public String toString(){
+        String revenueOrExpense = "";
+        if(this.transactionSeller)
+            revenueOrExpense = "revenue";
+        else
+            revenueOrExpense = "expense";
+        return "TransactionForClient{" +
+                "transactionOwner=" + transactionOwner.getOwnerName() +
+                ", transactionClient=" + transactionClient.getClientName() +
+                ", transactionQuantity=" + super.getTransactionQuantity() +
+                ", transactionProducValue=" + this.getProductValue() +
+                ", revenue or expense? " + revenueOrExpense;
+
+    }
 }

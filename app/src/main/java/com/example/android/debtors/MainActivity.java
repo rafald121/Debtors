@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseHelper;
-import com.example.android.debtors.Logic.RealizeTransaction;
+import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
-        RealizeTransaction realizeTransaction = null;
 
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);
@@ -55,36 +54,44 @@ public class MainActivity extends AppCompatActivity {
         // true - owner - sprzedający,
         // false - owner - kupujący
         TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 5, 10, true);
+        getInfoAboutTransaction(transactionForClient);
 
-        
+        Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+        getListOfOwnerTransactions(owner);
+        getListOfClientTransactions(clientJurand);
 
+        RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
+        realizeTransactionHelper.realizeTransaction(transactionForClient);
+        Log.w(TAG, "onCreate: AFTER TRANSACTION ");
 
-        //wlasciciel przyjmuje platnosc za tranzakcje,
-        //clientJurand - klient wlasciciela
-        // \/ wlasciciel aktualizuje kto zakupił
-//        TODO jesli "wlasciciel" akceptuje tranzakcje to jemu przybywa tyle ile tranzakcja
-//        wlasciciel.acceptTransaction(transaction,clientJurand);
-//        Log.i(TAG, "onCreate: wlasciciel sprzedal i teraz: " + wlasciciel.toString());
-
-
-
-
-        // clientJurand zakupił więc sie wykosztował za transaction
-        //TODO jeśli tranzakcja będzie miała kupującego i sprzedającego to dodać
-        //TODO aby jurandowi usuwało
-//        Log.i(TAG, "onCreate: ");
-//        clientJurand.changeClientLeftAmount(transaction);
-//        Log.i(TAG, "onCreate: jurand kupił i teraz: " + clientJurand.toString());
-
-
-//        wlasciciel.payForClient(payment);
-//        db.updateClient(wlasciciel);
-//        Log.i(TAG, "onCreate: client info: " + wlasciciel.toString());
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+        getListOfOwnerTransactions(owner);
+        getListOfClientTransactions(clientJurand);
 
 
 
-//        printList(listOfUserByName);
+    }
+    private void getListOfOwnerTransactions(Owner owner){
+        Log.i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());
+    }
 
+    private void getListOfClientTransactions(Client client){
+        Log.i(TAG, "getListOfClientTransactions: lista tranzakcji " + client.getListOfTransaction());
+    }
+
+    private void getInfoAboutTransaction(TransactionForClient transaction){
+        Log.i(TAG, "getInfoAboutTransaction: " + transaction.toString());
+    }
+
+    private void getInfoAboutOwner(Owner owner){
+        Log.i(TAG, "getInfoAboutOwner: " + owner.toString());
+    }
+
+    private void getInfoAboutClient(Client client){
+        Log.i(TAG, "getInfoAboutClient: " + client.toString());
     }
 
     private void printList(List<Client> list){

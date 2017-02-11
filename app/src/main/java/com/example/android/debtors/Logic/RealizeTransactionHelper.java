@@ -11,14 +11,13 @@ import com.example.android.debtors.Model.TransactionForClient;
  * Created by Rafaello on 2017-02-11.
  */
 
-public class RealizeTransaction {
+public class RealizeTransactionHelper {
 
-    private static final String TAG = RealizeTransaction.class.getSimpleName();
+    private static final String TAG = RealizeTransactionHelper.class.getSimpleName();
 
     Transaction transaction;
 
-    public RealizeTransaction(Transaction transaction) {
-        this.transaction = transaction;
+    public RealizeTransactionHelper() {
     }
 
     public void realizeTransaction(TransactionForClient transaction){
@@ -50,9 +49,9 @@ public class RealizeTransaction {
 
     private void changeOwnerValue(Owner owner, int totalValue, boolean gotOrGive) {
         if(gotOrGive) // jesli true = owner sprzedaje wiec ma dostać hajs
-            owner.changeOwnerAmount(totalValue);
+            owner.changeOwnerAmountWhenTransaction(totalValue);
         else
-            owner.changeOwnerAmount(totalValue*(-1));
+            owner.changeOwnerAmountWhenTransaction(totalValue*(-1));
     }
 
     private void addTransactionToOwnerList(Owner owner, TransactionForClient transaction) {
