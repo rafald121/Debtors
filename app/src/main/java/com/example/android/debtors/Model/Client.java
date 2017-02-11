@@ -29,6 +29,7 @@ public class Client {
         this.clientLeftAmount = clientLeftAmount;
     }
 
+
     public void payForClient(Payment payment){
         if(this.equals(payment.getPaymentClient()))
             Log.e(TAG, "changeLeftAmount: nie mozesz placic samemu sobie");

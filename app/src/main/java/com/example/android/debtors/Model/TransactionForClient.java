@@ -6,7 +6,8 @@ package com.example.android.debtors.Model;
 
 public class TransactionForClient extends Transaction {
 
-
+    private Client transactionSeller;
+    private Client transactionBouyer;
     private Product transactionProduct; //co
     int productValue;
 
@@ -17,6 +18,18 @@ public class TransactionForClient extends Transaction {
     public TransactionForClient(String transactionDate, int transactionQuantity, Product transactionProduct) {
         super(transactionDate, transactionQuantity);
         this.transactionProduct = transactionProduct;
+    }
+
+    public TransactionForClient(String transactionDate,
+                                Client transactionSeller,
+                                Client transactionBouyer,
+                                int transactionQuantity,
+                                int productValue) {
+
+        super(transactionDate, transactionQuantity);
+        this.transactionSeller = transactionSeller;
+        this.transactionBouyer = transactionBouyer;
+        this.productValue = productValue;
     }
 
     public TransactionForClient(String transactionDate, int transactionQuantity, int

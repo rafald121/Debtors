@@ -8,13 +8,11 @@ import com.example.android.debtors.Databases.DatabaseHelper;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
+import com.example.android.debtors.Utils.Utils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,23 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
-//        listOfUserByName = getClientsByName("adfed");
-
-//        Client wlasciciel = db.getClientByID(1);
-//        wlasciciel.setClientName("wlasciciel");
-//        db.updateClient(wlasciciel);
-//        Log.i(TAG, "onCreate: należność przed" + client.getClientLeftAmount() + " a teraz dodaje " +
-//                "hajsy");
-//        client.addClientLeftAmount(50);
-//        Log.i(TAG, "onCreate: należność po dodaniu" + client.getClientLeftAmount() + " a teraz " +
-//                "odejmuje " +
-//                "hajsy");
-//        client.addClientLeftAmount(-90);
-//        Log.i(TAG, "onCreate: Ostatecznie hajsuw: " + client.getClientLeftAmount());
-//        db.updateClient(client);
-//        Log.i(TAG, "onCreate: po zedytowaniu w bazie client wisi: " + db.getClientByID(1).getClientLeftAmount());
-//        Client client2 = new Client("jurek", 420);
-//        long clien2ID = db.createClient(client2);
 
 
         Client wlasciciel = db.getClientByID(1); //sprzedajacy
@@ -67,12 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
         // clientJurand to kto płaci,
 //        TODO trzeba chyba dodać kto komu placi
-        Payment payment = new Payment(getDateTime(), clientJurand, 50);//tworzony obiekt payment,
+        Payment payment = new Payment(Utils.getDateTime(), clientJurand, 50);//tworzony obiekt
+        // payment,
 
 
         //transakcja
 //        TODO dodac kupującego i sprzedającego w tranzakcji
-        TransactionForClient transaction = new TransactionForClient(getDateTime(), 3, 50);
+        //jurand placi wlascicielowi za 5 po 10 o godzinie
+        TransactionForClient transaction = new TransactionForClient(Utils.getDateTime(),  3, 50);
+        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
+                wlasciciel, clientJurand, 5,  10);
+
 
         //wlasciciel przyjmuje platnosc za tranzakcje,
         //clientJurand - klient wlasciciela
@@ -156,12 +142,7 @@ public class MainActivity extends AppCompatActivity {
         return listOfUserByName;
     }
 
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
+
 
 }
 
