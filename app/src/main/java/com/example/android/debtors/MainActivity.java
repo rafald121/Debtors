@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseHelper;
+import com.example.android.debtors.Logic.RealizeTransaction;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
+        RealizeTransaction realizeTransaction = null;
+
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);
 //        KLIECI
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         // false - owner - kupujący
         TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 5, 10, true);
 
-
+        
 
 
         //wlasciciel przyjmuje platnosc za tranzakcje,

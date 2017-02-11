@@ -8,9 +8,10 @@ import java.util.List;
  */
 
 public class Owner {
-    String ownerName, ownerSurname;
-    int ownerAmount;
+    private String ownerName, ownerSurname;
+    private int ownerAmount;
 
+    private List<Client> listOfClients = new ArrayList<>();
     private List<TransactionForClient> listOfTransaction = new ArrayList<>(); //optional
     private List<Payment> listOfPayments = new ArrayList<>();
 
@@ -19,7 +20,13 @@ public class Owner {
         this.ownerSurname = ownerSurname;
         this.ownerAmount = ownerAmount;
     }
+
 //   LOGIC METHODS
+
+    public void changeOwnerAmount(int amount){
+        this.ownerAmount +=amount;
+    }
+
 
     public void acceptTransaction(Transaction transaction){
 
@@ -53,6 +60,21 @@ public class Owner {
 
 //      LISTS
 
+    public void addTransactionToList(TransactionForClient transactionForClient){
+        this.listOfTransaction.add(transactionForClient);
+    }
+
+
+
+
+    public List<Client> getListOfClients() {
+        return listOfClients;
+    }
+
+    public void setListOfClients(List<Client> listOfClients) {
+        this.listOfClients = listOfClients;
+    }
+
     public List<TransactionForClient> getListOfTransaction() {
         return listOfTransaction;
     }
@@ -68,6 +90,7 @@ public class Owner {
     public void setListOfPayments(List<Payment> listOfPayments) {
         this.listOfPayments = listOfPayments;
     }
+
 
 //    OTHERS
 

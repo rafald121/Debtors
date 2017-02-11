@@ -42,27 +42,27 @@ public class Client {
     //    TRANSACTIONS
     //TODO zmienic, aby value nalezalo do klasy Product
     // akceptowac transakcje powinien
-    public void acceptTransaction(TransactionForClient transaction, Client transactionClient){
-        int amount = transaction.getTransactionQuantity();
-        int value = transaction.getProductValue();
-        int totalValue = amount * value;
-
-        Client seller = transaction.getTransactionSeller();
-        Client buyer = transaction.getTransactionBuyer();
-        //jeśli to ja jestem sprzedającym
-        if(this.equals(transaction.getTransactionSeller())) {
-            Log.i(TAG, "acceptTransaction: transaction.getTransactionSeller() = true");
-            this.changeClientLeftAmount(totalValue);
-        } else{
-            Log.i(TAG, "acceptTransaction: transaction.getTransactionSeller() = false");
-            this.changeClientLeftAmount(totalValue*(-1));
-        }
-
-
-    }
+//    public void acceptTransaction(TransactionForClient transaction, Client transactionClient){
+//        int amount = transaction.getTransactionQuantity();
+//        int value = transaction.getProductValue();
+//        int totalValue = amount * value;
+//
+//        Client seller = transaction.getTransactionSeller();
+//        Client buyer = transaction.getTransactionBuyer();
+//        //jeśli to ja jestem sprzedającym
+//        if(this.equals(transaction.getTransactionSeller())) {
+//            Log.i(TAG, "acceptTransaction: transaction.getTransactionSeller() = true");
+//            this.changeClientLeftAmount(totalValue);
+//        } else{
+//            Log.i(TAG, "acceptTransaction: transaction.getTransactionSeller() = false");
+//            this.changeClientLeftAmount(totalValue*(-1));
+//        }
+//
+//
+//    }
 
 //        CHANGING LEFT AMOUNT FOR CLIENT
-    public void changeClientLeftAmount( int amount){
+    public void changeClientLeftAmount( int amount ){
         this.clientLeftAmount += amount;
     }
 
@@ -71,9 +71,7 @@ public class Client {
         int quantity = transaction.getTransactionQuantity();
         int totalValue = value * quantity;
 
-        if(this.equals(transaction.getTransactionBuyer())){
-            Log.i(TAG, "changeClientLeftAmount: ");
-        }
+
 
         this.clientLeftAmount += totalValue;
     }
@@ -106,7 +104,7 @@ public class Client {
         this.clientLeftAmount = clientLeftAmount;
     }
 
-//      LISTS
+//      LISTS OF TRANSACTION
 
     public List<TransactionForClient> getListOfTransaction() {
         return listOfTransaction;
@@ -116,6 +114,8 @@ public class Client {
         this.listOfTransaction = listOfTransaction;
     }
 
+//    LISTA PLATNOSCI
+
     public List<Payment> getListOfPayments() {
         return listOfPayments;
     }
@@ -124,6 +124,7 @@ public class Client {
         this.listOfPayments = listOfPayments;
     }
 
+//    DODAC TRANZAKCJE DO LISTY TRANZAKCJI DLA DANEG CLIENTA
     public void addTransactionToListOfTransaction(TransactionForClient transaction){
         this.getListOfTransaction().add(transaction);
     }
