@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseHelper;
 import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Utils.Utils;
@@ -34,50 +35,48 @@ public class MainActivity extends AppCompatActivity {
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
         List<Client> listOfUserByName = new ArrayList<>();
-
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
+//        WLASCICIEL
+        Owner owner = new Owner("rafal","dolega", 5000);
+//        KLIECI
+        Client clientManiek = db.getClientByID(1); //kupujacy 1
+        Client clientJurand = db.getClientByID(14); //kupujacy 2
 
-        Client wlasciciel = db.getClientByID(1); //sprzedajacy
-        Client clientJurand = db.getClientByID(14); //kupujacy
+//        PLATNOSC, clientJurand - klient, 50 - kwota, true - dostaję, false - płacę
+        Payment payment = new Payment(Utils.getDateTime(), clientJurand, 50, true);//tworzony obiekt
 
-        Log.i(TAG, "onCreate: przed tranzakcja");
-        Log.i(TAG, "onCreate: wlasciciel info: " + wlasciciel.toString());
-        Log.i(TAG, "onCreate: jurand info: " + clientJurand.toString());
-
-        // clientJurand to kto płaci,
-//        TODO trzeba chyba dodać kto komu placi
-        Payment payment = new Payment(Utils.getDateTime(), clientJurand, 50);//tworzony obiekt
-        // payment,
+//        TRANZAKCJA
+        //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
+        // true - owner - sprzedający,
+        // false - owner - kupujący
+        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 5, 10, true);
 
 
-        //transakcja
-//        TODO dodac kupującego i sprzedającego w tranzakcji
-        //jurand placi wlascicielowi za 5 po 10 o godzinie
-        TransactionForClient transaction = new TransactionForClient(Utils.getDateTime(),  3, 50);
-        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
-                wlasciciel, clientJurand, 5,  10);
 
 
         //wlasciciel przyjmuje platnosc za tranzakcje,
         //clientJurand - klient wlasciciela
         // \/ wlasciciel aktualizuje kto zakupił
 //        TODO jesli "wlasciciel" akceptuje tranzakcje to jemu przybywa tyle ile tranzakcja
-        wlasciciel.acceptTransaction(transaction,clientJurand);
-        Log.i(TAG, "onCreate: wlasciciel sprzedal i teraz: " + wlasciciel.toString());
+//        wlasciciel.acceptTransaction(transaction,clientJurand);
+//        Log.i(TAG, "onCreate: wlasciciel sprzedal i teraz: " + wlasciciel.toString());
+
+
+
 
         // clientJurand zakupił więc sie wykosztował za transaction
         //TODO jeśli tranzakcja będzie miała kupującego i sprzedającego to dodać
         //TODO aby jurandowi usuwało
-        Log.i(TAG, "onCreate: ");
-        clientJurand.changeClientLeftAmount(transaction);
-        Log.i(TAG, "onCreate: jurand kupił i teraz: " + clientJurand.toString());
+//        Log.i(TAG, "onCreate: ");
+//        clientJurand.changeClientLeftAmount(transaction);
+//        Log.i(TAG, "onCreate: jurand kupił i teraz: " + clientJurand.toString());
 
 
-        wlasciciel.payForClient(payment);
-        db.updateClient(wlasciciel);
-        Log.i(TAG, "onCreate: client info: " + wlasciciel.toString());
+//        wlasciciel.payForClient(payment);
+//        db.updateClient(wlasciciel);
+//        Log.i(TAG, "onCreate: client info: " + wlasciciel.toString());
 
 
 

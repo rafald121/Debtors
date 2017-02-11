@@ -6,38 +6,22 @@ package com.example.android.debtors.Model;
 
 public class TransactionForClient extends Transaction {
 
-    private Client transactionSeller;
-    private Client transactionBouyer;
+    private Owner transactionOwner;
+    private Client transactionClient;
     private Product transactionProduct; //co
     int productValue;
+    boolean transactionSeller; // if true = sprzedawca = owner, if false = sprzedawca = ktos inny
 
-    public TransactionForClient(String transactionDate, int transactionQuantity) {
+
+    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, boolean transactionSeller) {
         super(transactionDate, transactionQuantity);
-    }
-
-    public TransactionForClient(String transactionDate, int transactionQuantity, Product transactionProduct) {
-        super(transactionDate, transactionQuantity);
-        this.transactionProduct = transactionProduct;
-    }
-
-    public TransactionForClient(String transactionDate,
-                                Client transactionSeller,
-                                Client transactionBouyer,
-                                int transactionQuantity,
-                                int productValue) {
-
-        super(transactionDate, transactionQuantity);
+        this.transactionOwner = transactionOwner;
+        this.transactionClient = transactionClient;
+        this.productValue = productValue;
         this.transactionSeller = transactionSeller;
-        this.transactionBouyer = transactionBouyer;
-        this.productValue = productValue;
     }
 
-    public TransactionForClient(String transactionDate, int transactionQuantity, int
-            productValue) {
-        super(transactionDate, transactionQuantity);
-        this.productValue = productValue;
-    }
-
+//KONSTRUKTORY SUPER Z KLASY TRANSACTION
     public String getTransactionDate(){
         return super.getTransactionDate();
     }
@@ -52,13 +36,22 @@ public class TransactionForClient extends Transaction {
         super.setTransactionQuantity(transactionQuantity);
     }
 
+// KONSTRUKTORY Z TEJ KLASY
 
-    //TODO usunac\/ , a value musi należeć do transactionProduct
-    public int getProductValue() {
-        return productValue;
+
+    public Owner getTransactionOwner() {
+        return transactionOwner;
     }
 
-    public void setProductValue(int productValue) {
-        this.productValue = productValue;
+    public void setTransactionOwner(Owner transactionOwner) {
+        this.transactionOwner = transactionOwner;
+    }
+
+    public Client getTransactionClient() {
+        return transactionClient;
+    }
+
+    public void setTransactionClient(Client transactionClient) {
+        this.transactionClient = transactionClient;
     }
 }
