@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
+        simulatePayments();
         simulateTransaction();
         simulateTransactionWithPayment();
 //TODO ZMIENIC ABY DLA KLIENTA JESLI PLACI HAJS NIE BYL REVENUE TYLKO EXPENSE ALBO STRATA,
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         getInfoAboutTransaction(transactionWithPayment);
 
-        Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
+        Log.w(TAG, "onCreate: BEFORE TRANSACTION WITH PAYMENT" );
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
         getListOfOwnerTransactions(owner);
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
         realizeTransactionHelper.realizeTransaction(transactionWithPayment);
 
-        Log.w(TAG, "onCreate: AFTER TRANSACTION ");
+        Log.w(TAG, "onCreate: AFTER TRANSACTION WITH PAYMENT ");
 
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void simulatePayments(){
+        Log.w(TAG, "simulatePayments: " );
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);
 //        KLIECI

@@ -106,8 +106,8 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
                 "transactionOwner=" + transactionOwner.getOwnerName() +
                 ", transactionClient=" + transactionClient.getClientName() +
                 ", transactionQuantity=" + super.getTransactionQuantity() +
-                ", transactionEntryPayment" + this.getTransactionEntryPayment() +
-                ", transactionProducValue=" + this.getProductValue() +
+                ", transactionEntryPayment=" + this.getTransactionEntryPayment() +
+                ", transactionProductValue=" + this.getProductValue() +
                 ", revenue or expense? " + revenueOrExpense;
 
     }
