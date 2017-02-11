@@ -40,11 +40,43 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
-        simulatePayments();
+        simulateTransaction();
+        simulateTransactionWithPayment();
 //TODO ZMIENIC ABY DLA KLIENTA JESLI PLACI HAJS NIE BYL REVENUE TYLKO EXPENSE ALBO STRATA,
 // ODJECIE, itd.
-        
+
     }
+    private void simulateTransactionWithPayment(){
+        Log.w(TAG, "simulateTransactionWithPayment: ");
+        //        WLASCICIEL
+        Owner owner = new Owner("rafal","dolega", 5000);
+//        KLIECI
+        Client clientManiek = db.getClientByID(1); //kupujacy 1
+        Client clientJurand = db.getClientByID(14); //kupujacy 2
+
+        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime
+                (), owner, clientJurand, 6, 30, 100, true);
+
+        getInfoAboutTransaction(transactionWithPayment);
+
+        Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+        getListOfOwnerTransactions(owner);
+        getListOfClientTransactions(clientJurand);
+
+        RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
+        realizeTransactionHelper.realizeTransaction(transactionWithPayment);
+
+        Log.w(TAG, "onCreate: AFTER TRANSACTION ");
+
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+        getListOfOwnerTransactions(owner);
+        getListOfClientTransactions(clientJurand);
+
+    }
+
     private void simulatePayments(){
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);
@@ -73,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void simulateTransaction(){
+        Log.w(TAG, "simulateTransaction: ");
 
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);

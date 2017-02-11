@@ -10,9 +10,10 @@ public class TransactionForClient extends Transaction {
     private Client transactionClient;
     private Product transactionProduct; //co
     int productValue;
+    int transactionEntryPayment = 0;
     boolean transactionSeller; // if true = sprzedawca = owner, if false = sprzedawca = ktos inny
 
-
+// TRANSACTION CONSTRUCTOR WITHOUT PAYMENT
     public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, boolean transactionSeller) {
         super(transactionDate, transactionQuantity);
         this.transactionOwner = transactionOwner;
@@ -21,7 +22,19 @@ public class TransactionForClient extends Transaction {
         this.transactionSeller = transactionSeller;
     }
 
-//GETTERY I SETTERY SUPER Z KLASY TRANSACTION
+// TRANSACTION CONSTRUCTOR WITH PAYMENT
+public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, int entryPayment,  boolean transactionSeller) {
+
+    super(transactionDate, transactionQuantity);
+    this.transactionOwner = transactionOwner;
+    this.transactionClient = transactionClient;
+    this.productValue = productValue;
+    this.transactionEntryPayment = entryPayment;
+    this.transactionSeller = transactionSeller;
+}
+
+
+    //GETTERY I SETTERY SUPER Z KLASY TRANSACTION
     public String getTransactionDate(){
         return super.getTransactionDate();
     }
@@ -38,7 +51,6 @@ public class TransactionForClient extends Transaction {
 
 // GETTERY I SETTERY Z TEJ KLASY
 
-
     public int getProductValue() {
         return productValue;
     }
@@ -47,7 +59,15 @@ public class TransactionForClient extends Transaction {
         this.productValue = productValue;
     }
 
-//    GET SET TRANSACTION SELLER
+    public int getTransactionEntryPayment() {
+        return transactionEntryPayment;
+    }
+
+    public void setTransactionEntryPayment(int transactionEntryPayment) {
+        this.transactionEntryPayment = transactionEntryPayment;
+    }
+
+    //    GET SET TRANSACTION SELLER
 
     public boolean isTransactionSeller() {
         return transactionSeller;
@@ -86,6 +106,7 @@ public class TransactionForClient extends Transaction {
                 "transactionOwner=" + transactionOwner.getOwnerName() +
                 ", transactionClient=" + transactionClient.getClientName() +
                 ", transactionQuantity=" + super.getTransactionQuantity() +
+                ", transactionEntryPayment" + this.getTransactionEntryPayment() +
                 ", transactionProducValue=" + this.getProductValue() +
                 ", revenue or expense? " + revenueOrExpense;
 

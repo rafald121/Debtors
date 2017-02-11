@@ -25,6 +25,11 @@ public class RealizeTransactionHelper {
             Log.e(TAG, "realizeTransaction: TRANSACTION IS NULL");
         else {
 
+            if(transaction.getTransactionEntryPayment()>0){
+                Log.i(TAG, "realizeTransaction: PODANO ENTRY PAYMENT" + transaction.getTransactionEntryPayment());
+            } else
+                Log.i(TAG, "realizeTransaction: NIE PODANO ENTRY PAYMENT" + transaction.getTransactionEntryPayment());
+
             int amount = transaction.getTransactionQuantity();
             int value = transaction.getProductValue();
             int totalValue = amount * value;
