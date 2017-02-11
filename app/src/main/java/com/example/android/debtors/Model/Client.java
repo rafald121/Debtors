@@ -126,7 +126,13 @@ public class Client {
 
 //    DODAC TRANZAKCJE DO LISTY TRANZAKCJI DLA DANEG CLIENTA
     public void addTransactionToListOfTransaction(TransactionForClient transaction){
-        this.getListOfTransaction().add(transaction);
+        this.listOfTransaction.add(transaction);
+    }
+
+//  DODAJ PLATNOSC DO LISTY PLATNOSCI DLA DANEGO KLIENTA
+
+    public void addPaymentToListOfPayments(Payment payment){
+        this.listOfPayments.add(payment);
     }
 
 //    OTHERS

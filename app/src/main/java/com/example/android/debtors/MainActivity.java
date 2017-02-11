@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseHelper;
+import com.example.android.debtors.Logic.RealizePaymentHelper;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
@@ -39,7 +40,12 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
-
+        simulatePayments();
+//TODO ZMIENIC ABY DLA KLIENTA JESLI PLACI HAJS NIE BYL REVENUE TYLKO EXPENSE ALBO STRATA,
+// ODJECIE, itd.
+        
+    }
+    private void simulatePayments(){
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);
 //        KLIECI
@@ -47,7 +53,32 @@ public class MainActivity extends AppCompatActivity {
         Client clientJurand = db.getClientByID(14); //kupujacy 2
 
 //        PLATNOSC, clientJurand - klient, 50 - kwota, true - dostaję, false - płacę
-        Payment payment = new Payment(Utils.getDateTime(), clientJurand, 50, true);//tworzony obiekt
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 50, true);
+        //tworzony obiekt
+        Log.w(TAG, "onCreate: BEFORE PAYMENT" );
+        getInfoAboutPayments(payment);
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+
+
+        RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
+        realizePaymentHelper.realizePayment(payment);
+
+        Log.w(TAG, "onCreate: AFTER PAYMENT ");
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+        getListOfOwnerPayments(owner);
+        getListOfClientPayments(clientJurand);
+
+    }
+
+    private void simulateTransaction(){
+
+//        WLASCICIEL
+        Owner owner = new Owner("rafal","dolega", 5000);
+//        KLIECI
+        Client clientManiek = db.getClientByID(1); //kupujacy 1
+        Client clientJurand = db.getClientByID(14); //kupujacy 2
 
 //        TRANZAKCJA
         //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
@@ -71,9 +102,8 @@ public class MainActivity extends AppCompatActivity {
         getListOfOwnerTransactions(owner);
         getListOfClientTransactions(clientJurand);
 
-
-
     }
+
     private void getListOfOwnerTransactions(Owner owner){
         Log.i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());
     }
@@ -82,10 +112,21 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "getListOfClientTransactions: lista tranzakcji " + client.getListOfTransaction());
     }
 
+    private void getListOfOwnerPayments(Owner owner){
+        Log.i(TAG, "getListOfOwnerPayments: lista zapłat: " + owner.getListOfPayments());
+    }
+
+    private void getListOfClientPayments(Client client){
+        Log.i(TAG, "getListOfClientPayments: lista zapłat: " + client.getListOfPayments());
+    }
+
     private void getInfoAboutTransaction(TransactionForClient transaction){
         Log.i(TAG, "getInfoAboutTransaction: " + transaction.toString());
     }
 
+    private void getInfoAboutPayments(Payment payment){
+        Log.i(TAG, "getInfoAboutPayments: " + payment.toString());
+    }
     private void getInfoAboutOwner(Owner owner){
         Log.i(TAG, "getInfoAboutOwner: " + owner.toString());
     }

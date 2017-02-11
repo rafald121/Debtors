@@ -28,9 +28,8 @@ public class Owner {
         this.ownerTotalAmount +=amount;
     }
 
-
-    public void acceptTransaction(Transaction transaction){
-
+    public void changeOwnerAmountWhenPayments(int amount){
+        this.ownerOwnAmount +=amount;
     }
 
 //    GETTERS AND SETTERS
@@ -61,12 +60,15 @@ public class Owner {
 
 //      LISTS
 
+//    ADD TRANSACTION TO LIST
     public void addTransactionToList(TransactionForClient transactionForClient){
         this.listOfTransaction.add(transactionForClient);
     }
 
-
-
+//    ADD PAYMENT TO LIST
+    public void addPaymentToList(Payment payment){
+        this.listOfPayments.add(payment);
+    }
 
     public List<Client> getListOfClients() {
         return listOfClients;
