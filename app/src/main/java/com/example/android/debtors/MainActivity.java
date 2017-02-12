@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         getListOfOwnerTransactions(owner);
         getListOfClientTransactions(clientJurand);
 
+        db.updateClient(clientJurand);
+
     }
 
     private void simulatePayments(){
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         getListOfOwnerPayments(owner);
         getListOfClientPayments(clientJurand);
 
+
+        db.updateClient(clientJurand);
 
 
     }
@@ -142,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
         getListOfOwnerTransactions(owner);
         getListOfClientTransactions(clientJurand);
 
+
+        db.updateClient(clientJurand);
     }
 
     private void getListOfOwnerTransactions(Owner owner){
