@@ -17,10 +17,10 @@ import java.util.List;
  * Created by Rafaello on 2017-02-09.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper{
+public class DatabaseClients extends SQLiteOpenHelper{
 
     // Logcat tag
-    private static final String TAG = DatabaseHelper.class.getName();
+    private static final String TAG = DatabaseClients.class.getName();
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -35,6 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String CLIENT_ID = "clientID";
     private static final String CLIENT_NAME = "clientName";
     private static final String CLIENT_LEFT_AMOUNT = "clientLeftAmount";
+    private static final String CLIENT_TRANSACTIONS_LIST = "clientTransactions";
+    private static final String CLIENT_PAYMENTS_LIST = "clientPayments";
     //TODO list of transaction
 
     private static final String PRODUCT_ID = "productID";
@@ -44,17 +46,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String CREATE_TABLE_CLIENT = "CREATE TABLE " + TABLE_CLIENTS
             + "(" + CLIENT_ID + " INTEGER  PRIMARY KEY, "
             + CLIENT_NAME + " TEXT,        "
-            + CLIENT_LEFT_AMOUNT + " INTEGER" + ")";
+            + CLIENT_LEFT_AMOUNT + " INTEGER, "
+            + CLIENT_PAYMENTS_LIST + " TEXT, "
+            + CLIENT_TRANSACTIONS_LIST + " TEXT " + ")";
 
-    public DatabaseHelper(Context context) {
+    public DatabaseClients(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DatabaseClients(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
+    public DatabaseClients(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
         super(context, name, factory, version, errorHandler);
     }
 
@@ -79,6 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         return clientID;
     }
+
+
 
     //ZWROC POJEDYNCZEGO KLIENTA
     public Client getClientByID(long clientID){

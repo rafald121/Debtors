@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.android.debtors.Databases.DatabaseHelper;
+import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Logic.RealizePaymentHelper;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    DatabaseHelper db;
+    DatabaseClients db;
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
             "maniek", "maniok", "chamiok"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new DatabaseHelper(getApplicationContext());
+        db = new DatabaseClients(getApplicationContext());
 
         List<Client> listOfClient = new ArrayList<>();
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
