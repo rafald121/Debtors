@@ -32,7 +32,7 @@ public class RealizePaymentHelper {
             addPaymentToOwnerList(owner, payment);
 
             changeClientAmount(client, paidAmount, revenueOrExpense);
-            addPaymentToClietnList(client, payment);
+            addPaymentToClientList(client, payment);
         }
     }
 
@@ -58,7 +58,7 @@ public class RealizePaymentHelper {
 
     }
 
-    private void addPaymentToClietnList(Client client, Payment payment) {
+    private void addPaymentToClientList(Client client, Payment payment) {
         client.addPaymentToListOfPayments(payment);
     }
 }

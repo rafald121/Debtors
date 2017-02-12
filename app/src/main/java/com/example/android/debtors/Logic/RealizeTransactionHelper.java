@@ -31,7 +31,7 @@ public class RealizeTransactionHelper {
             int amount = transaction.getTransactionQuantity();
             int value = transaction.getProductValue();
             int totalValue = amount * value;
-            boolean gotOrGive = transaction.isTransactionSeller();
+            boolean gotOrGive = transaction.isTransactionBuyOrSell();
 
             if (owner != null && client != null) {
 
@@ -82,6 +82,7 @@ public class RealizeTransactionHelper {
     }
 
     private void addTransactionToOwnerList(Owner owner, TransactionForClient transaction) {
+        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje: " + transaction.toString() );
         owner.addTransactionToList(transaction);
     }
 
@@ -94,6 +95,13 @@ public class RealizeTransactionHelper {
     }
 
     private void addTransactionToClientList(Client client, TransactionForClient transaction) {
-        client.addTransactionToListOfTransaction(transaction);
+        TransactionForClient editedTransaction = new TransactionForClient(Utils.getDateTime(),
+                transaction.getTransactionOwner(),transaction.getTransactionClient(), transaction
+                .getTransactionQuantity(),transaction.getProductValue(),transaction
+                .getTransactionEntryPayment(),!transaction.isTransactionBuyOrSell());
+        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje " + editedTransaction.toString() );
+
+        //edycja, aby u klienta wyswietlalo sie ze kupił, a nie sprzedal
+        client.addTransactionToListOfTransaction(editedTransaction);
     }
 }

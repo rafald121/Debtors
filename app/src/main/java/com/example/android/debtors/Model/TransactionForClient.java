@@ -11,26 +11,26 @@ public class TransactionForClient extends Transaction {
     private Product transactionProduct; //co
     int productValue;
     int transactionEntryPayment = 0;
-    boolean transactionSeller; // if true = sprzedawca = owner, if false = sprzedawca = ktos inny
+    boolean transactionBuyOrSell; // if true = sprzedawca = owner, if false = sprzedawca = ktos inny
 
 // TRANSACTION CONSTRUCTOR WITHOUT PAYMENT
-    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, boolean transactionSeller) {
+    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, boolean transactionBuyOrSell) {
         super(transactionDate, transactionQuantity);
         this.transactionOwner = transactionOwner;
         this.transactionClient = transactionClient;
         this.productValue = productValue;
-        this.transactionSeller = transactionSeller;
+        this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
 // TRANSACTION CONSTRUCTOR WITH PAYMENT
-public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, int entryPayment,  boolean transactionSeller) {
+public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, int entryPayment,  boolean transactionBuyOrSell) {
 
     super(transactionDate, transactionQuantity);
     this.transactionOwner = transactionOwner;
     this.transactionClient = transactionClient;
     this.productValue = productValue;
     this.transactionEntryPayment = entryPayment;
-    this.transactionSeller = transactionSeller;
+    this.transactionBuyOrSell = transactionBuyOrSell;
 }
 
 
@@ -67,14 +67,14 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
         this.transactionEntryPayment = transactionEntryPayment;
     }
 
-    //    GET SET TRANSACTION SELLER
+    //    GET SET TRANSACTION BuyOrSell
 
-    public boolean isTransactionSeller() {
-        return transactionSeller;
+    public boolean isTransactionBuyOrSell() {
+        return transactionBuyOrSell;
     }
 
-    public void setTransactionSeller(boolean transactionSeller) {
-        this.transactionSeller = transactionSeller;
+    public void setTransactionBuyOrSell(boolean transactionBuyOrSell) {
+        this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
     //TRANSACTION OWNER
@@ -97,18 +97,18 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
 
     @Override
     public String toString(){
-        String revenueOrExpense = "";
-        if(this.transactionSeller)
-            revenueOrExpense = "revenue";
+        String buyOrSell = "";
+        if(this.transactionBuyOrSell)
+            buyOrSell = "sell";
         else
-            revenueOrExpense = "expense";
+            buyOrSell = "buy";
         return "TransactionForClient{" +
                 "transactionOwner=" + transactionOwner.getOwnerName() +
                 ", transactionClient=" + transactionClient.getClientName() +
                 ", transactionQuantity=" + super.getTransactionQuantity() +
                 ", transactionEntryPayment=" + this.getTransactionEntryPayment() +
                 ", transactionProductValue=" + this.getProductValue() +
-                ", revenue or expense? " + revenueOrExpense;
+                ", sell or buy? " + buyOrSell;
 
     }
 }

@@ -20,7 +20,8 @@ public class Owner {
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
         this.ownerTotalAmount = ownerAmount;
-        this.ownerOwnAmount = ownerAmount;
+        this.ownerOwnAmount = ownerAmount/2;
+
     }
 
 //   LOGIC METHODS

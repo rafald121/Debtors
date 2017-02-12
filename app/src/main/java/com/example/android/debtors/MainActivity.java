@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
 //TODO ZMIENIC ABY DLA KLIENTA JESLI PLACI HAJS NIE BYL REVENUE TYLKO EXPENSE ALBO STRATA,
 // ODJECIE, itd.
 
+
     }
+
+
     private void simulateTransactionWithPayment(){
         Log.w(TAG, "simulateTransactionWithPayment: ");
         //        WLASCICIEL
@@ -103,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         getInfoAboutClient(clientJurand);
         getListOfOwnerPayments(owner);
         getListOfClientPayments(clientJurand);
+
+
 
     }
 
