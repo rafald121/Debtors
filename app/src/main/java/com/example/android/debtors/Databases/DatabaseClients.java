@@ -22,11 +22,11 @@ public class DatabaseClients extends SQLiteOpenHelper{
     // Logcat tag
     private static final String TAG = DatabaseClients.class.getName();
 
-    // Database Version
+       // Database Version
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "debtsDatabase";
+    private static final String DATABASE_NAME = "clientsDatabase";
 
     //TABLE NAMES
     private static final String TABLE_CLIENTS = "clients";
@@ -45,7 +45,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
     private static final String CREATE_TABLE_CLIENT = "CREATE TABLE " + TABLE_CLIENTS
             + "(" + CLIENT_ID + " INTEGER  PRIMARY KEY, "
-            + CLIENT_NAME + " TEXT,        "
+            + CLIENT_NAME + " TEXT, "
             + CLIENT_LEFT_AMOUNT + " INTEGER, "
             + CLIENT_PAYMENTS_LIST + " TEXT, "
             + CLIENT_TRANSACTIONS_LIST + " TEXT " + ")";

@@ -52,15 +52,23 @@ public class Owner {
         this.ownerSurname = ownerSurname;
     }
 
-    public int getOwnerAmount() {
+    public int getOwnerTotalAmount() {
         return ownerTotalAmount;
     }
 
-    public void setOwnerAmount(int ownerAmount) {
-        this.ownerTotalAmount = ownerAmount;
+    public void setOwnerTotalAmount(int ownerTotalAmount) {
+        this.ownerTotalAmount = ownerTotalAmount;
     }
 
-//      LISTS
+    public int getOwnerOwnAmount() {
+        return ownerOwnAmount;
+    }
+
+    public void setOwnerOwnAmount(int ownerOwnAmount) {
+        this.ownerOwnAmount = ownerOwnAmount;
+    }
+
+    //      LISTS
 
 //    ADD TRANSACTION TO LIST
     public void addTransactionToList(TransactionForClient transactionForClient){
