@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Logic.RealizePaymentHelper;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
@@ -12,6 +13,8 @@ import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Utils.Utils;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     DatabaseClients db;
+    DatabaseOwner dbo;
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
             "maniek", "maniok", "chamiok"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new DatabaseClients(getApplicationContext());
+        dbo = new DatabaseOwner(getApplicationContext());
 
         List<Client> listOfClient = new ArrayList<>();
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
@@ -40,9 +45,26 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
-        simulatePayments();
-        simulateTransaction();
-        simulateTransactionWithPayment();
+//        WLASCICIEL
+        Owner owner = new Owner("rafal","dolega", 5000);
+//        KLIECI
+        Client clientJurand = db.getClientByID(7); //kupujacy 2
+
+        simulatePayments(owner,clientJurand);
+//        simulateTransaction();
+//        simulateTransactionWithPayment();
+
+        long ownId;
+        try {
+            ownId = dbo.createOwner(owner);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+//        simulatePayments();
+//        simulateTransaction();
+//        simulateTransactionWithPayment();
 //TODO ZMIENIC ABY DLA KLIENTA JESLI PLACI HAJS NIE BYL REVENUE TYLKO EXPENSE ALBO STRATA,
 // ODJECIE, itd.
 
@@ -88,8 +110,33 @@ public class MainActivity extends AppCompatActivity {
 //        WLASCICIEL
         Owner owner = new Owner("rafal","dolega", 5000);
 //        KLIECI
-        Client clientManiek = db.getClientByID(1); //kupujacy 1
         Client clientJurand = db.getClientByID(14); //kupujacy 2
+
+//        PLATNOSC, clientJurand - klient, 50 - kwota, true - dostaję, false - płacę
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 50, true);
+        //tworzony obiekt
+        Log.w(TAG, "onCreate: BEFORE PAYMENT" );
+        getInfoAboutPayments(payment);
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+
+
+        RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
+        realizePaymentHelper.realizePayment(payment);
+
+        Log.w(TAG, "onCreate: AFTER PAYMENT ");
+        getInfoAboutOwner(owner);
+        getInfoAboutClient(clientJurand);
+        getListOfOwnerPayments(owner);
+        getListOfClientPayments(clientJurand);
+
+
+        db.updateClient(clientJurand);
+
+
+    }
+    private void simulatePayments(Owner owner, Client clientJurand){
+        Log.w(TAG, "simulatePayments: " );
 
 //        PLATNOSC, clientJurand - klient, 50 - kwota, true - dostaję, false - płacę
         Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 50, true);
@@ -148,6 +195,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         db.updateClient(clientJurand);
+    }
+
+    private void createClients(String[] names){
+        for(int i = 0 ; i< names.length -1 ; i++){
+            Client client = new Client(names[i], 50*i);
+            db.createClient(client);
+        }
     }
 
     private void getListOfOwnerTransactions(Owner owner){

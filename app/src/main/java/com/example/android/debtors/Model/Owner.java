@@ -16,6 +16,9 @@ public class Owner {
     private List<TransactionForClient> listOfTransaction = new ArrayList<>(); //optional
     private List<Payment> listOfPayments = new ArrayList<>();
 
+    public Owner() {
+    }
+
     public Owner(String ownerName, String ownerSurname, int ownerAmount) {
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
