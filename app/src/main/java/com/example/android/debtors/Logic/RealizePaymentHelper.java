@@ -29,7 +29,6 @@ public class RealizePaymentHelper {
             Log.e(TAG, "realizePayment: PAYMENT IS NULL");
         } else {
 
-            dbPayment.createPayment(payment);
 
             Owner owner = payment.getPaymentOwner();
             Client client = payment.getPaymentClient();
@@ -43,6 +42,9 @@ public class RealizePaymentHelper {
 
             changeClientAmount(client, paidAmount, revenueOrExpense);
             addPaymentToClientList(client, payment);
+
+            dbPayment.createPayment(payment);
+
         }
     }
 

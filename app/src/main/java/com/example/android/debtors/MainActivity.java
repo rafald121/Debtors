@@ -53,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         simulatePayments();
 
-
         List<Payment> listOfAllPayments = getPayments();
-
-
-
 
 //        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
