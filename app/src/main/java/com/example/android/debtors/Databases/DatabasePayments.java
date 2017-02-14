@@ -127,7 +127,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         List<Payment> listOfPayments = new ArrayList<>();
 
-
         String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_CLIENT + " = " + clientID;
 
         Cursor c = db.rawQuery(query, null);
@@ -150,6 +149,36 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return listOfPayments;
     }
+
+    public List<Payment> getPaymentsFromOwner(long ownerID){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Payment> listOfPayments = new ArrayList<>();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_OWNER + " = " +
+                ownerID;
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                Payment payment = new Payment();
+
+                payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                listOfPayments.add(payment);
+
+            }while (c.moveToNext());
+        }
+
+        return listOfPayments;
+    }
+
+
 }
 
 

@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
 //        simulatePayments();
 
         List<Payment> listOfAllPayments = getPayments();
-        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
+//        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
+        List<Payment> listOfPaymentsByOwnerId = getPaymentByOwnerId(1);
+
 //        Log.i(TAG, "onCreate: listOfPaymentsByClientId" + listOfPaymentsByClientId.toString();
 //        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
@@ -283,6 +285,19 @@ public class MainActivity extends AppCompatActivity {
         return listOfPayments;
     }
 
+    private List<Payment> getPaymentByOwnerId(long ownerID){
+        Log.i(TAG, "getPaymentByOwnerId: payment dla danego id ownera");
+        List<Payment> listOfPayments = dbPayment.getPaymentsFromOwner(ownerID);
+
+        if(listOfPayments.size()==0)
+            Log.e(TAG, "getPaymentByOwnerId: THERE IS NOT ANY PAYMENTS FOR THAT OWNER" );
+
+        for(Payment p : listOfPayments){
+            Log.i(TAG, "getPaymentByOwnerId: payment: " + p.toString(true));
+        }
+
+        return listOfPayments;
+    }
     private List<Client> getAllClients() {
         i(TAG, "getAllClients: WSZYSCY KLIENCI");
         List<Client> listOfClients = dbClient.getAllClient();
