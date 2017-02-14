@@ -53,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
 //        simulatePayments();
 
-        List<Payment> listOfAllPayments = getPayments();
+//        List<Payment> listOfAllPayments = getPayments();
 //        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
-        List<Payment> listOfPaymentsByOwnerId = getPaymentByOwnerId(1);
+//        List<Payment> listOfPaymentsByOwnerId = getPaymentByOwnerId(1);
+
+
 
 //        Log.i(TAG, "onCreate: listOfPaymentsByClientId" + listOfPaymentsByClientId.toString();
 //        simulatePayments(owner,clientJurand);

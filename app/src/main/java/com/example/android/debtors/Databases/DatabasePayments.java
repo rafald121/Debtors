@@ -59,7 +59,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PAYMENTS);
 //You'll have to attach Database X with Database Y using the ATTACH command, then run the appropriate Insert Into commands for the tables you want to transfer.
 //        INSERT INTO X.TABLE(fieldname1, fieldname2) SELECT fieldname1, fieldname2 FROM Y.TABLE;
-        db.execSQL("ATTACH DATABASE 'databaseClients.db' As 'dbClients'");
 
     }
 

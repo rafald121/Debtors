@@ -6,6 +6,7 @@ package com.example.android.debtors.Model;
 
 public class TransactionForClient extends Transaction {
 
+    private int transactionID;
     private Owner transactionOwner;
     private Client transactionClient;
     private Product transactionProduct; //co
@@ -34,6 +35,7 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
 }
 
 
+
     //GETTERY I SETTERY SUPER Z KLASY TRANSACTION
     public String getTransactionDate(){
         return super.getTransactionDate();
@@ -50,6 +52,15 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
     }
 
 // GETTERY I SETTERY Z TEJ KLASY
+
+//    ID
+    public int getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(int transactionID) {
+        this.transactionID = transactionID;
+    }
 
     public int getProductValue() {
         return productValue;
@@ -103,8 +114,9 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
         else
             buyOrSell = "buy";
         return "TransactionForClient{" +
-                "transactionOwner=" + transactionOwner.getOwnerName() +
-                ", transactionClient=" + transactionClient.getClientName() +
+                "transactionID=" + transactionID +
+                ", transactionOwner=" + transactionOwner.getOwnerID() +
+                ", transactionClient=" + transactionClient.getClientId() +
                 ", transactionQuantity=" + super.getTransactionQuantity() +
                 ", transactionEntryPayment=" + this.getTransactionEntryPayment() +
                 ", transactionProductValue=" + this.getProductValue() +
