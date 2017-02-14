@@ -2,11 +2,15 @@ package com.example.android.debtors.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.android.debtors.Model.Payment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -15,6 +19,7 @@ import static android.content.ContentValues.TAG;
  */
 
 public class DatabasePayments extends SQLiteOpenHelper {
+
 
 
     private static final int DATABASE_VERSION = 1;
@@ -42,6 +47,8 @@ public class DatabasePayments extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_PAYMENTS);
@@ -53,6 +60,11 @@ public class DatabasePayments extends SQLiteOpenHelper {
     }
 
     public long createPayment(Payment payment){
+        if (payment == null)
+            Log.e(TAG, "createPayment: PAYMENT IS NULL" );
+        else
+            Log.e(TAG, "createPayment: PAYMENT IS NOT NULL" );
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -71,6 +83,33 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return paymentID;
 
+    }
+
+    public List<Payment> getAllPayments(){
+        List<Payment> listOfPayments = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                Payment payment = new Payment();
+
+                payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                listOfPayments.add(payment);
+            } while (c.moveToNext());
+        }
+        Log.i(TAG, "getAllPayments: return listOfPayments: " + listOfPayments.toString());
+        return listOfPayments;
     }
 }
 

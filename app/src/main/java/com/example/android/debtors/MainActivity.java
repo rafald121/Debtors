@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseClients db;
     DatabaseOwner dbo;
+    DatabaseClients dbClient;
+    DatabaseOwner dbOwner;
+    DatabasePayments dbPayment;
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
             "maniek", "maniok", "chamiok"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         db = new DatabaseClients(getApplicationContext());
         dbo = new DatabaseOwner(getApplicationContext());
+        dbClient = new DatabaseClients(getApplicationContext());
+        dbOwner = new DatabaseOwner(getApplicationContext());
 
         List<Client> listOfClient = new ArrayList<>();
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        KLIECI
         Client clientJurand = db.getClientByID(14); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(7); //kupujacy 2
 
 //        PLATNOSC, clientJurand - klient, 50 - kwota, true - dostaję, false - płacę
         Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 50, true);
@@ -118,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         db.updateClient(clientJurand);
+        dbClient.updateClient(clientJurand);
 
 
     }
@@ -144,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         db.updateClient(clientJurand);
+        dbClient.updateClient(clientJurand);
 
 
     }
@@ -186,13 +194,16 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0 ; i< names.length -1 ; i++){
             Client client = new Client(names[i], 50*i);
             db.createClient(client);
+            dbClient.createClient(client);
         }
     }
     private List<Owner> getOwner(){
         i(TAG, "getOwner:  OWNER");
         dbo.getAllOwners();
+        dbOwner.getAllOwners();
 
         List<Owner> listOfOwners = dbo.getAllOwners();
+        List<Owner> listOfOwners = dbOwner.getAllOwners();
         Log.i(TAG, "getOwner: size of list of owners: " + listOfOwners.size());
         for(Owner o : listOfOwners)
             i(TAG, "getAllOwners: owner: " + o.toString());
@@ -242,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
     private void deleteAllClients() {
         
         List<Client> listOfClients = db.getAllClient();
+        List<Client> listOfClients = dbClient.getAllClient();
         int liczbaklientuw = listOfClients.size();
 
         Log.i(TAG, "deleteAllClients: size of list of clients : " + liczbaklientuw);
@@ -255,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0 ; i<liczbaklientuw;i++){
             Log.i(TAG, "deleteAllClients: deleted client: " + i);
             db.deleteClient(listOfClients.get(i).getClientId());
+            dbClient.deleteClient(listOfClients.get(i).getClientId());
         }
 
     }
@@ -262,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Client> getAllClients() {
         i(TAG, "getAllClients: WSZYSCY KLIENCI");
         List<Client> listOfClients = db.getAllClient();
+        List<Client> listOfClients = dbClient.getAllClient();
         i(TAG, "getAllClients: liczba klientów: " + listOfClients.size());
         for(Client c : listOfClients)
             i(TAG, "getAllClients: client: " + c.toString());
@@ -275,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 
         listOfClientWithLeftAmountFromTo = db.getClientWithLeftAmountSorted(50,150);
+        listOfClientWithLeftAmountFromTo = dbClient.getClientWithLeftAmountSorted(50,150);
 
 
         for(Client client : listOfClientWithLeftAmountFromTo){
@@ -289,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
         List<Client> listOfUserByName = new ArrayList<>();
 
         listOfUserByName =  db.getClientByName(name);
+        listOfUserByName =  dbClient.getClientByName(name);
         return listOfUserByName;
     }
 
