@@ -97,6 +97,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
                 TransactionForClient transaction = new TransactionForClient();
 
                 transaction.setTransactionID(c.getInt(c.getColumnIndex(TRANSACTION_ID)));
+                transaction.setTransactionDate(c.getString(c.getColumnIndex(TRANSACTION_DATE)));
                 transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
                 transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
                 transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));

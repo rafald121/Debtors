@@ -149,6 +149,7 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
             buyOrSell = "buy";
         return "TransactionForClient{" +
                 "transactionID=" + this.transactionID +
+                ", transactionDate=" + super.getTransactionDate() +
                 ", transactionOwner=" + this.transactionOwnerID +
                 ", transactionClient=" + this.transactionClientID +
                 ", transactionQuantity=" + super.getTransactionQuantity() +

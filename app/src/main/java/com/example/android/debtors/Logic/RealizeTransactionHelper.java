@@ -1,7 +1,9 @@
 package com.example.android.debtors.Logic;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
@@ -17,12 +19,16 @@ public class RealizeTransactionHelper {
 
     private static final String TAG = RealizeTransactionHelper.class.getSimpleName();
 
-    Transaction transaction;
 
+    Transaction transaction;
+    DatabaseTransactions dbTransaction;
+    Context mainContext;
     public RealizeTransactionHelper() {
     }
 
-    public void realizeTransaction(TransactionForClient transaction){
+    public void realizeTransaction(Context applicationContext, TransactionForClient transaction){
+        this.mainContext = applicationContext;
+        dbTransaction = new DatabaseTransactions(mainContext);
 
         if(transaction!=null){
 
@@ -51,10 +57,11 @@ public class RealizeTransactionHelper {
                     // więcej
                     addTransactionToClientList(client, transaction);
 
+                    dbTransaction.createTransaction(transaction);
+
                 } else {
 
-                    Log.i(TAG, "realizeTransaction: NIE PODANO ENTRY PAYMENT: " + transaction
-                            .getTransactionEntryPayment());
+                    Log.i(TAG, "realizeTransaction: NIE PODANO ENTRY PAYMENT: " + transaction.getTransactionEntryPayment());
 //                    TYLKO ZMIANA ZA TRANZAKCJE
                     changeOwnerValue(owner, totalValue, gotOrGive);
                     addTransactionToOwnerList(owner, transaction);
@@ -62,6 +69,9 @@ public class RealizeTransactionHelper {
                     changeClientValue(client, totalValue, gotOrGive); //jesli ostatnie true = Client wisi
                     // więcej
                     addTransactionToClientList(client, transaction);
+
+                    dbTransaction.createTransaction(transaction);
+
                 }
 
             } else {

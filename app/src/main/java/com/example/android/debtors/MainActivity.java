@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
         List<Owner> listOfAllOwners = getOwner();
 
 
-        simulateTransaction();
+//        simulateTransaction();
 //        simulatePayments();
+        simulateTransactionWithPayment();
 
 
 //        List<Payment> listOfAllPayments = getPayments();
@@ -79,10 +80,9 @@ public class MainActivity extends AppCompatActivity {
         Owner owner = dbOwner.getOwner(1);
 
 //        KLIECI
-        Client clientJurand = dbClient.getClientByID(7); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
 
-        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime
-                (), owner, clientJurand, 6, 30, 100, true);
+        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 6, 30, 100, true);
 
         getInfoAboutTransaction(transactionWithPayment);
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         getListOfClientTransactions(clientJurand);
 
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
-        realizeTransactionHelper.realizeTransaction(transactionWithPayment);
+        realizeTransactionHelper.realizeTransaction(getApplicationContext(), transactionWithPayment);
 
         Log.w(TAG, "onCreate: AFTER TRANSACTION WITH PAYMENT ");
 
@@ -167,16 +167,16 @@ public class MainActivity extends AppCompatActivity {
 //        WLASCICIEL
         Owner owner = dbOwner.getOwner(1);
 //        KLIECI
-        Client clientJurand = dbClient.getClientByID(5); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(3); //kupujacy 2
 
 //        TRANZAKCJA
         //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
         // true - owner - sprzedający,
         // false - owner - kupujący
         TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
-                owner, clientJurand, 2, 200, false);
+                owner, clientJurand, 2, 100, true);
 
-        dbTransaction.createTransaction(transactionForClient);
+//        dbTransaction.createTransaction(transactionForClient);
 
         getInfoAboutTransaction(transactionForClient);
 
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         getListOfClientTransactions(clientJurand);
 
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
-        realizeTransactionHelper.realizeTransaction(transactionForClient);
+        realizeTransactionHelper.realizeTransaction(getApplicationContext(),transactionForClient);
         Log.w(TAG, "onCreate: AFTER TRANSACTION ");
 
         getInfoAboutOwner(owner);
