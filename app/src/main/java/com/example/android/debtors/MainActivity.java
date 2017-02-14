@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getApplicationContext().deleteDatabase("ownerDatabase");
+//        getApplicationContext().deleteDatabase("ownerDatabase");
 
         db = new DatabaseClients(getApplicationContext());
         dbo = new DatabaseOwner(getApplicationContext());
@@ -48,28 +48,7 @@ public class MainActivity extends AppCompatActivity {
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
-
-
-//        WLASCICIEL
-        Owner owner = new Owner("pablito", 5000, 2500);
-        Owner owner1 = new Owner("rafonix", 3000, 2500);
-
-        long id1 = dbo.createOwner(owner);
-        long id2 = dbo.createOwner(owner1);
-
-        Log.i(TAG, "onCreate: id1: " + id1 + " id2: " + id2);
-
-
-
         List<Owner> listOfAllOwners = getOwner();
-
-//        KLIECI
-//        Client clientAndrzej = db.getClientByID(7);
-
-
-//        long ownerID;
-//        ownerID = dbo.createOwner(owner);
-//        Log.i(TAG, "onCreate: owner get: " + dbo.getOwner(ownerID).toString());
 
 
 //        simulatePayments(owner,clientJurand);
