@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
         List<Client> listOfUserByName = new ArrayList<>();
-
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
@@ -100,34 +99,29 @@ public class MainActivity extends AppCompatActivity {
     }
     private void simulatePayments(){
         Log.w(TAG, "simulatePayments: " );
-//        WLASCICIEL
+
         Owner owner = dbOwner.getOwner(1);
 
-//        KLIECI
-        Client clientJurand = dbClient.getClientByID(7); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(5); //kupujacy 2
 
-//        PLATNOSC, clientJurand - klient, 50 - kwota, true - dostaję, false - płacę
-        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 200, false);
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 150, false);
 
         Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
 //        dbPayment.createPayment(payment);
 
-        //tworzony obiekt
         Log.w(TAG, "onCreate: BEFORE PAYMENT" );
         getInfoAboutPayments(payment);
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
 
-
         RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
-        realizePaymentHelper.realizePayment(payment);
+        realizePaymentHelper.realizePayment(getApplicationContext(), payment);
 
         Log.w(TAG, "onCreate: AFTER PAYMENT ");
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
         getListOfOwnerPayments(owner);
         getListOfClientPayments(clientJurand);
-
 
         dbClient.updateClient(clientJurand);
 
@@ -146,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
-        realizePaymentHelper.realizePayment(payment);
+        realizePaymentHelper.realizePayment(getApplicationContext(), payment);
 
         Log.w(TAG, "onCreate: AFTER PAYMENT ");
         getInfoAboutOwner(owner);

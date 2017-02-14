@@ -42,7 +42,7 @@ public class RealizeTransactionHelper {
                             gotOrGive);
 
                     RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
-                    realizePaymentHelper.realizePayment(payment);
+//                    realizePaymentHelper.realizePayment(payment);
 
                     changeOwnerValue(owner, totalValue, gotOrGive);
                     addTransactionToOwnerList(owner, transaction);
