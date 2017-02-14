@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         List<Owner> listOfAllOwners = getOwner();
 
-        simulatePayments();
+//        simulatePayments();
 
         List<Payment> listOfAllPayments = getPayments();
-
+        dbPayment.getPaymentsFromClient(2);
 //        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
@@ -98,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
         Owner owner = dbOwner.getOwner(1);
 
-        Client clientJurand = dbClient.getClientByID(5); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(3); //kupujacy 2
 
-        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 150, false);
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 500, true);
 
         Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
 //        dbPayment.createPayment(payment);

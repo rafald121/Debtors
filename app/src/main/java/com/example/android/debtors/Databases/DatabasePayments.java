@@ -20,6 +20,10 @@ import static android.content.ContentValues.TAG;
 
 public class DatabasePayments extends SQLiteOpenHelper {
 
+    Context context;
+
+    DatabaseClients dbClient = new DatabaseClients(context);
+
 
 
     private static final int DATABASE_VERSION = 1;
@@ -45,6 +49,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
     public DatabasePayments(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
 
@@ -52,6 +57,10 @@ public class DatabasePayments extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_PAYMENTS);
+//You'll have to attach Database X with Database Y using the ATTACH command, then run the appropriate Insert Into commands for the tables you want to transfer.
+//        INSERT INTO X.TABLE(fieldname1, fieldname2) SELECT fieldname1, fieldname2 FROM Y.TABLE;
+        db.execSQL("ATTACH DATABASE 'databaseClients.db' As 'dbClients'");
+
     }
 
     @Override
@@ -107,6 +116,36 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
                 listOfPayments.add(payment);
             } while (c.moveToNext());
+        }
+
+        return listOfPayments;
+    }
+//    RETURN LIST OF PAYMENTS THAT CLIENT PAID ,,, BY CLIENT ID
+    public List<Payment> getPaymentsFromClient(long clientID){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Payment> listOfPayments = new ArrayList<>();
+
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_CLIENT + " = " + clientID;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                Payment payment = new Payment();
+
+                payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                listOfPayments.add(payment);
+
+            }while (c.moveToNext());
         }
 
         return listOfPayments;
