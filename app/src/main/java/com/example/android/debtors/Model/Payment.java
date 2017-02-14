@@ -5,16 +5,14 @@ package com.example.android.debtors.Model;
  */
 public class Payment {
 
-    private String paymentData; // kiedy zaplacono
+    private String paymentDate; // kiedy zaplacono
     private Owner paymentOwner;
     private Client paymentClient; // kto płaci
     private int paymentAmount; // ile zapłacono
     private boolean paymentGotOrGiven; //if true = got
 
-    public Payment(String paymentData, Owner paymentOwner, Client paymentClient, int
-            paymentAmount, boolean
-            paymentGotOrGiven) {
-        this.paymentData = paymentData;
+    public Payment(String paymentData, Owner paymentOwner, Client paymentClient, int paymentAmount, boolean paymentGotOrGiven) {
+        this.paymentDate = paymentData;
         this.paymentOwner = paymentOwner;
         this.paymentClient = paymentClient;
         this.paymentAmount = paymentAmount;
@@ -24,12 +22,12 @@ public class Payment {
 
 
 //DATA
-    public String getPaymentData() {
-        return paymentData;
+    public String getPaymentDate() {
+        return paymentDate;
     }
 
     public void setPaymentData(String paymentData) {
-        this.paymentData = paymentData;
+        this.paymentDate = paymentData;
     }
 
 //    WLASCICIEL KTOREMU SIE PLACI
@@ -81,7 +79,7 @@ public class Payment {
         else
             revenueOrExpense = "expense";
         return "Payment{" +
-                "paymentData='" + paymentData + '\'' +
+                "paymentData='" + paymentDate + '\'' +
                 ", paymentOwner=" + paymentOwner +
                 ", paymentClient=" + paymentClient +
                 ", paymentAmount=" + paymentAmount +
