@@ -8,7 +8,13 @@ import java.util.List;
  */
 
 public class Owner {
-    private String ownerName, ownerSurname;
+
+    private int ownerID;
+
+
+
+    private String ownerName;
+//            , ownerSurname;
     private int ownerTotalAmount;
     private int ownerOwnAmount;
 
@@ -19,12 +25,30 @@ public class Owner {
     public Owner() {
     }
 
-    public Owner(String ownerName, String ownerSurname, int ownerAmount) {
+    public Owner(int ownerOwnAmount, String ownerName, int ownerTotalAmount) {
+        this.ownerOwnAmount = ownerOwnAmount;
         this.ownerName = ownerName;
-        this.ownerSurname = ownerSurname;
-        this.ownerTotalAmount = ownerAmount;
-        this.ownerOwnAmount = ownerAmount/2;
+        this.ownerTotalAmount = ownerTotalAmount;
+    }
 
+//    public Owner(String ownerName, String ownerSurname, int ownerAmount) {
+//        this.ownerName = ownerName;
+//        this.ownerSurname = ownerSurname;
+//        this.ownerTotalAmount = ownerAmount;
+//        this.ownerOwnAmount = ownerAmount/2;
+//
+//    }
+
+    public Owner(String pawulon, int i) {
+        this.ownerName = pawulon;
+        this.ownerTotalAmount = i;
+        this.ownerOwnAmount = i/2;
+    }
+
+    public Owner(String name, int totalAmount, int ownAmount) {
+        this.ownerName = name;
+        this.ownerTotalAmount = totalAmount;
+        this.ownerOwnAmount = ownAmount;
     }
 
 //   LOGIC METHODS
@@ -39,6 +63,14 @@ public class Owner {
 
 //    GETTERS AND SETTERS
 
+    public int getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
+    }
+
     public String getOwnerName() {
         return ownerName;
     }
@@ -47,13 +79,13 @@ public class Owner {
         this.ownerName = ownerName;
     }
 
-    public String getOwnerSurname() {
-        return ownerSurname;
-    }
-
-    public void setOwnerSurname(String ownerSurname) {
-        this.ownerSurname = ownerSurname;
-    }
+//    public String getOwnerSurname() {
+//        return ownerSurname;
+//    }
+//
+//    public void setOwnerSurname(String ownerSurname) {
+//        this.ownerSurname = ownerSurname;
+//    }
 
     public int getOwnerTotalAmount() {
         return ownerTotalAmount;
@@ -113,8 +145,9 @@ public class Owner {
     @Override
     public String toString() {
         return "Owner{" +
-                "ownerName='" + ownerName + '\'' +
-                ", ownerSurname='" + ownerSurname + '\'' +
+                "ownerID=" + ownerID +
+                ", ownerName='" + ownerName + '\'' +
+//                ", ownerSurname='" + ownerSurname + '\'' +
                 ", ownerTotalAmount=" + ownerTotalAmount +
                 ", ownerOwnAmount=" + ownerOwnAmount +
                 '}';

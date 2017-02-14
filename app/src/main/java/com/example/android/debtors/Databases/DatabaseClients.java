@@ -44,7 +44,8 @@ public class DatabaseClients extends SQLiteOpenHelper{
     private static final String PRODUCT_LEFT_QUANTITY = "productLeftQuantity";
 
     private static final String CREATE_TABLE_CLIENT = "CREATE TABLE " + TABLE_CLIENTS
-            + "(" + CLIENT_ID + " INTEGER  PRIMARY KEY, "
+            + "("
+            + CLIENT_ID + " INTEGER  PRIMARY KEY, "
             + CLIENT_NAME + " TEXT, "
             + CLIENT_LEFT_AMOUNT + " INTEGER, "
             + CLIENT_PAYMENTS_LIST + " TEXT, "
@@ -74,12 +75,13 @@ public class DatabaseClients extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+
         values.put(CLIENT_NAME, client.getClientName());
         values.put(CLIENT_LEFT_AMOUNT, client.getClientLeftAmount());
 
         long clientID = db.insert(TABLE_CLIENTS, null, values);
 
-        Log.i(TAG, "createClient: before return clientID" + clientID);
+        Log.i(TAG, "createClient: before return clientID: " + clientID);
 
         return clientID;
     }

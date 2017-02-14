@@ -14,11 +14,11 @@ import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Utils.Utils;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.util.Log.i;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getApplicationContext().deleteDatabase("ownerDatabase");
+
         db = new DatabaseClients(getApplicationContext());
         dbo = new DatabaseOwner(getApplicationContext());
 
@@ -42,40 +44,45 @@ public class MainActivity extends AppCompatActivity {
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
         List<Client> listOfUserByName = new ArrayList<>();
+
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 
+
+
 //        WLASCICIEL
-        Owner owner = new Owner("rafal","dolega", 5000);
+        Owner owner = new Owner("pablito", 5000, 2500);
+        Owner owner1 = new Owner("rafonix", 3000, 2500);
+
+        long id1 = dbo.createOwner(owner);
+        long id2 = dbo.createOwner(owner1);
+
+        Log.i(TAG, "onCreate: id1: " + id1 + " id2: " + id2);
+
+
+
+        List<Owner> listOfAllOwners = getOwner();
+
 //        KLIECI
-        Client clientJurand = db.getClientByID(7); //kupujacy 2
+//        Client clientAndrzej = db.getClientByID(7);
 
-        simulatePayments(owner,clientJurand);
+
+//        long ownerID;
+//        ownerID = dbo.createOwner(owner);
+//        Log.i(TAG, "onCreate: owner get: " + dbo.getOwner(ownerID).toString());
+
+
+//        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
-
-        long ownId;
-        try {
-            ownId = dbo.createOwner(owner);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-//        simulatePayments();
-//        simulateTransaction();
-//        simulateTransactionWithPayment();
-//TODO ZMIENIC ABY DLA KLIENTA JESLI PLACI HAJS NIE BYL REVENUE TYLKO EXPENSE ALBO STRATA,
-// ODJECIE, itd.
-
-
     }
 
 
     private void simulateTransactionWithPayment(){
         Log.w(TAG, "simulateTransactionWithPayment: ");
         //        WLASCICIEL
-        Owner owner = new Owner("rafal","dolega", 5000);
+        Owner owner = new Owner("rafal", 5000, 2500);
+
 //        KLIECI
         Client clientManiek = db.getClientByID(1); //kupujacy 1
         Client clientJurand = db.getClientByID(14); //kupujacy 2
@@ -104,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
         db.updateClient(clientJurand);
 
     }
-
     private void simulatePayments(){
         Log.w(TAG, "simulatePayments: " );
 //        WLASCICIEL
-        Owner owner = new Owner("rafal","dolega", 5000);
+        Owner owner = new Owner("rafal", 5000, 2500);
+
 //        KLIECI
         Client clientJurand = db.getClientByID(14); //kupujacy 2
 
@@ -161,12 +168,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     private void simulateTransaction(){
         Log.w(TAG, "simulateTransaction: ");
 
 //        WLASCICIEL
-        Owner owner = new Owner("rafal","dolega", 5000);
+        Owner owner = new Owner("rafal", 5000, 2500);
 //        KLIECI
         Client clientManiek = db.getClientByID(1); //kupujacy 1
         Client clientJurand = db.getClientByID(14); //kupujacy 2
@@ -203,74 +209,89 @@ public class MainActivity extends AppCompatActivity {
             db.createClient(client);
         }
     }
+    private List<Owner> getOwner(){
+        i(TAG, "getOwner:  OWNER");
+        dbo.getAllOwners();
+
+        List<Owner> listOfOwners = dbo.getAllOwners();
+        Log.i(TAG, "getOwner: size of list of owners: " + listOfOwners.size());
+        for(Owner o : listOfOwners)
+            i(TAG, "getAllOwners: owner: " + o.toString());
+
+        return  listOfOwners;
+    }
 
     private void getListOfOwnerTransactions(Owner owner){
-        Log.i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());
+        i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());
     }
 
     private void getListOfClientTransactions(Client client){
-        Log.i(TAG, "getListOfClientTransactions: lista tranzakcji " + client.getListOfTransaction());
+        i(TAG, "getListOfClientTransactions: lista tranzakcji " + client.getListOfTransaction());
     }
 
     private void getListOfOwnerPayments(Owner owner){
-        Log.i(TAG, "getListOfOwnerPayments: lista zapłat: " + owner.getListOfPayments());
+        i(TAG, "getListOfOwnerPayments: lista zapłat: " + owner.getListOfPayments());
     }
 
     private void getListOfClientPayments(Client client){
-        Log.i(TAG, "getListOfClientPayments: lista zapłat: " + client.getListOfPayments());
+        i(TAG, "getListOfClientPayments: lista zapłat: " + client.getListOfPayments());
     }
 
     private void getInfoAboutTransaction(TransactionForClient transaction){
-        Log.i(TAG, "getInfoAboutTransaction: " + transaction.toString());
+        i(TAG, "getInfoAboutTransaction: " + transaction.toString());
     }
 
     private void getInfoAboutPayments(Payment payment){
-        Log.i(TAG, "getInfoAboutPayments: " + payment.toString());
+        i(TAG, "getInfoAboutPayments: " + payment.toString());
     }
     private void getInfoAboutOwner(Owner owner){
-        Log.i(TAG, "getInfoAboutOwner: " + owner.toString());
+        i(TAG, "getInfoAboutOwner: " + owner.toString());
     }
 
     private void getInfoAboutClient(Client client){
-        Log.i(TAG, "getInfoAboutClient: " + client.toString());
+        i(TAG, "getInfoAboutClient: " + client.toString());
     }
 
     private void printList(List<Client> list){
         if(list.size() == 0 )
-            Log.i(TAG, "printList: LISTA PUSTA");
-        Log.i(TAG, "printList: hao");
+            i(TAG, "printList: LISTA PUSTA");
+        i(TAG, "printList: hao");
         for(Client c : list)
-            Log.i(TAG, "printList: drukuje klienta: " + c.toString());
+            i(TAG, "printList: drukuje klienta: " + c.toString());
     }
 
     private void deleteAllClients() {
         
         List<Client> listOfClients = db.getAllClient();
-
         int liczbaklientuw = listOfClients.size();
 
+        Log.i(TAG, "deleteAllClients: size of list of clients : " + liczbaklientuw);
+
 //        while(liczbaklientuw>0){
+//            Log.i(TAG, "deleteAllClients: deleting client id: " + liczbaklientuw);
 //            db.deleteClient(liczbaklientuw);
+//            liczbaklientuw--;
 //        }
 
         for(int i = 0 ; i<liczbaklientuw;i++){
-            db.deleteClient(listOfClients.get(0).getClientId());
+            Log.i(TAG, "deleteAllClients: deleted client: " + i);
+            db.deleteClient(listOfClients.get(i).getClientId());
         }
 
     }
 
     private List<Client> getAllClients() {
-        Log.i(TAG, "getAllClients: WSZYSCY KLIENCI");
+        i(TAG, "getAllClients: WSZYSCY KLIENCI");
         List<Client> listOfClients = db.getAllClient();
-        Log.i(TAG, "getAllClients: liczba klientów: " + listOfClients.size());
+        i(TAG, "getAllClients: liczba klientów: " + listOfClients.size());
         for(Client c : listOfClients)
-            Log.i(TAG, "getAllClients: client: " + c.toString());
+            i(TAG, "getAllClients: client: " + c.toString());
 
         return  listOfClients;
     }
     
     private List<Client> getClientInLeftAmountRange(){
-        Log.i(TAG, "getClientInLeftAmountRange: Z ZAKRESU OD DO HAJSU");
+        i(TAG, "getClientInLeftAmountRange: Z ZAKRESU OD DO HAJSU");
         
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 
@@ -278,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         for(Client client : listOfClientWithLeftAmountFromTo){
-            Log.i(TAG, "onCreate: uzytkownik: " + client.toString());
+            i(TAG, "onCreate: uzytkownik: " + client.toString());
         }
         
         return listOfClientWithLeftAmountFromTo;
