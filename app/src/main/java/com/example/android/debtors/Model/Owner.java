@@ -10,9 +10,6 @@ import java.util.List;
 public class Owner {
 
     private int ownerID;
-
-
-
     private String ownerName;
 //            , ownerSurname;
     private int ownerTotalAmount;

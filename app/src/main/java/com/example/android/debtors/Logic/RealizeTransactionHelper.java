@@ -82,7 +82,8 @@ public class RealizeTransactionHelper {
     }
 
     private void addTransactionToOwnerList(Owner owner, TransactionForClient transaction) {
-        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje: " + transaction.toString() );
+        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje u ownera: " + transaction.toString
+                () );
         owner.addTransactionToList(transaction);
     }
 
@@ -99,7 +100,8 @@ public class RealizeTransactionHelper {
                 transaction.getTransactionOwner(),transaction.getTransactionClient(), transaction
                 .getTransactionQuantity(),transaction.getProductValue(),transaction
                 .getTransactionEntryPayment(),!transaction.isTransactionBuyOrSell());
-        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje " + editedTransaction.toString() );
+        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje  u klienta " + editedTransaction
+                .toString() );
 
         //edycja, aby u klienta wyswietlalo sie ze kupił, a nie sprzedal
         client.addTransactionToListOfTransaction(editedTransaction);
