@@ -108,7 +108,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
                 listOfPayments.add(payment);
             } while (c.moveToNext());
         }
-        Log.i(TAG, "getAllPayments: return listOfPayments: " + listOfPayments.toString());
+
         return listOfPayments;
     }
 }

@@ -130,4 +130,21 @@ public class Payment {
                 ", revenueOrExpense? " + revenueOrExpense +
                 '}';
     }
+//IF TO STRING WITH FLAGS WE GET INFO ABOUT PAYMENTS WITH CLIENT AND OWNER ID NOT OBJECT
+    public String toString(boolean flags) {
+        String revenueOrExpense = "";
+        if(this.paymentGotOrGiven)
+            revenueOrExpense = "revenue";
+        else
+            revenueOrExpense = "expense";
+        return "Payment{" +
+                "paymentID=" + paymentID +
+                ", paymentData='" + paymentDate + '\'' +
+                ", paymentOwnerID=" + paymentOwnerID +
+                ", paymentClientID=" + paymentClientID +
+                ", paymentAmount=" + paymentAmount +
+                ", revenueOrExpense? " + revenueOrExpense +
+                '}';
+    }
+
 }
