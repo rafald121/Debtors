@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 //        simulatePayments();
 
         List<Payment> listOfAllPayments = getPayments();
-        dbPayment.getPaymentsFromClient(2);
+        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
+//        Log.i(TAG, "onCreate: listOfPaymentsByClientId" + listOfPaymentsByClientId.toString();
 //        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
@@ -266,6 +267,20 @@ public class MainActivity extends AppCompatActivity {
             dbClient.deleteClient(listOfClients.get(i).getClientId());
         }
 
+    }
+
+    private List<Payment> getPaymentByClientId(long clientID){
+        Log.i(TAG, "getPaymentByClientId: payment dla danego id clienta");
+        List<Payment> listOfPayments = dbPayment.getPaymentsFromClient(clientID);
+
+        if(listOfPayments.size()==0)
+            Log.e(TAG, "getPaymentByClientId: THERE IS NOT ANY PAYMENTS FOR THAT CLIENT" );
+
+        for(Payment p : listOfPayments){
+            Log.i(TAG, "getPaymentByClientId: payment: " + p.toString(true));
+        }
+
+        return listOfPayments;
     }
 
     private List<Client> getAllClients() {
