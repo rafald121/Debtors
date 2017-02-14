@@ -1,7 +1,9 @@
 package com.example.android.debtors.Logic;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
@@ -14,13 +16,20 @@ public class RealizePaymentHelper {
 
     private static final String TAG = RealizePaymentHelper.class.getSimpleName();
 
+    Context mainContext;
+    DatabasePayments dbPayment;
     public RealizePaymentHelper() {
     }
 
-    public void realizePayment(Payment payment){
+    public void realizePayment(Context context, Payment payment){
+        mainContext=context;
+        dbPayment = new DatabasePayments(mainContext);
+
         if(payment==null){
             Log.e(TAG, "realizePayment: PAYMENT IS NULL");
         } else {
+
+
             Owner owner = payment.getPaymentOwner();
             Client client = payment.getPaymentClient();
 
@@ -33,6 +42,9 @@ public class RealizePaymentHelper {
 
             changeClientAmount(client, paidAmount, revenueOrExpense);
             addPaymentToClientList(client, payment);
+
+            dbPayment.createPayment(payment);
+
         }
     }
 
