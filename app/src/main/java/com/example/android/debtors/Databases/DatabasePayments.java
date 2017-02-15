@@ -119,6 +119,8 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return listOfPayments;
     }
+
+
 //    RETURN LIST OF PAYMENTS THAT CLIENT PAID ,,, BY CLIENT ID
     public List<Payment> getPaymentsFromClient(long clientID){
 
@@ -175,6 +177,21 @@ public class DatabasePayments extends SQLiteOpenHelper {
         }
 
         return listOfPayments;
+    }
+    public void deletePayment(long paymentID){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_PAYMENTS, PAYMENT_ID + " = ?", new String[]{String.valueOf(paymentID)});
+    }
+
+    public void deletePaymentInRange(long minID, long maxID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for(long i = minID ; i < maxID ; i++){
+            db.delete(TABLE_PAYMENTS, PAYMENT_ID + " = ?" , new String[]{String.valueOf(i)});
+        }
+
     }
 
 
