@@ -16,19 +16,22 @@
         <item>Settings</item>
         <!--<item>About me</item>-->
     </string-array>
-<!--MENU TRANSACTION-->
+    <!--MENU TRANSACTION-->
     <string name="menu_transaction_min_date">From date</string>
     <string name="menu_transaction_max_date">To date</string>
     <string name="menu_transaction_min_quantity">Minimum quantity</string>
     <string name="menu_transaction_max_quantity">Minimum max</string>
     <string name="menu_transaction_min_total_amount">Minimum total amount</string>
     <string name="menu_transaction_max_total_amount">Maximum total amount</string>
-<!--MENU PAYMENTS-->
+    <!--MENU PAYMENTS-->
     <string name="menu_payment_min_date">From date</string>
     <string name="menu_payment_max_date">To date</string>
     <string name="menu_payment_min_amount">Minimum amount</string>
     <string name="menu_payment_max_amount">Maximum amount</string>
-<!--MENU MAIN DEBTS-->
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--MENU MAIN DEBTS-->
     <!--TODO sort by name, amount, show under amount, above amount-->
     <!--<string name="menu_debtors_sort_"-->
 
