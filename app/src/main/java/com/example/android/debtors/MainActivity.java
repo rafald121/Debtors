@@ -55,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
 //        List<Payment> listOfAllPayments = getPayments();
 //        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
 //        List<Payment>
-        List<TransactionForClient> listOfTransactionByClientID = getTransactionByClientId(7);
-        List<Owner> listOfAllOwners = getOwner();
+//        List<TransactionForClient> listOfTransactionByClientID = getTransactionByClientId(7);
+//        List<TransactionForClient> listOfTransactionByOwnerID = getTransactionByOwnerId(2);
+
+//        List<Owner> listOfAllOwners = getOwner();
 
 
 //        simulateTransaction();
@@ -254,6 +256,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return transactionByClientID;
+    }
+
+    private List<TransactionForClient> getTransactionByOwnerId(long ownerID) {
+        List<TransactionForClient> transactionByOwnerID = dbTransaction.getTransactionFromOwned(ownerID);
+        Log.w(TAG, "getTransactionByOwnerId: " );
+
+        if (transactionByOwnerID.size() == 0 )
+            Log.e(TAG, "getTransactionByOwnerId: LIST OF TRANSACTION BY OWNER ID IS EMPTY");
+
+        for(TransactionForClient t : transactionByOwnerID){
+            Log.i(TAG, "getTransactionByOwnerId: transaction by owner id: " + t.toString());
+        }
+
+        return transactionByOwnerID;
     }
     private void getListOfOwnerTransactions(Owner owner){
         i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());

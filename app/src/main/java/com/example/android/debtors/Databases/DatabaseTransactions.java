@@ -142,6 +142,36 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
         return listOFTransaction;
     }
 
+    public List<TransactionForClient> getTransactionFromOwned(long ownerID){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<TransactionForClient> listOfTransaction = new ArrayList<>();
+
+        String query = "SELECT  * FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANSACTION_OWNER + "" +
+                " = " + ownerID;
+
+        Cursor c = db.rawQuery(query,null);
+
+        if(c.moveToFirst()){
+            do{
+                TransactionForClient transaction = new TransactionForClient();
+
+                transaction.setTransactionID(c.getInt(c.getColumnIndex(TRANSACTION_ID)));
+                transaction.setTransactionDate(c.getString(c.getColumnIndex(TRANSACTION_DATE)));
+                transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
+                transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
+                transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
+                transaction.setProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
+                transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
+
+                listOfTransaction.add(transaction);
+            } while (c.moveToNext());
+        }
+
+        return listOfTransaction;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

@@ -52,10 +52,13 @@ public class RealizePaymentHelper {
 
 
     private void changeOwnerAmount(Owner owner, int paidAmount, boolean revenueOrExpense) {
+
         if(revenueOrExpense)//jesli true = revenue
             owner.changeOwnerAmountWhenPayments(paidAmount);
         else
             owner.changeOwnerAmountWhenPayments(paidAmount*(-1));
+
+
     }
 
     private void addPaymentToOwnerList(Owner owner, Payment payment) {
