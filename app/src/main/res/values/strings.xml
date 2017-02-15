@@ -17,6 +17,12 @@
         <!--<item>About me</item>-->
     </string-array>
 
+    <string name="menu_transaction_min_date">From date</string>
+    <string name="menu_transaction_max_date">To date</string>
+    <string name="menu_transaction_min_quantity">Minimum quantity</string>
+    <string name="menu_transaction_max_quantity">Minimum max</string>
+    <string name="menu_transaction_min_total_amount">Minimum total amount</string>
+    <string name="menu_transaction_max_total_amount">Maximum total amount</string>
 
 
 </resources>
