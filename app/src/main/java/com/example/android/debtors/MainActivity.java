@@ -46,18 +46,11 @@ public class MainActivity extends AppCompatActivity {
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
-        Owner owner = dbOwner.getOwner(1);
-        Log.i(TAG, "onCreate: owner before update: " + owner.toString());
-        owner.setOwnerTotalAmount(666);
-        owner.setOwnerOwnAmount(500);
-        dbOwner.updateOwner(owner);
-        Log.i(TAG, "onCreate: owner after update: " + dbOwner.getOwner(owner.getOwnerID()));
-
 //        List<Client> listOfClient = new ArrayList<>();
-//        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
+        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
 //        List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 //        List<Client> listOfUserByName = new ArrayList<>();
-//        listOfAllClientFromDatabase = getAllClients();
+        listOfAllClientFromDatabase = getAllClients();
 //        listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 //        List<Payment> listOfAllPayments = getPayments();
 //        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
@@ -65,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
 //        List<TransactionForClient> listOfTransactionByClientID = getTransactionByClientId(7);
 //        List<TransactionForClient> listOfTransactionByOwnerID = getTransactionByOwnerId(2);
 
-//        List<Owner> listOfAllOwners = getOwner();
+        List<Owner> listOfAllOwners = getOwner();
 
 
 //        simulateTransaction();
-        simulatePayments();
+//        simulatePayments();
 //        simulateTransactionWithPayment();
 
 

@@ -9,6 +9,7 @@ import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
+import com.example.android.debtors.Utils.Utils;
 
 /**
  * Created by Rafaello on 2017-02-11.
@@ -82,6 +83,8 @@ public class RealizePaymentHelper {
     }
 
     private void addPaymentToClientList(Client client, Payment payment) {
-        client.addPaymentToListOfPayments(payment);
+        Payment payment2 = new Payment(Utils.getDateTime(), payment.getPaymentOwner(), payment.getPaymentClient(), payment.getPaymentAmount(), !payment.isPaymentGotOrGiven());
+
+        client.addPaymentToListOfPayments(payment2);
     }
 }
