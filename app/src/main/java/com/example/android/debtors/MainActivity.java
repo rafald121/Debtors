@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Logic.RealizePaymentHelper;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseClients dbClient;
     DatabaseOwner dbOwner;
     DatabasePayments dbPayment;
+    DatabaseTransactions dbTransaction;
+
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
             "maniek", "maniok", "chamiok"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
+        dbTransaction = new DatabaseTransactions(getApplicationContext());
 
         List<Client> listOfClient = new ArrayList<>();
         List<Client> listOfAllClientFromDatabase = new ArrayList<>();
@@ -48,14 +52,25 @@ public class MainActivity extends AppCompatActivity {
         List<Client> listOfUserByName = new ArrayList<>();
         listOfAllClientFromDatabase = getAllClients();
         listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
-
-        List<Owner> listOfAllOwners = getOwner();
-
-//        simulatePayments();
-
-        List<Payment> listOfAllPayments = getPayments();
+//        List<Payment> listOfAllPayments = getPayments();
 //        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
-        List<Payment> listOfPaymentsByOwnerId = getPaymentByOwnerId(1);
+//        List<Payment>
+//        List<TransactionForClient> listOfTransactionByClientID = getTransactionByClientId(7);
+//        List<TransactionForClient> listOfTransactionByOwnerID = getTransactionByOwnerId(2);
+
+//        List<Owner> listOfAllOwners = getOwner();
+
+
+//        simulateTransaction();
+//        simulatePayments();
+//        simulateTransactionWithPayment();
+
+
+//        List<Payment> listOfAllPayments = getPayments();
+//        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
+//        List<Payment> listOfPaymentsByOwnerId = getPaymentByOwnerId(1);
+
+        List<TransactionForClient> listOfAllTransaction = getTransaction();
 
 //        Log.i(TAG, "onCreate: listOfPaymentsByClientId" + listOfPaymentsByClientId.toString();
 //        simulatePayments(owner,clientJurand);
@@ -64,16 +79,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     private void simulateTransactionWithPayment(){
         Log.w(TAG, "simulateTransactionWithPayment: ");
         //        WLASCICIEL
         Owner owner = dbOwner.getOwner(1);
 
 //        KLIECI
-        Client clientJurand = dbClient.getClientByID(7); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
 
-        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime
-                (), owner, clientJurand, 6, 30, 100, true);
+        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 6, 30, 100, true);
 
         getInfoAboutTransaction(transactionWithPayment);
 
@@ -84,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         getListOfClientTransactions(clientJurand);
 
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
-        realizeTransactionHelper.realizeTransaction(transactionWithPayment);
+        realizeTransactionHelper.realizeTransaction(getApplicationContext(), transactionWithPayment);
 
         Log.w(TAG, "onCreate: AFTER TRANSACTION WITH PAYMENT ");
 
@@ -158,13 +174,17 @@ public class MainActivity extends AppCompatActivity {
 //        WLASCICIEL
         Owner owner = dbOwner.getOwner(1);
 //        KLIECI
-        Client clientJurand = dbClient.getClientByID(7); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(3); //kupujacy 2
 
 //        TRANZAKCJA
         //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
         // true - owner - sprzedający,
         // false - owner - kupujący
-        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 5, 10, true);
+        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
+                owner, clientJurand, 2, 100, true);
+
+//        dbTransaction.createTransaction(transactionForClient);
+
         getInfoAboutTransaction(transactionForClient);
 
         Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
@@ -174,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         getListOfClientTransactions(clientJurand);
 
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
-        realizeTransactionHelper.realizeTransaction(transactionForClient);
+        realizeTransactionHelper.realizeTransaction(getApplicationContext(),transactionForClient);
         Log.w(TAG, "onCreate: AFTER TRANSACTION ");
 
         getInfoAboutOwner(owner);
@@ -212,6 +232,45 @@ public class MainActivity extends AppCompatActivity {
         return listOfPayments;
     }
 
+    private List<TransactionForClient> getTransaction(){
+        Log.i(TAG, "getTransaction: ");
+        List<TransactionForClient> listOfTransaction = dbTransaction.getListOfTransaction();
+
+        if (listOfTransaction.size()==0)
+            Log.i(TAG, "getTransaction: LIST OF TRANSACTION = 0");
+
+        for(TransactionForClient t: listOfTransaction)
+            Log.i(TAG, "getTransaction: transaction: " + t.toString());
+
+        return listOfTransaction;
+    }
+    private List<TransactionForClient> getTransactionByClientId(long clientID) {
+        List<TransactionForClient> transactionByClientID = dbTransaction.getTransactionFromClient(clientID);
+        Log.w(TAG, "getTransactionByClientId: " );
+
+        if (transactionByClientID.size() == 0 )
+            Log.e(TAG, "getTransactionByClientId: LIST OF TRANSACTION BY CLIENT ID IS EMPTY");
+
+        for(TransactionForClient t : transactionByClientID){
+            Log.i(TAG, "getTransactionByClientId: transaction by client id: " + t.toString());
+        }
+
+        return transactionByClientID;
+    }
+
+    private List<TransactionForClient> getTransactionByOwnerId(long ownerID) {
+        List<TransactionForClient> transactionByOwnerID = dbTransaction.getTransactionFromOwned(ownerID);
+        Log.w(TAG, "getTransactionByOwnerId: " );
+
+        if (transactionByOwnerID.size() == 0 )
+            Log.e(TAG, "getTransactionByOwnerId: LIST OF TRANSACTION BY OWNER ID IS EMPTY");
+
+        for(TransactionForClient t : transactionByOwnerID){
+            Log.i(TAG, "getTransactionByOwnerId: transaction by owner id: " + t.toString());
+        }
+
+        return transactionByOwnerID;
+    }
     private void getListOfOwnerTransactions(Owner owner){
         i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());
     }
@@ -223,26 +282,21 @@ public class MainActivity extends AppCompatActivity {
     private void getListOfOwnerPayments(Owner owner){
         i(TAG, "getListOfOwnerPayments: lista zapłat: " + owner.getListOfPayments());
     }
-
     private void getListOfClientPayments(Client client){
         i(TAG, "getListOfClientPayments: lista zapłat: " + client.getListOfPayments());
     }
-
     private void getInfoAboutTransaction(TransactionForClient transaction){
         i(TAG, "getInfoAboutTransaction: " + transaction.toString());
     }
-
     private void getInfoAboutPayments(Payment payment){
         i(TAG, "getInfoAboutPayments: " + payment.toString());
     }
     private void getInfoAboutOwner(Owner owner){
         i(TAG, "getInfoAboutOwner: " + owner.toString());
     }
-
     private void getInfoAboutClient(Client client){
         i(TAG, "getInfoAboutClient: " + client.toString());
     }
-
     private void printList(List<Client> list){
         if(list.size() == 0 )
             i(TAG, "printList: LISTA PUSTA");
@@ -250,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
         for(Client c : list)
             i(TAG, "printList: drukuje klienta: " + c.toString());
     }
-
     private void deleteAllClients() {
         
         List<Client> listOfClients = dbClient.getAllClient();

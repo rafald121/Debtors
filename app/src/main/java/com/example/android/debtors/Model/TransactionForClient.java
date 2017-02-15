@@ -1,11 +1,16 @@
 package com.example.android.debtors.Model;
 
+import android.util.Log;
+
 /**
  * Created by Rafaello on 2017-02-09.
  */
 
 public class TransactionForClient extends Transaction {
 
+    private int transactionID;
+    private int transactionOwnerID;
+    private int transactionClientID;
     private Owner transactionOwner;
     private Client transactionClient;
     private Product transactionProduct; //co
@@ -33,6 +38,11 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
     this.transactionBuyOrSell = transactionBuyOrSell;
 }
 
+    public TransactionForClient() {
+        super();
+
+    }
+
 
     //GETTERY I SETTERY SUPER Z KLASY TRANSACTION
     public String getTransactionDate(){
@@ -50,6 +60,32 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
     }
 
 // GETTERY I SETTERY Z TEJ KLASY
+
+//    ID
+    public int getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(int transactionID) {
+        this.transactionID = transactionID;
+    }
+
+    public int getTransactionOwnerID() {
+        return transactionOwnerID;
+    }
+
+    public void setTransactionOwnerID(int transactionOwnerID) {
+        this.transactionOwnerID = transactionOwnerID;
+    }
+
+    public int getTransactionClientID() {
+        return transactionClientID;
+    }
+
+
+    public void setTransactionClientID(int transactionClientID) {
+        this.transactionClientID = transactionClientID;
+    }
 
     public int getProductValue() {
         return productValue;
@@ -75,6 +111,15 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
 
     public void setTransactionBuyOrSell(boolean transactionBuyOrSell) {
         this.transactionBuyOrSell = transactionBuyOrSell;
+    }
+
+    public void setTransactionBuyOrSell(int transactionBuyOrSell) {
+        if(transactionBuyOrSell==1)
+            this.transactionBuyOrSell = true;
+        else if(transactionBuyOrSell==0)
+            this.transactionBuyOrSell = false;
+        else
+            Log.e("TransactionForClient", "setTransactionBuyOrSell: TRANSACTION BUY OR SELL CAN'T BE OTHER THAN 0 or 1!1!" );
     }
 
     //TRANSACTION OWNER
@@ -103,8 +148,10 @@ public TransactionForClient(String transactionDate, Owner transactionOwner, Clie
         else
             buyOrSell = "buy";
         return "TransactionForClient{" +
-                "transactionOwner=" + transactionOwner.getOwnerName() +
-                ", transactionClient=" + transactionClient.getClientName() +
+                "transactionID=" + this.transactionID +
+                ", transactionDate=" + super.getTransactionDate() +
+                ", transactionOwner=" + this.transactionOwnerID +
+                ", transactionClient=" + this.transactionClientID +
                 ", transactionQuantity=" + super.getTransactionQuantity() +
                 ", transactionEntryPayment=" + this.getTransactionEntryPayment() +
                 ", transactionProductValue=" + this.getProductValue() +

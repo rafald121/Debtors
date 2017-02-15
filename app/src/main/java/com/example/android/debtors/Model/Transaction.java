@@ -14,6 +14,9 @@ public class Transaction {
         this.transactionQuantity = transactionQuantity;
     }
 
+    public Transaction() {
+
+    }
 
 
     public String getTransactionDate() {
