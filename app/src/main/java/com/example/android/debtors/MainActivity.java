@@ -16,13 +16,9 @@ import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Utils.Utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import static android.util.Log.i;
 
@@ -50,37 +46,7 @@ public class MainActivity extends AppCompatActivity {
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-            "yyyy-MM-dd HH:mm", Locale.getDefault());
-        String sDate = dateFormat.format(date);
-        Log.i(TAG, "onCreate: sDate: " + sDate);
-
-        Date date1 = new Date();
-        String sDate1 = null;
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm");
-
-
-        try {
-            sDate1 = String.valueOf(dateFormat1.parse("2016-04-12 12:22"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Log.i(TAG, "onCreate:  sDate1" + sDate1);
-
-//        / create 2 dates
-//        Date date = new Date(11, 5, 21);
-//        Date date2 = new Date(15, 1, 21);
-//
-//        // tests if date 2 is before date and print
-//        boolean before = date2.before(date);
-//        System.out.println("Date 2 is before date: " + before);
-//
-//        // tests if date is before date 2 and print
-//        before = date.before(date2);
-//        System.out.println("Date is before date 2: " + before);
-
+       
 //        dbPayment.deletePaymentInRange(15,20);
 //        simulatePayments();
 
