@@ -3,6 +3,8 @@ package com.example.android.debtors.Logic;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
@@ -22,6 +24,8 @@ public class RealizeTransactionHelper {
 
     Transaction transaction;
     DatabaseTransactions dbTransaction;
+    DatabaseClients dbClients;
+    DatabaseOwner dbOwners;
     Context mainContext;
     public RealizeTransactionHelper() {
     }
@@ -29,6 +33,8 @@ public class RealizeTransactionHelper {
     public void realizeTransaction(Context applicationContext, TransactionForClient transaction){
         this.mainContext = applicationContext;
         dbTransaction = new DatabaseTransactions(mainContext);
+        dbClients = new DatabaseClients(mainContext);
+        dbOwners = new DatabaseOwner(mainContext);
 
         if(transaction!=null){
 
@@ -87,26 +93,39 @@ public class RealizeTransactionHelper {
 
     private void changeOwnerValue(Owner owner, int totalValue, boolean gotOrGive) {
 
-        
+        Log.i(TAG, "changeOwnerValue: OWNER BEFORE FROM DATABASE: " + dbOwners.getOwner(owner.getOwnerID()));
 
         if(gotOrGive) // jesli true = owner sprzedaje wiec ma dostać hajs
             owner.changeOwnerAmountWhenTransaction(totalValue);
         else
             owner.changeOwnerAmountWhenTransaction(totalValue*(-1));
+
+        dbOwners.updateOwner(owner);
+
+        Log.i(TAG, "changeOwnerValue: OWNER AFTER FROM DATABASE: " + dbOwners.getOwner(owner.getOwnerID()));
     }
 
     private void addTransactionToOwnerList(Owner owner, TransactionForClient transaction) {
-        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje u ownera: " + transaction.toString
-                () );
+//        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje u ownera: " + transaction.toString
+//                () );
         owner.addTransactionToList(transaction);
     }
 
     private void changeClientValue(Client client, int totalValue, boolean gotOrGive) {
+
+        Log.i(TAG, "changeClientValue: CLIENT BEFORE FROM DATABASE: " + dbClients.getClientByID
+                (client.getClientId()));
+
         if(gotOrGive)// jesli true = owner sprzedaje wiec buyer wisi więcej
             client.changeClientLeftAmount(totalValue);
         else // jesli false - owner kupuje więc płaci hajs clientowi więc clientowi zmniejsza sie
             // zaległa kwota
             client.changeClientLeftAmount(totalValue*(-1));
+
+        dbClients.updateClient(client);
+
+        Log.i(TAG, "changeClientValue: CLIENT AFTER FROM DATABASE: " + dbClients.getClientByID
+                (client.getClientId()));
     }
 
     private void addTransactionToClientList(Client client, TransactionForClient transaction) {
@@ -114,8 +133,8 @@ public class RealizeTransactionHelper {
                 transaction.getTransactionOwner(),transaction.getTransactionClient(), transaction
                 .getTransactionQuantity(),transaction.getProductValue(),transaction
                 .getTransactionEntryPayment(),!transaction.isTransactionBuyOrSell());
-        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje  u klienta " + editedTransaction
-                .toString() );
+//        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje  u klienta " + editedTransaction
+//                .toString() );
 
         //edycja, aby u klienta wyswietlalo sie ze kupił, a nie sprzedal
         client.addTransactionToListOfTransaction(editedTransaction);

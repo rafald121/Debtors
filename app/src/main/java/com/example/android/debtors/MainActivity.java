@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
+
 //        List<Client> listOfClient = new ArrayList<>();
 //        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
 //        List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        simulateTransaction();
-        simulatePayments();
-//        simulateTransactionWithPayment();
+//        simulatePayments();
+        simulateTransactionWithPayment();
 
 
 //        List<Payment> listOfAllPayments = getPayments();
@@ -96,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         Log.w(TAG, "onCreate: BEFORE TRANSACTION WITH PAYMENT" );
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
-        getListOfOwnerTransactions(owner);
-        getListOfClientTransactions(clientJurand);
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
 
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
         realizeTransactionHelper.realizeTransaction(getApplicationContext(), transactionWithPayment);
@@ -190,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
         Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
-        getListOfOwnerTransactions(owner);
-        getListOfClientTransactions(clientJurand);
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
 
         RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
         realizeTransactionHelper.realizeTransaction(getApplicationContext(),transactionForClient);
@@ -199,8 +200,8 @@ public class MainActivity extends AppCompatActivity {
 
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
-        getListOfOwnerTransactions(owner);
-        getListOfClientTransactions(clientJurand);
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
 
 
         dbClient.updateClient(clientJurand);
