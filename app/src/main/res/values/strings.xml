@@ -24,5 +24,11 @@
     <string name="menu_transaction_min_total_amount">Minimum total amount</string>
     <string name="menu_transaction_max_total_amount">Maximum total amount</string>
 
+    <string name="menu_payment_min_date">From date</string>
+    <string name="menu_payment_max_date">To date</string>
+    <string name="menu_payment_min_amount">Minimum amount</string>
+    <string name="menu_payment_max_amount">Maximum amount</string>
+
+    
 
 </resources>

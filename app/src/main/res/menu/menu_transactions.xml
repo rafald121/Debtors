@@ -30,7 +30,7 @@
         android:orderInCategory="104"
         android:title="@string/menu_transaction_min_quantity"
         app:showAsAction="never" />
-    
+
     <item
         android:id="@+id/menu_transaction_max_quantity"
         android:orderInCategory="105"
