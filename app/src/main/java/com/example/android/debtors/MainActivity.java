@@ -47,22 +47,21 @@ public class MainActivity extends AppCompatActivity {
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
 //        List<Client> listOfClient = new ArrayList<>();
-        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
+//        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
 //        List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 //        List<Client> listOfUserByName = new ArrayList<>();
-        listOfAllClientFromDatabase = getAllClients();
+//        listOfAllClientFromDatabase = getAllClients();
 //        listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
 //        List<Payment> listOfAllPayments = getPayments();
 //        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
 //        List<Payment>
 //        List<TransactionForClient> listOfTransactionByClientID = getTransactionByClientId(7);
 //        List<TransactionForClient> listOfTransactionByOwnerID = getTransactionByOwnerId(2);
-
-        List<Owner> listOfAllOwners = getOwner();
+//        List<Owner> listOfAllOwners = getOwner();
 
 
 //        simulateTransaction();
-//        simulatePayments();
+        simulatePayments();
 //        simulateTransactionWithPayment();
 
 
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 //        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
+
     }
 
 
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
-        getListOfOwnerTransactions(owner);
-        getListOfClientTransactions(clientJurand);
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
 
         dbClient.updateClient(clientJurand);
 
@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
         Owner owner = dbOwner.getOwner(1);
 
-        Client clientJurand = dbClient.getClientByID(3); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(8); //kupujacy 2
 
-        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 500, true);
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 20, true);
 
         Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
 //        dbPayment.createPayment(payment);
@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
         Log.w(TAG, "onCreate: AFTER PAYMENT ");
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
-        getListOfOwnerPayments(owner);
-        getListOfClientPayments(clientJurand);
+//        getListOfOwnerPayments(owner);
+//        getListOfClientPayments(clientJurand);
 
         dbClient.updateClient(clientJurand);
 
@@ -160,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
         Log.w(TAG, "onCreate: AFTER PAYMENT ");
         getInfoAboutOwner(owner);
         getInfoAboutClient(clientJurand);
-        getListOfOwnerPayments(owner);
-        getListOfClientPayments(clientJurand);
+//        getListOfOwnerPayments(owner);
+//        getListOfClientPayments(clientJurand);
 
 
         dbClient.updateClient(clientJurand);
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 //        WLASCICIEL
         Owner owner = dbOwner.getOwner(1);
 //        KLIECI
-        Client clientJurand = dbClient.getClientByID(3); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
 
 //        TRANZAKCJA
         //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,

@@ -86,6 +86,9 @@ public class RealizeTransactionHelper {
 
 
     private void changeOwnerValue(Owner owner, int totalValue, boolean gotOrGive) {
+
+        
+
         if(gotOrGive) // jesli true = owner sprzedaje wiec ma dostać hajs
             owner.changeOwnerAmountWhenTransaction(totalValue);
         else

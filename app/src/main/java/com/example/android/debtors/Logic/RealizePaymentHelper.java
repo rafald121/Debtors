@@ -61,11 +61,17 @@ public class RealizePaymentHelper {
 
     private void changeOwnerAmount(Owner owner, int paidAmount, boolean revenueOrExpense) {
 
+        Log.i(TAG, "changeOwnerAmount: OWNER BEFORE FROM ARGUMENT: " + owner.toString());
+        Log.i(TAG, "changeOwnerAmount: OWNER BEFORE FROM DATABASE: " + dbOwner.getOwner(owner.getOwnerID()));
+
         if(revenueOrExpense)//jesli true = revenue
             owner.changeOwnerAmountWhenPayments(paidAmount);
         else
             owner.changeOwnerAmountWhenPayments(paidAmount*(-1));
 
+        dbOwner.updateOwner(owner);
+        Log.i(TAG, "changeOwnerAmount: OWNER AFTER FROM DATABASE: " + dbOwner.getOwner(owner
+                .getOwnerID()));
 
 
     }
@@ -75,10 +81,19 @@ public class RealizePaymentHelper {
     }
 
     private void changeClientAmount(Client client, int paidAmount, boolean revenueOrExpense) {
+
+        Log.i(TAG, "changeClientAmount: CLIENT BEFORE FROM ARGUMENT: " + client.toString());
+        Log.i(TAG, "changeClientAmount: CLIENT BEFORE FROM DATABASE: " + dbClient.getClientByID
+                (client.getClientId()));
+
         if(revenueOrExpense) // owner dostaje od clienta, wiec client ma mniejszy dlug
             client.changeClientLeftAmount(paidAmount*(-1));
         else
             client.changeClientLeftAmount(paidAmount);
+
+        dbClient.updateClient(client);
+        Log.i(TAG, "changeClientAmount: CLIENT AFTER FROM DATABASE: " + dbClient.getClientByID(client.getClientId
+                ()));
 
     }
 
