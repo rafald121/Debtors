@@ -108,6 +108,19 @@ public class DatabaseOwner extends SQLiteOpenHelper {
 
     }
 
+    public int updateOwner(Owner owner){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(OWNER_NAME, owner.getOwnerName());
+        values.put(OWNER_TOTAL_AMOUNT, owner.getOwnerTotalAmount());
+        values.put(OWNER_OWN_AMOUNT, owner.getOwnerOwnAmount());
+
+        return db.update(TABLE_OWNER, values, OWNER_ID + " = ?", new String[]{String.valueOf(owner.getOwnerID())});
+
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_OWNER);

@@ -44,6 +44,7 @@ public class RealizeTransactionHelper {
                 if (transaction.getTransactionEntryPayment() > 0) {
                     Log.i(TAG, "realizeTransaction: PODANO ENTRY PAYMENT: " + transaction
                             .getTransactionEntryPayment());
+
                     Payment payment = new Payment(Utils.getDateTime(), owner, client, transaction.getTransactionEntryPayment(),
                             gotOrGive);
 

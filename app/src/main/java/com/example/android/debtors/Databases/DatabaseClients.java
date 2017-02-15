@@ -86,8 +86,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return clientID;
     }
 
-
-
     //ZWROC POJEDYNCZEGO KLIENTA
     public Client getClientByID(long clientID){
         SQLiteDatabase db = this.getReadableDatabase();
