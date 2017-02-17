@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.android.debtors.Activities.AboutMe;
 import com.example.android.debtors.Activities.ActivitySettings;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     // urls to load navigation header background image
     // and profile image
     private static final String urlNavHeaderBg = "http://4.bp.blogspot.com/_SJTl75q21RY/TDWCRlNqnTI/AAAAAAAAAMU/3avdZcJHwSw/s1600/money1.jpg";
-    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    private static final String urlProfileImg = "https://avatars3.githubusercontent.com/u/16782428?v=3&u=d6d5d36732184328f00b7ee90c1ef6f23627005e&s=400";
     // index to identify current nav menu item
     public static int navItemIndex = 0;
 
@@ -172,6 +173,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_about_me:
                         // launch new intent instead of loading fragment
+                        startActivity(new Intent(MainActivity.this, AboutMe.class));
+                        drawer.closeDrawers();
+                        return true;
+                    case R.id.nav_settings:
                         startActivity(new Intent(MainActivity.this, ActivitySettings.class));
                         drawer.closeDrawers();
                         return true;
