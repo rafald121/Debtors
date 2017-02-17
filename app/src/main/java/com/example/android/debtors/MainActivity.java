@@ -1,8 +1,16 @@
 package com.example.android.debtors;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
@@ -36,17 +44,44 @@ public class MainActivity extends AppCompatActivity {
             "maniek", "maniok", "chamiok"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
 
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private View navHeader;
+    private ImageView imgNavHeaderBg, imgProfile;
+    private TextView txtName, txtWebsite;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer_layout);
+        setContentView(R.layout.main_activity);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        // Navigation view header
+        navHeader = navigationView.getHeaderView(0);
+        txtName = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_name);
+        txtWebsite = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_mail);
+        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_background);
+        imgProfile = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_profile);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
 
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
-
 //        dbPayment.deletePaymentInRange(15,20);
 //        simulatePayments();
 
