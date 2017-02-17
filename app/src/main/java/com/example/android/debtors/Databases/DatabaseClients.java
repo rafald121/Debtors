@@ -37,7 +37,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
     private static final String CLIENT_LEFT_AMOUNT = "clientLeftAmount";
     private static final String CLIENT_TRANSACTIONS_LIST = "clientTransactions";
     private static final String CLIENT_PAYMENTS_LIST = "clientPayments";
-    //TODO list of transaction
 
     private static final String PRODUCT_ID = "productID";
     private static final String PRODUCT_NAME = "productName";

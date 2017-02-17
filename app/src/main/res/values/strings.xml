@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Debtors</string>
+
+    <string name="nav_all_clients">All Clients</string>
+    <string name="nav_debtors">Debtors</string>
+    <string name="nav_transactions">Transactions</string>
+    <string name="nav_payments">Payments</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about_me">About me</string>
+
+    <string-array name="nav_item_toolbar_title">
+        <item>All Clients</item>
+        <item>Debtors</item>
+        <item>Transactions</item>
+        <item>Payments</item>
+        <item>Settings</item>
+        <!--<item>About me</item>-->
+    </string-array>
+    <!--MENU TRANSACTION-->
+    <string name="menu_transaction_min_date">From date</string>
+    <string name="menu_transaction_max_date">To date</string>
+    <string name="menu_transaction_min_quantity">Minimum quantity</string>
+    <string name="menu_transaction_max_quantity">Minimum max</string>
+    <string name="menu_transaction_min_total_amount">Minimum total amount</string>
+    <string name="menu_transaction_max_total_amount">Maximum total amount</string>
+    <!--MENU PAYMENTS-->
+    <string name="menu_payment_min_date">From date</string>
+    <string name="menu_payment_max_date">To date</string>
+    <string name="menu_payment_min_amount">Minimum amount</string>
+    <string name="menu_payment_max_amount">Maximum amount</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--MENU MAIN DEBTS-->
+    <!--TODO sort by name, amount, show under amount, above amount-->
+    <!--<string name="menu_debtors_sort_"-->
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
 </resources>
