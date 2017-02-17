@@ -1,17 +1,23 @@
 package com.example.android.debtors;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.android.debtors.Activities.ActivitySettings;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
@@ -22,6 +28,7 @@ import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
+import com.example.android.debtors.Others.CircleTransform;
 import com.example.android.debtors.Utils.Utils;
 
 import java.util.ArrayList;
@@ -52,11 +59,26 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
 
+    // urls to load navigation header background image
+    // and profile image
+    private static final String urlNavHeaderBg = "http://4.bp.blogspot.com/_SJTl75q21RY/TDWCRlNqnTI/AAAAAAAAAMU/3avdZcJHwSw/s1600/money1.jpg";
+    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    // index to identify current nav menu item
+    public static int navItemIndex = 0;
 
+
+    // tags used to attach the fragments
+    private static final String TAG_HOME = "home";
+    private static final String TAG_PHOTOS = "photos";
+    private static final String TAG_MOVIES = "movies";
+    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_SETTINGS = "settings";
+    public static String CURRENT_TAG = TAG_HOME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -76,7 +98,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+// load nav menu header data
+        loadNavHeader();
 
+        // initializing navigation menu
+        setUpNavigationView();
+
+       
 
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
@@ -115,7 +143,101 @@ public class MainActivity extends AppCompatActivity {
 //        simulateTransactionWithPayment();
     }
 
+    private void setUpNavigationView() {
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.nav_all_clients:
+                        navItemIndex = 0;
+                        CURRENT_TAG = TAG_HOME;
+                        break;
+                    case R.id.nav_debtors:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_PHOTOS;
+                        break;
+                    case R.id.nav_payments:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_MOVIES;
+                        break;
+                    case R.id.nav_transactions:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        break;
+                    case R.id.nav_about_me:
+                        // launch new intent instead of loading fragment
+                        startActivity(new Intent(MainActivity.this, ActivitySettings.class));
+                        drawer.closeDrawers();
+                        return true;
+                    default:
+                        navItemIndex = 0;
+                }
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
+                }
+                menuItem.setChecked(true);
+
+
+
+                return true;
+            }
+        });
+
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        //Setting the actionbarToggle to drawer layout
+        drawer.setDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+    }
+
+    private void loadNavHeader() {
+        // name, website
+        txtName.setText("Rafał Dołęga");
+        txtWebsite.setText("rafald121@gmail.com");
+
+        // loading header background image
+        Glide.with(this).load(urlNavHeaderBg)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgNavHeaderBg);
+
+        // Loading profile image
+        Glide.with(this).load(urlProfileImg)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgProfile);
+
+        // showing dot next to notifications label
+        navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
+    }
 
 
     private void simulateTransactionWithPayment(){
