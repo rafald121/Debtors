@@ -2,10 +2,12 @@ package com.example.android.debtors;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     // and profile image
     private static final String urlNavHeaderBg = "http://4.bp.blogspot.com/_SJTl75q21RY/TDWCRlNqnTI/AAAAAAAAAMU/3avdZcJHwSw/s1600/money1.jpg";
     private static final String urlProfileImg = "https://avatars3.githubusercontent.com/u/16782428?v=3&u=d6d5d36732184328f00b7ee90c1ef6f23627005e&s=400";
+
     // index to identify current nav menu item
     public static int navItemIndex = 0;
 
@@ -83,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_PAYMENTS = "tagPayments";
     private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_DEBTORS;
+    private Handler mHandler;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -166,35 +173,83 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadSelectedFragment(){
+        Log.i(TAG, "loadSelectedFragment: START");
 //        make that navigation item as selected in navigation layout
         selectNavigationMenuToBeChecked();
 //      set title of action bar depends on selected fragment
         setToolbarTitle();
+
+        // if user select the current navigation menu again, don't do anything
+        // just close the navigation drawer
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+
+            // show or hide the fab button
+//            TODO PRZETESTOWAC
+            toggleFab();
+            return;
+        }
+        Log.i(TAG, "loadSelectedFragment: fragment index before open it: " + navItemIndex);
+
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "run: start run");
+                // update the main content by replacing fragments
+                Fragment fragment = getSelectedFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+                Log.i(TAG, "run: end run");
+            }
+        };
+// If mPendingRunnable is not null, then add to the message queue
+        if (mPendingRunnable != null) {
+            Log.i(TAG, "loadSelectedFragment: mPendingRunnable is not null and go on: ");
+            mHandler.post(mPendingRunnable);
+        } else
+            Log.i(TAG, "loadSelectedFragment: IS NULL ");
+
+        // show or hide the fab button
+        toggleFab();
+
+        //Closing drawer on item click
+        drawer.closeDrawers();
+
+//        TODO TEST IT
+        invalidateOptionsMenu();
+        Log.i(TAG, "loadSelectedFragment: END");
     }
 
 
-
-
     private Fragment getSelectedFragment() {
+        Log.i(TAG, "getSelectedFragment: START");
         switch (navItemIndex) {
             case 0:
                 // all clients
                 FragmentAllClients allClients = new FragmentAllClients();
+                Log.i(TAG, "getSelectedFragment: END");
                 return allClients;
             case 1:
                 // debtors
                 FragmentDebtors debtors = new FragmentDebtors();
+                Log.i(TAG, "getSelectedFragment: END");
                 return debtors;
             case 2:
                 // transactions
                 FragmentTransactions transactions = new FragmentTransactions();
+                Log.i(TAG, "getSelectedFragment: END");
                 return transactions;
             case 3:
                 // payments
                 FragmentPayments payments = new FragmentPayments();
+                Log.i(TAG, "getSelectedFragment: END");
                 return payments;
             default:
 //                debtors fragment is default
+                Log.i(TAG, "getSelectedFragment: END");
                 return new FragmentDebtors();
         }
     }
@@ -206,42 +261,53 @@ public class MainActivity extends AppCompatActivity {
     private void setToolbarTitle(){
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
-
+    private void toggleFab(){
+        if(navItemIndex == 0 )
+            fab.show();
+        else fab.hide();
+    }
     private void setUpNavigationView() {
+        Log.i(TAG, "setUpNavigationView: START");
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Log.i(TAG, "onNavigationItemSelected: HALO");
+                Log.i(TAG, "onNavigationItemSelected: START");
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_all_clients:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_ALL_CLIENTS;
+                        Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_debtors:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_DEBTORS;
+                        Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_payments:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_PAYMENTS;
+                        Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_transactions:
                         navItemIndex = 3;
                         CURRENT_TAG = TAG_TRANSACTIONS;
+                        Log.i(TAG, "onNavigationItemSelected: END");
                         break;
+                    case R.id.nav_settings:
+                        startActivity(new Intent(MainActivity.this, ActivitySettings.class));
+                        drawer.closeDrawers();
+                        Log.i(TAG, "onNavigationItemSelected: END");
+                        return true;
                     case R.id.nav_about_me:
                         // launch new intent instead of loading fragment
                         startActivity(new Intent(MainActivity.this, AboutMe.class));
                         drawer.closeDrawers();
-                        return true;
-                    case R.id.nav_settings:
-                        startActivity(new Intent(MainActivity.this, ActivitySettings.class));
-                        drawer.closeDrawers();
+                        Log.i(TAG, "onNavigationItemSelected: END");
                         return true;
                     default:
                         navItemIndex = 0;
@@ -255,8 +321,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 menuItem.setChecked(true);
 
-
-
+                loadSelectedFragment();
+                Log.i(TAG, "onNavigationItemSelected: END2!");
                 return true;
             }
         });
@@ -284,9 +350,11 @@ public class MainActivity extends AppCompatActivity {
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+        Log.i(TAG, "setUpNavigationView: END");
     }
 
     private void loadNavHeader() {
+
         // name, website
         txtName.setText("Rafał Dołęga");
         txtWebsite.setText("rafald121@gmail.com");
