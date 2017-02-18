@@ -130,12 +130,14 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
+            Log.i(TAG, "onCreate: savedInstanceState == null");
             navItemIndex = 0;
-            CURRENT_TAG = TAG_DEBTORS;
+            CURRENT_TAG = TAG_ALL_CLIENTS;
             loadSelectedFragment();
 //          TODO  loadDebtorsFragment();
         }
 
+        loadSelectedFragment();
 
 
         dbClient = new DatabaseClients(getApplicationContext());
@@ -208,9 +210,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "run: end run");
             }
         };
+
 // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
-            Log.i(TAG, "loadSelectedFragment: mPendingRunnable is not null and go on: ");
             mHandler.post(mPendingRunnable);
         } else
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
@@ -262,8 +264,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle(){
-        Log.i(TAG, "setToolbarTitle: index" + navItemIndex);
-        Log.i(TAG, "setToolbarTitle: value for index" + activityTitles[navItemIndex]);
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
 
                 }
-
+                Log.i(TAG, "onNavigationItemSelected: selected index: " + navItemIndex);
                 //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
