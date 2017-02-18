@@ -186,10 +186,10 @@ public class MainActivity extends AppCompatActivity {
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
-
+            toggleFabOn();
             // show or hide the fab button
 //            TODO PRZETESTOWAC
-            toggleFab();
+//            toggleFab();
             return;
         }
         Log.i(TAG, "loadSelectedFragment: fragment index before open it: " + navItemIndex);
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
         // show or hide the fab button
-        toggleFab();
+        toggleFabOn();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -266,11 +266,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "setToolbarTitle: value for index" + activityTitles[navItemIndex]);
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
-    private void toggleFab(){
-        if(navItemIndex == 0 )
-            fab.show();
-        else
-            fab.hide();
+
+
+    private void toggleFabOn(){
+        fab.show();
+    }
+
+    private void toggleFabOff(){
+        fab.hide();
     }
     private void setUpNavigationView() {
         Log.i(TAG, "setUpNavigationView: START");
@@ -281,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Log.i(TAG, "onNavigationItemSelected: START");
+
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
@@ -317,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     default:
                         navItemIndex = 0;
+
                 }
 
                 //Checking if the item is in checked state or not, if not make it in checked state
@@ -339,12 +344,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                toggleFabOn();
                 super.onDrawerClosed(drawerView);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                toggleFabOff();
                 super.onDrawerOpened(drawerView);
             }
         };
