@@ -1,4 +1,4 @@
-package com.example.android.debtors;
+package com.example.android.debtors.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.android.debtors.Activities.AboutMe;
-import com.example.android.debtors.Activities.ActivitySettings;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
@@ -38,6 +35,7 @@ import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Others.CircleTransform;
+import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
 
 import java.util.ArrayList;
@@ -104,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        ARRAY OF AVAILABLE TAGS FROM NAVIGATION 
         activityTitles = getResources().getStringArray(R.array.nav_item_toolbar_title);
-
+        for(String s: activityTitles)
+            Log.i(TAG, "onCreate: " + s.toString());
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_name);
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_DEBTORS;
-
+            loadSelectedFragment();
 //          TODO  loadDebtorsFragment();
         }
 
@@ -259,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle(){
+        Log.i(TAG, "setToolbarTitle: index" + navItemIndex);
+        Log.i(TAG, "setToolbarTitle: value for index" + activityTitles[navItemIndex]);
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
     private void toggleFab(){
@@ -288,14 +289,14 @@ public class MainActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_DEBTORS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
-                    case R.id.nav_payments:
+                    case R.id.nav_transactions:
                         navItemIndex = 2;
-                        CURRENT_TAG = TAG_PAYMENTS;
+                        CURRENT_TAG = TAG_TRANSACTIONS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
-                    case R.id.nav_transactions:
+                    case R.id.nav_payments:
                         navItemIndex = 3;
-                        CURRENT_TAG = TAG_TRANSACTIONS;
+                        CURRENT_TAG = TAG_PAYMENTS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_settings:
@@ -334,14 +335,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
-                Toast.makeText(MainActivity.this, "ZAMKNIETO", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
                 super.onDrawerOpened(drawerView);
-                Toast.makeText(MainActivity.this, "OTWARTO", Toast.LENGTH_SHORT).show();
             }
         };
 
