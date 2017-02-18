@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -21,6 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.ActivitySettings"
+                  android:parentActivityName=".Activities.MainActivity"
+                  android:label="@string/activity_name_settings"/>
+        <activity android:name=".Activities.AboutMe"
+                  android:parentActivityName=".Activities.MainActivity"
+                  android:label="@string/activity_name_aboutMe"/>
+
+
     </application>
 
 </manifest>
