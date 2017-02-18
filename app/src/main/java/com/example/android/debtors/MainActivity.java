@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,6 +25,10 @@ import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Fragments.FragmentAllClients;
+import com.example.android.debtors.Fragments.FragmentDebtors;
+import com.example.android.debtors.Fragments.FragmentPayments;
+import com.example.android.debtors.Fragments.FragmentTransactions;
 import com.example.android.debtors.Logic.RealizePaymentHelper;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
@@ -67,23 +73,30 @@ public class MainActivity extends AppCompatActivity {
     // index to identify current nav menu item
     public static int navItemIndex = 0;
 
+    // toolbar titles respected to selected nav menu item
+    private String[] activityTitles;
 
     // tags used to attach the fragments
-    private static final String TAG_HOME = "home";
-    private static final String TAG_PHOTOS = "photos";
-    private static final String TAG_MOVIES = "movies";
-    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_ALL_CLIENTS = "tagAllClients";
+    private static final String TAG_DEBTORS = "tagDebtors";
+    private static final String TAG_TRANSACTIONS = "tagTransactions";
+    private static final String TAG_PAYMENTS = "tagPayments";
     private static final String TAG_SETTINGS = "settings";
-    public static String CURRENT_TAG = TAG_HOME;
+    public static String CURRENT_TAG = TAG_DEBTORS;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+//        ARRAY OF AVAILABLE TAGS FROM NAVIGATION 
+        activityTitles = getResources().getStringArray(R.array.nav_item_toolbar_title);
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -99,13 +112,21 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-// load nav menu header data
+
+        // load nav menu header data
         loadNavHeader();
 
         // initializing navigation menu
         setUpNavigationView();
 
-       
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_DEBTORS;
+
+//          TODO  loadDebtorsFragment();
+        }
+
+
 
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
@@ -144,6 +165,48 @@ public class MainActivity extends AppCompatActivity {
 //        simulateTransactionWithPayment();
     }
 
+    private void loadSelectedFragment(){
+//        make that navigation item as selected in navigation layout
+        selectNavigationMenuToBeChecked();
+//      set title of action bar depends on selected fragment
+        setToolbarTitle();
+    }
+
+
+
+
+    private Fragment getSelectedFragment() {
+        switch (navItemIndex) {
+            case 0:
+                // all clients
+                FragmentAllClients allClients = new FragmentAllClients();
+                return allClients;
+            case 1:
+                // debtors
+                FragmentDebtors debtors = new FragmentDebtors();
+                return debtors;
+            case 2:
+                // transactions
+                FragmentTransactions transactions = new FragmentTransactions();
+                return transactions;
+            case 3:
+                // payments
+                FragmentPayments payments = new FragmentPayments();
+                return payments;
+            default:
+//                debtors fragment is default
+                return new FragmentDebtors();
+        }
+    }
+//
+    private void selectNavigationMenuToBeChecked(){
+        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
+
+    private void setToolbarTitle(){
+        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+    }
+
     private void setUpNavigationView() {
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -151,25 +214,25 @@ public class MainActivity extends AppCompatActivity {
             // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-
+                Log.i(TAG, "onNavigationItemSelected: HALO");
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_all_clients:
                         navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
+                        CURRENT_TAG = TAG_ALL_CLIENTS;
                         break;
                     case R.id.nav_debtors:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_PHOTOS;
+                        CURRENT_TAG = TAG_DEBTORS;
                         break;
                     case R.id.nav_payments:
                         navItemIndex = 2;
-                        CURRENT_TAG = TAG_MOVIES;
+                        CURRENT_TAG = TAG_PAYMENTS;
                         break;
                     case R.id.nav_transactions:
                         navItemIndex = 3;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        CURRENT_TAG = TAG_TRANSACTIONS;
                         break;
                     case R.id.nav_about_me:
                         // launch new intent instead of loading fragment
@@ -205,12 +268,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
+                Toast.makeText(MainActivity.this, "ZAMKNIETO", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
                 super.onDrawerOpened(drawerView);
+                Toast.makeText(MainActivity.this, "OTWARTO", Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -240,7 +305,9 @@ public class MainActivity extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
 
+
         // showing dot next to notifications label
+//        TODO wklepać aby zamiast kropki pokazywaly się liczby
         navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
     }
 
