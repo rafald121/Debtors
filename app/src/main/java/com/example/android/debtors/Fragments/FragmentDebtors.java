@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
 import com.example.android.debtors.R;
 
 /**
@@ -63,6 +62,9 @@ public class FragmentDebtors extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
+
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -79,9 +81,8 @@ public class FragmentDebtors extends Fragment {
         Log.i(TAG, "onCreateView: start");
         // Inflate the layout for this fragment
         Log.i(TAG, "onCreateView: end");
-        CategoryAdapterDebtors mCategoryAdapterDebtors = new CategoryAdapterDebtors(getActivity()
-                .getSupportFragmentManager());
-
+//        CategoryAdapterDebtors mCategoryAdapterDebtors = new CategoryAdapterDebtors(getActivity()
+//                .getSupportFragmentManager());
 
 
         return inflater.inflate(R.layout.fragment_fragment_debtors, container, false);
