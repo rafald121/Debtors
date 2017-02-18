@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         //Setting the actionbarToggle to drawer layout
-        drawer.setDrawerListener(actionBarDrawerToggle);
+        drawer.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+        Log.i(TAG, "onCreateOptionsMenu: START");
 //        TODO all clients and debtors menu?
 
         if(navItemIndex == 2)
@@ -396,6 +396,7 @@ public class MainActivity extends AppCompatActivity {
         if(navItemIndex == 3)
             getMenuInflater().inflate(R.menu.menu_payments,menu);
 
+        Log.i(TAG, "onCreateOptionsMenu: END");
         return true;
     }
     @Override
@@ -403,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
+        Log.i(TAG, "onOptionsItemSelected: START");
 //TODO KIEDY OPCJA Z MENU KLIKNIETA -> UZUPELNIC
 //        int id = item.getItemId();
 
@@ -424,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
 //        if (id == R.id.action_clear_notifications) {
 //            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
 //        }
-
+        Log.i(TAG, "onOptionsItemSelected: END");
         return super.onOptionsItemSelected(item);
     }
 
