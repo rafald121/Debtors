@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
 
+    // flag to load home fragment when user presses back key
+    private boolean shouldLoadHomeFragOnBackPress = true;
     // tags used to attach the fragments
     private static final String TAG_ALL_CLIENTS = "tagAllClients";
     private static final String TAG_DEBTORS = "tagDebtors";
@@ -350,6 +353,28 @@ public class MainActivity extends AppCompatActivity {
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
         Log.i(TAG, "setUpNavigationView: END");
+    }
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawers();
+            return;
+        }
+
+        // This code loads home fragment when back key is pressed
+        // when user is in other fragment than home
+        if (shouldLoadHomeFragOnBackPress) {
+            // checking if user is on other navigation menu
+            // rather than home
+            if (navItemIndex != 1) {
+                navItemIndex = 1;
+                CURRENT_TAG = TAG_DEBTORS;
+                loadSelectedFragment();
+                return;
+            }
+        }
+
+        super.onBackPressed();
     }
 
     private void loadNavHeader() {
