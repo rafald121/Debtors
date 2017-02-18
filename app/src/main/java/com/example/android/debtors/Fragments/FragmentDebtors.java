@@ -3,12 +3,16 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
 import com.example.android.debtors.R;
 
 /**
@@ -65,6 +69,10 @@ public class FragmentDebtors extends Fragment {
 
 
 
+//        Fragment fragment = new PageSlider();
+//        FragmentManager manager = getSupportFragmentManager();
+//        manager.beginTransaction().replace(R.id.content, fragment).commit();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -86,6 +94,19 @@ public class FragmentDebtors extends Fragment {
 
 
         return inflater.inflate(R.layout.fragment_fragment_debtors, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
+
+        CategoryAdapterDebtors categoryAdapterDebtors = new CategoryAdapterDebtors
+                (getChildFragmentManager());
+        viewPager.setAdapter(categoryAdapterDebtors);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -6,13 +6,13 @@
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+        android:id="@+id/debtors_tabs"
         style="@style/CategoryTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/debtors_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
