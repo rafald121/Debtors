@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
             "maniek", "maniok", "chamiok"};
+    String[] names2 = {"ania","ula","ciocia","marianna","ola","ada","marysia","izabela"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
 
     private NavigationView navigationView;
@@ -144,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
+
+//        createClients(names2);
 //        dbPayment.deletePaymentInRange(15,20);
 //        simulatePayments();
 
@@ -585,7 +588,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createClients(String[] names){
         for(int i = 0 ; i< names.length -1 ; i++){
-            Client client = new Client(names[i], 50*i);
+            Client client = new Client(names[i], 50*i*(-10));
             dbClient.createClient(client);
         }
     }

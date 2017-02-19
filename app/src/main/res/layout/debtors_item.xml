@@ -29,7 +29,7 @@
 
     <TextView
         android:text="500"
-        android:layout_width="30dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/debtors_item_leftamount"
         android:textSize="@dimen/debtors_left_amount_size"
@@ -44,11 +44,12 @@
     <ImageButton
         android:layout_width="25dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/arrow_right_selected"
         android:id="@+id/debtors_item_arrow"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:srcCompat="@drawable/arrow_forward_24"
+        android:background="#0000"
+        android:scaleType="fitCenter"/>
 
 </android.support.constraint.ConstraintLayout>
