@@ -3,6 +3,7 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.android.debtors.Adapters.AdapterDebtorsForMe;
 import com.example.android.debtors.Databases.DatabaseClients;
@@ -29,6 +29,7 @@ public class FragmentDebtorsForMe extends Fragment{
 
     DatabaseClients dbClients;
     List<Client> listOfClients;
+    FloatingActionButton fab;
 
     public FragmentDebtorsForMe() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
@@ -57,14 +58,33 @@ public class FragmentDebtorsForMe extends Fragment{
         Log.i(TAG, "onCreateView: START");
         listOfClients = getAllClientsFromDatabase();
 
+//        fab = (FloatingActionButton)
+
         View rootView = inflater.inflate(R.layout.recycler, container, false);
         AdapterDebtorsForMe adapterDebtorsForMe = new AdapterDebtorsForMe(listOfClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         setupRecyclerView(recyclerView);
+
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+//                if (dy > 0 ||dy<0 && fab.isShown())
+//                    fab.hide();
+//            }
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+//                    fab.show();
+//                }
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//        });
+        Log.i(TAG, "onCreateView: END");
+
         recyclerView.setAdapter(adapterDebtorsForMe);
 
-
-        Log.i(TAG, "onCreateView: END");
         return rootView;
 
     }
@@ -79,8 +99,6 @@ public class FragmentDebtorsForMe extends Fragment{
 
     @Override
     public void onAttach(Context context) {
-        Toast.makeText(context, "halo", Toast.LENGTH_SHORT).show();
-
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
     }

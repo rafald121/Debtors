@@ -207,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
                         android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
+
                 Log.i(TAG, "run: end run");
             }
         };
@@ -214,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
 // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
+
         } else
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
