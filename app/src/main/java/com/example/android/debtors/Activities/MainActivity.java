@@ -90,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_SETTINGS = "settings";
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
+
+    public static boolean whenBackClickedOnDebtors = false; // if user click back button on
+    // debtor fragment, whenBackClickedOnDebtors is set to true and when click another time app
+    // minimalize
+
     private Handler mHandler;
 
 
@@ -296,6 +301,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "onNavigationItemSelected: START");
                 Log.i(TAG, "onNavigationItemSelected: TAG BEFORE CLICK: " + CURRENT_TAG);
                 //Check to see which item was being clicked and perform appropriate action
+
+                if(menuItem.getItemId()!=R.id.nav_debtors) // if user hasn't check debtors in
+                    // navigation asign whenBackClickedOnDebtors=false again
+                    whenBackClickedOnDebtors=false;
+
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_all_clients:
@@ -389,12 +399,21 @@ public class MainActivity extends AppCompatActivity {
         if (shouldLoadHomeFragOnBackPress) {
             // checking if user is on other navigation menu
             // rather than home
-            if (navItemIndex != 1) {
+            if (navItemIndex != 1) { // jeśli navItem nie jest 1
                 navItemIndex = 1;
                 PREVIOUS_TAG = CURRENT_TAG;
                 CURRENT_TAG = TAG_DEBTORS;
                 loadSelectedFragment();
                 return;
+            } else{ // jesli navItem jest 1
+                if(!whenBackClickedOnDebtors) { //if false, change variable to true and return
+                    // nothing(do anything)
+                    whenBackClickedOnDebtors = true;
+                    return;
+                } else{ // if true user have clicked back button once and next time minimalize app
+//                    minimalize app
+                }
+
             }
         }
 
