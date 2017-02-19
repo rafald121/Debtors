@@ -47,14 +47,29 @@ public class FragmentDebtorsMeToOther extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
 
-        // TODO użyć utilsa do pobierania informacji z baz danych ? \/
-        listOfClients = getClientsLessThanZero();
 
         View rootView = inflater.inflate(R.layout.recycler_with_viewpager, container, false);
-        AdapterDebtorsForMe adapter = new AdapterDebtorsForMe(listOfClients);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapter);
+
+        class Threadd implements Runnable{
+
+            View rootView;
+
+            public Threadd(View rootView){
+                this.rootView = rootView;
+            }
+
+            @Override
+            public void run() {
+                listOfClients = getClientsLessThanZero();
+                AdapterDebtorsForMe adapter = new AdapterDebtorsForMe(listOfClients);
+                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+                setupRecyclerView(recyclerView);
+                recyclerView.setAdapter(adapter);
+            }
+        }
+
+        Runnable r = new Threadd(rootView);
+        new Thread(r).run();
 
         Log.i(TAG, "onCreateView: END");
         return rootView;
