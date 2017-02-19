@@ -189,7 +189,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
         if(c.moveToFirst()){
             do{
                 if(flag) {//wez klientow z kwotą większą od zera włącznie
-                    if (c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) >= 0) {
+                    if (c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) > 0) {
                         Client client = new Client();
 
                         client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
