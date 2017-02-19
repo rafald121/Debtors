@@ -752,7 +752,7 @@ public class MainActivity extends AppCompatActivity {
         
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 
-        listOfClientWithLeftAmountFromTo = dbClient.getClientWithLeftAmountSorted(50,150);
+        listOfClientWithLeftAmountFromTo = dbClient.getClientWithLeftAmountInRange(50,150);
 
 
         for(Client client : listOfClientWithLeftAmountFromTo){

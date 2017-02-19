@@ -109,6 +109,8 @@ public class FragmentDebtorsForMe extends Fragment{
         super.onDetach();
     }
 
+
+
     public List<Client> getAllClientsFromDatabase() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getAllClient();

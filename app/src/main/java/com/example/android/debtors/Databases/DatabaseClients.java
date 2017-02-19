@@ -154,7 +154,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return clientsList;
     }
 
-    public List<Client> getClientWithLeftAmountSorted(int min, int max){
+    public List<Client> getClientWithLeftAmountInRange(int min, int max){
         List<Client> clientsList = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -178,6 +178,41 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return clientsList;
     }
 
+    public List<Client> getClientWithLeftAmountMoreOrLessZero(boolean flag) {//if true >0, false <0
+        List<Client> clientList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query,null);
+
+        if(c.moveToFirst()){
+            do{
+                if(flag) {//wez klientow z kwotą większą od zera włącznie
+                    if (c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) >= 0) {
+                        Client client = new Client();
+
+                        client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                        client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                        client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                        clientList.add(client);
+                    }
+                }else{
+                    if(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT))<0){
+                        Client client = new Client();
+
+                        client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                        client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                        client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                        clientList.add(client);
+                    }
+                }
+            } while (c.moveToNext());
+        }
+        return clientList;
+    }
     public void deleteClient(long clientID){
         SQLiteDatabase db = this.getWritableDatabase();
 
