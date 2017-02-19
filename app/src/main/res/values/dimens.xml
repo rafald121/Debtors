@@ -19,4 +19,6 @@
     <dimen name="debtors_plus_minus_text_size">18dp</dimen>
     <dimen name="debtors_plus_minus_size">24dp</dimen>
 
+    <dimen name="recycler_view_item_padding">8dp</dimen>
+
 </resources>
