@@ -10,4 +10,12 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
+    <!--DEBTORS ITEM-->
+    <dimen name="debtors_avatar_image">40dp</dimen>
+    <dimen name="debtors_name_size">18dp</dimen>
+    <dimen name="debtors_left_amount_size">18dp</dimen>
+    <dimen name="debtors_right_arrow_width">25dp</dimen>
+    <dimen name="debtors_plus_minus_text_size">18dp</dimen>
+    <dimen name="debtors_plus_minus_size">24dp</dimen>
+
 </resources>

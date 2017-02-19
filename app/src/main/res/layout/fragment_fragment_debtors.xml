@@ -5,9 +5,15 @@
              tools:context="com.example.android.debtors.Fragments.FragmentDebtors">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/debtors_tabs"
+        style="@style/CategoryTab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/debtors_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

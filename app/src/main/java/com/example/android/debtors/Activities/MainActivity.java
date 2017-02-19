@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
             "maniek", "maniok", "chamiok"};
+    String[] names2 = {"ania","ula","ciocia","marianna","ola","ada","marysia","izabela"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
 
     private NavigationView navigationView;
@@ -130,18 +131,22 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
+            Log.i(TAG, "onCreate: savedInstanceState == null");
             navItemIndex = 0;
-            CURRENT_TAG = TAG_DEBTORS;
+            CURRENT_TAG = TAG_ALL_CLIENTS;
             loadSelectedFragment();
 //          TODO  loadDebtorsFragment();
         }
 
+        loadSelectedFragment();
 
 
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
+
+//        createClients(names2);
 //        dbPayment.deletePaymentInRange(15,20);
 //        simulatePayments();
 
@@ -205,13 +210,15 @@ public class MainActivity extends AppCompatActivity {
                         android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
+
                 Log.i(TAG, "run: end run");
             }
         };
+
 // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
-            Log.i(TAG, "loadSelectedFragment: mPendingRunnable is not null and go on: ");
             mHandler.post(mPendingRunnable);
+
         } else
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
@@ -262,8 +269,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle(){
-        Log.i(TAG, "setToolbarTitle: index" + navItemIndex);
-        Log.i(TAG, "setToolbarTitle: value for index" + activityTitles[navItemIndex]);
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
@@ -323,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
 
                 }
-
+                Log.i(TAG, "onNavigationItemSelected: selected index: " + navItemIndex);
                 //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
@@ -583,7 +588,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createClients(String[] names){
         for(int i = 0 ; i< names.length -1 ; i++){
-            Client client = new Client(names[i], 50*i);
+            Client client = new Client(names[i], 50*i*(-10));
             dbClient.createClient(client);
         }
     }
@@ -750,7 +755,7 @@ public class MainActivity extends AppCompatActivity {
         
         List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
 
-        listOfClientWithLeftAmountFromTo = dbClient.getClientWithLeftAmountSorted(50,150);
+        listOfClientWithLeftAmountFromTo = dbClient.getClientWithLeftAmountInRange(50,150);
 
 
         for(Client client : listOfClientWithLeftAmountFromTo){
