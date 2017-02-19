@@ -19,15 +19,15 @@ import java.util.List;
  * Created by Rafaello on 2017-02-19.
  */
 
-public class AdapterDebtorsForMe extends RecyclerView.Adapter<AdapterDebtorsForMe.MyViewHolder> {
+public class AdapterDebtorsViewPagerItem extends RecyclerView.Adapter<AdapterDebtorsViewPagerItem.MyViewHolder> {
 
-    private static final String TAG = "AdapterDebtorsForMe";
+    private static final String TAG = "AdapterDebtorsViewPagerItem";
 
     List<Client> clientList = new ArrayList<>();
 
-    public AdapterDebtorsForMe(List<Client> clientList) {
+    public AdapterDebtorsViewPagerItem(List<Client> clientList) {
         this.clientList = clientList;
-        Log.i(TAG, "AdapterDebtorsForMe: " + clientList.toString());
+        Log.i(TAG, "AdapterDebtorsViewPagerItem: " + clientList.toString());
     }
 
     @Override
