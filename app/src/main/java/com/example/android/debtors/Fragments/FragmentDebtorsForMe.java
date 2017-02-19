@@ -60,7 +60,7 @@ public class FragmentDebtorsForMe extends Fragment{
 
 //        fab = (FloatingActionButton)
 
-        View rootView = inflater.inflate(R.layout.recycler, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_with_viewpager, container, false);
         AdapterDebtorsForMe adapterDebtorsForMe = new AdapterDebtorsForMe(listOfClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         setupRecyclerView(recyclerView);
