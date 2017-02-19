@@ -27,7 +27,6 @@ public class AdapterDebtorsViewPagerItem extends RecyclerView.Adapter<AdapterDeb
 
     public AdapterDebtorsViewPagerItem(List<Client> clientList) {
         this.clientList = clientList;
-        Log.i(TAG, "AdapterDebtorsViewPagerItem: " + clientList.toString());
     }
 
     @Override
@@ -40,7 +39,6 @@ public class AdapterDebtorsViewPagerItem extends RecyclerView.Adapter<AdapterDeb
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Client client = clientList.get(position);
-        Log.i(TAG, "onBindViewHolder: client: " + client.toString());
         holder.debtorsItemName.setText(client.getClientName());
         holder.debtorsItemAmount.setText(String.valueOf(client.getClientLeftAmount()));
 

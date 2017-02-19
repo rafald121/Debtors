@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.android.debtors.Adapters.AdapterDebtorsForMe;
+import com.example.android.debtors.Adapters.AdapterDebtorsViewPagerItem;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -61,7 +61,7 @@ public class FragmentDebtorsMeToOther extends Fragment {
             @Override
             public void run() {
                 listOfClients = getClientsLessThanZero();
-                AdapterDebtorsForMe adapter = new AdapterDebtorsForMe(listOfClients);
+                AdapterDebtorsViewPagerItem adapter = new AdapterDebtorsViewPagerItem(listOfClients);
                 RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
                 setupRecyclerView(recyclerView);
                 recyclerView.setAdapter(adapter);

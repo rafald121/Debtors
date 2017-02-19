@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.debtors.Adapters.AdapterDebtorsForMe;
+import com.example.android.debtors.Adapters.AdapterDebtorsViewPagerItem;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -62,7 +62,7 @@ public class FragmentDebtorsForMe extends Fragment{
 //        fab = (FloatingActionButton)
 
         View rootView = inflater.inflate(R.layout.recycler_with_viewpager, container, false);
-        AdapterDebtorsForMe adapterDebtorsForMe = new AdapterDebtorsForMe(listOfClients);
+        AdapterDebtorsViewPagerItem adapterDebtorsViewPagerItem = new AdapterDebtorsViewPagerItem(listOfClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         setupRecyclerView(recyclerView);
 
@@ -84,7 +84,7 @@ public class FragmentDebtorsForMe extends Fragment{
 //        });
         Log.i(TAG, "onCreateView: END");
 
-        recyclerView.setAdapter(adapterDebtorsForMe);
+        recyclerView.setAdapter(adapterDebtorsViewPagerItem);
 
         return rootView;
 
