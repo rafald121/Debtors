@@ -56,7 +56,7 @@ public class FragmentDebtorsForMe extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
-        listOfClients = getAllClientsFromDatabase();
+        listOfClients = getClientsMoreThanZero();
 
 //        fab = (FloatingActionButton)
 
@@ -111,9 +111,9 @@ public class FragmentDebtorsForMe extends Fragment{
 
 
 
-    public List<Client> getAllClientsFromDatabase() {
+    public List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
-        List<Client> clients = dbClients.getAllClient();
+        List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
 
         for(Client c: clients)
             Log.i(TAG, "getAllClientsFromDatabase: " + c.toString());
