@@ -39,6 +39,13 @@ public class FragmentDebtorsMeToOther extends Fragment {
         Log.i(TAG, "onCreateView: END");
         return rootView;
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated: START");
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated: END");
+    }
     @Override
     public void onAttach(Context context) {
         Toast.makeText(context, "halo", Toast.LENGTH_SHORT).show();
