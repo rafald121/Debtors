@@ -4,13 +4,21 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.android.debtors.Adapters.AdapterDebtorsForMe;
+import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
+
+import java.util.List;
 
 /**
  * Created by Rafaello on 2017-02-18.
@@ -18,6 +26,9 @@ import com.example.android.debtors.R;
 public class FragmentDebtorsMeToOther extends Fragment {
 
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
+
+    DatabaseClients dbClients;
+    List<Client> listOfClients;
 
     public FragmentDebtorsMeToOther() {
     }
@@ -35,10 +46,28 @@ public class FragmentDebtorsMeToOther extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
+
+        // TODO użyć utilsa do pobierania informacji z baz danych ? \/
+        listOfClients = getClientsLessThanZero();
+
         View rootView = inflater.inflate(R.layout.recycler_with_viewpager, container, false);
+        AdapterDebtorsForMe adapter = new AdapterDebtorsForMe(listOfClients);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
+
         Log.i(TAG, "onCreateView: END");
         return rootView;
     }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
+                .getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -58,4 +87,11 @@ public class FragmentDebtorsMeToOther extends Fragment {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
+
+    public List<Client> getClientsLessThanZero(){
+        dbClients = new DatabaseClients(getContext());
+        List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(false);
+        return clients;
+    }
+
 }

@@ -56,6 +56,7 @@ public class FragmentDebtorsForMe extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
+//        TODO make db is reading in another thread \/
         listOfClients = getClientsMoreThanZero();
 
 //        fab = (FloatingActionButton)
@@ -109,15 +110,9 @@ public class FragmentDebtorsForMe extends Fragment{
         super.onDetach();
     }
 
-
-
     public List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
-
-        for(Client c: clients)
-            Log.i(TAG, "getAllClientsFromDatabase: " + c.toString());
-
         return clients;
     }
 }
