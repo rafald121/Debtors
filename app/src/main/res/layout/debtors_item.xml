@@ -24,11 +24,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="@dimen/debtors_name_size"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"/>
 
     <TextView
         android:text="500"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:id="@+id/debtors_item_leftamount"
         android:textSize="@dimen/debtors_left_amount_size"
@@ -36,10 +37,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/debtors_item_arrow"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="0.83"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/debtors_item_name"/>
+        android:layout_marginEnd="32dp"
+        android:textAlignment="textEnd"
+        android:layout_marginRight="32dp"/>
 
     <ImageButton
         android:layout_width="25dp"
