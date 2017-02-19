@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_TRANSACTIONS = "tagTransactions";
     private static final String TAG_PAYMENTS = "tagPayments";
     private static final String TAG_SETTINGS = "settings";
+    public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
     private Handler mHandler;
 
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Log.i(TAG, "onCreate: savedInstanceState == null");
             navItemIndex = 0;
+            PREVIOUS_TAG = CURRENT_TAG;
             CURRENT_TAG = TAG_ALL_CLIENTS;
             loadSelectedFragment();
 //          TODO  loadDebtorsFragment();
@@ -189,7 +191,10 @@ public class MainActivity extends AppCompatActivity {
 
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+        Log.i(TAG, "loadSelectedFragment: CURRENT TAG: " + CURRENT_TAG);
+
+        if (PREVIOUS_TAG==CURRENT_TAG) {
+            Log.i(TAG, "loadSelectedFragment: wtf");
             drawer.closeDrawers();
             toggleFabOn();
             // show or hide the fab button
@@ -289,27 +294,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Log.i(TAG, "onNavigationItemSelected: START");
-
+                Log.i(TAG, "onNavigationItemSelected: TAG BEFORE CLICK: " + CURRENT_TAG);
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_all_clients:
                         navItemIndex = 0;
+                        PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_ALL_CLIENTS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_debtors:
                         navItemIndex = 1;
+                        PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_DEBTORS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_transactions:
                         navItemIndex = 2;
+                        PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_TRANSACTIONS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_payments:
                         navItemIndex = 3;
+                        PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_PAYMENTS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
@@ -382,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
             // rather than home
             if (navItemIndex != 1) {
                 navItemIndex = 1;
+                PREVIOUS_TAG = CURRENT_TAG;
                 CURRENT_TAG = TAG_DEBTORS;
                 loadSelectedFragment();
                 return;

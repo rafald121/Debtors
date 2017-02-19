@@ -84,6 +84,8 @@ public class FragmentAllClients extends Fragment {
         }
     }
 
+
+
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
