@@ -35,7 +35,7 @@ public class FragmentDebtorsMeToOther extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
-        View rootView = inflater.inflate(R.layout.recycler, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_with_viewpager, container, false);
         Log.i(TAG, "onCreateView: END");
         return rootView;
     }

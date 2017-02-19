@@ -41,8 +41,8 @@ public class AdapterDebtorsForMe extends RecyclerView.Adapter<AdapterDebtorsForM
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Client client = clientList.get(position);
         Log.i(TAG, "onBindViewHolder: client: " + client.toString());
-        holder.name.setText(client.getClientName());
-        holder.amount.setText(String.valueOf(client.getClientLeftAmount()));
+        holder.debtorsItemName.setText(client.getClientName());
+        holder.debtorsItemAmount.setText(String.valueOf(client.getClientLeftAmount()));
 
     }
 
@@ -53,16 +53,16 @@ public class AdapterDebtorsForMe extends RecyclerView.Adapter<AdapterDebtorsForM
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView imageView;
-        public TextView  name,amount;
-        public ImageButton imageButton;
+        public ImageView debtorsItemImageView;
+        public TextView  debtorsItemName,debtorsItemAmount;
+        public ImageButton debtorsItemImageButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            imageButton = (ImageButton) itemView.findViewById(R.id.details);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            name= (TextView) itemView.findViewById(R.id.name);
-            amount = (TextView) itemView.findViewById(R.id.amount);
+            debtorsItemImageButton = (ImageButton) itemView.findViewById(R.id.debtors_item_arrow);
+            debtorsItemImageView = (ImageView) itemView.findViewById(R.id.debtors_item_avatar);
+            debtorsItemName= (TextView) itemView.findViewById(R.id.debtors_item_name);
+            debtorsItemAmount = (TextView) itemView.findViewById(R.id.debtors_item_leftamount);
         }
 
 
