@@ -11,6 +11,7 @@
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
     <!--DEBTORS ITEM-->
+
     <dimen name="debtors_avatar_image">40dp</dimen>
     <dimen name="debtors_name_size">18dp</dimen>
     <dimen name="debtors_left_amount_size">18dp</dimen>
