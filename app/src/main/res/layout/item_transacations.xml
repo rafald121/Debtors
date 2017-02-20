@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="25">
+        android:layout_weight="20">
 
         <ImageView
             android:layout_width="match_parent"
@@ -21,14 +21,14 @@
             android:id="@+id/imageView"/>
 
         <TextView
-            android:text="TextView"
+            android:text="Kamil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             android:textAlignment="center"/>
 
         <TextView
-            android:text="TextView"
+            android:text="500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView2"
@@ -39,7 +39,7 @@
 <LinearLayout
     android:layout_width="0dp"
     android:layout_height="match_parent"
-    android:layout_weight="75"
+    android:layout_weight="80"
     android:weightSum="100"
     android:orientation="vertical">
 
@@ -65,7 +65,7 @@
             android:layout_weight="10"/>
 
         <TextView
-            android:text="Value"
+            android:text="Product Value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/textView12"
@@ -122,7 +122,7 @@
             android:layout_weight="10"/>
 
         <TextView
-            android:text="TextView"
+            android:text="Purchase"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/textView11"
