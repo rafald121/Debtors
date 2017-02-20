@@ -12,8 +12,8 @@
                                              android:layout_marginRight="4dp">
 
     <ImageView
-        android:layout_width="@dimen/debtors_avatar_image"
-        android:layout_height="@dimen/debtors_avatar_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/debtors_item_avatar"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,8 +36,8 @@
 
     <TextView
         android:text="500"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="50dp"
         android:id="@+id/debtors_item_leftamount"
         android:textSize="@dimen/debtors_left_amount_size"
         android:layout_weight="1"
@@ -45,8 +45,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/debtors_item_arrow"
         android:layout_marginEnd="32dp"
-        android:textAlignment="textEnd"
-        android:layout_marginRight="32dp"/>
+        android:textAlignment="textStart"
+        android:layout_marginRight="32dp"
+        />
 
     <ImageButton
         android:layout_width="@dimen/debtors_right_arrow_width"

@@ -16,8 +16,12 @@
     <dimen name="debtors_name_size">18dp</dimen>
     <dimen name="debtors_left_amount_size">18dp</dimen>
     <dimen name="debtors_right_arrow_width">25dp</dimen>
-    <dimen name="debtors_plus_minus_text_size">18dp</dimen>
-    <dimen name="debtors_plus_minus_size">24dp</dimen>
+
+
+    <dimen name="allclients_avatar_image">40dp</dimen>
+    <dimen name="allclients_name_size">18dp</dimen>
+    <dimen name="allclients_left_amount_size">18dp</dimen>
+    <dimen name="allclients_right_arrow_width">25dp</dimen>
 
     <dimen name="recycler_view_item_padding">8dp</dimen>
 
