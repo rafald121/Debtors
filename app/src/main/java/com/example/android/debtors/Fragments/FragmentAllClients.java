@@ -3,32 +3,40 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Adapters.AdapterAllClients;
+import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentAllClients.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentAllClients#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentAllClients extends Fragment {
-    private static final String TAG = FragmentAllClients.class.getSimpleName();
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+///**
+// * A simple {@link Fragment} subclass.
+// * Activities that contain this fragment must implement the
+// * {@link FragmentAllClients.OnFragmentInteractionListener} interface
+// * to handle interaction events.
+// * Use the {@link FragmentAllClients#newInstance} factory method to
+// * create an instance of this fragment.
+// */
+
+public class FragmentAllClients extends Fragment {
+
+    private static final String TAG = FragmentAllClients.class.getSimpleName();
+
+    List<Client> listOfAllClients = new ArrayList<>();
+
+    DatabaseClients dbClients;
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,30 +49,24 @@ public class FragmentAllClients extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment FragmentAllClients.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentAllClients newInstance(String param1, String param2) {
-        Log.i(TAG, "newInstance: START");
-        FragmentAllClients fragment = new FragmentAllClients();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        Log.i(TAG, "newInstance: END");
-        return fragment;
-    }
+//    public static FragmentAllClients newInstance(String param1, String param2) {
+//        Log.i(TAG, "newInstance: START");
+//        FragmentAllClients fragment = new FragmentAllClients();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        Log.i(TAG, "newInstance: END");
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         Log.i(TAG, "onCreate: END");
     }
 
@@ -73,7 +75,30 @@ public class FragmentAllClients extends Fragment {
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_clients, container, false);
+        listOfAllClients = getAllClientsFromDatabase();
+
+        View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager, container, false);
+        AdapterAllClients adapter = new AdapterAllClients(listOfAllClients);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
+        setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
+
+
+
+
+        return rootView;
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
+                .getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -83,8 +108,6 @@ public class FragmentAllClients extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
-
 
     @Override
     public void onAttach(Context context) {
@@ -103,6 +126,12 @@ public class FragmentAllClients extends Fragment {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
         mListener = null;
+    }
+
+    public List<Client> getAllClientsFromDatabase() {
+        dbClients = new DatabaseClients(getContext());
+        List<Client> list = dbClients.getAllClient();
+        return list;
     }
 
     /**
