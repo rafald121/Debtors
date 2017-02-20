@@ -425,7 +425,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i(TAG, "onCreateOptionsMenu: START");
 //        TODO all clients and debtors menu?
-
+        if(navItemIndex == 0)
+            getMenuInflater().inflate(R.menu.menu_allclients, menu);
         if(navItemIndex == 2)
             getMenuInflater().inflate(R.menu.menu_transactions, menu);
         if(navItemIndex == 3)

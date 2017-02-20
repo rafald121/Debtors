@@ -20,7 +20,7 @@ import com.example.android.debtors.R;
  * create an instance of this fragment.
  */
 public class FragmentTransactions extends Fragment {
-    
+
     private static final String TAG = FragmentTransactions.class.getSimpleName();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
