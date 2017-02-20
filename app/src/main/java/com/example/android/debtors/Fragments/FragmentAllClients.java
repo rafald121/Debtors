@@ -86,7 +86,7 @@ public class FragmentAllClients extends Fragment {
 
 
 
-        return inflater.inflate(R.layout.fragment_all_clients, container, false);
+        return rootView;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
