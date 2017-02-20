@@ -25,4 +25,7 @@
 
     <dimen name="recycler_view_item_padding">8dp</dimen>
 
+    <dimen name="item_transacation_subitem_client_padding">4dp</dimen>
+
+
 </resources>
