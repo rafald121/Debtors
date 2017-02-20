@@ -28,7 +28,7 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.allclients_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_allclients, parent, false);
 
         return new MyViewHolder(view);
     }

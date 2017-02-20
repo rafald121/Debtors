@@ -48,7 +48,7 @@ public class FragmentDebtorsMeToOther extends Fragment {
         Log.i(TAG, "onCreateView: START");
 
 
-        View rootView = inflater.inflate(R.layout.recycler_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
 
         class Threadd implements Runnable{
 

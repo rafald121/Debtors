@@ -30,7 +30,7 @@ public class AdapterDebtorsViewPagerItem extends RecyclerView.Adapter<AdapterDeb
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.debtors_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_debtors, parent, false);
 
         return new MyViewHolder(view);
     }
