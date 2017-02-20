@@ -5,12 +5,9 @@
                                              android:orientation="vertical"
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
-                                             android:padding="@dimen/recycler_view_item_padding"
+                                             style="@style/RecyclerViewItemDimens"
                                              android:background="@color/colorRecyclerViewDebtorsItem"
-                                             android:layout_marginLeft="4dp"
-                                             android:layout_marginTop="4dp"
-                                             android:layout_marginRight="4dp">
-
+>
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -50,7 +47,7 @@
         />
 
     <ImageButton
-        android:layout_width="@dimen/debtors_right_arrow_width"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:id="@+id/debtors_item_arrow"
         app:layout_constraintTop_toTopOf="parent"
