@@ -1,7 +1,6 @@
 package com.example.android.debtors.Adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class AdapterDebtorsViewPagerItem extends RecyclerView.Adapter<AdapterDebtorsViewPagerItem.MyViewHolder> {
 
-    private static final String TAG = "AdapterDebtorsViewPagerItem";
+    private static final String TAG = AdapterDebtorsViewPagerItem.class.getSimpleName();
 
     List<Client> clientList = new ArrayList<>();
 
