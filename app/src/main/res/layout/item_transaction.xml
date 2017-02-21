@@ -89,7 +89,7 @@
 
 
     </LinearLayout>
-
+<!--TODO jak bedzie po wszystkim to wyrzucic TYP ( określony w TabLayout)-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"

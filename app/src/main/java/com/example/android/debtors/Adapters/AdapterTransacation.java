@@ -1,12 +1,17 @@
 package com.example.android.debtors.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 
@@ -19,13 +24,22 @@ import java.util.List;
 
 public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacation.MyViewHolder>{
 
-    List<TransactionForClient> listOfTransactions = new ArrayList<>();
-    List<Client> listOfClients = new ArrayList<>();
+    private static final String TAG = AdapterTransacation.class.getSimpleName();
 
-    public AdapterTransacation(List<TransactionForClient> listOfTransactions, List<Client> listOfClients) {
-        this.listOfTransactions = listOfTransactions;
-        this.listOfClients = listOfClients;
+    DatabaseTransactions dbTransactions;
+    DatabaseClients dbClients;
+    List<TransactionForClient> listOfTransactions = new ArrayList<>();
+
+    Context context;
+
+    public AdapterTransacation(Context context, boolean purchaseOrSale) {
+        Log.i(TAG, "AdapterTransacation: START, constructor created ");
+        this.context = context;
+        dbClients = new DatabaseClients(context);
+        listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
     }
+
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +52,9 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     public void onBindViewHolder(MyViewHolder holder, int position) {
         TransactionForClient transaction = listOfTransactions.get(position);
 
-        String clientName = listOfClients.get(transaction.getTransactionClientID()).getClientName();
+
+        Client client = dbClients.getClientByID(transaction.getTransactionClientID());
+        String clientName = client.getClientName();
 
         holder.textViewClient.setText(clientName);
         holder.textViewTotalAmount.setText(String.valueOf(transaction.getProductValue()
@@ -71,5 +87,35 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             textViewDate = (TextView) itemView.findViewById(R.id.transaction_item_date);
             textViewType = (TextView) itemView.findViewById(R.id.transaction_item_type);
         }
+    }
+
+    //////////////////////////
+
+    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
+        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
+
+        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
+
+        for (Transaction t : list){
+            Log.i(TAG, "getListOfTransactionsSale: " + t.toString());
+        }
+
+        return list;
+    }
+
+    private Client getClientById(long ID){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        Client client = dbClients.getClientByID(ID);
+
+        return client;
+    }
+
+    private List<Client> getListOfClients(){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        List<Client> list = dbClients.getAllClient();
+
+        return list;
     }
 }

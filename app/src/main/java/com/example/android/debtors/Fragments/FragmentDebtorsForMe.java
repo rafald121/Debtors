@@ -40,8 +40,6 @@ public class FragmentDebtorsForMe extends Fragment{
         Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
 
-
-
         Log.i(TAG, "onCreate: end");
     }
 
