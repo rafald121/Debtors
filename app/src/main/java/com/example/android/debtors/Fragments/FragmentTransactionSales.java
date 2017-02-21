@@ -7,13 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterTransacation;
-import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -57,18 +55,15 @@ public class FragmentTransactionSales extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        listOfTransactions = getListOfTransactions();
-        listOfClients = getListOfClients();
+//        listOfTransactions = getListOfTransactionsSale();
+//        listOfClients = getListOfClients();
 
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
-        if (listOfClients != null || listOfClients != null){
-            AdapterTransacation adapterTransacation = new AdapterTransacation(listOfTransactions, listOfClients);
-            RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
-            setupRecyclerView(recyclerView);
-            recyclerView.setAdapter(adapterTransacation);
+        AdapterTransacation adapterTransacation = new AdapterTransacation(getContext());
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapterTransacation);
 
-        }else
-            Log.e(TAG, "onCreateView: listOfClients or listOfTransacation is null");
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -109,19 +104,8 @@ public class FragmentTransactionSales extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private List<TransactionForClient> getListOfTransactions(){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(getContext());
 
-        List<TransactionForClient> list = dbTransactions.getListOfTransaction();
 
-        return list;
-    }
 
-    private List<Client> getListOfClients(){
-        DatabaseClients dbClients = new DatabaseClients(getContext());
 
-        List<Client> list = dbClients.getAllClient();
-
-        return list;
-    }
 }
