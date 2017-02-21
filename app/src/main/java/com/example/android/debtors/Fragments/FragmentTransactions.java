@@ -3,7 +3,10 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.debtors.Adapters.AdapterTransacation;
-import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -73,20 +75,20 @@ public class FragmentTransactions extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
-        listOfTransactions = getListOfTransactions();
-        listOfClients = getListOfClients();
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
-        if (listOfClients != null || listOfClients != null){
-            AdapterTransacation adapterTransacation = new AdapterTransacation(listOfTransactions, listOfClients);
-            RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
-            setupRecyclerView(recyclerView);
-            recyclerView.setAdapter(adapterTransacation);
+        return inflater.inflate(R.layout.fragment_transactions, container, false);
+    }
 
-        }else
-            Log.e(TAG, "onCreateView: listOfClients or listOfTransacation is null");
-        // Inflate the layout for this fragment
-        return rootView;
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
+
+        CategoryAdapterTransactions categoryAdapterTransactions = new CategoryAdapterTransactions
+                (getChildFragmentManager());
+        viewPager.setAdapter(categoryAdapterTransactions);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -141,20 +143,6 @@ public class FragmentTransactions extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 //TODO sprobwac utilsa do baz
-    private List<TransactionForClient> getListOfTransactions(){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(getContext());
 
-        List<TransactionForClient> list = dbTransactions.getListOfTransaction();
-
-        return list;
-    }
-
-    private List<Client> getListOfClients(){
-        DatabaseClients dbClients = new DatabaseClients(getContext());
-
-        List<Client> list = dbClients.getAllClient();
-
-        return list;
-    }
 
 }
