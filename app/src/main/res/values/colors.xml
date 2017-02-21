@@ -9,8 +9,8 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorHeaderText">#EFEBE9</color>
 
-    <color name="colorRecyclerViewDebtorsItem">#ECEFF1
+    <color name="colorRecyclerViewDebtorsItem">#ECEFF1</color>
 
+    <color name="icon_transparent">#0000</color>
 
-    </color>
 </resources>
