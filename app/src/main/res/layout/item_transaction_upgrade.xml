@@ -81,7 +81,7 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/transaction_item_quantity"
+            android:id="@+id/transaction_item_totalamount"
             android:layout_weight="35"
             style="@style/ItemTransacationInfoTextView"/>
 

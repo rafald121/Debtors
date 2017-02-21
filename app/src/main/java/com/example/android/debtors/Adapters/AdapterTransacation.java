@@ -29,7 +29,8 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transacations, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction_upgrade, parent,
+                false);
         return new MyViewHolder(view);
     }
 
@@ -40,8 +41,8 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         String clientName = listOfClients.get(transaction.getTransactionClientID()).getClientName();
 
         holder.textViewClient.setText(clientName);
-        holder.textViewQuantity.setText(String.valueOf(transaction.getTransactionQuantity()));
-        holder.textViewValue.setText(String.valueOf(transaction.getProductValue()));
+        holder.textViewTotalAmount.setText(String.valueOf(transaction.getProductValue()
+                *transaction.getTransactionQuantity()));
         String[] datearray = transaction.getTransactionDate().split(" ");
         String date = datearray[0];
         holder.textViewDate.setText(date);
@@ -60,14 +61,13 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewClient, textViewQuantity, textViewValue, textViewDate, textViewType;
+        TextView textViewClient, textViewTotalAmount, textViewDate, textViewType;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             textViewClient = (TextView) itemView.findViewById(R.id.transaction_item_client);
-            textViewQuantity = (TextView) itemView.findViewById(R.id.transaction_item_quantity);
-            textViewValue = (TextView) itemView.findViewById(R.id.transaction_item_value);
+            textViewTotalAmount = (TextView) itemView.findViewById(R.id.transaction_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.transaction_item_date);
             textViewType = (TextView) itemView.findViewById(R.id.transaction_item_type);
         }
