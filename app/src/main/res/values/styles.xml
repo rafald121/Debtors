@@ -37,8 +37,9 @@
         <item name="android:textAlignment">viewStart</item>
         <item name="android:gravity">center_vertical|bottom</item>
         <item name="android:padding">1dp</item>
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <!--<item name="android:layout_marginTop">2dp</item>-->
+        <!--<item name="android:layout_marginLeft">1dp</item>-->
     </style>
     <style name="ItemTransacationInfoTextView" parent="android:Theme">
         <item name="android:textSize">14dp</item>
