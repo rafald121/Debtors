@@ -32,11 +32,11 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     Context context;
 
-    public AdapterTransacation(Context context) {
+    public AdapterTransacation(Context context, boolean purchaseOrSale) {
         Log.i(TAG, "AdapterTransacation: START, constructor created ");
         this.context = context;
         dbClients = new DatabaseClients(context);
-        listOfTransactions = getListOfTransactionsSale();
+        listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
     }
 
 
@@ -91,10 +91,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     //////////////////////////
 
-    private List<TransactionForClient> getListOfTransactionsSale(){
+    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
         DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
 
-        List<TransactionForClient> list = dbTransactions.getTransactionsByType(true);
+        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
 
         for (Transaction t : list){
             Log.i(TAG, "getListOfTransactionsSale: " + t.toString());
