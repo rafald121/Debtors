@@ -60,8 +60,7 @@ public class FragmentTransactionSales extends Fragment {
         listOfTransactions = getListOfTransactions();
         listOfClients = getListOfClients();
 
-        View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager, container, false);
-
+        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
         if (listOfClients != null || listOfClients != null){
             AdapterTransacation adapterTransacation = new AdapterTransacation(listOfTransactions, listOfClients);
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
