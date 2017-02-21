@@ -35,6 +35,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     public AdapterTransacation(Context context) {
         Log.i(TAG, "AdapterTransacation: START, constructor created ");
         this.context = context;
+        dbClients = new DatabaseClients(context);
         listOfTransactions = getListOfTransactionsSale();
     }
 
@@ -50,6 +51,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         TransactionForClient transaction = listOfTransactions.get(position);
+
 
         Client client = dbClients.getClientByID(transaction.getTransactionClientID());
         String clientName = client.getClientName();

@@ -201,7 +201,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
                 transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
 
                 listOfTransactions.add(transaction);
-            } while (c.moveToFirst());
+            } while (c.moveToNext());
         }
 
         return listOfTransactions;
