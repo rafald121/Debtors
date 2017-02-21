@@ -5,7 +5,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/colorHeaderText"
-              android:weightSum="100">
+              android:weightSum="100"
+    android:paddingTop="4dp">
               <!--android:padding="@dimen/item_transacation_padding">-->
 
     <LinearLayout

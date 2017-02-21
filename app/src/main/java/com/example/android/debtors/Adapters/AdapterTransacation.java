@@ -42,7 +42,9 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         holder.textViewClient.setText(clientName);
         holder.textViewQuantity.setText(String.valueOf(transaction.getTransactionQuantity()));
         holder.textViewValue.setText(String.valueOf(transaction.getProductValue()));
-        holder.textViewDate.setText(transaction.getTransactionDate());
+        String[] datearray = transaction.getTransactionDate().split(" ");
+        String date = datearray[0];
+        holder.textViewDate.setText(date);
         if(transaction.isTransactionBuyOrSell())
             holder.textViewType.setText("Sale");
         else
