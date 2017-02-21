@@ -62,7 +62,7 @@ public class FragmentDebtorsMeToOther extends Fragment {
             public void run() {
                 listOfClients = getClientsLessThanZero();
                 AdapterDebtorsViewPagerItem adapter = new AdapterDebtorsViewPagerItem(listOfClients);
-                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
                 setupRecyclerView(recyclerView);
                 recyclerView.setAdapter(adapter);
             }

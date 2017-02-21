@@ -57,13 +57,14 @@ public class FragmentDebtorsForMe extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
 //        TODO make db is reading in another thread \/
+//        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
         listOfClients = getClientsMoreThanZero();
 
 //        fab = (FloatingActionButton)
 
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
         AdapterDebtorsViewPagerItem adapterDebtorsViewPagerItem = new AdapterDebtorsViewPagerItem(listOfClients);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
         setupRecyclerView(recyclerView);
 
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){

@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Model.Transaction;
+import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +19,12 @@ import java.util.List;
 
 public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacation.MyViewHolder>{
 
-    List<Transaction> transactionList = new ArrayList<>();
+    List<TransactionForClient> listOfTransactions = new ArrayList<>();
+    List<Client> listOfClients = new ArrayList<>();
 
-    public AdapterTransacation(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
+    public AdapterTransacation(List<TransactionForClient> listOfTransactions, List<Client> listOfClients) {
+        this.listOfTransactions = listOfTransactions;
+        this.listOfClients = listOfClients;
     }
 
     @Override
@@ -35,15 +35,25 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Transaction transaction = transactionList.get(position);
+        TransactionForClient transaction = listOfTransactions.get(position);
 
-        holder.textViewClient.setText(client.getClientName());
-        ho
+        String clientName = listOfClients.get(transaction.getTransactionClientID()).getClientName();
+
+        holder.textViewClient.setText(clientName);
+        holder.textViewQuantity.setText(String.valueOf(transaction.getTransactionQuantity()));
+        holder.textViewValue.setText(String.valueOf(transaction.getProductValue()));
+        holder.textViewDate.setText(transaction.getTransactionDate());
+        if(transaction.isTransactionBuyOrSell())
+            holder.textViewType.setText("Sale");
+        else
+            holder.textViewType.setText("Purchase");
+
+
     }
 
     @Override
     public int getItemCount() {
-        return transactionList.size();
+        return listOfTransactions.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
