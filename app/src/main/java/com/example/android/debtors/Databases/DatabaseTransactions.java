@@ -171,6 +171,41 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
         return listOfTransaction;
     }
+//buyOrSell - TRUE - SALE,   buyOrSell - FALSE - PURCHASE
+    public List<TransactionForClient> getTransactionsByType(boolean buyOrSell){
+        List<TransactionForClient> listOfTransactions = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "";
+
+        if(buyOrSell)
+            query = "SELECT  * FROM " + TABLE_TRANSACTIONS + " WHERE " +
+                TRANSACTION_BUY_OR_SELL + " = 1";
+        else
+            query = "SELECT  * FROM " + TABLE_TRANSACTIONS + " WHERE " +
+                TRANSACTION_BUY_OR_SELL + " = 0";
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                TransactionForClient transaction = new TransactionForClient();
+
+                transaction.setTransactionID(c.getInt(c.getColumnIndex(TRANSACTION_ID)));
+                transaction.setTransactionDate(c.getString(c.getColumnIndex(TRANSACTION_DATE)));
+                transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
+                transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
+                transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
+                transaction.setProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
+                transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
+
+                listOfTransactions.add(transaction);
+            } while (c.moveToFirst());
+        }
+
+        return listOfTransactions;
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
