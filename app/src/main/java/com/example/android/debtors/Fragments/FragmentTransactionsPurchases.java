@@ -4,12 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -30,6 +32,10 @@ public class FragmentTransactionsPurchases extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private OnFragmentInteractionListener mListener;
+
+    private DatabaseTransactions dbTransaction;
+    private List<TransactionForClient> listOfTransactions;
+    private List<Client> listOfClients;
 
     public FragmentTransactionsPurchases() {
         // Required empty public constructor
@@ -62,9 +68,23 @@ public class FragmentTransactionsPurchases extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+
+        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        AdapterTransacation adapterTransacation = new AdapterTransacation(getContext());
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapterTransacation);
+
+        // Inflate the layout for this fragment
+        return rootView;
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
+                .getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -100,19 +120,19 @@ public class FragmentTransactionsPurchases extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private List<TransactionForClient> getListOfTransactions(){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(getContext());
-
-        List<TransactionForClient> list = dbTransactions.getListOfTransaction();
-
-        return list;
-    }
-
-    private List<Client> getListOfClients(){
-        DatabaseClients dbClients = new DatabaseClients(getContext());
-
-        List<Client> list = dbClients.getAllClient();
-
-        return list;
-    }
+//    private List<TransactionForClient> getListOfTransactions(){
+//        DatabaseTransactions dbTransactions = new DatabaseTransactions(getContext());
+//
+//        List<TransactionForClient> list = dbTransactions.getListOfTransaction();
+//
+//        return list;
+//    }
+//
+//    private List<Client> getListOfClients(){
+//        DatabaseClients dbClients = new DatabaseClients(getContext());
+//
+//        List<Client> list = dbClients.getAllClient();
+//
+//        return list;
+//    }
 }
