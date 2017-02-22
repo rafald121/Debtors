@@ -1,5 +1,6 @@
 package com.example.android.debtors.Fragments;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,8 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,11 +36,11 @@ public class FragmentDebtors extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
+
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
+
 
     public FragmentDebtors() {
         Log.i(TAG, "FragmentDebtors: START");
@@ -65,20 +70,9 @@ public class FragmentDebtors extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: start");
+
         super.onCreate(savedInstanceState);
-
-
-
-//        Fragment fragment = new PageSlider();
-//        FragmentManager manager = getSupportFragmentManager();
-//        manager.beginTransaction().replace(R.id.content, fragment).commit();
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
+        setHasOptionsMenu(true);
 
         Log.i(TAG, "onCreate: end");
     }
@@ -87,11 +81,8 @@ public class FragmentDebtors extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: start");
-        // Inflate the layout for this fragment
-        Log.i(TAG, "onCreateView: end");
-//        CategoryAdapterDebtors mCategoryAdapterDebtors = new CategoryAdapterDebtors(getActivity()
-//                .getSupportFragmentManager());
 
+        Log.i(TAG, "onCreateView: end");
 
         return inflater.inflate(R.layout.fragment_debtors, container, false);
     }
@@ -107,6 +98,66 @@ public class FragmentDebtors extends Fragment {
         viewPager.setAdapter(categoryAdapterDebtors);
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search_view, menu);
+        inflater.inflate(R.menu.menu_debtors, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_view);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.i("onQueryTextChange", newText);
+
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("onQueryTextSubmit", query);
+
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search_view:
+                Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
+                // Not implemented here
+                return false;
+            case R.id.menu_debtors_max_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_amount");
+                return true;
+            case R.id.menu_debtors_min_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_amount");
+                return true;
+            case R.id.menu_debtors_max_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_date");
+                return true;
+            case R.id.menu_debtors_min_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_date");
+                return true;
+            default:
+                break;
+        }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

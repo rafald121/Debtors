@@ -1,5 +1,6 @@
 package com.example.android.debtors.Fragments;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,8 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -40,6 +45,10 @@ public class FragmentAllClients extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
+
+
     public FragmentAllClients() {
         Log.i(TAG, "FragmentAllClients: START");
         // Required empty public constructor
@@ -66,7 +75,10 @@ public class FragmentAllClients extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
+
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         Log.i(TAG, "onCreate: END");
     }
 
@@ -89,6 +101,7 @@ public class FragmentAllClients extends Fragment {
         return rootView;
     }
 
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
@@ -96,6 +109,68 @@ public class FragmentAllClients extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search_view, menu);
+        inflater.inflate(R.menu.menu_allclients, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_view);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.i("onQueryTextChange", newText);
+
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("onQueryTextSubmit", query);
+
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search_view:
+                Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
+                // Not implemented here
+                return false;
+            case R.id.menu_allclients_max_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_amount");
+                return true;
+            case R.id.menu_allclients_min_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_amount");
+                return true;
+            case R.id.menu_allclients_max_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_date");
+                return true;
+            case R.id.menu_allclients_min_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_date");
+                return true;
+            default:
+                break;
+        }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
