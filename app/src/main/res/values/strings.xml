@@ -42,4 +42,6 @@
 
     <string name="view_pager_debtors_me_to_other">Me to other</string>
     <string name="view_pager_debtors_for_me">For me</string>
+
+    <string name="search_title">Search client</string>
 </resources>

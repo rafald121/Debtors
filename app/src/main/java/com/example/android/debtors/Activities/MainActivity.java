@@ -290,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
     private void toggleFabOff(){
         fab.hide();
     }
+
     private void setUpNavigationView() {
         Log.i(TAG, "setUpNavigationView: START");
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
@@ -387,6 +388,7 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         Log.i(TAG, "setUpNavigationView: END");
     }
+
     @Override
     public void onBackPressed() {
 //        TODO when clicked two times ask if quit app
@@ -424,6 +426,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i(TAG, "onCreateOptionsMenu: START");
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_search_view, menu);
+
 //        TODO all clients and debtors menu?
         if(navItemIndex == 0)
             getMenuInflater().inflate(R.menu.menu_allclients, menu);
@@ -435,6 +440,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreateOptionsMenu: END");
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
