@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.R;
+
 ///**
 // * A simple {@link Fragment} subclass.
 // * Activities that contain this fragment must implement the
@@ -52,8 +54,10 @@ public class FragmentPaymentsGiven extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_payments, container, false);
+
 //        TODO ZLE XD
-        return getView();
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
