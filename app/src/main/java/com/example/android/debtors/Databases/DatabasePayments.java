@@ -195,7 +195,38 @@ public class DatabasePayments extends SQLiteOpenHelper {
     }
 
 
+    public List<Payment> getPaymentsByType(boolean receivedOrGive) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        List<Payment> listOfPayments = new ArrayList<>();
+
+        String query = "";
+
+        if (receivedOrGive)//received
+            query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_GOT_OR_GIVEN + " = 1";
+        else//give
+            query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_GOT_OR_GIVEN + " = 0";
+
+        Cursor c = db.rawQuery(query, null);
+
+
+        if (c.moveToFirst()) {
+            do {
+                Payment payment = new Payment();
+
+                payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                listOfPayments.add(payment);
+            } while (c.moveToNext());
+        }
+
+        return listOfPayments;
+    }
 }
 
 
