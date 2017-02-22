@@ -112,8 +112,11 @@ public class FragmentAllClients extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 //        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_search_view, menu);
+        inflater.inflate(R.menu.menu_allclients, menu);
+
         MenuItem searchItem = menu.findItem(R.id.allclients_search);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
 
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
@@ -148,6 +151,18 @@ public class FragmentAllClients extends Fragment {
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
+            case R.id.menu_allclients_max_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_amount");
+                return true;
+            case R.id.menu_allclients_min_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_amount");
+                return true;
+            case R.id.menu_allclients_max_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_date");
+                return true;
+            case R.id.menu_allclients_min_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_date");
+                return true;
             default:
                 break;
         }
