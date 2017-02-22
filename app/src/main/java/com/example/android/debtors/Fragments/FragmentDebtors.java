@@ -93,7 +93,7 @@ public class FragmentDebtors extends Fragment {
 //                .getSupportFragmentManager());
 
 
-        return inflater.inflate(R.layout.fragment_fragment_debtors, container, false);
+        return inflater.inflate(R.layout.fragment_debtors, container, false);
     }
 
     @Override

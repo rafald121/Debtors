@@ -32,6 +32,8 @@
         <item name="android:layout_marginRight">4dp</item>
 
     </style>
+
+
     <style name="ItemTransacationHeaderTextView" parent="android:Theme">
         <item name="android:textSize">10dp</item>
         <item name="android:textAlignment">viewStart</item>
@@ -40,6 +42,11 @@
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginLeft">2dp</item>
     </style>
+
+    <style name="ItemPaymentsHeaderTextView" parent="ItemTransacationHeaderTextView">
+
+    </style>
+
     <style name="ItemTransacationInfoTextView" parent="android:Theme">
         <item name="android:textSize">15dp</item>
         <item name="android:textAlignment">viewStart</item>
@@ -47,6 +54,10 @@
         <item name="android:padding">1dp</item>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="ItemPaymentsInfoTextView" parent="ItemTransacationInfoTextView">
+
     </style>
     <!--<style name="RecyclerView">-->
         <!--<item name="recyclerViewItemBackgroundColor">@android:colors-->
