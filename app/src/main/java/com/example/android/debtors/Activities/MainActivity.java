@@ -415,58 +415,12 @@ public class MainActivity extends AppCompatActivity {
                 } else{ // if true user have clicked back button once and next time minimalize app
 //                    minimalize app
                 }
-
             }
         }
 
         super.onBackPressed();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        Log.i(TAG, "onCreateOptionsMenu: START");
-////        MenuInflater inflater = getMenuInflater();
-////        inflater.inflate(R.menu.menu_search_view, menu);
-//
-////        TODO all clients and debtors menu?
-////        if(navItemIndex == 0)
-////            getMenuInflater().inflate(R.menu.menu_allclients, menu);
-//        if(navItemIndex == 2)
-//            getMenuInflater().inflate(R.menu.menu_transactions, menu);
-//        if(navItemIndex == 3)
-//            getMenuInflater().inflate(R.menu.menu_payments,menu);
-//
-//        Log.i(TAG, "onCreateOptionsMenu: END");
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-////TODO KIEDY OPCJA Z MENU KLIKNIETA -> UZUPELNIC
-////        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-////        if (id == R.id.action_logout) {
-////            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-////            return true;
-////        }
-////
-////        // user is in notifications fragment
-////        // and selected 'Mark all as Read'
-////        if (id == R.id.action_mark_all_read) {
-////            Toast.makeText(getApplicationContext(), "All notifications marked as read!", Toast.LENGTH_LONG).show();
-////        }
-////
-////        // user is in notifications fragment
-////        // and selected 'Clear All'
-////        if (id == R.id.action_clear_notifications) {
-////            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     private void loadNavHeader() {
 

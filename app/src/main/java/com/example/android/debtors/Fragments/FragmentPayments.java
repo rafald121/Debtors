@@ -47,6 +47,7 @@ public class FragmentPayments extends Fragment {
         Log.i(TAG, "FragmentPayments: START");
         // Required empty public constructor
     }
+
 //
 //    /**
 //     * Use this factory method to create a new instance of

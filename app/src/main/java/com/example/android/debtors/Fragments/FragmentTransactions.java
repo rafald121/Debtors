@@ -12,6 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -68,6 +71,7 @@ public class FragmentTransactions extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         Log.i(TAG, "onCreate: END");
     }
 
@@ -89,6 +93,39 @@ public class FragmentTransactions extends Fragment {
                 (getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterTransactions);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_transactions,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_transaction_max_total_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_transaction_max_total_amount");
+                return true;
+            case R.id.menu_transaction_min_total_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_transaction_min_total_amount");
+                return true;
+            case R.id.menu_transaction_max_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_transaction_max_date");
+                return true;
+            case R.id.menu_transaction_min_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_transaction_min_date");
+                return true;
+            case R.id.menu_transaction_max_quantity:
+                Log.i(TAG, "onOptionsItemSelected: menu_transaction_max_quantity");
+                return true;
+            case R.id.menu_transaction_min_quantity:
+                Log.i(TAG, "onOptionsItemSelected: menu_transaction_min_quantity");
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
