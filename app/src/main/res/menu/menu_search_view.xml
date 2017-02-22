@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".Activities.MainActivity">
-    <item android:id="@+id/allclients_search"
+    <item android:id="@+id/search_view"
           android:title="@string/search_title"
           android:icon="@drawable/search_24"
           app:actionViewClass="android.support.v7.widget.SearchView"

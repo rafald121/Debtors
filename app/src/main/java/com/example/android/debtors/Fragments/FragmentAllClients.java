@@ -75,8 +75,10 @@ public class FragmentAllClients extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
+
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         Log.i(TAG, "onCreate: END");
     }
 
@@ -114,9 +116,8 @@ public class FragmentAllClients extends Fragment {
         inflater.inflate(R.menu.menu_search_view, menu);
         inflater.inflate(R.menu.menu_allclients, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.allclients_search);
+        MenuItem searchItem = menu.findItem(R.id.search_view);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-
 
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
@@ -147,7 +148,7 @@ public class FragmentAllClients extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.allclients_search:
+            case R.id.search_view:
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
