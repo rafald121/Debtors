@@ -4,10 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.R;
 
 ///**
@@ -54,10 +58,25 @@ public class FragmentPaymentsGiven extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_payments, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
 
-//        TODO ZLE XD
+        AdapterPayment adapterPayment = new AdapterPayment(getContext(), false);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapterPayment);
+
+        // Inflate the layout for this fragment
         return rootView;
+
+
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
+                .getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     // TODO: Rename method, update argument and hook method into UI event
