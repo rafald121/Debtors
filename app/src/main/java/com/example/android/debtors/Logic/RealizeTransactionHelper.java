@@ -27,6 +27,7 @@ public class RealizeTransactionHelper {
     DatabaseClients dbClients;
     DatabaseOwner dbOwners;
     Context mainContext;
+
     public RealizeTransactionHelper() {
     }
 

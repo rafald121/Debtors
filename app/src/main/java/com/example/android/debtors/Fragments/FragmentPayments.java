@@ -3,32 +3,39 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Adapters.CategoryAdapterPayments;
+import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentPayments.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentPayments#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
+///**
+// * A simple {@link Fragment} subclass.
+// * Activities that contain this fragment must implement the
+// * {@link FragmentPayments.OnFragmentInteractionListener} interface
+// * to handle interaction events.
+// * Use the {@link FragmentPayments#newInstance} factory method to
+// * create an instance of this fragment.
+// */
 public class FragmentPayments extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = FragmentPayments.class.getSimpleName();
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private DatabasePayments dbPayments;
+    private List<Payment> listOfPayments;
+//    private List<>
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -36,36 +43,32 @@ public class FragmentPayments extends Fragment {
         Log.i(TAG, "FragmentPayments: START");
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentPayments.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentPayments newInstance(String param1, String param2) {
-        Log.i(TAG, "newInstance: START");
-        FragmentPayments fragment = new FragmentPayments();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        Log.i(TAG, "newInstance: END");
-        return fragment;
-    }
+//
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
+//     * @return A new instance of fragment FragmentPayments.
+//     */
+//    // TODO: Rename and change types and number of parameters
+//    public static FragmentPayments newInstance(String param1, String param2) {
+//        Log.i(TAG, "newInstance: START");
+//        FragmentPayments fragment = new FragmentPayments();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        Log.i(TAG, "newInstance: END");
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        Log.i(TAG, "onCreate: END");
+
     }
 
     @Override
@@ -73,15 +76,25 @@ public class FragmentPayments extends Fragment {
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_payments, container, false);
+        return inflater.inflate(R.layout.fragment_payments, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.payments_viewpager);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.payments_tabs);
+
+        CategoryAdapterPayments categoryAdapterPayments = new CategoryAdapterPayments(getChildFragmentManager());
+        viewPager.setAdapter(categoryAdapterPayments);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         Log.i(TAG, "onButtonPressed: START");
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
     }
 
     @Override
@@ -117,4 +130,7 @@ public class FragmentPayments extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
 }
