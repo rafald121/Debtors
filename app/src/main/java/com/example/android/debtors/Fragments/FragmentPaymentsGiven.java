@@ -7,18 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.android.debtors.R;
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentPaymentsGiven.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentPaymentsGiven#newInstance} factory method to
- * create an instance of this fragment.
- */
+///**
+// * A simple {@link Fragment} subclass.
+// * Activities that contain this fragment must implement the
+// * {@link FragmentPaymentsGiven.OnFragmentInteractionListener} interface
+// * to handle interaction events.
+// * Use the {@link FragmentPaymentsGiven#newInstance} factory method to
+// * create an instance of this fragment.
+// */
 public class FragmentPaymentsGiven extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,7 +52,8 @@ public class FragmentPaymentsGiven extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+//        TODO ZLE XD
+        return getView();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
