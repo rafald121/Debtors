@@ -18,13 +18,13 @@ import java.util.List;
  * Created by Rafaello on 2017-02-19.
  */
 
-public class AdapterDebtorsViewPagerItem extends RecyclerView.Adapter<AdapterDebtorsViewPagerItem.MyViewHolder> {
+public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHolder> {
 
-    private static final String TAG = AdapterDebtorsViewPagerItem.class.getSimpleName();
+    private static final String TAG = AdapterDebtors.class.getSimpleName();
 
     List<Client> clientList = new ArrayList<>();
 
-    public AdapterDebtorsViewPagerItem(List<Client> clientList) {
+    public AdapterDebtors(List<Client> clientList) {
         this.clientList = clientList;
     }
 
