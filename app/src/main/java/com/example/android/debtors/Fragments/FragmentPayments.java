@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,6 +38,7 @@ public class FragmentPayments extends Fragment {
     private DatabasePayments dbPayments;
     private List<Payment> listOfPayments;
 //    private List<>
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -68,6 +72,7 @@ public class FragmentPayments extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
     }
 
@@ -89,6 +94,34 @@ public class FragmentPayments extends Fragment {
         CategoryAdapterPayments categoryAdapterPayments = new CategoryAdapterPayments(getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterPayments);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_payments,menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_payment_max_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_payment_max_amount");
+                return true;
+            case R.id.menu_payment_min_amount:
+                Log.i(TAG, "onOptionsItemSelected: menu_payment_min_amount");
+                return true;
+            case R.id.menu_payment_max_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_payment_max_date");
+                return true;
+            case R.id.menu_payment_min_date:
+                Log.i(TAG, "onOptionsItemSelected: menu_payment_min_date");
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
