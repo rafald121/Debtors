@@ -444,6 +444,8 @@ public class MainActivity extends AppCompatActivity {
 
         // showing dot next to notifications label
 //        TODO wklepać aby zamiast kropki pokazywaly się liczby
+//        TextView amount = (TextView) findViewById(R.layout.navigation_drawer_amount);
+//        navigationView.getMenu().getItem(2).setAct
         navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
     }
 
