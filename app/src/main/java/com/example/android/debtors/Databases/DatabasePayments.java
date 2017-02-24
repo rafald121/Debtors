@@ -11,6 +11,7 @@ import com.example.android.debtors.Model.Payment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import static android.content.ContentValues.TAG;
 
@@ -118,6 +119,24 @@ public class DatabasePayments extends SQLiteOpenHelper {
         }
 
         return listOfPayments;
+    }
+
+    public int getAmountOfPayments(){
+        int paymentsAmount = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                paymentsAmount++;
+            } while (c.moveToNext());
+        }
+
+        return paymentsAmount;
     }
 
 

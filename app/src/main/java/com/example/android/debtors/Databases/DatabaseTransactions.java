@@ -112,6 +112,25 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
         return listOfTransaction;
     }
 
+    public int getAmountOfTransactions(){
+        int transactionsAmount = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_TRANSACTIONS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                transactionsAmount++;
+            }while (c.moveToNext());
+        }
+
+        return transactionsAmount;
+
+    }
+
     public List<TransactionForClient> getTransactionFromClient(long clientID){
         SQLiteDatabase db = this.getReadableDatabase();
 

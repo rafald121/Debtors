@@ -108,6 +108,7 @@ public class DatabaseOwner extends SQLiteOpenHelper {
 
     }
 
+
     public int updateOwner(Owner owner){
         SQLiteDatabase db = this.getWritableDatabase();
 

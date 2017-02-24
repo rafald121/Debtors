@@ -12,6 +12,7 @@ import com.example.android.debtors.Model.Client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Rafaello on 2017-02-09.
@@ -152,6 +153,42 @@ public class DatabaseClients extends SQLiteOpenHelper{
         }
 
         return clientsList;
+    }
+
+    public int getAmountOfAllClient(){
+        int clientsAmount = 0 ;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query,null);
+
+        if(c.moveToFirst()){
+            do{
+                clientsAmount ++;
+            }while (c.moveToNext());
+        }
+
+        return clientsAmount;
+    }
+
+    public int getDebtorsAmount(){
+        int debtorsAmount = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " != " + " 0";
+
+        Cursor c = db.rawQuery(query,null);
+
+        if(c.moveToFirst()){
+            do{
+                debtorsAmount++;
+            }while (c.moveToNext());
+        }
+
+        return debtorsAmount;
     }
 
     public List<Client> getClientWithLeftAmountInRange(int min, int max){
