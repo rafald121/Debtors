@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
@@ -93,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
     // debtor fragment, whenBackClickedOnDebtors is set to true and when click another time app
     // minimalize
 
+    public HashMap<Integer, Integer> navItemCount;
+    UtilsDatabaseMethods databaseMethods;
+
     private Handler mHandler;
 
 
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadSelectedFragment();
 
-        UtilsDatabaseMethods databaseMethods = new UtilsDatabaseMethods(getApplicationContext());
+        databaseMethods = new UtilsDatabaseMethods(getApplicationContext());
 
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
@@ -153,37 +157,8 @@ public class MainActivity extends AppCompatActivity {
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
 
-        Owner owner = new Owner(5000,"Adrian",10000);
-        dbOwner.createOwner(owner);
-//        dbPayment.deletePaymentInRange(15,20);
-        simulatePayments();
+//        simulatePayments();
 
-//        List<Client> listOfClient = new ArrayList<>();
-//        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
-//        List<Client> listOfClientWithLeftAmountFromTo = new ArrayList<>();
-//        List<Client> listOfUserByName = new ArrayList<>();
-//        listOfAllClientFromDatabase = getAllClients();
-//        listOfClientWithLeftAmountFromTo = getClientInLeftAmountRange();
-//        List<Payment> listOfAllPayments = getPayments();
-//        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
-//        List<Payment>
-//        List<TransactionForClient> listOfTransactionByClientID = getTransactionByClientId(7);
-//        List<TransactionForClient> listOfTransactionByOwnerID = getTransactionByOwnerId(2);
-//        List<Owner> listOfAllOwners = getOwner();
-
-//
-//        simulateTransaction();
-//        simulateTransactionWithPayment();
-
-
-//        List<Payment> listOfAllPayments = getPayments();
-//        List<Payment> listOfPaymentsByClientId = getPaymentByClientId(2);
-//        List<Payment> listOfPaymentsByOwnerId = getPaymentByOwnerId(1);
-
-//        List<TransactionForClient> listOfAllTransaction = getTransaction();
-
-//        Log.i(TAG, "onCreate: listOfPaymentsByClientId" + listOfPaymentsByClientId.toString();
-//        simulatePayments(owner,clientJurand);
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
     }
@@ -191,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadSelectedFragment(){
         Log.i(TAG, "loadSelectedFragment: START");
 //        count amount of items in every fragment
-        setNavigationDrawerItemAmount(R.id.nav_all_clients ,30);
+        setNavigationDrawerItemAmount();
 //        make that navigation item as selected in navigation layout
         selectNavigationMenuToBeChecked();
 //      set title of action bar depends on selected fragment
@@ -246,14 +221,45 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "loadSelectedFragment: END");
     }
 
-    private void setNavigationDrawerItemAmount(@IdRes int itemID, int count) {
-        TextView textView = (TextView) navigationView.getMenu().getItem(1).getActionView();
-        if(textView == null)
-            Log.e(TAG, "setNavigationDrawerItemAmount: textView is null" );
-        else
-            textView.setText(String.valueOf(count));
-    }
+    private void setNavigationDrawerItemAmount() {
 
+        DatabaseClients _dbClient = new DatabaseClients(getApplicationContext());
+        DatabasePayments _dbPayment = new DatabasePayments(getApplicationContext());
+        DatabaseTransactions _dbTransaction = new DatabaseTransactions(getApplicationContext());
+
+        int amountAllClients = _dbClient.getAmountOfAllClient();
+        int amountDebtors = _dbClient.getDebtorsAmount();
+        int amountTransactions = _dbTransaction.getAmountOfTransactions();
+        int amountPayments = _dbPayment.getAmountOfPayments();
+
+
+
+        TextView itemCounterAllClients = (TextView) navigationView.getMenu().findItem(R.id.nav_all_clients).getActionView();
+        if(itemCounterAllClients != null)
+            itemCounterAllClients.setText(String.valueOf(amountAllClients));
+        else
+            Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterAlLClients is null");
+
+        TextView itemCounterDebtors = (TextView) navigationView.getMenu().findItem(R.id.nav_debtors).getActionView();
+        if(itemCounterDebtors != null)
+            itemCounterDebtors.setText(String.valueOf(amountDebtors));
+        else
+            Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterDebtors is null");
+
+        TextView itemCounterPayments = (TextView) navigationView.getMenu().findItem(R.id.nav_payments).getActionView();
+        if(itemCounterPayments != null)
+            itemCounterPayments.setText(String.valueOf(amountPayments));
+        else
+            Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterPayments is null");
+
+        TextView itemCounterTransactions = (TextView) navigationView.getMenu().findItem(R.id.nav_transactions).getActionView();
+        if(itemCounterTransactions != null)
+            itemCounterTransactions.setText(String.valueOf(amountTransactions));
+        else
+            Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterTransaction is null");
+
+
+    }
 
     private Fragment getSelectedFragment() {
         Log.i(TAG, "getSelectedFragment: START");
@@ -458,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
 //        TODO wklepać aby zamiast kropki pokazywaly się liczby
 //        TextView amount = (TextView) findViewById(R.layout.navigation_drawer_item_counter);
 //        navigationView.getMenu().getItem(2).setAct
-        navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
+//        navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
     }
 
 //SIMULATIONS \/

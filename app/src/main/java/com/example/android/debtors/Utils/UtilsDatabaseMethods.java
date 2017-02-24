@@ -1,8 +1,10 @@
 package com.example.android.debtors.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
@@ -11,7 +13,9 @@ import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.TransactionForClient;
+import com.example.android.debtors.R;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -27,11 +31,14 @@ public class UtilsDatabaseMethods {
     static DatabasePayments dbPayment;
     static DatabaseTransactions dbTransaction;
     static DatabaseOwner dbOwner;
-Context context;
+    static Context context;
 
     public UtilsDatabaseMethods(Context applicationContext) {
         this.context = applicationContext;
         dbClient = new DatabaseClients(applicationContext);
+        dbPayment = new DatabasePayments(applicationContext);
+        dbTransaction = new DatabaseTransactions(applicationContext);
+
     }
 
     public static void createClients(String[] names){
@@ -133,5 +140,6 @@ Context context;
 
         return transactionByOwnerID;
     }
+
 
 }
