@@ -1,5 +1,6 @@
 package com.example.android.debtors.Utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.android.debtors.Databases.DatabaseClients;
@@ -22,45 +23,51 @@ import static android.util.Log.i;
 
 public class UtilsDatabaseMethods {
 
-    DatabaseClients dbClient;
-    DatabasePayments dbPayment;
-    DatabaseTransactions dbTransaction;
-    DatabaseOwner dbOwner;
+    static DatabaseClients dbClient;
+    static DatabasePayments dbPayment;
+    static DatabaseTransactions dbTransaction;
+    static DatabaseOwner dbOwner;
+Context context;
 
-    private void createClients(String[] names){
+    public UtilsDatabaseMethods(Context applicationContext) {
+        this.context = applicationContext;
+        dbClient = new DatabaseClients(applicationContext);
+    }
+
+    public static void createClients(String[] names){
         for(int i = 0 ; i< names.length -1 ; i++){
             Client client = new Client(names[i], 50*i*(-10));
             dbClient.createClient(client);
         }
     }
 
-    private void getListOfOwnerTransactions(Owner owner){
+    public static void getListOfOwnerTransactions(Owner owner){
         i(TAG, "getListOfOwnerTransactions: lista tranzakcji " + owner.getListOfTransaction());
     }
 
-    private void getListOfClientTransactions(Client client){
+    public static void getListOfClientTransactions(Client client){
         i(TAG, "getListOfClientTransactions: lista tranzakcji " + client.getListOfTransaction());
     }
 
-    private void getListOfOwnerPayments(Owner owner){
+    public static void getListOfOwnerPayments(Owner owner){
         i(TAG, "getListOfOwnerPayments: lista zapłat: " + owner.getListOfPayments());
     }
-    private void getListOfClientPayments(Client client){
+    public static void getListOfClientPayments(Client client){
         i(TAG, "getListOfClientPayments: lista zapłat: " + client.getListOfPayments());
     }
-    private void getInfoAboutTransaction(TransactionForClient transaction){
+    public static void getInfoAboutTransaction(TransactionForClient transaction){
         i(TAG, "getInfoAboutTransaction: " + transaction.toString());
     }
-    private void getInfoAboutPayments(Payment payment){
+    public static void getInfoAboutPayments(Payment payment){
         i(TAG, "getInfoAboutPayments: " + payment.toString());
     }
-    private void getInfoAboutOwner(Owner owner){
+    public static void getInfoAboutOwner(Owner owner){
         i(TAG, "getInfoAboutOwner: " + owner.toString());
     }
-    private void getInfoAboutClient(Client client){
+    public static void getInfoAboutClient(Client client){
         i(TAG, "getInfoAboutClient: " + client.toString());
     }
-    private void printList(List<Client> list){
+    public static void printList(List<Client> list){
         if(list.size() == 0 )
             i(TAG, "printList: LISTA PUSTA");
         i(TAG, "printList: hao");
@@ -68,7 +75,7 @@ public class UtilsDatabaseMethods {
             i(TAG, "printList: drukuje klienta: " + c.toString());
     }
 
-    private List<Owner> getOwner(){
+    public static List<Owner> getOwner(){
         i(TAG, "getOwner:  OWNER");
 
         List<Owner> listOfOwners = dbOwner.getAllOwners();
@@ -79,7 +86,7 @@ public class UtilsDatabaseMethods {
         return  listOfOwners;
     }
 
-    private List<Payment> getPayments(){
+    public static List<Payment> getPayments(){
         List<Payment> listOfPayments = dbPayment.getAllPayments();
 
         for(Payment p : listOfPayments)
@@ -87,7 +94,7 @@ public class UtilsDatabaseMethods {
 
         return listOfPayments;
     }
-    private List<TransactionForClient> getTransaction(){
+    public static List<TransactionForClient> getTransaction(){
         Log.i(TAG, "getTransaction: ");
         List<TransactionForClient> listOfTransaction = dbTransaction.getListOfTransaction();
 
@@ -99,7 +106,7 @@ public class UtilsDatabaseMethods {
 
         return listOfTransaction;
     }
-    private List<TransactionForClient> getTransactionByClientId(long clientID) {
+    public static List<TransactionForClient> getTransactionByClientId(long clientID) {
         List<TransactionForClient> transactionByClientID = dbTransaction.getTransactionFromClient(clientID);
         Log.w(TAG, "getTransactionByClientId: " );
 
@@ -113,7 +120,7 @@ public class UtilsDatabaseMethods {
         return transactionByClientID;
     }
 
-    private List<TransactionForClient> getTransactionByOwnerId(long ownerID) {
+    public static List<TransactionForClient> getTransactionByOwnerId(long ownerID) {
         List<TransactionForClient> transactionByOwnerID = dbTransaction.getTransactionFromOwned(ownerID);
         Log.w(TAG, "getTransactionByOwnerId: " );
 

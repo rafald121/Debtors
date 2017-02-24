@@ -29,9 +29,16 @@ import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
 import com.example.android.debtors.Fragments.FragmentTransactions;
+import com.example.android.debtors.Logic.RealizePaymentHelper;
+import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Owner;
+import com.example.android.debtors.Model.Payment;
+import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Others.CircleTransform;
 import com.example.android.debtors.R;
+import com.example.android.debtors.Utils.Utils;
+import com.example.android.debtors.Utils.UtilsDatabaseMethods;
 
 import java.util.HashMap;
 
@@ -136,15 +143,18 @@ public class MainActivity extends AppCompatActivity {
 
         loadSelectedFragment();
 
+        UtilsDatabaseMethods databaseMethods = new UtilsDatabaseMethods(getApplicationContext());
 
         dbClient = new DatabaseClients(getApplicationContext());
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
-//        createClients(names2);
+
+        Owner owner = new Owner(5000,"Adrian",10000);
+        dbOwner.createOwner(owner);
 //        dbPayment.deletePaymentInRange(15,20);
-//        simulatePayments();
+        simulatePayments();
 
 //        List<Client> listOfClient = new ArrayList<>();
 //        List<Client> listOfAllClientFromDatabase = new ArrayList<>();
@@ -159,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 //        List<TransactionForClient> listOfTransactionByOwnerID = getTransactionByOwnerId(2);
 //        List<Owner> listOfAllOwners = getOwner();
 
-
+//
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
 
@@ -438,67 +448,68 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //SIMULATIONS \/
-//    private void simulateTransactionWithPayment(){
-//        Log.w(TAG, "simulateTransactionWithPayment: ");
-//        //        WLASCICIEL
-//        Owner owner = dbOwner.getOwner(1);
-//
-////        KLIECI
-//        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
-//
-//        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 6, 30, 100, true);
-//
+    private void simulateTransactionWithPayment(){
+        Log.w(TAG, "simulateTransactionWithPayment: ");
+        //        WLASCICIEL
+        Owner owner = dbOwner.getOwner(1);
+
+//        KLIECI
+        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
+
+        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 6, 30, 100, true);
+
 //        getInfoAboutTransaction(transactionWithPayment);
 //
 //        Log.w(TAG, "onCreate: BEFORE TRANSACTION WITH PAYMENT" );
 //        getInfoAboutOwner(owner);
 //        getInfoAboutClient(clientJurand);
-////        getListOfOwnerTransactions(owner);
-////        getListOfClientTransactions(clientJurand);
-//
-//        RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
-//        realizeTransactionHelper.realizeTransaction(getApplicationContext(), transactionWithPayment);
-//
-//        Log.w(TAG, "onCreate: AFTER TRANSACTION WITH PAYMENT ");
-//
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
+
+        RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
+        realizeTransactionHelper.realizeTransaction(getApplicationContext(), transactionWithPayment);
+
+        Log.w(TAG, "onCreate: AFTER TRANSACTION WITH PAYMENT ");
+
 //        getInfoAboutOwner(owner);
 //        getInfoAboutClient(clientJurand);
-////        getListOfOwnerTransactions(owner);
-////        getListOfClientTransactions(clientJurand);
-//
-//        dbClient.updateClient(clientJurand);
-//
-//    }
-//    private void simulatePayments(){
-//        Log.w(TAG, "simulatePayments: " );
-//
-//        Owner owner = dbOwner.getOwner(1);
-//
-//        Client clientJurand = dbClient.getClientByID(8); //kupujacy 2
-//
-//        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 20, true);
-//
-//        Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
-////        dbPayment.createPayment(payment);
-//
-//        Log.w(TAG, "onCreate: BEFORE PAYMENT" );
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
+
+        dbClient.updateClient(clientJurand);
+
+    }
+    private void simulatePayments(){
+        Log.w(TAG, "simulatePayments: " );
+
+
+        Owner owner = dbOwner.getOwner(1);
+
+        Client clientJurand = dbClient.getClientByID(8); //kupujacy 2
+
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 20, true);
+
+        Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
+//        dbPayment.createPayment(payment);
+
+        Log.w(TAG, "onCreate: BEFORE PAYMENT" );
 //        getInfoAboutPayments(payment);
 //        getInfoAboutOwner(owner);
 //        getInfoAboutClient(clientJurand);
-//
-//        RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
-//        realizePaymentHelper.realizePayment(getApplicationContext(), payment);
-//
-//        Log.w(TAG, "onCreate: AFTER PAYMENT ");
+
+        RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
+        realizePaymentHelper.realizePayment(getApplicationContext(), payment);
+
+        Log.w(TAG, "onCreate: AFTER PAYMENT ");
 //        getInfoAboutOwner(owner);
 //        getInfoAboutClient(clientJurand);
-////        getListOfOwnerPayments(owner);
-////        getListOfClientPayments(clientJurand);
-//
-//        dbClient.updateClient(clientJurand);
-//
-//
-//    }
+//        getListOfOwnerPayments(owner);
+//        getListOfClientPayments(clientJurand);
+
+        dbClient.updateClient(clientJurand);
+
+
+    }
 //    private void simulatePayments(Owner owner, Client clientJurand){
 //        Log.w(TAG, "simulatePayments: " );
 //
@@ -525,41 +536,41 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //    }
-//    private void simulateTransaction(){
-//        Log.w(TAG, "simulateTransaction: ");
-//
-//        Owner owner = dbOwner.getOwner(1);
-//        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
-//
-////        TRANZAKCJA
-//        //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
-//        // true - owner - sprzedający,
-//        // false - owner - kupujący
-//        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
-//                owner, clientJurand, 2, 100, true);
-//
-////        dbTransaction.createTransaction(transactionForClient);
-//
+    private void simulateTransaction(){
+        Log.w(TAG, "simulateTransaction: ");
+
+        Owner owner = dbOwner.getOwner(1);
+        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
+
+//        TRANZAKCJA
+        //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
+        // true - owner - sprzedający,
+        // false - owner - kupujący
+        TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
+                owner, clientJurand, 2, 100, true);
+
+//        dbTransaction.createTransaction(transactionForClient);
+
 //        getInfoAboutTransaction(transactionForClient);
-//
-//        Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
-//        UtilsDatabaseMethods.getInfoAboutOwner(owner);
+
+        Log.w(TAG, "onCreate: BEFORE TRANSACTION" );
+        UtilsDatabaseMethods.getInfoAboutOwner(owner);
 //        getInfoAboutClient(clientJurand);
-////        getListOfOwnerTransactions(owner);
-////        getListOfClientTransactions(clientJurand);
-//
-//        RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
-//        realizeTransactionHelper.realizeTransaction(getApplicationContext(),transactionForClient);
-//        Log.w(TAG, "onCreate: AFTER TRANSACTION ");
-//
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
+
+        RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
+        realizeTransactionHelper.realizeTransaction(getApplicationContext(),transactionForClient);
+        Log.w(TAG, "onCreate: AFTER TRANSACTION ");
+
 //        getInfoAboutOwner(owner);
 //        getInfoAboutClient(clientJurand);
-////        getListOfOwnerTransactions(owner);
-////        getListOfClientTransactions(clientJurand);
-//
-//
-//        dbClient.updateClient(clientJurand);
-//    }
+//        getListOfOwnerTransactions(owner);
+//        getListOfClientTransactions(clientJurand);
+
+
+        dbClient.updateClient(clientJurand);
+    }
 
 
 

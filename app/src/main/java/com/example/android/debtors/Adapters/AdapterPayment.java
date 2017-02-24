@@ -15,6 +15,7 @@ import com.example.android.debtors.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Rafaello on 2017-02-22.
@@ -52,9 +53,12 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         Payment payment = listOfPayments.get(position);
 
         String clientName = getClientByID(payment.getPaymentClientID()).getClientName();
+        String[] dateArray = payment.getPaymentDate().split(" ");
+        String dateString = dateArray[0];
+
 
         holder.textViewClient.setText(clientName);
-        holder.textViewDate.setText(payment.getPaymentDate());
+        holder.textViewDate.setText(dateString);
         holder.textViewPaymentAmount.setText(String.valueOf(payment.getPaymentAmount()));
         if(payment.isPaymentGotOrGiven())//if tru
             holder.textViewType.setText("Received");
