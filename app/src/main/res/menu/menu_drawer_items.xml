@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <group android:checkableBehavior="single">
     <item
         android:id="@+id/nav_all_clients"
         android:title="@string/nav_all_clients"
-        android:actionLayout="@layout/navigation_drawer_amount"/>
+        app:actionLayout="@layout/navigation_drawer_item_counter"/>
     <!--android:icon="@drawable/ic_home_black_24dp"-->
 
 
     <item
         android:id="@+id/nav_debtors"
         android:title="@string/nav_debtors"
-        android:actionLayout="@layout/navigation_drawer_amount"/>
+        app:actionLayout="@layout/navigation_drawer_item_counter"/>
     <!--android:icon="@drawable/ic_photo_library_black_24dp"-->
 
     <item
         android:id="@+id/nav_transactions"
         android:title="@string/nav_transactions"
-        android:actionLayout="@layout/navigation_drawer_amount"/>
+        app:actionLayout="@layout/navigation_drawer_item_counter"/>
     <!--android:icon="@drawable/ic_local_movies_black_24dp"-->
 
 
     <item
         android:id="@+id/nav_payments"
         android:title="@string/nav_payments"
-        android:actionLayout="@layout/navigation_drawer_amount"/>
+        app:actionLayout="@layout/navigation_drawer_item_counter"/>
     <!--android:icon="@drawable/ic_notifications_black_24dp"-->
 
 

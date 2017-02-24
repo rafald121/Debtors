@@ -3,6 +3,7 @@ package com.example.android.debtors.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String urlProfileImg = "https://avatars3.githubusercontent.com/u/16782428?v=3&u=d6d5d36732184328f00b7ee90c1ef6f23627005e&s=400";
 
     // index to identify current nav menu item
+    public static int navItemAmount = 4;
     public static int navItemIndex = 0;
 
     // toolbar titles respected to selected nav menu item
@@ -188,6 +190,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadSelectedFragment(){
         Log.i(TAG, "loadSelectedFragment: START");
+//        count amount of items in every fragment
+        setNavigationDrawerItemAmount(R.id.nav_all_clients ,30);
 //        make that navigation item as selected in navigation layout
         selectNavigationMenuToBeChecked();
 //      set title of action bar depends on selected fragment
@@ -240,6 +244,14 @@ public class MainActivity extends AppCompatActivity {
 //        TODO TEST IT
         invalidateOptionsMenu();
         Log.i(TAG, "loadSelectedFragment: END");
+    }
+
+    private void setNavigationDrawerItemAmount(@IdRes int itemID, int count) {
+        TextView textView = (TextView) navigationView.getMenu().getItem(1).getActionView();
+        if(textView == null)
+            Log.e(TAG, "setNavigationDrawerItemAmount: textView is null" );
+        else
+            textView.setText(String.valueOf(count));
     }
 
 
@@ -444,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
 
         // showing dot next to notifications label
 //        TODO wklepać aby zamiast kropki pokazywaly się liczby
-//        TextView amount = (TextView) findViewById(R.layout.navigation_drawer_amount);
+//        TextView amount = (TextView) findViewById(R.layout.navigation_drawer_item_counter);
 //        navigationView.getMenu().getItem(2).setAct
         navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
     }
