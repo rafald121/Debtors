@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ public class FragmentDebtorsForMe extends Fragment{
     DatabaseClients dbClients;
     List<Client> listOfClients;
     FloatingActionButton fab;
+    FragmentActivity fragmentActivity;
 
     public FragmentDebtorsForMe() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
@@ -61,7 +63,7 @@ public class FragmentDebtorsForMe extends Fragment{
 //        fab = (FloatingActionButton)
 
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
-        AdapterDebtors adapterDebtors = new AdapterDebtors(listOfClients);
+        AdapterDebtors adapterDebtors = new AdapterDebtors(fragmentActivity, listOfClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
         setupRecyclerView(recyclerView);
 
@@ -100,6 +102,7 @@ public class FragmentDebtorsForMe extends Fragment{
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
+        fragmentActivity = (FragmentActivity) context;
         super.onAttach(context);
     }
 
