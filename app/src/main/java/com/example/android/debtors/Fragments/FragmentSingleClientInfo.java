@@ -86,7 +86,7 @@ public class FragmentSingleClientInfo extends Fragment {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.clientsinfo_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.clientsinfo_tabs);
 
-        CategoryAdapterClientInfo categoryAdapterClientInfo = new CategoryAdapterClientInfo(getChildFragmentManager());
+        CategoryAdapterClientInfo categoryAdapterClientInfo = new CategoryAdapterClientInfo(clientID, getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterClientInfo);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -104,6 +104,7 @@ public class FragmentSingleClientInfo extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

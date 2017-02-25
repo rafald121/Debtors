@@ -31,6 +31,13 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     Context context;
 
+    public AdapterPayment(Context context) {
+        this.context = context;
+        dbClients = new DatabaseClients(context);
+        listOfPayments = getListOfPayments();
+    }
+
+
     public AdapterPayment(Context context, boolean receivedOrGive) {
         this.context = context;
         dbClients = new DatabaseClients(context);
@@ -86,6 +93,14 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
 
         }
+    }
+
+    private List<Payment> getListOfPayments(){
+        DatabasePayments dbPayments = new DatabasePayments(context);
+
+        List<Payment> list = dbPayments.getAllPayments();
+
+        return list;
     }
 
     private List<Payment> getListOfTransactionsByType(boolean receivedOrGive) {
