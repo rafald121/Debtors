@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,11 @@ import com.example.android.debtors.R;
 // */
 public class FragmentSingleClientInfo extends Fragment {
 
+    private static final String TAG = FragmentSingleClientInfo.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
 
     private FragmentActivity fragmentActivity;
+    private long clientID;
 
     public FragmentSingleClientInfo() {
         // Required empty public constructor
@@ -62,6 +65,10 @@ public class FragmentSingleClientInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Bundle readenArguments = getArguments();
+        clientID = readenArguments.getLong("id");
+        Log.i(TAG, "onCreateView: readen clientID : " + clientID);
+
         return inflater.inflate(R.layout.fragment_single_client_info, container, false);
     }
 
