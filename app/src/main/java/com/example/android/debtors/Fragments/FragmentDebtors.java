@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -41,6 +43,7 @@ public class FragmentDebtors extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
 
+    private FloatingActionButton fab;
 
     public FragmentDebtors() {
         Log.i(TAG, "FragmentDebtors: START");
@@ -73,7 +76,6 @@ public class FragmentDebtors extends Fragment {
 
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
         Log.i(TAG, "onCreate: end");
     }
 
@@ -84,12 +86,24 @@ public class FragmentDebtors extends Fragment {
 
         Log.i(TAG, "onCreateView: end");
 
+
+
         return inflater.inflate(R.layout.fragment_debtors, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Debtors", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
 

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgNavHeaderBg, imgProfile;
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
 
     // urls to load navigation header background image
     // and profile image
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab = (FloatingActionButton) findViewById(R.id.fab);
 
 //        ARRAY OF AVAILABLE TAGS FROM NAVIGATION 
         activityTitles = getResources().getStringArray(R.array.nav_item_toolbar_title);
@@ -124,13 +124,13 @@ public class MainActivity extends AppCompatActivity {
         imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_background);
         imgProfile = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_profile);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         // load nav menu header data
         loadNavHeader();
@@ -300,11 +300,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void toggleFabOn(){
-        fab.show();
+//        fab.show();
     }
 
     private void toggleFabOff(){
-        fab.hide();
+//        fab.hide();
     }
 
     private void setUpNavigationView() {
