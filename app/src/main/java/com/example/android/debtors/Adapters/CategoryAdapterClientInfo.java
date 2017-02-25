@@ -3,10 +3,8 @@ package com.example.android.debtors.Adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
-import com.example.android.debtors.Fragments.FragmentSingleClientInfo;
 import com.example.android.debtors.Fragments.FragmentSingleClientInfoPayments;
 import com.example.android.debtors.Fragments.FragmentSingleClientInfoTransactions;
 

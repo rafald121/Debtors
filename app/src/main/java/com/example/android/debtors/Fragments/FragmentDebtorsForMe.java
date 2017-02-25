@@ -28,10 +28,10 @@ public class FragmentDebtorsForMe extends Fragment{
     
     private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
 
-    DatabaseClients dbClients;
-    List<Client> listOfClients;
-    FloatingActionButton fab;
-    FragmentActivity fragmentActivity;
+    private DatabaseClients dbClients;
+    private List<Client> listOfClients;
+    private FloatingActionButton fab;
+    private FragmentActivity fragmentActivity;
 
     public FragmentDebtorsForMe() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
