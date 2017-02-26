@@ -1,5 +1,6 @@
 package com.example.android.debtors.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Adapters.AdapterClientInfo;
 import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Model.Payment;
@@ -61,24 +63,29 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         Log.i(TAG, "onCreateView: HALO? xD");
         Log.i(TAG, "onCreateView: clientsID ??: " + clientsID);
         listOfPayments = getPaymentsByClientId(clientsID);
+
+
+        for( Payment p : listOfPayments ){
+            Log.i(TAG, "onCreateView: payment : " + p.toString(true));
+        }
+
+
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager,container, false);
+        AdapterClientInfo adapterClientInfo = new AdapterClientInfo(getContext());
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapterClientInfo);
+//        AdapterPayment adapterPayments = new AdapterPayment(getContext(),false);
+//        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+//        setupRecyclerView(recyclerView);
+//        recyclerView.setAdapter(adapterPayments);
 
-
-        if(listOfPayments!=null){
-
-            AdapterPayment adapterPayments = new AdapterPayment(getContext());
-            RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
-            setupRecyclerView(recyclerView);
-            recyclerView.setAdapter(adapterPayments);
-
-        } else
-            Log.e(TAG, "onCreateView: listOfpayment is null");
+//        } else
+//            Log.e(TAG, "onCreateView: listOfpayment is null");
 
         return rootView;
 
     }
-
-
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
@@ -94,6 +101,15 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "onViewCreated: END");
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
 
     private List<Payment> getPaymentsByClientId(long clientsID) {
         dbPayments = new DatabasePayments(getContext());
@@ -102,4 +118,6 @@ public class FragmentSingleClientInfoPayments extends Fragment {
 
         return listOfPayments;
     }
+
+
 }

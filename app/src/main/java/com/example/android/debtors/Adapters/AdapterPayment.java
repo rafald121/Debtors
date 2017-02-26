@@ -2,6 +2,7 @@ package com.example.android.debtors.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +29,16 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
     List<Payment> listOfPayments = new ArrayList<>();
     DatabasePayments dbPayments;
     DatabaseClients dbClients;
-
+    long clientID;
     Context context;
 
-    public AdapterPayment(Context context) {
+    public AdapterPayment(Context context, List<Payment> listOfPayments) {
         this.context = context;
         dbClients = new DatabaseClients(context);
-        listOfPayments = getListOfPayments();
+        this.listOfPayments = listOfPayments;
+        Log.i(TAG, "AdapterPayment: listOFPayments : " + listOfPayments.toString());
     }
+
 
 
     public AdapterPayment(Context context, boolean receivedOrGive) {
@@ -44,6 +47,12 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         listOfPayments = getListOfTransactionsByType(receivedOrGive);
     }
 
+//    public AdapterPayment(Context context, long clientsID) {
+//        this.context = context;
+//        this.clientID = clientsID;
+//        listOfPayments = getListOfPaymentsByClient(clientsID);
+//        Log.i(TAG, "AdapterPayment: listOfPayments in constructor : " + listOfPayments.toString());
+//    }
 
 
     @Override
@@ -58,7 +67,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Payment payment = listOfPayments.get(position);
-
+        Log.i(TAG, "onBindViewHolder: payment " + payment.toString());
         String clientName = getClientByID(payment.getPaymentClientID()).getClientName();
         String[] dateArray = payment.getPaymentDate().split(" ");
         String dateString = dateArray[0];
@@ -76,6 +85,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     @Override
     public int getItemCount() {
+    Log.i(TAG, "getItemCount: " + listOfPayments.size());
         return listOfPayments.size();
     }
 
@@ -93,6 +103,13 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
 
         }
+    }
+    private List<Payment> getListOfPaymentsByClient(long clientID){
+        DatabasePayments dbPayments = new DatabasePayments(context);
+
+        List<Payment> paymentList = dbPayments.getPaymentsFromClient(clientID);
+        Log.i(TAG, "getListOfPaymentsByClient: list of payments: " + paymentList.toString());
+        return paymentList;
     }
 
     private List<Payment> getListOfPayments(){
