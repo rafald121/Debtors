@@ -42,9 +42,11 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
 
     public AdapterPayment(Context context, boolean receivedOrGive) {
+        Log.i(TAG, "AdapterPayment: start");
         this.context = context;
         dbClients = new DatabaseClients(context);
         listOfPayments = getListOfTransactionsByType(receivedOrGive);
+        Log.i(TAG, "AdapterPayment: end");
     }
 
 //    public AdapterPayment(Context context, long clientsID) {
@@ -57,7 +59,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        Log.i(TAG, "onCreateViewHolder: start");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_payments,
                 parent, false);
 
@@ -66,6 +68,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        Log.i(TAG, "onBindViewHolder: start");
         Payment payment = listOfPayments.get(position);
         Log.i(TAG, "onBindViewHolder: payment " + payment.toString());
         String clientName = getClientByID(payment.getPaymentClientID()).getClientName();
@@ -80,7 +83,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             holder.textViewType.setText("Received");
         else
             holder.textViewType.setText("Given");
-
+        Log.i(TAG, "onBindViewHolder: END");
     }
 
     @Override
@@ -95,13 +98,13 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
+            Log.i(TAG, "MyViewHolder: start");
             textViewClient = (TextView) itemView.findViewById(R.id.payment_item_client);
             textViewPaymentAmount = (TextView) itemView.findViewById(R.id.payments_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.payments_item_date);
             textViewType = (TextView) itemView.findViewById(R.id.payments_item_type);
 
-
+            Log.i(TAG, "MyViewHolder: end");
         }
     }
     private List<Payment> getListOfPaymentsByClient(long clientID){
