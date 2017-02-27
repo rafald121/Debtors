@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +48,8 @@ public class FragmentAllClients extends Fragment {
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+    private FragmentActivity fragmentActivity;
+
 
 
     public FragmentAllClients() {
@@ -90,7 +93,7 @@ public class FragmentAllClients extends Fragment {
         listOfAllClients = getAllClientsFromDatabase();
 
         View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager, container, false);
-        AdapterAllClients adapter = new AdapterAllClients(listOfAllClients);
+        AdapterAllClients adapter = new AdapterAllClients(fragmentActivity, listOfAllClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
@@ -188,6 +191,8 @@ public class FragmentAllClients extends Fragment {
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity) context;
+
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 //        } else {
