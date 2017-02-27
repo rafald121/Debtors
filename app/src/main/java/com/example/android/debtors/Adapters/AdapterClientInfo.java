@@ -23,12 +23,14 @@ import java.util.List;
 public class AdapterClientInfo  extends RecyclerView.Adapter<AdapterClientInfo.MyViewHolder> {
 
     private static final String TAG = AdapterClientInfo.class.getSimpleName();
-    List<Payment> listOfPayments = new ArrayList<>();
+    List<Payment> listOfPayments;
     Context context;
 
-    public AdapterClientInfo(Context context) {
+    public AdapterClientInfo(Context context, List<Payment> list) {
         Log.i(TAG, "AdapterClientInfo: ");
         this.context = context;
+        this.listOfPayments = list;
+        Log.i(TAG, "AdapterClientInfo: size of list : " + list.size());
     }
 
 

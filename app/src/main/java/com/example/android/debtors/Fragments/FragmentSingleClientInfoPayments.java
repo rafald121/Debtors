@@ -60,22 +60,24 @@ public class FragmentSingleClientInfoPayments extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: HALO? xD");
-        Log.i(TAG, "onCreateView: clientsID ??: " + clientsID);
         listOfPayments = getPaymentsByClientId(clientsID);
-
 
         for( Payment p : listOfPayments ){
             Log.i(TAG, "onCreateView: payment : " + p.toString(true));
         }
 
-
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager,container, false);
-        AdapterClientInfo adapterClientInfo = new AdapterClientInfo(getContext());
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
-        setupRecyclerView(recyclerView);
+        View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager,container, false);
+        AdapterClientInfo adapterClientInfo = new AdapterClientInfo(getContext(),listOfPayments);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
+//        setupRecyclerView(recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterClientInfo);
+        return rootView;
+
 //        AdapterPayment adapterPayments = new AdapterPayment(getContext(),false);
+
+
+
 //        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
 //        setupRecyclerView(recyclerView);
 //        recyclerView.setAdapter(adapterPayments);
@@ -83,7 +85,6 @@ public class FragmentSingleClientInfoPayments extends Fragment {
 //        } else
 //            Log.e(TAG, "onCreateView: listOfpayment is null");
 
-        return rootView;
 
     }
 
