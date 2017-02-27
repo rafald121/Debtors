@@ -64,7 +64,7 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "onCreateView: START");
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
-        listOfTransactionsForClient = getTransactionsByClientId(3);
+        listOfTransactionsForClient = getTransactionsByClientId(4);
         Log.i(TAG, "onCreateView: listOfTransactionsForClient: " + listOfTransactionsForClient.toString());
 //        fab = (FloatingActionButton)
 
