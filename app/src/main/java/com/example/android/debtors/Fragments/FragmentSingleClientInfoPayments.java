@@ -69,9 +69,14 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager,container, false);
         AdapterClientInfo adapterClientInfo = new AdapterClientInfo(getContext(),listOfPayments);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
-//        setupRecyclerView(recyclerView);
+        setupRecyclerView(recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if(adapterClientInfo!=null){
+            Log.e(TAG, "onCreateView: adpaterClientInfo isn not null" );
         recyclerView.setAdapter(adapterClientInfo);
+            }
+        else
+            Log.e(TAG, "onCreateView: adapterClientInfo is null!!1"  );
         return rootView;
 
 //        AdapterPayment adapterPayments = new AdapterPayment(getContext(),false);

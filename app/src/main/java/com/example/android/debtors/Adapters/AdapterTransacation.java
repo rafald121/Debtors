@@ -34,6 +34,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     public AdapterTransacation(List<TransactionForClient> listOfTransactions) {
         this.listOfTransactions = listOfTransactions;
+
+        for(TransactionForClient t : listOfTransactions){
+            Log.i(TAG, "AdapterTransacation: " + t.toString());
+        }
     }
 
     public AdapterTransacation(Context context, boolean purchaseOrSale) {

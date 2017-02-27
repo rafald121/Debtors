@@ -36,6 +36,7 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
     public AdapterAllClients(FragmentActivity fragmentActivity, List<Client> clientList) {
         this.fragmentActivity = fragmentActivity;
         this.clientList = clientList;
+
     }
 
     @Override
