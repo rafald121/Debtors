@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ public class FragmentSingleClientInfoPayments extends Fragment {
     private static final String TAG = FragmentSingleClientInfoPayments.class.getSimpleName();
     private long clientsID;
     private List<Payment> listOfPayments;
+    private FragmentActivity fragmentActivity;
     private DatabasePayments dbPayments;
 
     public FragmentSingleClientInfoPayments() {
@@ -95,8 +97,7 @@ public class FragmentSingleClientInfoPayments extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
-                .getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(fragmentActivity);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -109,6 +110,8 @@ public class FragmentSingleClientInfoPayments extends Fragment {
     }
     @Override
     public void onAttach(Context context) {
+        Log.i(TAG, "onAttach: start");
+        fragmentActivity = (FragmentActivity) context;
         super.onAttach(context);
     }
 

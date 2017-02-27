@@ -1,6 +1,7 @@
 package com.example.android.debtors.Adapters;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
@@ -18,6 +19,8 @@ public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
 
     private static final String TAG = CategoryAdapterClientInfo.class.getSimpleName();
     private long clientID;
+    private FragmentActivity fragmentActivity;
+
 
     public CategoryAdapterClientInfo(FragmentManager fm) {
         super(fm);
