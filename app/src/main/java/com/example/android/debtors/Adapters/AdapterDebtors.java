@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
     private static final String TAG = AdapterDebtors.class.getSimpleName();
 
     List<Client> clientList = new ArrayList<>();
+    List<Client> clientListCopy = new ArrayList<>();
 
     private Context context;
     private FragmentActivity fragmentActivity;
@@ -42,6 +44,7 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
     public AdapterDebtors(FragmentActivity fragmentActivity, List<Client> clientList) {
         this.fragmentActivity = fragmentActivity;
         this.clientList = clientList;
+        this.clientListCopy.addAll(clientList);
     }
 
     @Override
@@ -113,5 +116,25 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
             bundle.putLong("id", id);
             return bundle;
         }
+
+        public void filter(String text) {
+            clientList.clear();
+            if(text.isEmpty()){
+                clientList.addAll(clientListCopy);
+            } else{
+                text = text.toLowerCase();
+
+                for(Client client: clientListCopy){
+                    if(client.getClientName().toLowerCase().contains(text))
+                        clientList.add(client);
+                }
+
+            }
+            notifyDataSetChanged();
+        }
     }
+
+
+
+
 }
