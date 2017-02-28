@@ -3,7 +3,6 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,28 +14,35 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterDebtors;
-import com.example.android.debtors.Databases.DatabaseClients;
-import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Adapters.AdapterTransacation;
+import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Model.Payment;
+import com.example.android.debtors.Model.Transaction;
+import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Rafaello on 2017-02-18.
+ * Created by admin on 25.02.2017.
  */
-public class FragmentDebtorsForMe extends Fragment{
-    
-    private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
+public class FragmentSingleClientInfoTransactions extends Fragment {
 
-    private DatabaseClients dbClients;
-    private List<Client> listOfClients;
-    private FloatingActionButton fab;
+    private static final String TAG = FragmentSingleClientInfoTransactions.class.getSimpleName();
+
+    private List<TransactionForClient> listOfTransactionsForClient;
+    private DatabaseTransactions dbTransactions;
+
     private FragmentActivity fragmentActivity;
 
-    public FragmentDebtorsForMe() {
+
+    public FragmentSingleClientInfoTransactions() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: start");
@@ -58,14 +64,15 @@ public class FragmentDebtorsForMe extends Fragment{
         Log.i(TAG, "onCreateView: START");
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
-        listOfClients = getClientsMoreThanZero();
-
+        listOfTransactionsForClient = getTransactionsByClientId(4);
+        Log.i(TAG, "onCreateView: listOfTransactionsForClient: " + listOfTransactionsForClient.toString());
 //        fab = (FloatingActionButton)
 
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
-        AdapterDebtors adapterDebtors = new AdapterDebtors(fragmentActivity, listOfClients);
+        AdapterTransacation adapterTransactions = new AdapterTransacation(listOfTransactionsForClient);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
         setupRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapterTransactions);
 
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
 //            @Override
@@ -85,7 +92,7 @@ public class FragmentDebtorsForMe extends Fragment{
 //        });
         Log.i(TAG, "onCreateView: END");
 
-        recyclerView.setAdapter(adapterDebtors);
+//        recyclerView.setAdapter(adapterDebtors);
 
         return rootView;
 
@@ -99,22 +106,31 @@ public class FragmentDebtorsForMe extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
+
+    private List<TransactionForClient> getTransactionsByClient() {
+
+        List<TransactionForClient> listOfTransactions = new ArrayList<>();
+        return listOfTransactions;
+    }
+
     @Override
     public void onAttach(Context context) {
-        Log.i(TAG, "onAttach: START");
         fragmentActivity = (FragmentActivity) context;
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
-        Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
 
-    public List<Client> getClientsMoreThanZero() {
-        dbClients = new DatabaseClients(getContext());
-        List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
-        return clients;
+    private List<TransactionForClient> getTransactionsByClientId(long clientsID) {
+        dbTransactions = new DatabaseTransactions(getContext());
+
+        List<TransactionForClient> listofTransactions = dbTransactions.getTransactionFromClient(clientsID);
+
+        return listofTransactions;
     }
+
+
 }

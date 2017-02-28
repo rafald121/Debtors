@@ -32,6 +32,11 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     Context context;
 
+    public AdapterTransacation(List<TransactionForClient> listOfTransactions) {
+        Log.i(TAG, "AdapterTransacation: constructor");
+        this.listOfTransactions = listOfTransactions;
+    }
+
     public AdapterTransacation(Context context, boolean purchaseOrSale) {
         Log.i(TAG, "AdapterTransacation: START, constructor created ");
         this.context = context;
@@ -41,8 +46,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
 
 
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction, parent,
                 false);
         return new MyViewHolder(view);

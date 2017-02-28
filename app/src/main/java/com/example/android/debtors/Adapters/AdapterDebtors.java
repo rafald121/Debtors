@@ -1,6 +1,13 @@
 package com.example.android.debtors.Adapters;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.debtors.Activities.MainActivity;
+import com.example.android.debtors.Fragments.FragmentDebtorsForMe;
+import com.example.android.debtors.Fragments.FragmentSingleClientInfo;
+import com.example.android.debtors.Fragments.FragmentTransactions;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -24,7 +35,12 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
 
     List<Client> clientList = new ArrayList<>();
 
-    public AdapterDebtors(List<Client> clientList) {
+    private Context context;
+    private FragmentActivity fragmentActivity;
+
+//    FragmentManager fragmentManager =
+    public AdapterDebtors(FragmentActivity fragmentActivity, List<Client> clientList) {
+        this.fragmentActivity = fragmentActivity;
         this.clientList = clientList;
     }
 
@@ -48,7 +64,7 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
         return clientList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView debtorsItemImageView;
         public TextView  debtorsItemName,debtorsItemAmount;
@@ -60,9 +76,42 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
             debtorsItemImageView = (ImageView) itemView.findViewById(R.id.debtors_item_avatar);
             debtorsItemName= (TextView) itemView.findViewById(R.id.debtors_item_name);
             debtorsItemAmount = (TextView) itemView.findViewById(R.id.debtors_item_leftamount);
+
+            itemView.setOnClickListener(this);
+            debtorsItemImageButton.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View v) {
+            Log.i(TAG, "onClick: clicked position " + getLayoutPosition());
+            Client client = clientList.get(getLayoutPosition());
+            Log.i(TAG, "onClick: clicked client : " + client.toString());
+            Log.i(TAG, "onClick: client ID: " + client.getClientId());
 
+            if(v.getId() == debtorsItemImageButton.getId()) {
+                Log.i(TAG, "onClick: expand item");
+                MainActivity.PREVIOUS_TAG = MainActivity.CURRENT_TAG;
+                MainActivity.CURRENT_TAG = "singleClient";
+                Fragment fragment = new FragmentSingleClientInfo();
+
+                Bundle bundleArgument = setArgument(client.getClientId());
+                fragment.setArguments( bundleArgument );
+
+                FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+                FragmentTransaction fragmenttransaction = fragmentManager.beginTransaction();
+                fragmenttransaction.replace(R.id.frame, fragment, MainActivity.CURRENT_TAG);
+                fragmenttransaction.addToBackStack(null);
+                fragmenttransaction.commit();
+            } else {
+                Log.i(TAG, "onClick: item content clicked");
+            }
+        }
+
+        private Bundle setArgument(long id){
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", id);
+            return bundle;
+        }
     }
 }

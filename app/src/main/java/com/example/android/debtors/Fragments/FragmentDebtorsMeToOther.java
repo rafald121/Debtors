@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,9 @@ public class FragmentDebtorsMeToOther extends Fragment {
 
     DatabaseClients dbClients;
     List<Client> listOfClients;
+
+    FragmentActivity fragmentActivity;
+
 
     public FragmentDebtorsMeToOther() {
     }
@@ -61,7 +65,7 @@ public class FragmentDebtorsMeToOther extends Fragment {
             @Override
             public void run() {
                 listOfClients = getClientsLessThanZero();
-                AdapterDebtors adapter = new AdapterDebtors(listOfClients);
+                AdapterDebtors adapter = new AdapterDebtors(fragmentActivity, listOfClients);
                 RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
                 setupRecyclerView(recyclerView);
                 recyclerView.setAdapter(adapter);
@@ -92,8 +96,7 @@ public class FragmentDebtorsMeToOther extends Fragment {
     }
     @Override
     public void onAttach(Context context) {
-        Toast.makeText(context, "halo", Toast.LENGTH_SHORT).show();
-
+        fragmentActivity = (FragmentActivity) context;
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
     }

@@ -166,7 +166,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
             }while (c.moveToNext());
         }
-
         return listOfPayments;
     }
 
