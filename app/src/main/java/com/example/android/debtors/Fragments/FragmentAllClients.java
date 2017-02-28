@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -51,6 +53,7 @@ public class FragmentAllClients extends Fragment {
     private FragmentActivity fragmentActivity;
 
 
+    private FloatingActionButton fab;
 
     public FragmentAllClients() {
         Log.i(TAG, "FragmentAllClients: START");
@@ -92,13 +95,33 @@ public class FragmentAllClients extends Fragment {
         // Inflate the layout for this fragment
         listOfAllClients = getAllClientsFromDatabase();
 
-        View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_all_clients, container, false);
         AdapterAllClients adapter = new AdapterAllClients(fragmentActivity, listOfAllClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
 
 
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0  && fab.isShown())
+                    fab.hide();
+                else if(dy<0 && !fab.isShown())
+                    fab.show();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+//                    fab.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
 
         return rootView;
@@ -177,6 +200,17 @@ public class FragmentAllClients extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Allclients", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -227,5 +261,13 @@ public class FragmentAllClients extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void toggleFabOn(){
+        fab.show();
+    }
+
+    private void toggleFabOff(){
+        fab.hide();
     }
 }
