@@ -66,10 +66,10 @@ public class FragmentSingleClientInfoPayments extends Fragment {
             Log.i(TAG, "onCreateView: payment : " + p.toString(true));
         }
 
-        View rootView = inflater.inflate(R.layout.recycler_view_without_viewpager,container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager,container, false);
         AdapterClientInfo adapterClientInfo = new AdapterClientInfo(getContext(),listOfPayments);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
-//        setupRecyclerView(recyclerView);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        setupRecyclerView(recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterClientInfo);
         return rootView;

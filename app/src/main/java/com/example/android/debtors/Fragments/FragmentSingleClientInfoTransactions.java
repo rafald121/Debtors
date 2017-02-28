@@ -35,12 +35,27 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
     private List<TransactionForClient> listOfTransactionsForClient;
     private DatabaseTransactions dbTransactions;
 
+    private long clientsID;
+
     private FragmentActivity fragmentActivity;
 
 
     public FragmentSingleClientInfoTransactions() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
         // Required empty public constructor
+    }
+
+    public static Fragment newInstance(long clientID) {
+        Log.i(TAG, "newInstance: start");
+        FragmentSingleClientInfoTransactions f = new FragmentSingleClientInfoTransactions();
+        f.clientsID = clientID;
+//        Bundle args = new Bundle();
+//
+//        FragmentSingleClientInfoPayments fragment = new FragmentSingleClientInfoPayments();
+//        fragment.setArguments(args);
+//        return fragment;
+        Log.i(TAG, "newInstance: before return ");
+        return f;
     }
 
     @Override
@@ -64,12 +79,12 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "onCreateView: START");
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
-        listOfTransactionsForClient = getTransactionsByClientId(4);
+        listOfTransactionsForClient = getTransactionsByClientId(clientsID);
         Log.i(TAG, "onCreateView: listOfTransactionsForClient: " + listOfTransactionsForClient.toString());
 //        fab = (FloatingActionButton)
 
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
-        AdapterTransacation adapterTransactions = new AdapterTransacation(listOfTransactionsForClient);
+        AdapterTransacation adapterTransactions = new AdapterTransacation(getContext(), listOfTransactionsForClient);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransactions);

@@ -32,13 +32,15 @@ public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if(position == 0) {
 
-            Log.i(TAG, "getItem: tworze newInstance");
+            Log.i(TAG, "getItem: tworze newInstance dla: " + position);
             Fragment fragmentSingleClientInfo = FragmentSingleClientInfoPayments.newInstance(clientID);
             return fragmentSingleClientInfo;
 
         } else if(position == 1) {
 
-            return new FragmentSingleClientInfoTransactions();
+            Log.i(TAG, "getItem: tworze newInstance dla: " + position);
+            Fragment fragmentSingleClientInfoTransactions = FragmentSingleClientInfoTransactions.newInstance(clientID);
+            return fragmentSingleClientInfoTransactions;
 
         }
         return null;

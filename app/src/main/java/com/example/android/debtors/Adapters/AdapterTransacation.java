@@ -44,8 +44,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
     }
 
-
-
+    public AdapterTransacation(Context context, List<TransactionForClient> listOfTransactions){
+        this.context = context;
+        this.listOfTransactions = listOfTransactions;
+    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,9 +60,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         TransactionForClient transaction = listOfTransactions.get(position);
-
-
-        Client client = dbClients.getClientByID(transaction.getTransactionClientID());
+        Log.i(TAG, "onBindViewHolder: halo: " + transaction.toString());
+        Log.i(TAG, "onBindViewHolder: client ID" + transaction.getTransactionClientID());
+        Client client =  getClientById(transaction.getTransactionClientID());
+//                dbClients.getClientByID(transaction.getTransactionClientID());
         String clientName = client.getClientName();
 
         holder.textViewClient.setText(clientName);
