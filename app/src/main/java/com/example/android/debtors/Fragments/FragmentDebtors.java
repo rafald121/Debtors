@@ -30,7 +30,7 @@ import com.example.android.debtors.R;
  * Use the {@link FragmentDebtors#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentDebtors extends Fragment {
+public class FragmentDebtors extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = FragmentDebtors.class.getSimpleName();
@@ -199,6 +199,8 @@ public class FragmentDebtors extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

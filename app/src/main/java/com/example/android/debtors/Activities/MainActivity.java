@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
-//        createClients(names2);
+//        createClients(names);
 //        Owner owner = new Owner("Rafal", 500, 200);
 //        dbOwner.createOwner(owner);
 //        simulatePayments();
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createClients(String[] names){
         for(int i = 0 ; i< names.length -1 ; i++){
-            Client client = new Client(names[i], 50*i*(-10));
+            Client client = new Client(names[i], 50*i*10);
             dbClient.createClient(client);
         }
     }

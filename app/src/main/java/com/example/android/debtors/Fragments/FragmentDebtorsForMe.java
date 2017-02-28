@@ -1,5 +1,6 @@
 package com.example.android.debtors.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +34,10 @@ public class FragmentDebtorsForMe extends Fragment{
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
+    interface Scrolling {
+        public void scrolling(boolean direction);
+    }
+
     public FragmentDebtorsForMe() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
         // Required empty public constructor
@@ -60,6 +65,7 @@ public class FragmentDebtorsForMe extends Fragment{
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
         listOfClients = getClientsMoreThanZero();
 
+
 //        fab = (FloatingActionButton)
 
         View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
@@ -67,22 +73,26 @@ public class FragmentDebtorsForMe extends Fragment{
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
         setupRecyclerView(recyclerView);
 
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-//                if (dy > 0 ||dy<0 && fab.isShown())
-//                    fab.hide();
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0){
+                    Log.i(TAG, "onScrolled: w gore");
+
+                }else if(dy<0 ) {
+                    Log.i(TAG, "onScrolled: w dol");
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
 //                    fab.show();
-//                }
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//        });
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         Log.i(TAG, "onCreateView: END");
 
         recyclerView.setAdapter(adapterDebtors);
@@ -99,10 +109,21 @@ public class FragmentDebtorsForMe extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
+    public void scrolling(boolean direction){
+
+    }
+
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         fragmentActivity = (FragmentActivity) context;
+
+//        try{
+//            scrollingInterface = (Scrolling) context;
+//        } catch (ClassCastException e ) {
+//            throw new ClassCastException(context.toString()
+//                    + " must implement OnHeadlineSelectedListener");
+//        }
         super.onAttach(context);
     }
 
