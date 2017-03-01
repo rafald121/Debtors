@@ -49,7 +49,7 @@ public class FragmentDebtors extends Fragment  {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
 
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
 
 
 
@@ -97,14 +97,14 @@ public class FragmentDebtors extends Fragment  {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Debtors", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Debtors", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);

@@ -42,7 +42,7 @@ public class FragmentPayments extends Fragment {
     private List<Payment> listOfPayments;
 //    private List<>
 
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
 
 
     private OnFragmentInteractionListener mListener;
@@ -100,14 +100,14 @@ public class FragmentPayments extends Fragment {
         viewPager.setAdapter(categoryAdapterPayments);
         tabLayout.setupWithViewPager(viewPager);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_payments);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Payments", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab = (FloatingActionButton) view.findViewById(R.id.fab_payments);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Payments", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     @Override

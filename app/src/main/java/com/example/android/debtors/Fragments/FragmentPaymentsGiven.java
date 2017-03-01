@@ -3,6 +3,9 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +40,9 @@ public class FragmentPaymentsGiven extends Fragment {
     }
     private test mtest;
 
+
+    private FloatingActionButton fab;
+
     private OnFragmentInteractionListener mListener;
 
     public FragmentPaymentsGiven() {
@@ -57,6 +63,7 @@ public class FragmentPaymentsGiven extends Fragment {
         AdapterPayment adapterPayment = new AdapterPayment(getContext(), false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
 
+
 //        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
 //        recyclerView.addOnScrollListener(new RecyclerOnScrollListener(this));
         
@@ -64,9 +71,44 @@ public class FragmentPaymentsGiven extends Fragment {
         recyclerView.setAdapter(adapterPayment);
 
         // Inflate the layout for this fragment
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0  && fab.isShown())
+                    fab.hide();
+                else if(dy<0 && !fab.isShown())
+                    fab.show();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+//                    fab.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
         return rootView;
 
 
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_payments_given);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "PaymentsGiven", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
