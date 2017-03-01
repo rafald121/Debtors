@@ -202,7 +202,7 @@ public class FragmentAllClients extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_allclients);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

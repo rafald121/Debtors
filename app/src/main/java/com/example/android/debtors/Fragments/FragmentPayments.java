@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.CategoryAdapterPayments;
 import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.ItemListener.RecyclerOnScrollListener;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
@@ -39,6 +42,7 @@ public class FragmentPayments extends Fragment {
     private List<Payment> listOfPayments;
 //    private List<>
 
+    private FloatingActionButton fab;
 
 
     private OnFragmentInteractionListener mListener;
@@ -95,6 +99,15 @@ public class FragmentPayments extends Fragment {
         CategoryAdapterPayments categoryAdapterPayments = new CategoryAdapterPayments(getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterPayments);
         tabLayout.setupWithViewPager(viewPager);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_payments);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Payments", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
@@ -149,6 +162,8 @@ public class FragmentPayments extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

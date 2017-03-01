@@ -26,10 +26,7 @@ import java.util.List;
  */
 public class FragmentDebtorsMeToOther extends Fragment {
 
-    interface hideOrShowFab{
-        void hideFab();
-        void showFab();
-    }
+
 
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
 
@@ -39,8 +36,6 @@ public class FragmentDebtorsMeToOther extends Fragment {
     FragmentActivity fragmentActivity;
 
 
-    public FragmentDebtorsMeToOther() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

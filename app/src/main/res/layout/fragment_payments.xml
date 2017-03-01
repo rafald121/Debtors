@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.example.android.debtors.Fragments.FragmentPayments">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.android.debtors.Fragments.FragmentPayments">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.TabLayout
@@ -16,5 +18,17 @@
         android:id="@+id/payments_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_payments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:scaleType="center"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        android:src="@drawable/button_plus_36"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </FrameLayout>

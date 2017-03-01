@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
+//import com.example.android.debtors.ItemListener.RecyclerItemClickListener;
+import com.example.android.debtors.ItemListener.RecyclerOnScrollListener;
 import com.example.android.debtors.R;
 
 ///**
@@ -23,31 +26,22 @@ import com.example.android.debtors.R;
 // * create an instance of this fragment.
 // */
 public class FragmentPaymentsGiven extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = FragmentPaymentsGiven.class.getSimpleName();
+
+    interface test{
+        void hide();
+        void show();
+    }
+    private test mtest;
+
     private OnFragmentInteractionListener mListener;
 
     public FragmentPaymentsGiven() {
         // Required empty public constructor
     }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment FragmentPaymentsGiven.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static FragmentPaymentsGiven newInstance(String param1, String param2) {
-//        FragmentPaymentsGiven fragment = new FragmentPaymentsGiven();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +56,10 @@ public class FragmentPaymentsGiven extends Fragment {
 
         AdapterPayment adapterPayment = new AdapterPayment(getContext(), false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+
+//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
+//        recyclerView.addOnScrollListener(new RecyclerOnScrollListener(this));
+        
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
 
@@ -95,6 +93,18 @@ public class FragmentPaymentsGiven extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+//    @Override
+//    public void hideFab() {
+//        Log.i(TAG, "hideFab: ");
+//        mtest.hide();
+//    }
+//
+//    @Override
+//    public void showFab() {
+//        Log.i(TAG, "showFab: ");
+//        mtest.show();
+//    }
 
     /**
      * This interface must be implemented by activities that contain this
