@@ -26,7 +26,12 @@ import java.util.List;
  * Created by Rafaello on 2017-02-18.
  */
 public class FragmentDebtorsForMe extends Fragment{
-    
+
+    interface hideOrShowFab{
+        void hideFab();
+        void showFab();
+    }
+
     private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
 
     private DatabaseClients dbClients;

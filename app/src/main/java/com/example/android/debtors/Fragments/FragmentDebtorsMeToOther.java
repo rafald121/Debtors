@@ -26,6 +26,11 @@ import java.util.List;
  */
 public class FragmentDebtorsMeToOther extends Fragment {
 
+    interface hideOrShowFab{
+        void hideFab();
+        void showFab();
+    }
+
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
 
     DatabaseClients dbClients;
