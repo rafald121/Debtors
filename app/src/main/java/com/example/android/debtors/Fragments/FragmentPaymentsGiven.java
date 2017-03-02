@@ -20,19 +20,10 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.ItemListener.RecyclerOnScrollListener;
 import com.example.android.debtors.R;
 
-///**
-// * A simple {@link Fragment} subclass.
-// * Activities that contain this fragment must implement the
-// * {@link FragmentPaymentsGiven.OnFragmentInteractionListener} interface
-// * to handle interaction events.
-// * Use the {@link FragmentPaymentsGiven#newInstance} factory method to
-// * create an instance of this fragment.
-// */
 public class FragmentPaymentsGiven extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = FragmentPaymentsGiven.class.getSimpleName();
+
     private FloatingActionButton fab;
 
 //    interface test{
@@ -41,10 +32,7 @@ public class FragmentPaymentsGiven extends Fragment {
 //    }
 //    private test mtest;
 
-    private OnFragmentInteractionListener mListener;
-
     public FragmentPaymentsGiven() {
-        // Required empty public constructor
     }
 
     @Override
@@ -55,7 +43,6 @@ public class FragmentPaymentsGiven extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
 
         AdapterPayment adapterPayment = new AdapterPayment(getContext(), false);
@@ -79,14 +66,12 @@ public class FragmentPaymentsGiven extends Fragment {
 
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-//                    fab.show();
+                    Log.i(TAG, "onScrollStateChanged: ");
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
 
-
-        // Inflate the layout for this fragment
         return rootView;
 
 
@@ -115,47 +100,17 @@ public class FragmentPaymentsGiven extends Fragment {
         });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-//    @Override
-//    public void hideFab() {
-//        Log.i(TAG, "hideFab: ");
-//        mtest.hide();
-//    }
-//
-//    @Override
-//    public void showFab() {
-//        Log.i(TAG, "showFab: ");
-//        mtest.show();
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
