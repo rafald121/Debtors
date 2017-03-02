@@ -150,7 +150,7 @@ public class FragmentAllClients extends Fragment {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQueryTextSubmit", query);
-
+                    adapterAllClients.filter(query);
                     return true;
                 }
             };
