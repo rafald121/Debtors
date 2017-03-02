@@ -32,10 +32,19 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
     private Context context;
     private DatabaseClients dbClients;
 
+    private boolean type;
+
     public DialogNewClient(Context context) {
         super(context);
         this.context = context;
         dbClients = new DatabaseClients(context);
+    }
+
+    public DialogNewClient(Context context, boolean type) {
+        super(context);
+        this.context = context;
+        dbClients = new DatabaseClients(context);
+        this.type = type;
     }
 
     @Override
@@ -66,7 +75,11 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
             if(!newClientName.getText().toString().equals("")) {
                 String clientName = newClientName.getText().toString();
-                int clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
+                int clientLeftAmount;
+                if(type)
+                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
+                else
+                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString())*(-1);
 
                 Client client = new Client(clientName, clientLeftAmount);
                 dbClients.createClient(client);

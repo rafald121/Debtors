@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -119,6 +120,9 @@ public class FragmentDebtorsMeToOther extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "Debtors me to other", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity,false);
+                dialogNewClient.show();
             }
         });
 

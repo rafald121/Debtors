@@ -43,6 +43,7 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
     private AdapterDebtors adapterDebtors;
+    private RecyclerView recyclerView;
 
     @Override
     public void searchViewQueryChanged(String query) {
@@ -74,8 +75,8 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
 
 
         View rootView = inflater.inflate(R.layout.fragment_debtors_forme, container, false);
-        AdapterDebtors adapterDebtors = new AdapterDebtors(fragmentActivity, listOfClients);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_debtors_forme_recyclerview);
+        adapterDebtors = new AdapterDebtors(fragmentActivity, listOfClients);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_debtors_forme_recyclerview);
         setupRecyclerView(recyclerView);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -134,10 +135,10 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
                 Snackbar.make(view, "Debtors forme ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity);
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity,true);
                 dialogNewClient.show();
 
-
+//                adapterDebtors.notifyDataSetChanged();
 
 
             }

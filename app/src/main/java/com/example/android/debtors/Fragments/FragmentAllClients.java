@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -195,6 +196,10 @@ public class FragmentAllClients extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "Allclients", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity);
+                dialogNewClient.show();
+
             }
         });
 
