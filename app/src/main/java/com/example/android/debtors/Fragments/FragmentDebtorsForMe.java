@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -55,12 +56,6 @@ public class FragmentDebtorsForMe extends Fragment{
         Log.i(TAG, "onCreate: end");
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: START");
-        super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated: END");
-    }
 
     @Nullable
     @Override
@@ -71,21 +66,23 @@ public class FragmentDebtorsForMe extends Fragment{
         listOfClients = getClientsMoreThanZero();
 
 
-//        fab = (FloatingActionButton)
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_debtors_forme, container, false);
         AdapterDebtors adapterDebtors = new AdapterDebtors(fragmentActivity, listOfClients);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_debtors_forme_recyclerview);
         setupRecyclerView(recyclerView);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0){
+                    Log.i(TAG, "onScrolled: w dol");
+
+                    fab.hide();
+                }else if(dy<0 ) {
                     Log.i(TAG, "onScrolled: w gore");
 
-                }else if(dy<0 ) {
-                    Log.i(TAG, "onScrolled: w dol");
+                    fab.show();
                 }
             }
 
@@ -116,6 +113,23 @@ public class FragmentDebtorsForMe extends Fragment{
 
     public void scrolling(boolean direction){
 
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated: START");
+        super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_debtors_forme_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Debtors forme ", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        Log.i(TAG, "onViewCreated: END");
     }
 
     @Override
