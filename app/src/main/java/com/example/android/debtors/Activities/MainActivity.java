@@ -393,6 +393,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                Log.i(TAG, "onDrawerClosed: ");
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 toggleFabOn();
                 super.onDrawerClosed(drawerView);
@@ -400,6 +401,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                Log.i(TAG, "onDrawerOpened: ");
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
                 toggleFabOff();
                 super.onDrawerOpened(drawerView);

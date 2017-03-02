@@ -2,13 +2,16 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -32,21 +35,20 @@ import com.example.android.debtors.R;
 // */
 public class FragmentDebtors extends Fragment  {
 
-    interface hideOrShowFab{
-        void hideFab();
-        void showFab();
-    }
+
 
     private static final String TAG = FragmentDebtors.class.getSimpleName();
-
-    private OnFragmentInteractionListener mListener;
+    static final String QUERY_DEBTORS = "QUERY_DEBTORS";
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+    private FragmentActivity fragmentActivity;
 
-//    private FloatingActionButton fab;
+    interface SearchViewQuery{
+        void searchViewQueryChanged(String query);
+    }
 
-
+//    private final SearchViewQuery searchViewQuery;
 
     public FragmentDebtors() {
         Log.i(TAG, "FragmentDebtors: START");
@@ -108,10 +110,14 @@ public class FragmentDebtors extends Fragment  {
             queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
+
                     Log.i("onQueryTextChange", newText);
-//SHARED PREFERENCE??
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences((fragmentActivity));
+                    sharedPreferences.edit().putString(QUERY_DEBTORS, newText).apply();
+
                     return true;
                 }
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQueryTextSubmit", query);
@@ -153,44 +159,19 @@ public class FragmentDebtors extends Fragment  {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        fragmentActivity = (FragmentActivity) context;
     }
 
     @Override
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
-        mListener = null;
     }
 
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

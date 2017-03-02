@@ -43,7 +43,6 @@ import java.util.List;
 public class FragmentAllClients extends Fragment {
 
     private static final String TAG = FragmentAllClients.class.getSimpleName();
-    static final String QUERY_ALLCLIENTS = "QUERY_ALLCLIENTS";
 
     private AdapterAllClients adapterAllClients;
     private List<Client> listOfAllClients = new ArrayList<>();
