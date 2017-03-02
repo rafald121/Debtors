@@ -35,7 +35,7 @@
         android:layout_height="47dp"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/dialog_payment_toggle"
+        android:id="@+id/dialog_payment_amount"
         android:hint="Payment amount"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -48,25 +48,55 @@
         android:text="ToggleButton"
         android:layout_width="228dp"
         android:layout_height="49dp"
-        android:id="@+id/toggleButton"
+        android:id="@+id/dialog_payment_amount"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_payment_toggle" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_payment_amount" />
 
     <TextView
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dialog_payment_error"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_payment_amount"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="95dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_payment_amount">
+
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_payment_amount"
+            android:layout_marginStart="32dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_payment_amount"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
