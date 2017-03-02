@@ -41,7 +41,7 @@ public class FragmentTransactions extends Fragment {
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
@@ -102,8 +102,6 @@ public class FragmentTransactions extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         Log.i(TAG, "onButtonPressed: START");
     }
