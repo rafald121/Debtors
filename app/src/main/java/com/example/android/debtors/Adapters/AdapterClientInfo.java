@@ -23,8 +23,8 @@ import java.util.List;
 public class AdapterClientInfo  extends RecyclerView.Adapter<AdapterClientInfo.MyViewHolder> {
 
     private static final String TAG = AdapterClientInfo.class.getSimpleName();
-    List<Payment> listOfPayments;
-    Context context;
+    private List<Payment> listOfPayments;
+    private Context context;
 
     public AdapterClientInfo(Context context, List<Payment> list) {
         Log.i(TAG, "AdapterClientInfo: ");
@@ -69,8 +69,7 @@ public class AdapterClientInfo  extends RecyclerView.Adapter<AdapterClientInfo.M
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewClient, textViewPaymentAmount, textViewDate, textViewType;
-
+        private TextView textViewClient, textViewPaymentAmount, textViewDate, textViewType;
 
         public MyViewHolder(View itemView) {
             super(itemView);

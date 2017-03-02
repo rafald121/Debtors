@@ -39,11 +39,7 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         Log.i(TAG, "newInstance: start");
         FragmentSingleClientInfoPayments f = new FragmentSingleClientInfoPayments();
         f.clientsID = clientID;
-//        Bundle args = new Bundle();
-//
-//        FragmentSingleClientInfoPayments fragment = new FragmentSingleClientInfoPayments();
-//        fragment.setArguments(args);
-//        return fragment;
+
         Log.i(TAG, "newInstance: before return ");
         return f;
     }
@@ -52,7 +48,6 @@ public class FragmentSingleClientInfoPayments extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
-//        clientsID = getArguments().getLong("");
 
         Log.i(TAG, "onCreate: end");
     }
@@ -73,18 +68,6 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterClientInfo);
         return rootView;
-
-//        AdapterPayment adapterPayments = new AdapterPayment(getContext(),false);
-
-
-
-//        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
-//        setupRecyclerView(recyclerView);
-//        recyclerView.setAdapter(adapterPayments);
-
-//        } else
-//            Log.e(TAG, "onCreateView: listOfpayment is null");
-
 
     }
 

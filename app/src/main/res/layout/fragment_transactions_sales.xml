@@ -1,22 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.android.debtors.Fragments.FragmentAllClients">
+    tools:context="com.example.android.debtors.Fragments.FragmentPaymentsGiven">
 
-    <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:id="@+id/recycler_view_without_viewpager"
+        android:paddingTop="55dp"
+        android:id="@+id/fragment_transactions_sales_recycler"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_allclients"
+        android:id="@+id/fragment_transactions_sales_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -26,6 +28,5 @@
         app:fabSize="normal"
         android:src="@drawable/button_plus_36"
         app:srcCompat="@android:drawable/ic_dialog_email" />
-
 
 </FrameLayout>

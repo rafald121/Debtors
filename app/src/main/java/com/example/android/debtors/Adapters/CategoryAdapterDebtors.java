@@ -13,7 +13,6 @@ import com.example.android.debtors.Fragments.FragmentDebtorsMeToOther;
 
 public class CategoryAdapterDebtors extends FragmentPagerAdapter {
 
-
     public CategoryAdapterDebtors(FragmentManager fm) {
         super(fm);
     }

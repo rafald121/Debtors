@@ -26,11 +26,11 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     private static final String TAG = AdapterTransacation.class.getSimpleName();
 
-    DatabaseTransactions dbTransactions;
-    DatabaseClients dbClients;
-    List<TransactionForClient> listOfTransactions = new ArrayList<>();
+    private DatabaseTransactions dbTransactions;
+    private DatabaseClients dbClients;
+    private List<TransactionForClient> listOfTransactions = new ArrayList<>();
 
-    Context context;
+    private Context context;
 
     public AdapterTransacation(List<TransactionForClient> listOfTransactions) {
         Log.i(TAG, "AdapterTransacation: constructor");
@@ -62,8 +62,9 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         TransactionForClient transaction = listOfTransactions.get(position);
         Log.i(TAG, "onBindViewHolder: halo: " + transaction.toString());
         Log.i(TAG, "onBindViewHolder: client ID" + transaction.getTransactionClientID());
+
         Client client =  getClientById(transaction.getTransactionClientID());
-//                dbClients.getClientByID(transaction.getTransactionClientID());
+
         String clientName = client.getClientName();
 
         holder.textViewClient.setText(clientName);
@@ -87,7 +88,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewClient, textViewTotalAmount, textViewDate, textViewType;
+        private TextView textViewClient, textViewTotalAmount, textViewDate, textViewType;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -98,8 +99,6 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             textViewType = (TextView) itemView.findViewById(R.id.transaction_item_type);
         }
     }
-
-    //////////////////////////
 
     private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
         DatabaseTransactions dbTransactions = new DatabaseTransactions(context);

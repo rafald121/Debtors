@@ -3,10 +3,14 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,60 +20,66 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentPaymentsReceived.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentPaymentsReceived#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FragmentPaymentsReceived extends Fragment {
 
+    private static final String TAG = FragmentPaymentsReceived.class.getSimpleName();
 
-
-    private OnFragmentInteractionListener mListener;
+    private FloatingActionButton fab;
 
     public FragmentPaymentsReceived() {
-        // Required empty public constructor
     }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment FragmentPaymentsReceived.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static FragmentPaymentsReceived newInstance(String param1, String param2) {
-//        FragmentPaymentsReceived fragment = new FragmentPaymentsReceived();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_payments_received, container, false);
         AdapterPayment adapterPayment = new AdapterPayment(getContext(), true);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
 
-        // Inflate the layout for this fragment
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0  && fab.isShown())
+                    fab.hide();
+                else if(dy<0 && !fab.isShown())
+                    fab.show();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Log.i(TAG, "onScrollStateChanged: ");
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payments_received_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -82,9 +92,7 @@ public class FragmentPaymentsReceived extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
     }
 
     @Override
@@ -96,21 +104,6 @@ public class FragmentPaymentsReceived extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

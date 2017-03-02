@@ -40,7 +40,6 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
     private Context context;
     private FragmentActivity fragmentActivity;
 
-//    FragmentManager fragmentManager =
     public AdapterDebtors(FragmentActivity fragmentActivity, List<Client> clientList) {
         this.fragmentActivity = fragmentActivity;
         this.clientList = clientList;

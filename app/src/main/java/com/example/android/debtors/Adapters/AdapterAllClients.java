@@ -29,13 +29,17 @@ import java.util.List;
 public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.MyViewHolder> {
 
     private static final String TAG = AdapterAllClients.class.getSimpleName();
-    List<Client> clientList = new ArrayList<>();
+
+    private List<Client> clientList = new ArrayList<>();
+    private List<Client> clientListCopy = new ArrayList<>();
+
     private FragmentActivity fragmentActivity;
 
 
     public AdapterAllClients(FragmentActivity fragmentActivity, List<Client> clientList) {
         this.fragmentActivity = fragmentActivity;
         this.clientList = clientList;
+        this.clientListCopy.addAll(clientList);
     }
 
     @Override
@@ -59,11 +63,27 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
         return clientList.size();
     }
 
+    public void filter(String text) {
+        clientList.clear();
+        if(text.isEmpty()){
+            clientList.addAll(clientListCopy);
+        } else{
+            text = text.toLowerCase();
+
+            for(Client client: clientListCopy){
+                if(client.getClientName().toLowerCase().contains(text))
+                    clientList.add(client);
+            }
+
+        }
+        notifyDataSetChanged();
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 //        TODO check if private
-        public ImageView allClientsItemAvatar;
-        public TextView allClientsItemName, allClientsItemLeftAmount;
-        public ImageButton allClientsItemButton;
+        private ImageView allClientsItemAvatar;
+        private TextView allClientsItemName, allClientsItemLeftAmount;
+        private ImageButton allClientsItemButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);

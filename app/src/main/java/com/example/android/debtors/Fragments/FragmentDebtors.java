@@ -22,53 +22,37 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
 import com.example.android.debtors.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentDebtors.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentDebtors#newInstance} factory method to
- * create an instance of this fragment.
- */
+///**
+// * A simple {@link Fragment} subclass.
+// * Activities that contain this fragment must implement the
+// * {@link FragmentDebtors.OnFragmentInteractionListener} interface
+// * to handle interaction events.
+// * Use the {@link FragmentDebtors#newInstance} factory method to
+// * create an instance of this fragment.
+// */
 public class FragmentDebtors extends Fragment  {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TAG = FragmentDebtors.class.getSimpleName();
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    interface hideOrShowFab{
+        void hideFab();
+        void showFab();
+    }
+
+    private static final String TAG = FragmentDebtors.class.getSimpleName();
 
     private OnFragmentInteractionListener mListener;
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
 
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
+
+
 
     public FragmentDebtors() {
         Log.i(TAG, "FragmentDebtors: START");
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentDebtors.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentDebtors newInstance(String param1, String param2) {
-        Log.i(TAG, "newInstance: start");
-        FragmentDebtors fragment = new FragmentDebtors();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        Log.i(TAG, "newInstance: end");
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,14 +79,6 @@ public class FragmentDebtors extends Fragment  {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Debtors", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
@@ -119,6 +95,7 @@ public class FragmentDebtors extends Fragment  {
         inflater.inflate(R.menu.menu_search_view, menu);
         inflater.inflate(R.menu.menu_debtors, menu);
 
+
         MenuItem searchItem = menu.findItem(R.id.search_view);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
@@ -132,7 +109,7 @@ public class FragmentDebtors extends Fragment  {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.i("onQueryTextChange", newText);
-
+//SHARED PREFERENCE??
                     return true;
                 }
                 @Override

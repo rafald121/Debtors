@@ -26,11 +26,11 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     private static final String TAG = AdapterPayment.class.getSimpleName();
 
-    List<Payment> listOfPayments = new ArrayList<>();
-    DatabasePayments dbPayments;
-    DatabaseClients dbClients;
-    long clientID;
-    Context context;
+    private List<Payment> listOfPayments = new ArrayList<>();
+    private DatabasePayments dbPayments;
+    private DatabaseClients dbClients;
+    private long clientID;
+    private Context context;
 
     public AdapterPayment(Context context, List<Payment> listOfPayments) {
         this.context = context;
@@ -48,14 +48,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         listOfPayments = getListOfTransactionsByType(receivedOrGive);
         Log.i(TAG, "AdapterPayment: end");
     }
-
-//    public AdapterPayment(Context context, long clientsID) {
-//        this.context = context;
-//        this.clientID = clientsID;
-//        listOfPayments = getListOfPaymentsByClient(clientsID);
-//        Log.i(TAG, "AdapterPayment: listOfPayments in constructor : " + listOfPayments.toString());
-//    }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -94,7 +86,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     public class MyViewHolder  extends RecyclerView.ViewHolder{
 
-        TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewType;
+        private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewType;
 
         public MyViewHolder(View itemView) {
             super(itemView);
