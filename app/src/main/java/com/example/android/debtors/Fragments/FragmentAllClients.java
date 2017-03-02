@@ -46,8 +46,6 @@ public class FragmentAllClients extends Fragment {
 
     DatabaseClients dbClients;
 
-    private OnFragmentInteractionListener mListener;
-
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private FragmentActivity fragmentActivity;
@@ -60,23 +58,7 @@ public class FragmentAllClients extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment FragmentAllClients.
-     */
-    // TODO: Rename and change types and number of parameters
-//    public static FragmentAllClients newInstance(String param1, String param2) {
-//        Log.i(TAG, "newInstance: START");
-//        FragmentAllClients fragment = new FragmentAllClients();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        Log.i(TAG, "newInstance: END");
-//        return fragment;
-//    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +74,7 @@ public class FragmentAllClients extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
-        // Inflate the layout for this fragment
+
         listOfAllClients = getAllClientsFromDatabase();
 
         View rootView = inflater.inflate(R.layout.fragment_all_clients, container, false);
@@ -100,7 +82,6 @@ public class FragmentAllClients extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
-
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -117,7 +98,7 @@ public class FragmentAllClients extends Fragment {
 
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-//                    fab.show();
+                    Log.i(TAG, "onScrollStateChanged: ");
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
@@ -138,7 +119,7 @@ public class FragmentAllClients extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.menu_search_view, menu);
         inflater.inflate(R.menu.menu_allclients, menu);
 
@@ -201,7 +182,6 @@ public class FragmentAllClients extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         fab = (FloatingActionButton) view.findViewById(R.id.fab_allclients);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,33 +193,23 @@ public class FragmentAllClients extends Fragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         Log.i(TAG, "onButtonPressed: START");
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
+
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
 
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
-        mListener = null;
     }
 
     public List<Client> getAllClientsFromDatabase() {
@@ -248,20 +218,6 @@ public class FragmentAllClients extends Fragment {
         return list;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 
     private void toggleFabOn(){
         fab.show();
