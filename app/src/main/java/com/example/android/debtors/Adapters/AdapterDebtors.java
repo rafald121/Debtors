@@ -40,6 +40,8 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
     private Context context;
     private FragmentActivity fragmentActivity;
 
+
+
     public AdapterDebtors(FragmentActivity fragmentActivity, List<Client> clientList) {
         this.fragmentActivity = fragmentActivity;
         this.clientList = clientList;
@@ -64,6 +66,22 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
     @Override
     public int getItemCount() {
         return clientList.size();
+    }
+
+    public void filter(String text) {
+        clientList.clear();
+        if(text.isEmpty()){
+            clientList.addAll(clientListCopy);
+        } else{
+            text = text.toLowerCase();
+
+            for(Client client: clientListCopy){
+                if(client.getClientName().toLowerCase().contains(text))
+                    clientList.add(client);
+            }
+
+        }
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -116,21 +134,7 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
             return bundle;
         }
 
-        public void filter(String text) {
-            clientList.clear();
-            if(text.isEmpty()){
-                clientList.addAll(clientListCopy);
-            } else{
-                text = text.toLowerCase();
 
-                for(Client client: clientListCopy){
-                    if(client.getClientName().toLowerCase().contains(text))
-                        clientList.add(client);
-                }
-
-            }
-            notifyDataSetChanged();
-        }
     }
 
 

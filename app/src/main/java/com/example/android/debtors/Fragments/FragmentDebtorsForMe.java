@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -26,7 +27,8 @@ import java.util.List;
 /**
  * Created by Rafaello on 2017-02-18.
  */
-public class FragmentDebtorsForMe extends Fragment{
+public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.SearchViewQuery{
+
 
     interface hideOrShowFab{
         void hideFab();
@@ -35,13 +37,18 @@ public class FragmentDebtorsForMe extends Fragment{
 
     private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
 
+    private String query;
     private DatabaseClients dbClients;
     private List<Client> listOfClients;
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
+    private AdapterDebtors adapterDebtors;
 
-    interface Scrolling {
-        public void scrolling(boolean direction);
+    @Override
+    public void searchViewQueryChanged(String query) {
+        Log.i(TAG, "searchViewQueryChanged: halo");
+        this.query = query;
+        adapterDebtors.filter(query);
     }
 
     public FragmentDebtorsForMe() {
@@ -64,7 +71,6 @@ public class FragmentDebtorsForMe extends Fragment{
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
         listOfClients = getClientsMoreThanZero();
-
 
 
         View rootView = inflater.inflate(R.layout.fragment_debtors_forme, container, false);
@@ -124,8 +130,16 @@ public class FragmentDebtorsForMe extends Fragment{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Snackbar.make(view, "Debtors forme ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity);
+                dialogNewClient.show();
+
+
+
+
             }
         });
 

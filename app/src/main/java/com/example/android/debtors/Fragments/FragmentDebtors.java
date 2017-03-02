@@ -35,8 +35,6 @@ import com.example.android.debtors.R;
 // */
 public class FragmentDebtors extends Fragment  {
 
-
-
     private static final String TAG = FragmentDebtors.class.getSimpleName();
     static final String QUERY_DEBTORS = "QUERY_DEBTORS";
 
@@ -48,7 +46,7 @@ public class FragmentDebtors extends Fragment  {
         void searchViewQueryChanged(String query);
     }
 
-//    private final SearchViewQuery searchViewQuery;
+    private SearchViewQuery searchViewQuery;
 
     public FragmentDebtors() {
         Log.i(TAG, "FragmentDebtors: START");
@@ -115,6 +113,8 @@ public class FragmentDebtors extends Fragment  {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences((fragmentActivity));
                     sharedPreferences.edit().putString(QUERY_DEBTORS, newText).apply();
 
+                    searchViewQuery.searchViewQueryChanged(newText);
+
                     return true;
                 }
 
@@ -125,9 +125,10 @@ public class FragmentDebtors extends Fragment  {
                     return true;
                 }
             };
-            searchView.setOnQueryTextListener(queryTextListener);
+//            searchView.setOnQueryTextListener(queryTextListener);
 
         }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -166,6 +167,12 @@ public class FragmentDebtors extends Fragment  {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+//
+//        try{
+//            searchViewQuery = (SearchViewQuery) context;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(context.toString() + " must implement ");
+//        }
     }
 
     @Override
