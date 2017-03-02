@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
+
 //
 //        createClients(names);
 //        Owner owner = new Owner("Rafal", 500, 200);
@@ -482,9 +483,9 @@ public class MainActivity extends AppCompatActivity {
         Owner owner = dbOwner.getOwner(1);
 
 //        KLIECI
-        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(2); //kupujacy 2
 
-        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 6, 30, 100, true);
+        TransactionForClient transactionWithPayment = new TransactionForClient(Utils.getDateTime(), owner, clientJurand, 120, 40, 250, false);
 
 //        getInfoAboutTransaction(transactionWithPayment);
 //
@@ -513,9 +514,9 @@ public class MainActivity extends AppCompatActivity {
 
         Owner owner = dbOwner.getOwner(1);
 
-        Client clientJurand = dbClient.getClientByID(8); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(5); //kupujacy 2
 
-        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 20, true);
+        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 20, false);
 
         Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
 //        dbPayment.createPayment(payment);
@@ -568,14 +569,14 @@ public class MainActivity extends AppCompatActivity {
         Log.w(TAG, "simulateTransaction: ");
 
         Owner owner = dbOwner.getOwner(1);
-        Client clientJurand = dbClient.getClientByID(4); //kupujacy 2
+        Client clientJurand = dbClient.getClientByID(6); //kupujacy 2
 
 //        TRANZAKCJA
         //o godziinie X owner robi tranzakcje z jurandem za 5 po 10,
         // true - owner - sprzedający,
         // false - owner - kupujący
         TransactionForClient transactionForClient = new TransactionForClient(Utils.getDateTime(),
-                owner, clientJurand, 2, 100, true);
+                owner, clientJurand, 7, 150, false);
 
 //        dbTransaction.createTransaction(transactionForClient);
 
