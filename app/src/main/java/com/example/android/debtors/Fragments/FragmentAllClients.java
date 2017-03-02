@@ -2,8 +2,10 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,10 +43,12 @@ import java.util.List;
 public class FragmentAllClients extends Fragment {
 
     private static final String TAG = FragmentAllClients.class.getSimpleName();
+    static final String QUERY_ALLCLIENTS = "QUERY_ALLCLIENTS";
 
-    List<Client> listOfAllClients = new ArrayList<>();
+    private AdapterAllClients adapterAllClients;
+    private List<Client> listOfAllClients = new ArrayList<>();
 
-    DatabaseClients dbClients;
+    private DatabaseClients dbClients;
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
@@ -78,10 +82,10 @@ public class FragmentAllClients extends Fragment {
         listOfAllClients = getAllClientsFromDatabase();
 
         View rootView = inflater.inflate(R.layout.fragment_all_clients, container, false);
-        AdapterAllClients adapter = new AdapterAllClients(fragmentActivity, listOfAllClients);
+        adapterAllClients = new AdapterAllClients(fragmentActivity, listOfAllClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapterAllClients);
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -136,7 +140,11 @@ public class FragmentAllClients extends Fragment {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.i("onQueryTextChange", newText);
-
+                        adapterAllClients.filter(newText);
+//                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragmentActivity);
+//                    sharedPreferences.edit().putString(QUERY_ALLCLIENTS, newText).apply();
+//                    searchView.clearFocus();
+//                    finish();
                     return true;
                 }
                 @Override
