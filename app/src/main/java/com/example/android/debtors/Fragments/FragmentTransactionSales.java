@@ -3,6 +3,9 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +31,7 @@ public class FragmentTransactionSales extends Fragment {
     private DatabaseTransactions dbTransaction;
     private List<TransactionForClient> listOfTransactions;
     private List<Client> listOfClients;
+    private FloatingActionButton fab;
 
     public FragmentTransactionSales() {
     }
@@ -58,11 +62,32 @@ public class FragmentTransactionSales extends Fragment {
 //        listOfTransactions = getListOfTransactionsSale();
 //        listOfClients = getListOfClients();
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
         AdapterTransacation adapterTransacation = new AdapterTransacation(getContext(), true);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransacation);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0  && fab.isShown())
+                    fab.hide();
+                else if(dy<0 && !fab.isShown())
+                    fab.show();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+//                    fab.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return rootView;
@@ -74,6 +99,22 @@ public class FragmentTransactionSales extends Fragment {
                 .getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_transactions_sales_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "transaction sales", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
