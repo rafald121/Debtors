@@ -49,11 +49,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "newInstance: start");
         FragmentSingleClientInfoTransactions f = new FragmentSingleClientInfoTransactions();
         f.clientsID = clientID;
-//        Bundle args = new Bundle();
-//
-//        FragmentSingleClientInfoPayments fragment = new FragmentSingleClientInfoPayments();
-//        fragment.setArguments(args);
-//        return fragment;
         Log.i(TAG, "newInstance: before return ");
         return f;
     }
@@ -62,7 +57,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
-
         Log.i(TAG, "onCreate: end");
     }
 

@@ -29,7 +29,7 @@ import java.util.List;
 public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.MyViewHolder> {
 
     private static final String TAG = AdapterAllClients.class.getSimpleName();
-    List<Client> clientList = new ArrayList<>();
+    private List<Client> clientList = new ArrayList<>();
     private FragmentActivity fragmentActivity;
 
 
@@ -61,9 +61,9 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 //        TODO check if private
-        public ImageView allClientsItemAvatar;
-        public TextView allClientsItemName, allClientsItemLeftAmount;
-        public ImageButton allClientsItemButton;
+        private ImageView allClientsItemAvatar;
+        private TextView allClientsItemName, allClientsItemLeftAmount;
+        private ImageButton allClientsItemButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);

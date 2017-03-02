@@ -17,6 +17,7 @@ import com.example.android.debtors.Fragments.FragmentSingleClientInfoTransaction
 public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
 
     private static final String TAG = CategoryAdapterClientInfo.class.getSimpleName();
+
     private long clientID;
 
     public CategoryAdapterClientInfo(FragmentManager fm) {
