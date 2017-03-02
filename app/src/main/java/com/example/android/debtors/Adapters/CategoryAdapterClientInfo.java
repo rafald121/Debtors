@@ -60,8 +60,5 @@ public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
         return 2;
     }
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return false;
-    }
+
 }
