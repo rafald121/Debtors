@@ -33,15 +33,13 @@ public class FragmentPaymentsGiven extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = FragmentPaymentsGiven.class.getSimpleName();
-
-    interface test{
-        void hide();
-        void show();
-    }
-    private test mtest;
-
-
     private FloatingActionButton fab;
+
+//    interface test{
+//        void hide();
+//        void show();
+//    }
+//    private test mtest;
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,19 +56,14 @@ public class FragmentPaymentsGiven extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
 
         AdapterPayment adapterPayment = new AdapterPayment(getContext(), false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
-
-
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
 //        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
 //        recyclerView.addOnScrollListener(new RecyclerOnScrollListener(this));
-        
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
-
-        // Inflate the layout for this fragment
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -83,6 +76,8 @@ public class FragmentPaymentsGiven extends Fragment {
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
 //                    fab.show();
                 }
@@ -91,24 +86,10 @@ public class FragmentPaymentsGiven extends Fragment {
         });
 
 
+        // Inflate the layout for this fragment
         return rootView;
 
 
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_payments_given);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "PaymentsGiven", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -117,6 +98,21 @@ public class FragmentPaymentsGiven extends Fragment {
                 .getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payment_given_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

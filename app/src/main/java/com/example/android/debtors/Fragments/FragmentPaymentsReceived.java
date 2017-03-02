@@ -22,16 +22,9 @@ import com.example.android.debtors.R;
 
 public class FragmentPaymentsReceived extends Fragment {
 
-
-//    interface HideOrShowFab{
-//        void hideFab();
-//        void showFab();
-//    }
-//    private final HideOrShowFab hideOrShowFab;
+    private OnFragmentInteractionListener mListener;
 
     private FloatingActionButton fab;
-
-    private OnFragmentInteractionListener mListener;
 
     public FragmentPaymentsReceived() {
         // Required empty public constructor
@@ -65,13 +58,12 @@ public class FragmentPaymentsReceived extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_payments_received, container, false);
         AdapterPayment adapterPayment = new AdapterPayment(getContext(), true);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
 
-        // Inflate the layout for this fragment
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
@@ -83,6 +75,8 @@ public class FragmentPaymentsReceived extends Fragment {
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
 //                    fab.show();
                 }
@@ -90,8 +84,22 @@ public class FragmentPaymentsReceived extends Fragment {
             }
         });
 
-
+        // Inflate the layout for this fragment
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payments_received_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -100,19 +108,6 @@ public class FragmentPaymentsReceived extends Fragment {
                 .getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_payments_given);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "PaymentsReceived", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        super.onViewCreated(view, savedInstanceState);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -37,12 +37,7 @@ public class FragmentDebtors extends Fragment  {
         void showFab();
     }
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = FragmentDebtors.class.getSimpleName();
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,19 +53,6 @@ public class FragmentDebtors extends Fragment  {
         // Required empty public constructor
     }
 
-
-
-
-//    public static FragmentDebtors newInstance(String param1, String param2) {
-//        Log.i(TAG, "newInstance: start");
-//        FragmentDebtors fragment = new FragmentDebtors();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        Log.i(TAG, "newInstance: end");
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,14 +79,6 @@ public class FragmentDebtors extends Fragment  {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        fab = (FloatingActionButton) view.findViewById(R.id.fab_debtors);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Debtors", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
