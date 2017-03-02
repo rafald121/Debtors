@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,38 +32,13 @@ import java.util.List;
 // * create an instance of this fragment.
 // */
 public class FragmentTransactionsPurchases extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private OnFragmentInteractionListener mListener;
+    private static final String TAG = FragmentTransactionsPurchases.class.getSimpleName();
 
-    private DatabaseTransactions dbTransaction;
-    private List<TransactionForClient> listOfTransactions;
-    private List<Client> listOfClients;
     private FloatingActionButton fab;
 
-
     public FragmentTransactionsPurchases() {
-        // Required empty public constructor
     }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment FragmentTransactionsPurchases.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static FragmentTransactionsPurchases newInstance(String param1, String param2) {
-//        FragmentTransactionsPurchases fragment = new FragmentTransactionsPurchases();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,11 +52,9 @@ public class FragmentTransactionsPurchases extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_transactions_purchases, container, false);
         AdapterTransacation adapterTransacation = new AdapterTransacation(getContext(),false);
-        //if false - fetch purchase transaction , if true - fetch sales transaction
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransacation);
-
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -96,13 +70,12 @@ public class FragmentTransactionsPurchases extends Fragment {
 
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-//                    fab.show();
+                    Log.i(TAG, "onScrollStateChanged: ");
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
 
-        // Inflate the layout for this fragment
         return rootView;
     }
 
@@ -128,11 +101,8 @@ public class FragmentTransactionsPurchases extends Fragment {
         });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
     }
 
     @Override
@@ -143,37 +113,7 @@ public class FragmentTransactionsPurchases extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 
-//    private List<TransactionForClient> getListOfTransactions(){
-//        DatabaseTransactions dbTransactions = new DatabaseTransactions(getContext());
-//
-//        List<TransactionForClient> list = dbTransactions.getListOfTransaction();
-//
-//        return list;
-//    }
-//
-//    private List<Client> getListOfClients(){
-//        DatabaseClients dbClients = new DatabaseClients(getContext());
-//
-//        List<Client> list = dbClients.getAllClient();
-//
-//        return list;
-//    }
 }
