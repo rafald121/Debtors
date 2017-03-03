@@ -44,4 +44,8 @@
     <string name="view_pager_debtors_for_me">For me</string>
 
     <string name="search_title">Search client</string>
+
+    <string name="dialog_payment_toggle_on">Sale</string>
+    <string name="dialog_payment_toggle_off">Purchase</string>
+
 </resources>
