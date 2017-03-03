@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Model.Client;
 
 import java.util.ArrayList;
@@ -153,6 +154,28 @@ public class DatabaseClients extends SQLiteOpenHelper{
         }
 
         return clientsList;
+    }
+
+    public List<String> getListOfClientsNames(){
+
+        List<String> clientsNamesList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                clientsNamesList.add(c.getString(c.getColumnIndex(CLIENT_NAME)));
+
+            } while (c.moveToNext());
+        }
+
+        Log.i(TAG, "getListOfClientsNames: list to string: " + clientsNamesList.toString());
+
+        return clientsNamesList;
     }
 
     public int getAmountOfAllClient(){

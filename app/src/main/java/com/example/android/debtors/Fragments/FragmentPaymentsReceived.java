@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
+import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.R;
 
 
@@ -26,6 +28,7 @@ public class FragmentPaymentsReceived extends Fragment {
     private static final String TAG = FragmentPaymentsReceived.class.getSimpleName();
 
     private FloatingActionButton fab;
+    private FragmentActivity fragmentActivity;
 
     public FragmentPaymentsReceived() {
     }
@@ -78,8 +81,14 @@ public class FragmentPaymentsReceived extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity);
+                dialogPayment.show();
             }
         });
+
+
+
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -98,6 +107,7 @@ public class FragmentPaymentsReceived extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity) context;
 
     }
 
