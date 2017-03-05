@@ -65,6 +65,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         setContentView(R.layout.dialog_payment);
 
         newPaymentAmount = (EditText) findViewById(R.id.dialog_payment_amount);
+        newPaymentAmount.setText("");
 
         newPaymentError = (TextView) findViewById(R.id.dialog_payment_error);
         newPaymentError.setText("");
@@ -98,12 +99,19 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == newPaymentOk.getId()){
+        if(v.getId() == newPaymentOk.getId()) {
             Log.i(TAG, "onClick: ok");
 
             String paymentClientName = newPaymentSpinner.getSelectedItem().toString();
-            int paymentAmount = Integer.parseInt(newPaymentAmount.getText().toString());
+            int paymentAmount;
+
+            if (newPaymentAmount.getText().toString().equals(""))
+                newPaymentError.setText("Payment amount must be over 0");
+            else
+                paymentAmount = Integer.parseInt(newPaymentAmount.getText().toString());
+
             boolean _type;
+
 
             if(newPaymentRadioReceived.isChecked())
                 _type=true;

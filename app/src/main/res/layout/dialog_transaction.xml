@@ -33,7 +33,6 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/dialog_transaction_quantity"
         android:hint="Quantity"
@@ -42,12 +41,12 @@
         android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:inputType="numberDecimal" />
 
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/dialog_transaction_productvalue"
         android:hint="Product Value"
@@ -57,12 +56,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_quantity"
         android:layout_marginTop="@dimen/dialog_margin_top"
-        app:layout_constraintHorizontal_bias="0.52" />
+        app:layout_constraintHorizontal_bias="0.52"
+        android:inputType="numberDecimal" />
 
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/dialog_transaction_entrypayment"
         android:hint="Entry Payment"
@@ -71,7 +70,8 @@
         android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/dialog_margin_top"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_productvalue" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_productvalue"
+        android:inputType="numberDecimal" />
 
 
     <RadioGroup
