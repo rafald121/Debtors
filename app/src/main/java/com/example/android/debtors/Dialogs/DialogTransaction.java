@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -12,10 +13,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.R;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * Created by admin on 05.03.2017.
@@ -49,6 +53,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
     public DialogTransaction(Context context, boolean type) {
         super(context);
+        this.context = context;
         this.typeOfTransaction = type;
     }
 
@@ -76,13 +81,25 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         else
             newTransactionRadioPurchase.setChecked(true);
 
+        List<String> clientsNames = getListOfClientsNames();
 
+        ArrayAdapter<String> adapterSpiner = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, clientsNames);
+        newTransactionSpinner.setAdapter(adapterSpiner);
 
-
+//        newTransactionButtonOk.setOnClickListener(this);
+//        newTransactionButtonCancel.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
+    }
+
+    private List<String> getListOfClientsNames(){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        List<String> list = dbClients.getListOfClientsNames();
+
+        return list;
     }
 }
