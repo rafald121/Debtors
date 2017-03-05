@@ -100,7 +100,7 @@ public class FragmentPaymentsGiven extends Fragment {
                 Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                DialogPayment dialogPayment = new DialogPayment(fragmentActivity);
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity,false);
                 dialogPayment.show();
             }
         });

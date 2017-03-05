@@ -45,7 +45,7 @@
 
     <string name="search_title">Search client</string>
 
-    <string name="dialog_payment_toggle_sale">Sale</string>
-    <string name="dialog_payment_toggle_purchase">Purchase</string>
+    <string name="dialog_payment_toggle_received">Received</string>
+    <string name="dialog_payment_toggle_given">Given</string>
 
 </resources>

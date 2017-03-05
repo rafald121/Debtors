@@ -82,7 +82,7 @@ public class FragmentPaymentsReceived extends Fragment {
                 Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                DialogPayment dialogPayment = new DialogPayment(fragmentActivity);
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true);
                 dialogPayment.show();
             }
         });

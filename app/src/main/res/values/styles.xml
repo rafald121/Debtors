@@ -60,8 +60,8 @@
     <style name="ItemPaymentsInfoTextView" parent="ItemTransacationInfoTextView">
 
     </style>
-    <!--<style name="RecyclerView">-->
+    <!--<dialog_payment_radio_shape name="RecyclerView">-->
         <!--<item name="recyclerViewItemBackgroundColor">@android:colors-->
             <!--/colorRecyclerViewDebtorsItem</item>-->
-    <!--</style>-->
+    <!--</dialog_payment_radio_shape>-->
 </resources>
