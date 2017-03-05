@@ -47,7 +47,6 @@ public class RealizePaymentHelper {
             changeOwnerAmount(owner, paidAmount, revenueOrExpense);
             addPaymentToOwnerList(owner, payment);
 
-
             changeClientAmount(client, paidAmount, revenueOrExpense);
             addPaymentToClientList(client, payment);
 

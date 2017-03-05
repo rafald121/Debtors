@@ -15,7 +15,7 @@ public class Payment {
     private Client paymentClient; // kto płaci
     private int paymentAmount; // ile zapłacono
     private boolean paymentGotOrGiven; //if true = got
-
+    private String paymentDetails;
     public Payment(){
 
     }
@@ -24,6 +24,16 @@ public class Payment {
         this.paymentDate = paymentData;
         this.paymentOwner = paymentOwner;
         this.paymentClient = paymentClient;
+        this.paymentAmount = paymentAmount;
+        this.paymentGotOrGiven = paymentGotOrGiven;
+    }
+
+    public Payment(String paymentDetails, int paymentID, String paymentDate, int paymentOwnerID, int paymentClientID, int paymentAmount, boolean paymentGotOrGiven) {
+        this.paymentDetails = paymentDetails;
+        this.paymentID = paymentID;
+        this.paymentDate = paymentDate;
+        this.paymentOwnerID = paymentOwnerID;
+        this.paymentClientID = paymentClientID;
         this.paymentAmount = paymentAmount;
         this.paymentGotOrGiven = paymentGotOrGiven;
     }
@@ -112,7 +122,15 @@ public class Payment {
             Log.e("Payment", "setPaymentGotOrGiven: PaymentGotOrGiven can't be other than 0 or 1");
     }
 
-//    OTHERS
+    public String getPaymentDetails() {
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(String paymentDetails) {
+        this.paymentDetails = paymentDetails;
+    }
+
+    //    OTHERS
 
     @Override
     public String toString() {
@@ -143,6 +161,7 @@ public class Payment {
                 ", paymentOwnerID=" + paymentOwnerID +
                 ", paymentClientID=" + paymentClientID +
                 ", paymentAmount=" + paymentAmount +
+                ", paymentDetails=" + paymentDetails +
                 ", revenueOrExpense? " + revenueOrExpense +
                 '}';
     }
