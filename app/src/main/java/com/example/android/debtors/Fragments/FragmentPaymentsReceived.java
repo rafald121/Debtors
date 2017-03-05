@@ -79,8 +79,8 @@ public class FragmentPaymentsReceived extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true);
                 dialogPayment.show();

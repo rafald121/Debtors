@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -29,6 +31,7 @@ public class FragmentTransactionSales extends Fragment {
     private static final String TAG = FragmentTransactionSales.class.getSimpleName();
 
     private FloatingActionButton fab;
+    private FragmentActivity fragmentActivity;
 
     public FragmentTransactionSales() {
     }
@@ -92,10 +95,14 @@ public class FragmentTransactionSales extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "transaction sales", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "transaction sales", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true);
+                dialogTransaction.show();
             }
         });
+
     }
 
     public void onButtonPressed(Uri uri) {
@@ -104,6 +111,8 @@ public class FragmentTransactionSales extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity) context;
+
     }
 
     @Override
