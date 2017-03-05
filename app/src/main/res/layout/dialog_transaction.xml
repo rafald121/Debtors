@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/dialog_transaction_client"
+        android:id="@+id/dialog_transaction_productvalue"
         android:hint="Product Value"
         android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -71,7 +71,7 @@
         android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/dialog_margin_top"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_client" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_productvalue" />
 
 
     <RadioGroup

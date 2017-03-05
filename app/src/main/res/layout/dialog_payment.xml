@@ -93,29 +93,6 @@
     </RadioGroup>
 
 
-    <!--<org.jraf.android.backport.switchwidget.Switch-->
-        <!--android:text="Sale or Purchase?"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:id="@+id/dialog_payment_switch"-->
-
-        <!--app:thumb="@drawable/apptheme_switch_inner_holo_light"-->
-        <!--app:track="@drawable/apptheme_switch_track_holo_light"-->
-        <!--android:textOn="@string/dialog_payment_toggle_sale"-->
-        <!--android:textOff="@string/dialog_payment_toggle_purchase"-->
-        <!--android:textColor="#000000"-->
-        <!--android:background="@drawable/my_btn_toggle/>-->
-    <!--&lt;!&ndash;&ndash;&gt;-->
-    <!--<Switch-->
-
-
-
-        <!--tools:text="Sale or Purchase?"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_width="0dp"-->
-        <!--tools:layout_editor_absoluteY="0dp"-->
-        <!--tools:layout_editor_absoluteX="0dp" />-->
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
