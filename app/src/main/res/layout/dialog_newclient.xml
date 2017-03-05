@@ -14,23 +14,12 @@
         android:id="@+id/textView"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="18sp"
+        android:textSize="@dimen/dialog_header"
         android:textStyle="normal|bold" />
-
-    <TextView
-        android:text="Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="14sp"/>
 
     <EditText
         android:layout_height="38dp"
@@ -38,66 +27,66 @@
         android:hint="Enter client name"
         android:textSize="14sp"
         android:inputType="textPersonName"
-        android:text="Rafał"
-        android:layout_width="100dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginStart="56dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView3" />
-
-    <TextView
-        android:text="Left amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_marginStart="8dp"
+        android:="Rafał"
+        android:layout_width="0dp"
+        tools:layout_editor_absoluteY="46dp"
+        android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_name" />
+        android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="178dp"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:text="420"
         android:id="@+id/dialog_newclient_leftamount"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_name"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView4" />
-
-    <Button
-        android:text="Add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dialog_newclient_button_ok"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_leftamount" />
-
-    <Button
-        android:text="Cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dialog_newclient_button_cancel"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_leftamount"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/dialog_newclient_button_ok" />
+        tools:layout_editor_absoluteY="92dp"
+        tools:layout_editor_absoluteX="16dp"
+        android:hint="Enter left amount of client" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/dialog_newclient_error"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_button_ok"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
         app:layout_constraintRight_toRightOf="parent"
         android:textAlignment="center"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        tools:layout_editor_absoluteY="187dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/dialog_margin_left_and_right"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_leftamount"
+        android:layout_marginTop="8dp"
+        android:weightSum="100">
+
+
+        <Button
+            android:text="Add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_newclient_button_ok"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_leftamount"
+            android:layout_weight="50" />
+
+        <Button
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_newclient_button_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_newclient_leftamount"
+            app:layout_constraintLeft_toRightOf="@+id/dialog_newclient_button_ok"
+            android:layout_weight="50" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
