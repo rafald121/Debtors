@@ -27,16 +27,16 @@ public class TransactionForClient extends Transaction {
         this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
-// TRANSACTION CONSTRUCTOR WITH PAYMENT
-public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, int entryPayment,  boolean transactionBuyOrSell) {
+    // TRANSACTION CONSTRUCTOR WITH PAYMENT
+    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, int entryPayment,  boolean transactionBuyOrSell) {
 
-    super(transactionDate, transactionQuantity);
-    this.transactionOwner = transactionOwner;
-    this.transactionClient = transactionClient;
-    this.productValue = productValue;
-    this.transactionEntryPayment = entryPayment;
-    this.transactionBuyOrSell = transactionBuyOrSell;
-}
+        super(transactionDate, transactionQuantity);
+        this.transactionOwner = transactionOwner;
+        this.transactionClient = transactionClient;
+        this.productValue = productValue;
+        this.transactionEntryPayment = entryPayment;
+        this.transactionBuyOrSell = transactionBuyOrSell;
+    }
 
     public TransactionForClient() {
         super();
