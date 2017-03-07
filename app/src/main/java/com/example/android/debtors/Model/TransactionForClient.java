@@ -14,27 +14,41 @@ public class TransactionForClient extends Transaction {
     private Owner transactionOwner;
     private Client transactionClient;
     private Product transactionProduct; //co
-    int productValue;
-    int transactionEntryPayment = 0;
+    private int transactionProductValue;
+    private int transactionEntryPayment = 0;
+
+
+
+    private String transactionDetails = "";
     boolean transactionBuyOrSell; // if true = sprzedawca = owner, if false = sprzedawca = ktos inny
 
 // TRANSACTION CONSTRUCTOR WITHOUT PAYMENT
-    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, boolean transactionBuyOrSell) {
+    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int transactionProductValue, boolean transactionBuyOrSell) {
         super(transactionDate, transactionQuantity);
         this.transactionOwner = transactionOwner;
         this.transactionClient = transactionClient;
-        this.productValue = productValue;
+        this.transactionProductValue = transactionProductValue;
         this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
     // TRANSACTION CONSTRUCTOR WITH PAYMENT
-    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int productValue, int entryPayment,  boolean transactionBuyOrSell) {
+    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int transactionProductValue, int entryPayment,  boolean transactionBuyOrSell) {
 
         super(transactionDate, transactionQuantity);
         this.transactionOwner = transactionOwner;
         this.transactionClient = transactionClient;
-        this.productValue = productValue;
+        this.transactionProductValue = transactionProductValue;
         this.transactionEntryPayment = entryPayment;
+        this.transactionBuyOrSell = transactionBuyOrSell;
+    }
+
+    public TransactionForClient(String transactionDate, int transactionQuantity, int transactionOwnerID, int transactionClientID, int transactionProductValue, int transactionEntryPayment, String transactionDetails, boolean transactionBuyOrSell) {
+        super(transactionDate, transactionQuantity);
+        this.transactionOwnerID = transactionOwnerID;
+        this.transactionClientID = transactionClientID;
+        this.transactionProductValue = transactionProductValue;
+        this.transactionEntryPayment = transactionEntryPayment;
+        this.transactionDetails = transactionDetails;
         this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
@@ -87,12 +101,12 @@ public class TransactionForClient extends Transaction {
         this.transactionClientID = transactionClientID;
     }
 
-    public int getProductValue() {
-        return productValue;
+    public int getTransactionProductValue() {
+        return transactionProductValue;
     }
 
-    public void setProductValue(int productValue) {
-        this.productValue = productValue;
+    public void setTransactionProductValue(int transactionProductValue) {
+        this.transactionProductValue = transactionProductValue;
     }
 
     public int getTransactionEntryPayment() {
@@ -101,6 +115,15 @@ public class TransactionForClient extends Transaction {
 
     public void setTransactionEntryPayment(int transactionEntryPayment) {
         this.transactionEntryPayment = transactionEntryPayment;
+    }
+
+
+    public String getTransactionDetails() {
+        return transactionDetails;
+    }
+
+    public void setTransactionDetails(String transactionDetails) {
+        this.transactionDetails = transactionDetails;
     }
 
     //    GET SET TRANSACTION BuyOrSell
@@ -154,7 +177,7 @@ public class TransactionForClient extends Transaction {
                 ", transactionClient=" + this.transactionClientID +
                 ", transactionQuantity=" + super.getTransactionQuantity() +
                 ", transactionEntryPayment=" + this.getTransactionEntryPayment() +
-                ", transactionProductValue=" + this.getProductValue() +
+                ", transactiontransactionProductValue=" + this.getTransactionProductValue() +
                 ", sell or buy? " + buyOrSell;
 
     }
