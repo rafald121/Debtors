@@ -175,8 +175,8 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
             realizePaymentHelper.realizePayment(context, payment);
 
-            Client client = dbClients.getClientByID(selectedClientId);
-            dbClients.updateClient(client);
+//            Client client = dbClients.getClientByID(selectedClientId);
+//            dbClients.updateClient(client);
 
 
 //            TODO add snackbar when client is added
