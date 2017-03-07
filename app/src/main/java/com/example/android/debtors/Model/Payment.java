@@ -15,7 +15,7 @@ public class Payment {
     private Client paymentClient; // kto płaci
     private int paymentAmount; // ile zapłacono
     private boolean paymentGotOrGiven; //if true = got
-    private String paymentDetails;
+    private String paymentDetails = "";
     public Payment(){
 
     }

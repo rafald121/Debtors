@@ -34,6 +34,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
     private static final String TRANSACTION_QUANTITY = "transactionQuantity";
     private static final String TRANSACTION_PRODUCT_VALUE = "transcationProductValue";
     private static final String TRANSACTION_ENTRY="transcationEntry";
+    private static final String TRANSACTION_DETAILS = "transactionDetails";
     private static final String TRANSACTION_BUY_OR_SELL = "transcationBuyOrSell";
 
     private static final String CREATE_TABLE_TRANSACTIONS = "CREATE TABLE " + TABLE_TRANSACTIONS
@@ -45,6 +46,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
             + TRANSACTION_QUANTITY + " INTEGER, "
             + TRANSACTION_PRODUCT_VALUE + " INTEGER, "
             + TRANSACTION_ENTRY + " INTEGER, "
+            + TRANSACTION_DETAILS + " TEXT, "
             + TRANSACTION_BUY_OR_SELL + " INTEGER "
             + ")";
 
@@ -60,6 +62,9 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
     }
 
     public long createTransaction(TransactionForClient transactionForClient){
+
+        Log.i(TAG, "createTransaction: transactionForClient: " + transactionForClient.toString() );
+
         if (transactionForClient == null)
             Log.e(TAG, "createTransaction: TRANSACTION IS NULL" );
         else
@@ -70,11 +75,12 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(TRANSACTION_DATE, transactionForClient.getTransactionDate());
-        values.put(TRANSACTION_OWNER, transactionForClient.getTransactionOwner().getOwnerID());
-        values.put(TRANSACTION_CLIENT, transactionForClient.getTransactionClient().getClientId());
+        values.put(TRANSACTION_OWNER, transactionForClient.getTransactionOwnerID());
+        values.put(TRANSACTION_CLIENT, transactionForClient.getTransactionClientID());
         values.put(TRANSACTION_QUANTITY, transactionForClient.getTransactionQuantity());
-        values.put(TRANSACTION_PRODUCT_VALUE, transactionForClient.getProductValue());
         values.put(TRANSACTION_ENTRY, transactionForClient.getTransactionEntryPayment());
+        values.put(TRANSACTION_PRODUCT_VALUE, transactionForClient.getTransactionProductValue());
+        values.put(TRANSACTION_DETAILS, transactionForClient.getTransactionDetails());
         int buyOrSell = (transactionForClient.isTransactionBuyOrSell())? 1:0;
         values.put(TRANSACTION_BUY_OR_SELL, buyOrSell);
 
@@ -101,8 +107,9 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
                 transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
                 transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
                 transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
-                transaction.setProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
                 transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
+                transaction.setTransactionDetails(c.getString(c.getColumnIndex(TRANSACTION_DETAILS)));
                 transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
 
                 listOfTransaction.add(transaction);
@@ -150,7 +157,8 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
                 transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
                 transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
                 transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
-                transaction.setProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionDetails(c.getString(c.getColumnIndex(TRANSACTION_DETAILS)));
                 transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
                 transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
 
@@ -180,7 +188,8 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
                 transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
                 transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
                 transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
-                transaction.setProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionDetails(c.getString(c.getColumnIndex(TRANSACTION_DETAILS)));
                 transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
                 transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
 
@@ -215,7 +224,8 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
                 transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
                 transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
                 transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
-                transaction.setProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                transaction.setTransactionDetails(c.getString(c.getColumnIndex(TRANSACTION_DETAILS)));
                 transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
                 transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
 

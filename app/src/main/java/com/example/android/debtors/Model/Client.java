@@ -67,7 +67,7 @@ public class Client {
     }
 
     public void changeClientLeftAmount(TransactionForClient transaction){
-        int value = transaction.getProductValue();
+        int value = transaction.getTransactionProductValue();
         int quantity = transaction.getTransactionQuantity();
         int totalValue = value * quantity;
 

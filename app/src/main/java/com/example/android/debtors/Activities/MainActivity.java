@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseTransactions dbTransaction;
 
     String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
-            "maniek", "maniok", "chamiok"};
+            "maniek", "maniok", "chamiok", "krzysztof", "zofia", "alfons", "kamil", "pawel"};
     String[] names2 = {"ania","ula","ciocia","marianna","ola","ada","marysia","izabela"};
     HashMap<Long,Client> clientsMap = new HashMap<>();
 
@@ -156,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
+//        deleteDatabase("clientsDatabase");
+//        deleteDatabase("paymentsDatabase");
+//        deleteDatabase("transactionsDatabase");
+
 //
 //        createClients(names);
 //        Owner owner = new Owner("Rafal", 500, 200);
@@ -164,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 //        dbOwner.createOwner(owner);
 //        dbOwner.createOwner(owner1);
 
-        simulatePayments();
+//        simulatePayments();
 //
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
@@ -172,8 +176,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void createClients(String[] names){
         for(int i = 0 ; i< names.length -1 ; i++){
-            Client client = new Client(names[i], 50*i*(-10));
+
+            Client client = new Client(names[i], 100*i);
             dbClient.createClient(client);
+
         }
     }
     private void loadSelectedFragment(){
