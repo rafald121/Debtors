@@ -150,27 +150,28 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             String paymentDetails = newPaymentDetails.getText().toString();
             int paymentAmount = 0;
 
-            if ((newPaymentAmount.getText().toString().equals("") )){
-                newPaymentError.setText("Payment amount must be over 0");
+            if ((newPaymentAmount.getText().toString().equals(""))) {
+                newPaymentError.setText("Payment amount has to be over 0");
                 return;
-            } else if (Integer.parseInt(newPaymentAmount.getText().toString()) == 0)
-                newPaymentError.setText("Payment amount must be over 0");
-            else
+            } else if (Integer.parseInt(newPaymentAmount.getText().toString()) == 0){
+                newPaymentError.setText("Payment amount has to be over 0");
+                return;
+            } else
                 paymentAmount = Integer.parseInt(newPaymentAmount.getText().toString());
 
-            boolean _type = false;
+            boolean typeOfPayment = false;
 
 
             if(newPaymentRadioReceived.isChecked())
-                _type=true;
+                typeOfPayment=true;
             else if(newPaymentRadioGiven.isChecked())
-                _type=false;
+                typeOfPayment=false;
             else {
                 Log.e(TAG, "onClick: weird error");
                 return;
             }
 
-            Payment payment = new Payment(Utils.getDateTime(), owner.getOwnerID(), selectedClientId, paymentAmount, paymentDetails, _type );
+            Payment payment = new Payment(Utils.getDateTime(), owner.getOwnerID(), selectedClientId, paymentAmount, paymentDetails, typeOfPayment );
             RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
             realizePaymentHelper.realizePayment(context, payment);
 
@@ -182,6 +183,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             dismiss();
 
         } else if(v.getId() == newPaymentCancel.getId()) {
+            dismiss();
             Log.i(TAG, "onClick: cancel");
         } else if(v.getId() == newPaymentSpinner.getId()) {
             Log.i(TAG, "onClick: spinner");
