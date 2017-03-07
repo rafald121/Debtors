@@ -42,7 +42,7 @@ public class TransactionForClient extends Transaction {
         this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
-    public TransactionForClient(String transactionDate, int transactionQuantity, int transactionOwnerID, int transactionClientID, int transactionProductValue, int transactionEntryPayment, String transactionDetails, boolean transactionBuyOrSell) {
+    public TransactionForClient(String transactionDate, int transactionOwnerID, int transactionClientID, int transactionQuantity, int transactionProductValue, int transactionEntryPayment, String transactionDetails, boolean transactionBuyOrSell) {
         super(transactionDate, transactionQuantity);
         this.transactionOwnerID = transactionOwnerID;
         this.transactionClientID = transactionClientID;
