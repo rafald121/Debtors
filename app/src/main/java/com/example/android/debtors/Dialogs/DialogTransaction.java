@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
+import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -129,14 +130,16 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
             Client selectedClient = (Client) newTransactionSpinner.getSelectedItem();
 
+            Log.i(TAG, "onClick: selectedClient from spinner: " + selectedClient.toString());
+
             int selectedClientId = selectedClient.getClientId();
 
-            String transactionDetails;
+            String transactionDetails = "";
             int transactionQuantity;
             int transactionProductValue;
-            int transactionEntryPayment;
+            int transactionEntryPayment = 0;
 
-            boolean _type ;
+            boolean _typeOfTransaction ;
 
             if(newTransactionQuantity.getText().toString().equals("")){
                 newTransactionError.setText("Transaction quantity has to be over 0");
@@ -157,21 +160,38 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
             } else
                 transactionProductValue = Integer.parseInt(newTransactionProductValue.getText().toString());
 
-            transactionEntryPayment = Integer.parseInt(newTransactionEntryPayment.getText().toString());
+            if(!newTransactionEntryPayment.getText().toString().equals(""))
+                transactionEntryPayment = Integer.parseInt(newTransactionEntryPayment.getText().toString());
 
-            transactionDetails = newTransactionDetails.getText().toString();
+            if(!newTransactionDetails.getText().toString().equals(""))
+                transactionDetails = newTransactionDetails.getText().toString();
 
             if(newTransactionRadioSale.isChecked())
-                typeOfTransaction = true;
+                _typeOfTransaction = true;
             else if(newTransactionRadioPurchase.isChecked())
-                typeOfTransaction = false;
+                _typeOfTransaction = false;
             else {
                 Log.e(TAG, "onClick: weird error");
                 return;
             }
 
-//            TransactionForClient transaction = new TransactionForClient(Utils.getDateTime(), )
-            
+            TransactionForClient transaction = new TransactionForClient(Utils.getDateTime(), owner.getOwnerID(), selectedClient.getClientId(),  transactionQuantity, transactionProductValue, transactionEntryPayment, transactionDetails, _typeOfTransaction);
+
+            Client client = dbClients.getClientByID(selectedClientId);
+
+            Log.i(TAG, "onClick: before tranzaction: " + client.toString(true));
+
+            RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
+            realizeTransactionHelper.realizeTransaction(context, transaction);
+
+            dbClients.updateClient(client);
+
+            Client client1 = dbClients.getClientByID(selectedClientId);
+
+            Log.i(TAG, "onClick: after tranzaction: " + client1.toString(true));
+
+            dismiss();
+
         } else if(v.getId() == newTransactionButtonCancel.getId()){
             dismiss();
         }
