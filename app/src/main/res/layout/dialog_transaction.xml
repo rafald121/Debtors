@@ -75,7 +75,7 @@
 
     <EditText
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/dialog_transaction_details"
