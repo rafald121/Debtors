@@ -28,9 +28,8 @@ public class Payment {
         this.paymentGotOrGiven = paymentGotOrGiven;
     }
 
-    public Payment(String paymentDetails, int paymentID, String paymentDate, int paymentOwnerID, int paymentClientID, int paymentAmount, boolean paymentGotOrGiven) {
+    public Payment(String paymentDate, int paymentOwnerID, int paymentClientID, int paymentAmount, String paymentDetails, boolean paymentGotOrGiven) {
         this.paymentDetails = paymentDetails;
-        this.paymentID = paymentID;
         this.paymentDate = paymentDate;
         this.paymentOwnerID = paymentOwnerID;
         this.paymentClientID = paymentClientID;

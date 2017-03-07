@@ -136,9 +136,12 @@ public class Client {
     }
 
 //    OTHERS
-
     @Override
-    public String toString() {
+    public String toString(){
+        return this.clientName;
+    }
+
+    public String toString(boolean halo) {
         return "Client{" +
                 "clientId=" + clientId +
                 ", clientName='" + clientName + '\'' +

@@ -71,18 +71,22 @@ public class DatabasePayments extends SQLiteOpenHelper {
     }
 
     public long createPayment(Payment payment){
+
+
         if (payment == null)
             Log.e(TAG, "createPayment: PAYMENT IS NULL" );
         else
-            Log.e(TAG, "createPayment: PAYMENT IS NOT NULL" );
+            Log.e(TAG, "createPayment: PAYMENT IS NOT NULL: " + payment.toString() );
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(PAYMENT_DATE, payment.getPaymentDate());
-        values.put(PAYMENT_OWNER, payment.getPaymentOwner().getOwnerID());
-        values.put(PAYMENT_CLIENT, payment.getPaymentClient().getClientId());
+//        values.put(PAYMENT_OWNER, payment.getPaymentOwner().getOwnerID());
+//        values.put(PAYMENT_CLIENT, payment.getPaymentClient().getClientId());
+        values.put(PAYMENT_OWNER, payment.getPaymentOwnerID());
+        values.put(PAYMENT_CLIENT, payment.getPaymentClientID());
         values.put(PAYMENT_AMOUNT, payment.getPaymentAmount());
 
         if(!payment.getPaymentDetails().equals(""))
