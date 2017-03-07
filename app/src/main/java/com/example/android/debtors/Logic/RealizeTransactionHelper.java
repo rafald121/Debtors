@@ -38,11 +38,11 @@ public class RealizeTransactionHelper {
         dbOwners = new DatabaseOwner(mainContext);
 
         if(transaction!=null){
-
+//ZMIENIC NA PRZYPISYWANIE ID
             Owner owner = transaction.getTransactionOwner();
             Client client = transaction.getTransactionClient();
             int amount = transaction.getTransactionQuantity();
-            int value = transaction.getProductValue();
+            int value = transaction.getTransactionProductValue();
             int totalValue = amount * value;
             boolean gotOrGive = transaction.isTransactionBuyOrSell();
 
@@ -132,7 +132,7 @@ public class RealizeTransactionHelper {
     private void addTransactionToClientList(Client client, TransactionForClient transaction) {
         TransactionForClient editedTransaction = new TransactionForClient(Utils.getDateTime(),
                 transaction.getTransactionOwner(),transaction.getTransactionClient(), transaction
-                .getTransactionQuantity(),transaction.getProductValue(),transaction
+                .getTransactionQuantity(),transaction.getTransactionProductValue(),transaction
                 .getTransactionEntryPayment(),!transaction.isTransactionBuyOrSell());
 //        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje  u klienta " + editedTransaction
 //                .toString() );

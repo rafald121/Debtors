@@ -68,7 +68,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         String clientName = client.getClientName();
 
         holder.textViewClient.setText(clientName);
-        holder.textViewTotalAmount.setText(String.valueOf(transaction.getProductValue()
+        holder.textViewTotalAmount.setText(String.valueOf(transaction.getTransactionProductValue()
                 *transaction.getTransactionQuantity()));
         String[] datearray = transaction.getTransactionDate().split(" ");
         String date = datearray[0];
