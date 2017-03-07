@@ -62,6 +62,9 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
     }
 
     public long createTransaction(TransactionForClient transactionForClient){
+
+        Log.i(TAG, "createTransaction: transactionForClient: " + transactionForClient.toString() );
+
         if (transactionForClient == null)
             Log.e(TAG, "createTransaction: TRANSACTION IS NULL" );
         else
@@ -72,8 +75,8 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(TRANSACTION_DATE, transactionForClient.getTransactionDate());
-        values.put(TRANSACTION_OWNER, transactionForClient.getTransactionOwner().getOwnerID());
-        values.put(TRANSACTION_CLIENT, transactionForClient.getTransactionClient().getClientId());
+        values.put(TRANSACTION_OWNER, transactionForClient.getTransactionOwnerID());
+        values.put(TRANSACTION_CLIENT, transactionForClient.getTransactionClientID());
         values.put(TRANSACTION_QUANTITY, transactionForClient.getTransactionQuantity());
         values.put(TRANSACTION_ENTRY, transactionForClient.getTransactionEntryPayment());
         values.put(TRANSACTION_PRODUCT_VALUE, transactionForClient.getTransactionProductValue());
