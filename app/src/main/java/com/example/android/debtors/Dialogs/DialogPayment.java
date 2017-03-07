@@ -3,9 +3,15 @@ package com.example.android.debtors.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,13 +24,21 @@ import android.widget.ToggleButton;
 
 import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Databases.DatabaseOwner;
+import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Logic.RealizePaymentHelper;
+import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 03.03.2017.
@@ -37,6 +51,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
     private Spinner newPaymentSpinner;
     private EditText newPaymentAmount;
+    private EditText newPaymentDetails;
     private TextView newPaymentError;
     private RadioGroup newPaymentRadioGroup;
     private RadioButton newPaymentRadioReceived;
@@ -46,6 +61,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
     private Context context;
     private DatabaseClients dbClients;
+    private DatabasePayments dbPayments;
 
     public DialogPayment(Context context) {
         super(context);
@@ -66,6 +82,8 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
         newPaymentAmount = (EditText) findViewById(R.id.dialog_payment_amount);
         newPaymentAmount.setText("");
+        
+        newPaymentDetails = (EditText) findViewById(R.id.dialog_payment_details);
 
         newPaymentError = (TextView) findViewById(R.id.dialog_payment_error);
         newPaymentError.setText("");
@@ -84,17 +102,35 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         newPaymentOk = (Button) findViewById(R.id.dialog_payment_ok);
         newPaymentCancel = (Button) findViewById(R.id.dialog_payment_cancel);
 
-        List<String> clientsNames= getListOfClientsNames();
+        List<Client> listOfClients = new ArrayList<>();
 
-        ArrayAdapter<String> adapterSpiner = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, clientsNames);
-        newPaymentSpinner.setAdapter(adapterSpiner);
+        listOfClients = getListOfClients();
+
+
+        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_item, listOfClients);
+
+        newPaymentSpinner.setAdapter(adapter);
+
+
+        newPaymentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Client client = (Client) parent.getSelectedItem();
+
+
+                Log.i(TAG, "onItemSelected: "+ client.toString(true));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         newPaymentOk.setOnClickListener(this);
         newPaymentCancel.setOnClickListener(this);
 
-//        newPaymentRadioGroup.setOnClickListener(this);
-/*        newPaymentSpinner.setOnClickListener(this);
-        newPaymentToggle.setOnClickListener(this);*/
+
     }
 
     @Override
@@ -102,27 +138,52 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         if(v.getId() == newPaymentOk.getId()) {
             Log.i(TAG, "onClick: ok");
 
-            String paymentClientName = newPaymentSpinner.getSelectedItem().toString();
-            int paymentAmount;
+            DatabaseOwner dbOwner = new DatabaseOwner(context);
+            DatabaseClients dbClients = new DatabaseClients(context);
 
-            if (newPaymentAmount.getText().toString().equals(""))
-                newPaymentError.setText("Payment amount must be over 0");
-            else
+//            TODO ZMIENIC RAW OWNER NA ZALOGOWANEGO
+            Owner owner = dbOwner.getOwner(1);
+
+            Client selectedClient = (Client) newPaymentSpinner.getSelectedItem();
+            int selectedClientId = selectedClient.getClientId();
+
+            String paymentDetails = newPaymentDetails.getText().toString();
+            int paymentAmount = 0;
+
+            if ((newPaymentAmount.getText().toString().equals(""))) {
+                newPaymentError.setText("Payment amount has to be over 0");
+                return;
+            } else if (Integer.parseInt(newPaymentAmount.getText().toString()) == 0){
+                newPaymentError.setText("Payment amount has to be over 0");
+                return;
+            } else
                 paymentAmount = Integer.parseInt(newPaymentAmount.getText().toString());
 
-            boolean _type;
+            boolean typeOfPayment = false;
 
 
             if(newPaymentRadioReceived.isChecked())
-                _type=true;
+                typeOfPayment=true;
             else if(newPaymentRadioGiven.isChecked())
-                _type=false;
-            else
+                typeOfPayment=false;
+            else {
                 Log.e(TAG, "onClick: weird error");
-//TODO dopisac dodawanie paymenta do bazy danych, dopisac dodawanie clienta po ID
-//            Payment payment = new Payment(Utils.getDateTime(), )
+                return;
+            }
+
+            Payment payment = new Payment(Utils.getDateTime(), owner.getOwnerID(), selectedClientId, paymentAmount, paymentDetails, typeOfPayment );
+            RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
+            realizePaymentHelper.realizePayment(context, payment);
+
+            Client client = dbClients.getClientByID(selectedClientId);
+            dbClients.updateClient(client);
+
+
+//            TODO add snackbar when client is added
+            dismiss();
 
         } else if(v.getId() == newPaymentCancel.getId()) {
+            dismiss();
             Log.i(TAG, "onClick: cancel");
         } else if(v.getId() == newPaymentSpinner.getId()) {
             Log.i(TAG, "onClick: spinner");
@@ -131,11 +192,37 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         }
     }
 
+    private List<Client> getListOfClients(){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        List<Client> listOfClients = new ArrayList<>();
+
+        listOfClients = dbClients.getAllClient();
+
+        return listOfClients;
+    }
+
     private List<String> getListOfClientsNames(){
         DatabaseClients dbClients = new DatabaseClients(context);
 
         List<String> list = dbClients.getListOfClientsNames();
 
         return list;
+    }
+    
+    private List<HashMap<Integer, String>> getListOfHashMapOfClientsIdAndNames(){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        List<HashMap<Integer, String>> list = dbClients.getListOfMapIntStringOfAllClients();
+        
+        return list;
+    }
+
+    private HashMap<Integer, String> getHashMapOfClientsIdAndNames(){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        HashMap<Integer, String> map = dbClients.getHashMapIntStringOfAllClients();
+
+        return map;
     }
 }

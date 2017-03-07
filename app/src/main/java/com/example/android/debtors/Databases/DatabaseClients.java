@@ -2,6 +2,7 @@ package com.example.android.debtors.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Model.Client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -176,6 +178,46 @@ public class DatabaseClients extends SQLiteOpenHelper{
         Log.i(TAG, "getListOfClientsNames: list to string: " + clientsNamesList.toString());
 
         return clientsNamesList;
+    }
+
+    public List<HashMap<Integer, String>> getListOfMapIntStringOfAllClients(){
+
+        List<HashMap<Integer, String>> listOfMap = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = " SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst())
+            do{
+                HashMap<Integer, String> map = new HashMap<>();
+
+                map.put(c.getInt(c.getColumnIndex(CLIENT_ID)), c.getString(c.getColumnIndex(CLIENT_NAME)));
+
+                listOfMap.add(map);
+            } while (c.moveToNext());
+
+        return listOfMap;
+    }
+
+    public HashMap<Integer, String> getHashMapIntStringOfAllClients(){
+
+        HashMap<Integer, String> hashmap = new HashMap<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = " SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst())
+            do{
+                hashmap.put(c.getInt(c.getColumnIndex(CLIENT_ID)), c.getString(c.getColumnIndex(CLIENT_NAME)));
+            } while (c.moveToNext());
+
+        return hashmap;
     }
 
     public int getAmountOfAllClient(){

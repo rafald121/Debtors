@@ -37,8 +37,16 @@ public class RealizePaymentHelper {
         } else {
 
 
-            Owner owner = payment.getPaymentOwner();
-            Client client = payment.getPaymentClient();
+//            Owner owner = payment.getPaymentOwner();
+//            Client client = payment.getPaymentClient();
+            int ownerID = payment.getPaymentOwnerID();
+            int clientID = payment.getPaymentClientID();
+
+            Owner owner = dbOwner.getOwner(ownerID);
+            Client client = dbClient.getClientByID(clientID);
+
+            Log.i(TAG, "realizePayment: " + owner.toString());
+            Log.i(TAG, "realizePayment: " + client.toString());
 
             int paidAmount = payment.getPaymentAmount();
 
@@ -46,7 +54,6 @@ public class RealizePaymentHelper {
 
             changeOwnerAmount(owner, paidAmount, revenueOrExpense);
             addPaymentToOwnerList(owner, payment);
-
 
             changeClientAmount(client, paidAmount, revenueOrExpense);
             addPaymentToClientList(client, payment);

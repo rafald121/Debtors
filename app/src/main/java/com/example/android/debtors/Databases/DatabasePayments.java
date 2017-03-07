@@ -36,6 +36,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
     private static final String PAYMENT_OWNER = "paymentOwner";
     private static final String PAYMENT_CLIENT = "paymentClient";
     private static final String PAYMENT_AMOUNT = "paymentAmount";
+    private static final String PAYMENT_DETAILS = "paymentDetails";
     private static final String PAYMENT_GOT_OR_GIVEN = "paymentGotOrGiven";
 
     private static final String CREATE_TABLE_PAYMENTS = "CREATE TABLE " + TABLE_PAYMENTS
@@ -45,6 +46,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
             + PAYMENT_OWNER + " INTEGER, "
             + PAYMENT_CLIENT + " INTEGER, "
             + PAYMENT_AMOUNT + " INTEGER, "
+            + PAYMENT_DETAILS + " TEXT, "
             + PAYMENT_GOT_OR_GIVEN + " INTEGER "
             + ")";
 
@@ -69,26 +71,34 @@ public class DatabasePayments extends SQLiteOpenHelper {
     }
 
     public long createPayment(Payment payment){
+
+
         if (payment == null)
             Log.e(TAG, "createPayment: PAYMENT IS NULL" );
         else
-            Log.e(TAG, "createPayment: PAYMENT IS NOT NULL" );
+            Log.e(TAG, "createPayment: PAYMENT IS NOT NULL: " + payment.toString() );
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(PAYMENT_DATE, payment.getPaymentDate());
-        values.put(PAYMENT_OWNER, payment.getPaymentOwner().getOwnerID());
-        values.put(PAYMENT_CLIENT, payment.getPaymentClient().getClientId());
+//        values.put(PAYMENT_OWNER, payment.getPaymentOwner().getOwnerID());
+//        values.put(PAYMENT_CLIENT, payment.getPaymentClient().getClientId());
+        values.put(PAYMENT_OWNER, payment.getPaymentOwnerID());
+        values.put(PAYMENT_CLIENT, payment.getPaymentClientID());
         values.put(PAYMENT_AMOUNT, payment.getPaymentAmount());
+
+        if(!payment.getPaymentDetails().equals(""))
+            values.put(PAYMENT_DETAILS, payment.getPaymentDetails());
+        else
+            values.put(PAYMENT_DETAILS, "");
+
         int gotOrGiven = (payment.isPaymentGotOrGiven())? 1:0;
-        Log.i(TAG, "createPayment: gotOrGiven value " + gotOrGiven);
+
         values.put(PAYMENT_GOT_OR_GIVEN, gotOrGiven);
 
         long paymentID = db.insert(TABLE_PAYMENTS, null, values);
-
-        Log.i(TAG, "createPayment: payment ID before add to db: " + paymentID);
 
         return paymentID;
 
@@ -112,6 +122,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
                 payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
                 payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
                 payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
                 payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
 
                 listOfPayments.add(payment);
@@ -160,6 +171,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
                 payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
                 payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
                 payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
                 payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
 
                 listOfPayments.add(payment);
@@ -187,6 +199,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
                 payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
                 payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
                 payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
                 payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
 
                 listOfPayments.add(payment);
@@ -237,6 +250,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
                 payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
                 payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
                 payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
                 payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
 
                 listOfPayments.add(payment);
