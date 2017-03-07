@@ -159,8 +159,12 @@ public class MainActivity extends AppCompatActivity {
 //
 //        createClients(names);
 //        Owner owner = new Owner("Rafal", 500, 200);
+//        Owner owner1 = new Owner("Cham", 420, 210);
+//
 //        dbOwner.createOwner(owner);
-//        simulatePayments();
+//        dbOwner.createOwner(owner1);
+
+        simulatePayments();
 //
 //        simulateTransaction();
 //        simulateTransactionWithPayment();
@@ -513,12 +517,12 @@ public class MainActivity extends AppCompatActivity {
     private void simulatePayments(){
         Log.w(TAG, "simulatePayments: " );
 
-
         Owner owner = dbOwner.getOwner(1);
+        Log.i(TAG, "simulatePayments: ownerhhe: " + owner.toString());
 
         Client clientJurand = dbClient.getClientByID(5); //kupujacy 2
 
-        Payment payment = new Payment(Utils.getDateTime(), owner, clientJurand, 20, false);
+        Payment payment = new Payment(Utils.getDateTime(), owner.getOwnerID(), clientJurand.getClientId(), 20, "opis",  false);
 
         Log.i(TAG, "simulatePayments: CREATING PAYMENT  " + payment.toString());
 //        dbPayment.createPayment(payment);
@@ -536,7 +540,6 @@ public class MainActivity extends AppCompatActivity {
 //        getInfoAboutClient(clientJurand);
 //        getListOfOwnerPayments(owner);
 //        getListOfClientPayments(clientJurand);
-
         dbClient.updateClient(clientJurand);
 
 
