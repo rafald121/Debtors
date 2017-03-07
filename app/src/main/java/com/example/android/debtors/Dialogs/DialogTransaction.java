@@ -177,6 +177,8 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
             TransactionForClient transaction = new TransactionForClient(Utils.getDateTime(), owner.getOwnerID(), selectedClient.getClientId(),  transactionQuantity, transactionProductValue, transactionEntryPayment, transactionDetails, _typeOfTransaction);
 
+            Log.i(TAG, "onClick: transaction: " + transaction.toString());
+
             Client client = dbClients.getClientByID(selectedClientId);
 
             Log.i(TAG, "onClick: before tranzaction: " + client.toString(true));
@@ -184,7 +186,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
             RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
             realizeTransactionHelper.realizeTransaction(context, transaction);
 
-            dbClients.updateClient(client);
+//            dbClients.updateClient(client);
 
             Client client1 = dbClients.getClientByID(selectedClientId);
 
