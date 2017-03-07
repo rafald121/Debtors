@@ -39,105 +39,149 @@ public class RealizeTransactionHelper {
 
         if(transaction!=null){
 //ZMIENIC NA PRZYPISYWANIE ID
-            Owner owner = transaction.getTransactionOwner();
-            Client client = transaction.getTransactionClient();
+//            Owner owner = transaction.getTransactionOwner();
+//            Client client = transaction.getTransactionClient();
+            int ownerId = transaction.getTransactionOwnerID();
+            int clientId = transaction.getTransactionClientID();
             int amount = transaction.getTransactionQuantity();
             int value = transaction.getTransactionProductValue();
             int totalValue = amount * value;
             boolean gotOrGive = transaction.isTransactionBuyOrSell();
 
-            if (owner != null && client != null) {
+//            Owner owner = dbOwners.getOwner(ownerId);
+//            Client client = dbClients.getClientByID(clientId);
 
-                if (transaction.getTransactionEntryPayment() > 0) {
-                    Log.i(TAG, "realizeTransaction: PODANO ENTRY PAYMENT: " + transaction
-                            .getTransactionEntryPayment());
+//            if (owner != null && client != null) {
 
-                    Payment payment = new Payment(Utils.getDateTime(), owner, client, transaction.getTransactionEntryPayment(),
-                            gotOrGive);
+            if (transaction.getTransactionEntryPayment() > 0) {
+                Log.i(TAG, "realizeTransaction: PODANO ENTRY PAYMENT: " + transaction
+                        .getTransactionEntryPayment());
 
-                    RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
-                    realizePaymentHelper.realizePayment(applicationContext, payment);
+                Payment payment = new Payment(Utils.getDateTime(), ownerId, clientId, transaction.getTransactionEntryPayment(), transaction.getTransactionDetails(),
+                        gotOrGive);
 
-                    changeOwnerValue(owner, totalValue, gotOrGive);
-                    addTransactionToOwnerList(owner, transaction);
+                RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
+                realizePaymentHelper.realizePayment(applicationContext, payment);
 
-                    changeClientValue(client, totalValue, gotOrGive); //jesli ostatnie true = Client wisi
-                    // więcej
-                    addTransactionToClientList(client, transaction);
+                changeOwnerValue(ownerId, totalValue, gotOrGive);
+//                    addTransactionToOwnerList(owner, transaction);
 
-                    dbTransaction.createTransaction(transaction);
+                changeClientValue(clientId, totalValue, gotOrGive); //jesli ostatnie true = Client wisi
+                // więcej
+//                    addTransactionToClientList(client, transaction);
 
-                } else {
-
-                    Log.i(TAG, "realizeTransaction: NIE PODANO ENTRY PAYMENT: " + transaction.getTransactionEntryPayment());
-//                    TYLKO ZMIANA ZA TRANZAKCJE
-                    changeOwnerValue(owner, totalValue, gotOrGive);
-                    addTransactionToOwnerList(owner, transaction);
-
-                    changeClientValue(client, totalValue, gotOrGive); //jesli ostatnie true = Client wisi
-                    // więcej
-                    addTransactionToClientList(client, transaction);
-
-                    dbTransaction.createTransaction(transaction);
-
-                }
+                dbTransaction.createTransaction(transaction);
 
             } else {
-                Log.e(TAG, "realizeTransaction: CLIENT OR OWNER IS NULL");
+
+                Log.i(TAG, "realizeTransaction: NIE PODANO ENTRY PAYMENT: " + transaction.getTransactionEntryPayment());
+//                    TYLKO ZMIANA ZA TRANZAKCJE
+                changeOwnerValue(ownerId, totalValue, gotOrGive);
+//                    addTransactionToOwnerList(owner, transaction);
+
+                changeClientValue(clientId, totalValue, gotOrGive); //jesli ostatnie true = Client wisi
+                // więcej
+//                    addTransactionToClientList(client, transaction);
+
+                dbTransaction.createTransaction(transaction);
+
             }
+
+//            } else {
+//                Log.e(TAG, "realizeTransaction: CLIENT OR OWNER IS NULL");
+//            }
         } else {
             Log.e(TAG, "realizeTransaction: TRANSACTION IS NULL");
         }
 
     }
 
+    private void changeOwnerValue(int ownerID, int totalValue, boolean gotOrGive){
 
-    private void changeOwnerValue(Owner owner, int totalValue, boolean gotOrGive) {
+        Log.i(TAG, "changeOwnerValue: ownerID: " + ownerID);
 
-        Log.i(TAG, "changeOwnerValue: OWNER BEFORE FROM DATABASE: " + dbOwners.getOwner(owner.getOwnerID()));
+        Owner owner = dbOwners.getOwner(ownerID);
 
-        if(gotOrGive) // jesli true = owner sprzedaje wiec ma dostać hajs
-            owner.changeOwnerAmountWhenTransaction(totalValue);
+        if (owner!=null)
+            Log.i(TAG, "changeOwnerValue: git");
         else
+            Log.i(TAG, "changeOwnerValue: slabo");
+
+        if (gotOrGive){
+            owner.changeOwnerAmountWhenTransaction(totalValue);
+        } else {
             owner.changeOwnerAmountWhenTransaction(totalValue*(-1));
+        }
 
         dbOwners.updateOwner(owner);
 
-        Log.i(TAG, "changeOwnerValue: OWNER AFTER FROM DATABASE: " + dbOwners.getOwner(owner.getOwnerID()));
     }
 
-    private void addTransactionToOwnerList(Owner owner, TransactionForClient transaction) {
-//        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje u ownera: " + transaction.toString
-//                () );
-        owner.addTransactionToList(transaction);
-    }
+    private void changeClientValue(int clientId, int totalValue, boolean gotOrGive){
 
-    private void changeClientValue(Client client, int totalValue, boolean gotOrGive) {
-
-        Log.i(TAG, "changeClientValue: CLIENT BEFORE FROM DATABASE: " + dbClients.getClientByID
-                (client.getClientId()));
-
-        if(gotOrGive)// jesli true = owner sprzedaje wiec buyer wisi więcej
+        Log.i(TAG, "changeClientValue: clientID: " + clientId);
+        
+        Client client = dbClients.getClientByID(clientId);
+        
+        if(client!=null)
+            Log.i(TAG, "changeClientValue: git");
+        else
+            Log.i(TAG, "changeClientValue: slabo");
+        
+        if(gotOrGive)
             client.changeClientLeftAmount(totalValue);
-        else // jesli false - owner kupuje więc płaci hajs clientowi więc clientowi zmniejsza sie
-            // zaległa kwota
+        else
             client.changeClientLeftAmount(totalValue*(-1));
 
         dbClients.updateClient(client);
 
-        Log.i(TAG, "changeClientValue: CLIENT AFTER FROM DATABASE: " + dbClients.getClientByID
-                (client.getClientId()));
     }
+//    private void changeOwnerValue(Owner owner, int totalValue, boolean gotOrGive) {
+//
+//        Log.i(TAG, "changeOwnerValue: OWNER BEFORE FROM DATABASE: " + dbOwners.getOwner(owner.getOwnerID()));
+//
+//        if(gotOrGive) // jesli true = owner sprzedaje wiec ma dostać hajs
+//            owner.changeOwnerAmountWhenTransaction(totalValue);
+//        else
+//            owner.changeOwnerAmountWhenTransaction(totalValue*(-1));
+//
+//        dbOwners.updateOwner(owner);
+//
+//        Log.i(TAG, "changeOwnerValue: OWNER AFTER FROM DATABASE: " + dbOwners.getOwner(owner.getOwnerID()));
+//    }
 
-    private void addTransactionToClientList(Client client, TransactionForClient transaction) {
-        TransactionForClient editedTransaction = new TransactionForClient(Utils.getDateTime(),
-                transaction.getTransactionOwner(),transaction.getTransactionClient(), transaction
-                .getTransactionQuantity(),transaction.getTransactionProductValue(),transaction
-                .getTransactionEntryPayment(),!transaction.isTransactionBuyOrSell());
-//        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje  u klienta " + editedTransaction
-//                .toString() );
+//    private void addTransactionToOwnerList(Owner owner, TransactionForClient transaction) {
+////        Log.w(TAG, "addTransactionToOwnerList: dodaje tranzakcje u ownera: " + transaction.toString
+////                () );
+//        owner.addTransactionToList(transaction);
+//    }
 
-        //edycja, aby u klienta wyswietlalo sie ze kupił, a nie sprzedal
-        client.addTransactionToListOfTransaction(editedTransaction);
-    }
+//    private void changeClientValue(Client client, int totalValue, boolean gotOrGive) {
+//
+//        Log.i(TAG, "changeClientValue: CLIENT BEFORE FROM DATABASE: " + dbClients.getClientByID
+//                (client.getClientId()));
+//
+//        if(gotOrGive)// jesli true = owner sprzedaje wiec buyer wisi więcej
+//            client.changeClientLeftAmount(totalValue);
+//        else // jesli false - owner kupuje więc płaci hajs clientowi więc clientowi zmniejsza sie
+//            // zaległa kwota
+//            client.changeClientLeftAmount(totalValue*(-1));
+//
+//        dbClients.updateClient(client);
+//
+//        Log.i(TAG, "changeClientValue: CLIENT AFTER FROM DATABASE: " + dbClients.getClientByID
+//                (client.getClientId()));
+//    }
+
+//    private void addTransactionToClientList(Client client, TransactionForClient transaction) {
+//        TransactionForClient editedTransaction = new TransactionForClient(Utils.getDateTime(),
+//                transaction.getTransactionOwner(),transaction.getTransactionClient(), transaction
+//                .getTransactionQuantity(),transaction.getTransactionProductValue(),transaction
+//                .getTransactionEntryPayment(),!transaction.isTransactionBuyOrSell());
+////        Log.w(TAG, "addTransactionToClientList: dodaje tranzakcje  u klienta " + editedTransaction
+////                .toString() );
+//
+//        //edycja, aby u klienta wyswietlalo sie ze kupił, a nie sprzedal
+//        client.addTransactionToListOfTransaction(editedTransaction);
+//    }
 }
