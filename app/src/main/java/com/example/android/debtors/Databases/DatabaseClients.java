@@ -98,16 +98,18 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         Cursor c = db.rawQuery(query,null);
 
-        if ( c!= null)
+        if ( c!= null && c.getCount() >= 0){
             c.moveToFirst();
 
-        Client client = new Client();
+            Client client = new Client();
 
-        client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
-        client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
-        client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+            client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+            client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+            client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
 
-        return client;
+            return client;
+        } else
+            return null;
     }
 
     public List<Client> getClientByName(String name){

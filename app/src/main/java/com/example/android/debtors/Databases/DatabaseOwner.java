@@ -70,18 +70,22 @@ public class DatabaseOwner extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT  * FROM " + TABLE_OWNER + " WHERE " + OWNER_ID + " = " + id;
+
         Cursor c = db.rawQuery(query, null);
 
-        if(c!=null)
+        if(c!=null) {
             c.moveToFirst();
 
-        Owner owner = new Owner();
-        owner.setOwnerID(c.getInt(c.getColumnIndex(OWNER_ID)));
-        owner.setOwnerName(c.getString(c.getColumnIndex(OWNER_NAME)));
-        owner.setOwnerTotalAmount(c.getInt(c.getColumnIndex(OWNER_TOTAL_AMOUNT)));
-        owner.setOwnerOwnAmount(c.getInt(c.getColumnIndex(OWNER_OWN_AMOUNT)));
+            Owner owner = new Owner();
 
-        return owner;
+            owner.setOwnerID(c.getInt(c.getColumnIndex(OWNER_ID)));
+            owner.setOwnerName(c.getString(c.getColumnIndex(OWNER_NAME)));
+            owner.setOwnerTotalAmount(c.getInt(c.getColumnIndex(OWNER_TOTAL_AMOUNT)));
+            owner.setOwnerOwnAmount(c.getInt(c.getColumnIndex(OWNER_OWN_AMOUNT)));
+
+            return owner;
+        } else
+            return null;
     }
 
     public List<Owner> getAllOwners(){
