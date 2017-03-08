@@ -3,6 +3,7 @@ package com.example.android.debtors.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
@@ -56,6 +58,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
     private Context context;
     private DatabaseClients dbClients;
 
+    CallbackAddInDialog callbackAddInDialog = null;
 
     public DialogTransaction(Context context) {
         super(context);
@@ -65,6 +68,13 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         super(context);
         this.context = context;
         this.typeOfTransaction = type;
+    }
+
+    public DialogTransaction(Context context, boolean type, CallbackAddInDialog callbackAddInDialog) {
+        super(context);
+        this.context = context;
+        this.typeOfTransaction = type;
+        this.callbackAddInDialog = callbackAddInDialog;
     }
 
     @Override
@@ -191,6 +201,8 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
             Client client1 = dbClients.getClientByID(selectedClientId);
 
             Log.i(TAG, "onClick: after tranzaction: " + client1.toString(true));
+
+//            callbackAddInDialog.reloadRecycler();
 
             dismiss();
 

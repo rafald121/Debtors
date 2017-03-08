@@ -28,7 +28,7 @@ import java.util.concurrent.RecursiveAction;
 /**
  * Created by admin on 25.02.2017.
  */
-public class FragmentSingleClientInfoPayments extends Fragment {
+public class FragmentSingleClientInfoPayments extends Fragment{
 
     private static final String TAG = FragmentSingleClientInfoPayments.class.getSimpleName();
     private long clientsID;
@@ -124,8 +124,6 @@ public class FragmentSingleClientInfoPayments extends Fragment {
                 dialogTransaction.show();
             }
         });
-
-
 
         Log.i(TAG, "onViewCreated: END");
     }
