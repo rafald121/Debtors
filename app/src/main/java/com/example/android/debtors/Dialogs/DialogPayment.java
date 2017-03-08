@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Logic.RealizePaymentHelper;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Owner;
@@ -63,6 +65,8 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
     private DatabaseClients dbClients;
     private DatabasePayments dbPayments;
 
+    private CallbackAddInDialog callbackAddInDialog = null;
+
     public DialogPayment(Context context) {
         super(context);
         this.context = context;
@@ -72,6 +76,13 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         super(context);
         this.context = context;
         this.type=type;
+    }
+
+    public DialogPayment(Context context, boolean type, CallbackAddInDialog callback){
+        super(context);
+        this.context = context;
+        this.type = type;
+        callbackAddInDialog = (CallbackAddInDialog) callback;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +189,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 //            Client client = dbClients.getClientByID(selectedClientId);
 //            dbClients.updateClient(client);
 
+            callbackAddInDialog.reloadRecycler();
 
 //            TODO add snackbar when client is added
             dismiss();

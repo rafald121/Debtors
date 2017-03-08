@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.R;
 
 
@@ -82,7 +84,20 @@ public class FragmentPaymentsReceived extends Fragment {
 //                Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true);
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true, new CallbackAddInDialog() {
+                    @Override
+                    public void reloadRecycler() {
+
+                        FragmentPaymentsReceived fragmentPaymentsReceived = new FragmentPaymentsReceived();
+
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                                android.R.anim.fade_out);
+                        fragmentTransaction.replace(R.id.frame, fragmentPaymentsReceived);
+                        fragmentTransaction.commitAllowingStateLoss();
+
+                    }
+                });
                 dialogPayment.show();
             }
         });
