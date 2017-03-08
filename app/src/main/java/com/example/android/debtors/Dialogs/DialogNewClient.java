@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Model.Client;
@@ -28,6 +29,7 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
     private TextView newClientError;
     private EditText newClientName, newClientLeftAmount;
     private Button newClientButtonOK, newClientButtonCancel;
+    private ToggleButton newClientToggle;
 
     private Context context;
     private DatabaseClients dbClients;
@@ -38,6 +40,7 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
         super(context);
         this.context = context;
         dbClients = new DatabaseClients(context);
+        type = true;
     }
 
     public DialogNewClient(Context context, boolean type) {
@@ -56,7 +59,14 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
         newClientName = (EditText) findViewById(R.id.dialog_newclient_name);
 
         newClientLeftAmount = (EditText) findViewById(R.id.dialog_newclient_leftamount);
-        newClientLeftAmount.setText("0");
+//        newClientLeftAmount.setText("0");
+
+        newClientToggle = (ToggleButton) findViewById(R.id.dialog_newclient_type);
+
+        if(type)
+            newClientToggle.setChecked(true);
+        else
+            newClientToggle.setChecked(false);
 
         newClientError = (TextView) findViewById(R.id.dialog_newclient_error);
         newClientError.setText("");
@@ -76,10 +86,16 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
             if(!newClientName.getText().toString().equals("")) {
                 String clientName = newClientName.getText().toString();
                 int clientLeftAmount;
-                if(type)
+
+                if(newClientToggle.isChecked())
                     clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
                 else
                     clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString())*(-1);
+
+//                if(!type)
+//                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
+//                else
+//                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString())*(-1);
 
                 Client client = new Client(clientName, clientLeftAmount);
                 dbClients.createClient(client);
