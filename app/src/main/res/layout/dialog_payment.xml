@@ -65,8 +65,8 @@
         android:inputType="textMultiLine" />
 
     <RadioGroup
+        android:id="@+id/dialog_payment_toggle"
         android:checkedButton="@+id/dialog_payment_radio"
-        android:id="@+id/toggle"
         android:layout_width="0dp"
         android:layout_height="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -110,17 +110,17 @@
 
 
     <LinearLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/dialog_margin_top"
         android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
+        android:layout_marginStart="@dimen/dialog_margin_left_and_right"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/constraintLayout"
         app:layout_constraintHorizontal_bias="0.56"
         android:weightSum="100"
-        android:layout_marginTop="@dimen/dialog_margin_top"
         app:layout_constraintTop_toBottomOf="@+id/toggle">
 
         <Button
@@ -146,14 +146,14 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/dialog_payment_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dialog_payment_error"
         android:layout_marginStart="@dimen/dialog_margin_left_and_right"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/dialog_error_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 

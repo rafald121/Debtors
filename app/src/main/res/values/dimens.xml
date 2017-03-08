@@ -38,5 +38,7 @@
     <dimen name="dialog_margin_left_and_right">16dp</dimen>
     <dimen name="dialog_error_margin_top">0dp</dimen>
 
+    <dimen name="dialog_newclient_toggle_size">20sp</dimen>
+
 
 </resources>
