@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -54,8 +56,9 @@ public class FragmentAllClients extends Fragment {
     private SearchView.OnQueryTextListener queryTextListener;
     private FragmentActivity fragmentActivity;
 
-
     private FloatingActionButton fab;
+
+    private CallbackAddInDialog addInDialog = null;
 
     public FragmentAllClients() {
         Log.i(TAG, "FragmentAllClients: START");
@@ -87,6 +90,7 @@ public class FragmentAllClients extends Fragment {
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterAllClients);
 
+        
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -197,13 +201,32 @@ public class FragmentAllClients extends Fragment {
                 Snackbar.make(view, "Allclients", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity);
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
+                    @Override
+                    public void reloadRecycler() {
+
+                        FragmentAllClients allClients = new FragmentAllClients();
+
+                        Fragment fragment = allClients ;
+
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                                android.R.anim.fade_out);
+                        fragmentTransaction.replace(R.id.frame, allClients);
+                        fragmentTransaction.commitAllowingStateLoss();
+
+//                        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+//                        Fragment f = get
+                    }
+                });
                 dialogNewClient.show();
 
             }
         });
 
     }
+
+
 
     public void onButtonPressed(Uri uri) {
         Log.i(TAG, "onButtonPressed: START");
@@ -216,12 +239,16 @@ public class FragmentAllClients extends Fragment {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
 
+
+
     }
 
     @Override
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
+
+        addInDialog = null;
     }
 
     public List<Client> getAllClientsFromDatabase() {

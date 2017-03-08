@@ -1,6 +1,7 @@
 package com.example.android.debtors.Dialogs;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -24,7 +26,9 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
     private static final String TAG = DialogNewClient.class.getSimpleName();
 
-//    private DatabaseClients dbClients;
+//    interface CallbackAddInDialog{
+//        void reloadRecycler();
+//    }
 
     private TextView newClientError;
     private EditText newClientName, newClientLeftAmount;
@@ -36,11 +40,21 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
     private boolean type;
 
+    private CallbackAddInDialog callbackAddInDialog = null;
+
     public DialogNewClient(Context context) {
         super(context);
         this.context = context;
         dbClients = new DatabaseClients(context);
         type = true;
+    }
+
+    public DialogNewClient(Context context, CallbackAddInDialog callback){
+        super(context);
+        this.context = context;
+        dbClients = new DatabaseClients(context);
+        callbackAddInDialog = (CallbackAddInDialog) callback;
+
     }
 
     public DialogNewClient(Context context, boolean type) {
@@ -99,6 +113,9 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
                 Client client = new Client(clientName, clientLeftAmount);
                 dbClients.createClient(client);
+
+                callbackAddInDialog.reloadRecycler();
+
                 dismiss();
 
             } else {
