@@ -69,9 +69,9 @@ public class FragmentSingleClientInfoPayments extends Fragment {
             Log.i(TAG, "onCreateView: payment : " + p.toString(true));
         }
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager,container, false);
+        View rootView = inflater.inflate(R.layout.fragment_singleclient_payments,container, false);
         AdapterClientInfo adapterClientInfo = new AdapterClientInfo(getContext(),listOfPayments);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_payments_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterClientInfo);
@@ -113,7 +113,7 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payment_given_fab);
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_singleclient_payments_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

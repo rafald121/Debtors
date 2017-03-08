@@ -74,9 +74,9 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "onCreateView: listOfTransactionsForClient: " + listOfTransactionsForClient.toString());
 //        fab = (FloatingActionButton)
 
-        View rootView = inflater.inflate(R.layout.recycler_view_with_viewpager, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_singleclient_transactions, container, false);
         AdapterTransacation adapterTransactions = new AdapterTransacation(getContext(), listOfTransactionsForClient);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_with_viewpager);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_transactions_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransactions);
 
@@ -115,14 +115,14 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payment_given_fab);
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_singleclient_transactions_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                DialogPayment dialogPayment = new DialogPayment(fragmentActivity,false);
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity,true);
                 dialogPayment.show();
             }
         });
