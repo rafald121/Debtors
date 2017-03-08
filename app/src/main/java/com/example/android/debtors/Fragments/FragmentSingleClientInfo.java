@@ -69,7 +69,7 @@ public class FragmentSingleClientInfo extends Fragment {
         clientID = readenArguments.getLong("id");
         Log.i(TAG, "onCreateView: readen clientID : " + clientID);
 
-        return inflater.inflate(R.layout.fragment_single_client_info, container, false);
+        return inflater.inflate(R.layout.fragment_singleclient, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
