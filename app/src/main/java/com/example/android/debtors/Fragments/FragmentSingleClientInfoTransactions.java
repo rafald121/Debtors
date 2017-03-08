@@ -3,6 +3,7 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +18,7 @@ import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -37,6 +39,7 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
 
     private long clientsID;
 
+    private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
 
@@ -60,12 +63,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "onCreate: end");
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: START");
-        super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated: END");
-    }
 
     @Nullable
     @Override
@@ -83,22 +80,28 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransactions);
 
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-//                if (dy > 0 ||dy<0 && fab.isShown())
-//                    fab.hide();
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-//                    fab.show();
-//                }
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0  && fab.isShown())
+                    fab.hide();
+                else if(dy<0 && !fab.isShown())
+                    fab.show();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Log.i(TAG, "onScrollStateChanged: ");
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
         Log.i(TAG, "onCreateView: END");
 
 //        recyclerView.setAdapter(adapterDebtors);
@@ -106,6 +109,27 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         return rootView;
 
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated: START");
+        super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payment_given_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity,false);
+                dialogPayment.show();
+            }
+        });
+        Log.i(TAG, "onViewCreated: END");
+    }
+
+
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki

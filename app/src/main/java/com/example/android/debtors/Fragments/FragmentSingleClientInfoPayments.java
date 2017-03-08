@@ -3,7 +3,9 @@ package com.example.android.debtors.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,8 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterClientInfo;
 import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
@@ -30,6 +34,10 @@ public class FragmentSingleClientInfoPayments extends Fragment {
     private long clientsID;
     private List<Payment> listOfPayments;
     private DatabasePayments dbPayments;
+
+    private FloatingActionButton fab;
+    private FragmentActivity fragmentActivity;
+
 
     public FragmentSingleClientInfoPayments() {
 
@@ -67,6 +75,27 @@ public class FragmentSingleClientInfoPayments extends Fragment {
         setupRecyclerView(recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterClientInfo);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0  && fab.isShown())
+                    fab.hide();
+                else if(dy<0 && !fab.isShown())
+                    fab.show();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Log.i(TAG, "onScrollStateChanged: ");
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
         return rootView;
 
     }
@@ -83,11 +112,28 @@ public class FragmentSingleClientInfoPayments extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payment_given_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true);
+                dialogTransaction.show();
+            }
+        });
+
+
+
         Log.i(TAG, "onViewCreated: END");
     }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity) context;
+
     }
 
     @Override
