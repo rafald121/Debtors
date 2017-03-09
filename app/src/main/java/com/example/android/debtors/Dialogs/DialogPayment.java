@@ -188,9 +188,9 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
 //            Client client = dbClients.getClientByID(selectedClientId);
 //            dbClients.updateClient(client);
-
+            Log.i(TAG, "onClick: przed");
             callbackAddInDialog.reloadRecycler();
-
+            Log.i(TAG, "onClick: po");
 //            TODO add snackbar when client is added
             dismiss();
 

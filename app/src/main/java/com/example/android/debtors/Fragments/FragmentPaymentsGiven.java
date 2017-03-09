@@ -90,33 +90,36 @@ public class FragmentPaymentsGiven extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
-
-
+    
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payment_given_fab);
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_payments_given_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-
-                DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true, new CallbackAddInDialog() {
+                Log.i(TAG, "onClick: halo fab");
+                DialogPayment dialogPayment = new DialogPayment(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-
+                
                         FragmentPaymentsGiven fragmentPaymentsGiven = new FragmentPaymentsGiven();
-
+                
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                                 android.R.anim.fade_out);
-                        fragmentTransaction.replace(R.id.frame, fragmentPaymentsGiven);
+                        Log.i(TAG, "reloadRecycler: 1");
+                        fragmentTransaction.replace(R.id.fragment_payments_given_frame, fragmentPaymentsGiven);
+                        Log.i(TAG, "reloadRecycler: 2");
                         fragmentTransaction.commitAllowingStateLoss();
+                        Log.i(TAG, "reloadRecycler: 3");
 
                     }
                 });
+                Log.i(TAG, "onClick: 4");
                 dialogPayment.show();
             }
         });

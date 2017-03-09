@@ -93,7 +93,7 @@ public class FragmentPaymentsReceived extends Fragment {
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                                 android.R.anim.fade_out);
-                        fragmentTransaction.replace(R.id.frame, fragmentPaymentsReceived);
+                        fragmentTransaction.replace(R.id.fragment_payments_received_frame, fragmentPaymentsReceived);
                         fragmentTransaction.commitAllowingStateLoss();
 
                     }

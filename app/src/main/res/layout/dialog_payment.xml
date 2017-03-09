@@ -115,13 +115,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="@dimen/dialog_margin_top"
         android:layout_marginEnd="@dimen/dialog_margin_left_and_right"
         android:layout_marginStart="@dimen/dialog_margin_left_and_right"
+        android:layout_marginTop="@dimen/dialog_margin_top"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
         android:weightSum="100"
-        app:layout_constraintTop_toBottomOf="@+id/toggle">
+        app:layout_constraintTop_toBottomOf="@+id/dialog_payment_toggle">
 
         <Button
             android:text="ADD"
