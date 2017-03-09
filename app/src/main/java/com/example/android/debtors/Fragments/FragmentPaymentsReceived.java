@@ -32,6 +32,10 @@ public class FragmentPaymentsReceived extends Fragment {
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
+    AdapterPayment adapterPayment = null;
+    View rootView;
+    RecyclerView recyclerView;
+
     public FragmentPaymentsReceived() {
     }
 
@@ -44,9 +48,9 @@ public class FragmentPaymentsReceived extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_payments_received, container, false);
-        AdapterPayment adapterPayment = new AdapterPayment(getContext(), true);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
+        rootView = inflater.inflate(R.layout.fragment_payments_received, container, false);
+        adapterPayment = new AdapterPayment(getContext(), true);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
 
@@ -88,13 +92,19 @@ public class FragmentPaymentsReceived extends Fragment {
                     @Override
                     public void reloadRecycler() {
 
-                        FragmentPaymentsReceived fragmentPaymentsReceived = new FragmentPaymentsReceived();
+//                        adapterPayment.notifyDataSetChanged();
+                        adapterPayment = new AdapterPayment(getContext(), true);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
+//                        setupRecyclerView(recyclerView);
+                        recyclerView.setAdapter(adapterPayment);
 
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                                android.R.anim.fade_out);
-                        fragmentTransaction.replace(R.id.fragment_payments_received_frame, fragmentPaymentsReceived);
-                        fragmentTransaction.commitAllowingStateLoss();
+//                        FragmentPaymentsReceived fragmentPaymentsReceived = new FragmentPaymentsReceived();
+//
+//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+//                                android.R.anim.fade_out);
+//                        fragmentTransaction.replace(R.id.fragment_payments_received_frame, fragmentPaymentsReceived);
+//                        fragmentTransaction.commitAllowingStateLoss();
 
                     }
                 });

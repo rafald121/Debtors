@@ -32,6 +32,10 @@ public class FragmentPaymentsGiven extends Fragment {
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
+    AdapterPayment adapterPayment = null;
+    View rootView;
+    RecyclerView recyclerView;
+
 //    interface test{
 //        void hide();
 //        void show();
@@ -49,12 +53,10 @@ public class FragmentPaymentsGiven extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
 
-        AdapterPayment adapterPayment = new AdapterPayment(getContext(), false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
-//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
-//        recyclerView.addOnScrollListener(new RecyclerOnScrollListener(this));
+        rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
+        adapterPayment = new AdapterPayment(getContext(), false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
 
@@ -105,17 +107,23 @@ public class FragmentPaymentsGiven extends Fragment {
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                
-                        FragmentPaymentsGiven fragmentPaymentsGiven = new FragmentPaymentsGiven();
-                
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                                android.R.anim.fade_out);
-                        Log.i(TAG, "reloadRecycler: 1");
-                        fragmentTransaction.replace(R.id.fragment_payments_given_frame, fragmentPaymentsGiven);
-                        Log.i(TAG, "reloadRecycler: 2");
-                        fragmentTransaction.commitAllowingStateLoss();
-                        Log.i(TAG, "reloadRecycler: 3");
+
+                        Log.i(TAG, "reloadRecycler: ");
+//                        adapterPayment.notifyDataSetChanged();
+                        adapterPayment = new AdapterPayment(getContext(), false);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
+//                        setupRecyclerView(recyclerView);
+                        recyclerView.setAdapter(adapterPayment);
+//                        FragmentPaymentsGiven fragmentPaymentsGiven = new FragmentPaymentsGiven();
+//                
+//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+//                                android.R.anim.fade_out);
+//                        Log.i(TAG, "reloadRecycler: 1");
+//                        fragmentTransaction.replace(R.id.fragment_payments_given_frame, fragmentPaymentsGiven);
+//                        Log.i(TAG, "reloadRecycler: 2");
+//                        fragmentTransaction.commitAllowingStateLoss();
+//                        Log.i(TAG, "reloadRecycler: 3");
 
                     }
                 });
