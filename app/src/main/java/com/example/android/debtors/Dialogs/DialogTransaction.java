@@ -58,7 +58,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
     private Context context;
     private DatabaseClients dbClients;
 
-    CallbackAddInDialog callbackAddInDialog = null;
+    private CallbackAddInDialog callbackAddInDialog = null;
 
     public DialogTransaction(Context context) {
         super(context);
@@ -202,7 +202,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
             Log.i(TAG, "onClick: after tranzaction: " + client1.toString(true));
 
-//            callbackAddInDialog.reloadRecycler();
+            callbackAddInDialog.reloadRecycler();
 
             dismiss();
 

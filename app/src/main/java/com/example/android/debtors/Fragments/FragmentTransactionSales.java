@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -32,6 +33,10 @@ public class FragmentTransactionSales extends Fragment {
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
+
+    View rootView = null;
+    AdapterTransacation adapterTransacation = null;
+    RecyclerView recyclerView = null;
 
     public FragmentTransactionSales() {
     }
@@ -50,9 +55,9 @@ public class FragmentTransactionSales extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
-        AdapterTransacation adapterTransacation = new AdapterTransacation(getContext(), true);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
+        rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
+        adapterTransacation = new AdapterTransacation(getContext(), true);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransacation);
 
@@ -98,7 +103,14 @@ public class FragmentTransactionSales extends Fragment {
 //                Snackbar.make(view, "transaction sales", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true);
+                DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true, new CallbackAddInDialog() {
+                    @Override
+                    public void reloadRecycler() {
+                        adapterTransacation = new AdapterTransacation(getContext(), true);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
+                        recyclerView.setAdapter(adapterTransacation);
+                    }
+                });
                 dialogTransaction.show();
             }
         });
