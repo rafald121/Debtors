@@ -40,5 +40,6 @@
 
     <dimen name="dialog_newclient_toggle_size">20sp</dimen>
 
+    <dimen name="item_debtors_width_leftamount">70sp</dimen>
 
 </resources>

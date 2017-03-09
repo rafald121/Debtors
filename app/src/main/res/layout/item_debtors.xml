@@ -34,7 +34,6 @@
     <TextView
         android:text="500"
         android:layout_height="wrap_content"
-        android:layout_width="50dp"
         android:id="@+id/debtors_item_leftamount"
         android:textSize="@dimen/debtors_left_amount_size"
         android:layout_weight="1"
@@ -44,7 +43,7 @@
         android:layout_marginEnd="32dp"
         android:textAlignment="textStart"
         android:layout_marginRight="32dp"
-        />
+        android:layout_width="@dimen/item_debtors_width_leftamount" />
 
     <ImageButton
         android:layout_width="25dp"
