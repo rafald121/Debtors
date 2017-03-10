@@ -39,7 +39,10 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         Log.i(TAG, "AdapterPayment: listOFPayments : " + listOfPayments.toString());
     }
 
-
+    public AdapterPayment(Context context){
+        this.context = context;
+        listOfPayments = getListOfPayments();
+    }
 
     public AdapterPayment(Context context, boolean receivedOrGive) {
         Log.i(TAG, "AdapterPayment: start");

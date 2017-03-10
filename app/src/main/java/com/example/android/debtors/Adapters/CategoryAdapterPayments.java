@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.android.debtors.Fragments.FragmentPaymentsAll;
 import com.example.android.debtors.Fragments.FragmentPaymentsGiven;
 import com.example.android.debtors.Fragments.FragmentPaymentsReceived;
 
@@ -20,16 +21,20 @@ public class CategoryAdapterPayments extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position == 0)
-            return new FragmentPaymentsReceived();
+            return new FragmentPaymentsAll();
         if(position == 1)
+            return new FragmentPaymentsReceived();
+        if(position == 2)
             return new FragmentPaymentsGiven();
         return null;
     }
 
     public CharSequence getPageTitle(int position){
         if(position == 0 ){
-            return "Received";
+            return "All";
         } else if (position == 1){
+            return "Received";
+        } else if (position == 2){
             return "Given";
         }
         return null;
@@ -37,7 +42,7 @@ public class CategoryAdapterPayments extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
 
