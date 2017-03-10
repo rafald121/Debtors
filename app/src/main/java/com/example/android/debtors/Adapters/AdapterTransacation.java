@@ -32,6 +32,11 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     private Context context;
 
+    public AdapterTransacation(Context context){
+        this.context = context;
+        listOfTransactions = getListOfAllTransactions();
+    }
+
     public AdapterTransacation(List<TransactionForClient> listOfTransactions) {
         Log.i(TAG, "AdapterTransacation: constructor");
         this.listOfTransactions = listOfTransactions;
@@ -98,6 +103,14 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             textViewDate = (TextView) itemView.findViewById(R.id.transaction_item_date);
             textViewType = (TextView) itemView.findViewById(R.id.transaction_item_type);
         }
+    }
+
+    private List<TransactionForClient> getListOfAllTransactions(){
+        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
+
+        List<TransactionForClient> list = dbTransactions.getAllTransactions();
+
+        return list;
     }
 
     private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){

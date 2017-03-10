@@ -1,11 +1,9 @@
 package com.example.android.debtors.Fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,49 +15,44 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterTransacation;
-import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
-import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 
-import java.util.List;
+/**
+ * Created by admin on 10.03.2017.
+ */
 
-public class FragmentTransactionSales extends Fragment {
+public class FragmentTransactionsAll extends Fragment{
 
-
-    private static final String TAG = FragmentTransactionSales.class.getSimpleName();
+    private static final String TAG = FragmentTransactionsAll.class.getSimpleName();
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
     View rootView = null;
-    AdapterTransacation adapterTransacation = null;
+    AdapterTransacation adapterTransaction = null;
     RecyclerView recyclerView = null;
 
-    public FragmentTransactionSales() {
-    }
+    public FragmentTransactionsAll(){
 
-    public static FragmentTransactionSales newInstance(String param1, String param2) {
-        FragmentTransactionSales fragment = new FragmentTransactionSales();
-        return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
-        adapterTransacation = new AdapterTransacation(getContext(), true);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
+        rootView = inflater.inflate(R.layout.fragment_transactions_all, container, false);
+        adapterTransaction = new AdapterTransacation(getContext());
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapterTransacation);
+
+        recyclerView.setAdapter(adapterTransaction);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -95,29 +88,26 @@ public class FragmentTransactionSales extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fab = (FloatingActionButton) view.findViewById(R.id.fragment_transactions_all_fab);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fragment_transactions_sales_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "transaction sales", Snackbar.LENGTH_LONG)
+//                Snackbar.make(view, "transaction purchases", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                        adapterTransacation = new AdapterTransacation(getContext(), true);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
-                        recyclerView.setAdapter(adapterTransacation);
+//                       // zaleznei od ustawien albo domyslnie true albo false    \/
+                        adapterTransaction = new AdapterTransacation(getContext(), true);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
+                        recyclerView.setAdapter(adapterTransaction);
                     }
                 });
                 dialogTransaction.show();
             }
         });
-
-    }
-
-    public void onButtonPressed(Uri uri) {
     }
 
     @Override

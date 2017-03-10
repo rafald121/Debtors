@@ -89,7 +89,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
         return transactionID;
     }
 
-    public List<TransactionForClient> getListOfTransaction(){
+    public List<TransactionForClient> getAllTransactions(){
         List<TransactionForClient> listOfTransaction = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();

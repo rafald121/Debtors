@@ -105,7 +105,7 @@ public class UtilsDatabaseMethods {
     }
     public static List<TransactionForClient> getTransaction(){
         Log.i(TAG, "getTransaction: ");
-        List<TransactionForClient> listOfTransaction = dbTransaction.getListOfTransaction();
+        List<TransactionForClient> listOfTransaction = dbTransaction.getAllTransactions();
 
         if (listOfTransaction.size()==0)
             Log.i(TAG, "getTransaction: LIST OF TRANSACTION = 0");
