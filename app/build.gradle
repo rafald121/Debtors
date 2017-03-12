@@ -30,5 +30,6 @@ dependencies {
     compile 'com.android.support:support-v4:25.2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
+    compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
     testCompile 'junit:junit:4.12'
 }

@@ -57,7 +57,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder: ");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction, parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_transaction, parent,
                 false);
         return new MyViewHolder(view);
     }

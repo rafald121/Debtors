@@ -16,7 +16,6 @@ import com.example.android.debtors.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by Rafaello on 2017-02-22.
@@ -55,7 +54,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder: start");
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_payments,
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_payments,
                 parent, false);
 
         return new MyViewHolder(itemView);
