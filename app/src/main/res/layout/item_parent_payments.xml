@@ -5,7 +5,6 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/colorHeaderText"
-              android:weightSum="100"
               android:layout_marginBottom="4dp"
               android:layout_marginLeft="2dp"
               android:layout_marginRight="2dp">
@@ -15,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorHeaderText"
-        android:weightSum="92"
+        android:weightSum="100"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp">
@@ -139,27 +138,29 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/payments_item_linear_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:weightSum="50"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <TextView
-            android:text="Title"
+            android:id="@+id/payments_item_details_header"
+            android:text="Details"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            style="@style/ItemPaymentsHeaderTitle"
+            style="@style/ItemPaymentsHeaderDetails"
             android:layout_gravity="top"
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/payments_item_title"
+            android:id="@+id/payments_item_details"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="35"
-            style="@style/ItemPaymentsInfoTextView"
-            android:text="TextView"
+            style="@style/ItemPaymentsInfoTextView1"
             android:layout_gravity="top" />
 
     </LinearLayout>

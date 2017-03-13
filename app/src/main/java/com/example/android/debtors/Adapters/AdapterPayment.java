@@ -1,11 +1,13 @@
 package com.example.android.debtors.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabaseClients;
@@ -14,8 +16,11 @@ import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Rafaello on 2017-02-22.
@@ -68,11 +73,24 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         String clientName = getClientByID(payment.getPaymentClientID()).getClientName();
         String[] dateArray = payment.getPaymentDate().split(" ");
         String dateString = dateArray[0];
-
+        String title = payment.getPaymentDetails();
 
         holder.textViewClient.setText(clientName);
         holder.textViewDate.setText(dateString);
         holder.textViewPaymentAmount.setText(String.valueOf(payment.getPaymentAmount()));
+
+        if(!title.equals("")) {
+            holder.linearLayout.getLayoutParams().height = LinearLayoutCompat.LayoutParams.WRAP_CONTENT;
+            holder.linearLayout.setVisibility(View.VISIBLE);
+            holder.textViewDetails.setVisibility(View.VISIBLE);
+            holder.textViewDetailsHeader.setVisibility(View.VISIBLE);
+            holder.textViewDetails.setText(payment.getPaymentDetails());
+        } else{
+            holder.linearLayout.setVisibility(View.INVISIBLE);
+//            holder.textViewDetails.setVisibility(View.INVISIBLE);
+//            holder.textViewDetailsHeader.setVisibility(View.INVISIBLE);
+        }
+
         if(payment.isPaymentGotOrGiven())//if tru
             holder.textViewType.setText("Received");
         else
@@ -88,7 +106,8 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     public class MyViewHolder  extends RecyclerView.ViewHolder{
 
-        private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewType;
+        private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewType, textViewDetails, textViewDetailsHeader;
+        private LinearLayout linearLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -97,6 +116,9 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             textViewPaymentAmount = (TextView) itemView.findViewById(R.id.payments_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.payments_item_date);
             textViewType = (TextView) itemView.findViewById(R.id.payments_item_type);
+            textViewDetails = (TextView) itemView.findViewById(R.id.payments_item_details);
+            textViewDetailsHeader = (TextView) itemView.findViewById(R.id.payments_item_details_header);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.payments_item_linear_details);
 
             Log.i(TAG, "MyViewHolder: end");
         }
