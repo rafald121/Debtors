@@ -160,6 +160,43 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return clientsList;
     }
 
+    public List<Client> fillListFromHashMap(HashMap<Integer,Integer> hashMap){
+        List<Client> clientsList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst())
+            do{
+                Client client = new Client();
+                client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+
+
+
+            }while (c.moveToNext());
+
+        return clientsList;
+    }
+//    public List<Client> getClientInMostCommonOrder(int fromLastDays){
+//        List<Client> clientsList = new ArrayList<>();
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+//
+//        Cursor c = db.rawQuery(query, null);
+//
+//        if(c.moveToFirst())
+//            do{
+//                Client c = new Client();
+//
+//
+//            }while (c.moveToNext());
+//    }
+
     public List<String> getListOfClientsNames(){
 
         List<String> clientsNamesList = new ArrayList<>();

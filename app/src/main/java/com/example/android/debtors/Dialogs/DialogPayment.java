@@ -2,6 +2,7 @@ package com.example.android.debtors.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -67,6 +68,9 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
     private CallbackAddInDialog callbackAddInDialog = null;
 
+    List<Client> listOfClients = new ArrayList<>();
+    List<Client> listOfClientsInOrder = new ArrayList<>();
+
     public DialogPayment(Context context) {
         super(context);
         this.context = context;
@@ -113,10 +117,9 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         newPaymentOk = (Button) findViewById(R.id.dialog_payment_ok);
         newPaymentCancel = (Button) findViewById(R.id.dialog_payment_cancel);
 
-        List<Client> listOfClients = new ArrayList<>();
 
         listOfClients = getListOfClients();
-
+        listOfClientsInOrder = getListOfClientsInMostCommonOrder(10);
 
         ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_item, listOfClients);
 
@@ -213,6 +216,19 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         listOfClients = dbClients.getAllClient();
 
         return listOfClients;
+    }
+
+    private List<Client> getListOfClientsInMostCommonOrder(int fromLastDays){
+        DatabaseClients dbClients = new DatabaseClients(context);
+        DatabasePayments dbPayments = new DatabasePayments(context);
+
+        HashMap<Integer,Integer> hashMap = dbPayments.getHashMapWithMostCommonClients(10);
+
+        Log.i(TAG, "getListOfClientsInMostCommonOrder: hashMap: " + hashMap.toString());
+
+        List<Client> list = dbClients.fillListFromHashMap(hashMap);
+
+        return list;
     }
 
     private List<String> getListOfClientsNames(){
