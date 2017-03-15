@@ -101,7 +101,7 @@ public class FragmentPaymentsAll extends Fragment {
 
                         Log.i(TAG, "reloadRecycler: ");
                         adapterPayment = new AdapterPayment(getContext());
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_all_fab);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_all_recycler);
                         recyclerView.setAdapter(adapterPayment);
 
                     }
