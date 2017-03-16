@@ -3,10 +3,7 @@ package com.example.android.debtors.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -27,19 +24,14 @@ import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
 import com.example.android.debtors.Fragments.FragmentTransactions;
-import com.example.android.debtors.Logic.RealizePaymentHelper;
-import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Model.Owner;
-import com.example.android.debtors.Model.Payment;
-import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Others.CircleTransform;
 import com.example.android.debtors.R;
-import com.example.android.debtors.Utils.Utils;
 import com.example.android.debtors.Utils.UtilsDatabaseMethods;
 
 import java.util.HashMap;
@@ -54,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
     DatabasePayments dbPayment;
     DatabaseTransactions dbTransaction;
 
-    String[] names = {"rafal", "marek", "karol", "adrian" , "tomek" , "jan", "andrzejek",
+    String[] names = {"rafal", "marek", "karol", "adrian", "tomek", "jan", "andrzejek",
             "maniek", "maniok", "chamiok", "krzysztof", "zofia", "alfons", "kamil", "pawel"};
-    String[] names2 = {"ania","ula","ciocia","marianna","ola","ada","marysia","izabela"};
-    HashMap<Long,Client> clientsMap = new HashMap<>();
+    String[] names2 = {"ania", "ula", "ciocia", "marianna", "ola", "ada", "marysia", "izabela"};
+    HashMap<Long, Client> clientsMap = new HashMap<>();
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -82,13 +74,21 @@ public class MainActivity extends AppCompatActivity {
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
     // tags used to attach the fragments
-    private static final String TAG_ALL_CLIENTS = "tagAllClients";
-    private static final String TAG_DEBTORS = "tagDebtors";
-    private static final String TAG_TRANSACTIONS = "tagTransactions";
-    private static final String TAG_PAYMENTS = "tagPayments";
-    private static final String TAG_SETTINGS = "settings";
+    public static int fragmentID = -1 ;
+    public static int previousFragmentID = -1;
+
+    public static int subFragmentID = -1 ;
+    public static int previousSubFragmentID = -1;
+
+
+    private static final String TAG_ALL_CLIENTS = String.valueOf(R.string.tag_allclients);
+    private static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
+    private static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
+    private static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);
+    private static final String TAG_SETTINGS = String.valueOf(R.string.tag_settings);
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
+    public static String CURRENT_SUB_TAG = null;
 
     public static boolean whenBackClickedOnDebtors = false; // if user click back button on
     // debtor fragment, whenBackClickedOnDebtors is set to true and when click another time app
@@ -98,7 +98,10 @@ public class MainActivity extends AppCompatActivity {
     UtilsDatabaseMethods databaseMethods;
 
     private Handler mHandler;
-
+    private FragmentAllClients fragmentAllClients;
+    private FragmentDebtors fragmentDebtors;
+    private FragmentTransactions fragmentTransactions;
+    private FragmentPayments fragmentPayments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        initFragments();
 
         mHandler = new Handler();
 
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        ARRAY OF AVAILABLE TAGS FROM NAVIGATION 
         activityTitles = getResources().getStringArray(R.array.nav_item_toolbar_title);
-        for(String s: activityTitles)
+        for (String s : activityTitles)
             Log.i(TAG, "onCreate: " + s.toString());
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -141,8 +146,13 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Log.i(TAG, "onCreate: savedInstanceState == null");
             navItemIndex = 0;
+
+            previousFragmentID = fragmentID;
+            fragmentID = FragmentsIDs.ALLCLIENTS;
+
             PREVIOUS_TAG = CURRENT_TAG;
             CURRENT_TAG = TAG_ALL_CLIENTS;
+
             loadSelectedFragment();
 //          TODO  loadDebtorsFragment();
         }
@@ -174,15 +184,16 @@ public class MainActivity extends AppCompatActivity {
 //        simulateTransactionWithPayment();
     }
 
-    public void createClients(String[] names){
-        for(int i = 0 ; i< names.length -1 ; i++){
-
-            Client client = new Client(names[i], 100*i);
-            dbClient.createClient(client);
-
-        }
+    private void initFragments() {
+        fragmentAllClients = new FragmentAllClients();
+        fragmentDebtors = new FragmentDebtors();
+        fragmentPayments = new FragmentPayments();
+        fragmentTransactions = new FragmentTransactions();
     }
-    private void loadSelectedFragment(){
+
+
+
+    private void loadSelectedFragment() {
         Log.i(TAG, "loadSelectedFragment: START");
 //        count amount of items in every fragment
         setNavigationDrawerItemAmount();
@@ -193,9 +204,14 @@ public class MainActivity extends AppCompatActivity {
 
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
-        Log.i(TAG, "loadSelectedFragment: CURRENT TAG: " + CURRENT_TAG);
+//        Log.i(TAG, "loadSelectedFragment: CURRENT TAG: " + CURRENT_TAG);
+        Log.i(TAG, "loadSelectedFragment: 11CURRENT FRAGMENT ID : " + fragmentID);
+        Log.i(TAG, "loadSelectedFragment: 11CURRENT SUBFRAGMENT ID : " + subFragmentID);
 
-        if (PREVIOUS_TAG==CURRENT_TAG) {
+//        Log.i(TAG, "onNavigationItemSelected: prev frag: " + fragmentID);
+//        Log.i(TAG, "onNavigationItemSelected: prev subfrag: " + subFragmentID);
+
+        if (PREVIOUS_TAG == CURRENT_TAG) {
             Log.i(TAG, "loadSelectedFragment: wtf");
             drawer.closeDrawers();
             toggleFabOn();
@@ -204,7 +220,11 @@ public class MainActivity extends AppCompatActivity {
 //            toggleFab();
             return;
         }
-        Log.i(TAG, "loadSelectedFragment: fragment index before open it: " + navItemIndex);
+//        Log.i(TAG, "loadSelectedFragment: fragment index before open it: " + navItemIndex);
+
+        Log.i(TAG, "loadSelectedFragment: fragment index before open it FRAGMENT ID: " + fragmentID);
+        Log.i(TAG, "loadSelectedFragment: fragment index before open it SUBFRAGMENT ID: " + subFragmentID);
+
 
         Runnable mPendingRunnable = new Runnable() {
             @Override
@@ -212,6 +232,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "run: start run");
                 // update the main content by replacing fragments
                 Fragment fragment = getSelectedFragment();
+                if(fragment.isAdded()) {
+                    Log.i(TAG, "run: ");
+                    return;
+                }
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
@@ -230,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
         // show or hide the fab button
-        toggleFabOn();
+//        toggleFabOn();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -238,6 +262,11 @@ public class MainActivity extends AppCompatActivity {
 //        TODO TEST IT
         invalidateOptionsMenu();
         Log.i(TAG, "loadSelectedFragment: END");
+
+
+        Log.i(TAG, "loadSelectedFragment:22 fragment index before open it FRAGMENT ID: " + fragmentID);
+        Log.i(TAG, "loadSelectedFragment:22 fragment index before open it SUBFRAGMENT ID: " + subFragmentID);
+
     }
 
     private void setNavigationDrawerItemAmount() {
@@ -252,27 +281,26 @@ public class MainActivity extends AppCompatActivity {
         int amountPayments = _dbPayment.getAmountOfPayments();
 
 
-
         TextView itemCounterAllClients = (TextView) navigationView.getMenu().findItem(R.id.nav_all_clients).getActionView();
-        if(itemCounterAllClients != null)
+        if (itemCounterAllClients != null)
             itemCounterAllClients.setText(String.valueOf(amountAllClients));
         else
             Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterAlLClients is null");
 
         TextView itemCounterDebtors = (TextView) navigationView.getMenu().findItem(R.id.nav_debtors).getActionView();
-        if(itemCounterDebtors != null)
+        if (itemCounterDebtors != null)
             itemCounterDebtors.setText(String.valueOf(amountDebtors));
         else
             Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterDebtors is null");
 
         TextView itemCounterPayments = (TextView) navigationView.getMenu().findItem(R.id.nav_payments).getActionView();
-        if(itemCounterPayments != null)
+        if (itemCounterPayments != null)
             itemCounterPayments.setText(String.valueOf(amountPayments));
         else
             Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterPayments is null");
 
         TextView itemCounterTransactions = (TextView) navigationView.getMenu().findItem(R.id.nav_transactions).getActionView();
-        if(itemCounterTransactions != null)
+        if (itemCounterTransactions != null)
             itemCounterTransactions.setText(String.valueOf(amountTransactions));
         else
             Log.e(TAG, "setNavigationDrawerItemAmount: itemCounterTransaction is null");
@@ -284,47 +312,33 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "getSelectedFragment: START");
         switch (navItemIndex) {
             case 0:
-                // all clients
-                FragmentAllClients allClients = new FragmentAllClients();
                 Log.i(TAG, "getSelectedFragment: END");
-                return allClients;
+                return fragmentAllClients;
             case 1:
-                // debtors
-                FragmentDebtors debtors = new FragmentDebtors();
                 Log.i(TAG, "getSelectedFragment: END");
-                return debtors;
+                return fragmentDebtors;
             case 2:
-                // transactions
-                FragmentTransactions transactions = new FragmentTransactions();
                 Log.i(TAG, "getSelectedFragment: END");
-                return transactions;
+                return fragmentTransactions;
             case 3:
-                // payments
-                FragmentPayments payments = new FragmentPayments();
                 Log.i(TAG, "getSelectedFragment: END");
-                return payments;
+                return fragmentPayments;
             default:
-//                debtors fragment is default
-                Log.i(TAG, "getSelectedFragment: END");
-                return new FragmentDebtors();
+                Log.e(TAG, "getSelectedFragment: ERROR");
+                return null;
         }
     }
-//
-    private void selectNavigationMenuToBeChecked(){
+
+    //
+    private void selectNavigationMenuToBeChecked() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
-    private void setToolbarTitle(){
+    private void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
-    private void toggleFabOn(){
-//        fab.show();
-    }
 
-    private void toggleFabOff(){
-//        fab.hide();
-    }
 
     private void setUpNavigationView() {
         Log.i(TAG, "setUpNavigationView: START");
@@ -334,51 +348,88 @@ public class MainActivity extends AppCompatActivity {
             // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Log.i(TAG, "onNavigationItemSelected: START");
-                Log.i(TAG, "onNavigationItemSelected: TAG BEFORE CLICK: " + CURRENT_TAG);
+//                Log.i(TAG, "onNavigationItemSelected: START");
+//                Log.i(TAG, "onNavigationItemSelected: TAG BEFORE CLICK: " + CURRENT_TAG);
                 //Check to see which item was being clicked and perform appropriate action
-
-                if(menuItem.getItemId()!=R.id.nav_debtors) // if user hasn't check debtors in
+                initFragments();
+                if (menuItem.getItemId() != R.id.nav_debtors) // if user hasn't check debtors in
                     // navigation asign whenBackClickedOnDebtors=false again
-                    whenBackClickedOnDebtors=false;
+                    whenBackClickedOnDebtors = false;
 
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_all_clients:
                         navItemIndex = 0;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.ALLCLIENTS;
+                        subFragmentID = FragmentsIDs.ALLCLIENTS;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_ALL_CLIENTS;
+
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_debtors:
                         navItemIndex = 1;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.DEBTORS;
+                        subFragmentID = FragmentsIDs.DEBTORSFORME;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_DEBTORS;
+
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_transactions:
                         navItemIndex = 2;
+                        Log.i(TAG, "onNavigationItemSelected: prev frag: " + fragmentID);
+                        Log.i(TAG, "onNavigationItemSelected: prev subfrag: " + subFragmentID);
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.TRANSACTIONS;
+                        subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+
+                        Log.i(TAG, "onNavigationItemSelected: after frag: " + fragmentID);
+                        Log.i(TAG, "onNavigationItemSelected: after subfrag: " + subFragmentID);
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_TRANSACTIONS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
+
                     case R.id.nav_payments:
                         navItemIndex = 3;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.PAYMENTS;
+                        subFragmentID = FragmentsIDs.PAYMENTSALL;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_PAYMENTS;
+
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
+
                     case R.id.nav_settings:
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.SETTINGS;
+
                         startActivity(new Intent(MainActivity.this, ActivitySettings.class));
-                        drawer.closeDrawers();
                         Log.i(TAG, "onNavigationItemSelected: END");
                         return true;
+
                     case R.id.nav_about_me:
-                        // launch new intent instead of loading fragment
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.ABOUTME;
+
                         startActivity(new Intent(MainActivity.this, AboutMe.class));
-                        drawer.closeDrawers();
                         Log.i(TAG, "onNavigationItemSelected: END");
                         return true;
+
                     default:
                         navItemIndex = 0;
 
@@ -399,24 +450,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                Log.i(TAG, "onDrawerClosed: ");
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                toggleFabOn();
-                super.onDrawerClosed(drawerView);
-            }
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+//                        subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+                        Log.i(TAG, "onDrawerClosed: ");
+                        Log.i(TAG, "onDrawerClosed: fragmentID: "  + fragmentID);
+                        Log.i(TAG, "onDrawerClosed: subfragmentID: " + subFragmentID);
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                Log.i(TAG, "onDrawerOpened: ");
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-                toggleFabOff();
-                super.onDrawerOpened(drawerView);
-            }
-        };
+                        toggleFabOn();
+                        super.onDrawerClosed(drawerView);
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        Log.i(TAG, "onDrawerOpened: ");
+                        Log.i(TAG, "onDrawerOpened: fragmentID: "  + fragmentID);
+                        Log.i(TAG, "onDrawerOpened: subfragmentID: " + subFragmentID);
+
+                        toggleFabOff();
+                        super.onDrawerOpened(drawerView);
+                    }
+                };
 
         //Setting the actionbarToggle to drawer layout
         drawer.addDrawerListener(actionBarDrawerToggle);
@@ -441,16 +498,20 @@ public class MainActivity extends AppCompatActivity {
             // rather than home
             if (navItemIndex != 1) { // jeśli navItem nie jest 1
                 navItemIndex = 1;
+
+                previousFragmentID = fragmentID;
+                fragmentID = FragmentsIDs.DEBTORS;
+
                 PREVIOUS_TAG = CURRENT_TAG;
                 CURRENT_TAG = TAG_DEBTORS;
                 loadSelectedFragment();
                 return;
-            } else{ // jesli navItem jest 1
-                if(!whenBackClickedOnDebtors) { //if false, change variable to true and return
+            } else { // jesli navItem jest 1
+                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
                     // nothing(do anything)
                     whenBackClickedOnDebtors = true;
                     return;
-                } else{ // if true user have clicked back button once and next time minimalize app
+                } else { // if true user have clicked back button once and next time minimalize app
 //                    minimalize app
                 }
             }
@@ -479,18 +540,90 @@ public class MainActivity extends AppCompatActivity {
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
-
-
-        // showing dot next to notifications label
-//        TODO wklepać aby zamiast kropki pokazywaly się liczby
-//        TextView amount = (TextView) findViewById(R.layout.navigation_drawer_item_counter);
-//        navigationView.getMenu().getItem(2).setAct
-//        navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
     }
 
 
 
-    public void hideFABs() {
+    private void toggleFabOn() {
+//        fab.show();
+        Log.i(TAG, "toggleFabOn: fragmentID: "  + fragmentID);
+        Log.i(TAG, "toggleFabOn: subfragmentID: " + subFragmentID);
+
+        switch (fragmentID){
+
+            case FragmentsIDs.ALLCLIENTS:
+
+                if (fragmentAllClients != null) {
+                    fragmentAllClients.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
+                break;
+
+            case FragmentsIDs.DEBTORS:
+
+                if (fragmentDebtors != null) {
+                    fragmentDebtors.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
+                break;
+
+            case FragmentsIDs.TRANSACTIONS:
+                if (fragmentTransactions != null) {
+                    fragmentTransactions.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
+                break;
+
+            case FragmentsIDs.PAYMENTS:
+
+                if (fragmentPayments != null) {
+                    fragmentPayments.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
+                break;
+
+            default:
+                Log.d(TAG, "toggleFabOn() called");
+                Log.e(TAG, "toggleFabOn: ERROR called ID: " + fragmentID );
+
+        }
+    }
+
+    private void toggleFabOff() {
+//        fab.hide();
+        switch (fragmentID){
+
+            case FragmentsIDs.ALLCLIENTS:
+                if (fragmentAllClients != null) {
+                    fragmentAllClients.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
+                break;
+
+            case FragmentsIDs.DEBTORS:
+                if (fragmentDebtors != null) {
+                    fragmentDebtors.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
+                break;
+
+            case FragmentsIDs.TRANSACTIONS:
+                if (fragmentTransactions != null) {
+                    fragmentTransactions.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
+                break;
+
+            case FragmentsIDs.PAYMENTS:
+                if (fragmentPayments != null) {
+                    fragmentPayments.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
+                break;
+
+            default:
+                Log.e(TAG, "toggleFabOn: ERROR");
+        }
 
     }
 }

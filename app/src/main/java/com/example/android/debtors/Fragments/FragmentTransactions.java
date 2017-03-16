@@ -18,8 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Interfaces.InterfaceSearchInRecyclerView;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -37,7 +41,8 @@ import java.util.List;
 public class FragmentTransactions extends Fragment {
 
     private static final String TAG = FragmentTransactions.class.getSimpleName();
-
+    private CategoryAdapterTransactions categoryAdapterTransactions;
+    ViewPager viewPager;
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
     }
@@ -59,20 +64,81 @@ public class FragmentTransactions extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
 
-        CategoryAdapterTransactions categoryAdapterTransactions = new CategoryAdapterTransactions
-                (getChildFragmentManager());
-        viewPager.setAdapter(categoryAdapterTransactions);
+        Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.subFragmentID);
+//        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+
+        super.onViewCreated(view, savedInstanceState);
+        viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
+        Log.i(TAG, "onViewCreated: 1");
+
+        if (categoryAdapterTransactions == null)
+            categoryAdapterTransactions = new CategoryAdapterTransactions(getChildFragmentManager());
+        else
+            Log.e(TAG, "onViewCreated: 11 ");
+
+        Log.i(TAG, "onViewCreated: 2");
+
+        if (viewPager != null) {
+            viewPager.setAdapter(categoryAdapterTransactions);
+        } else
+            Log.e(TAG, "onViewCreated: 22");
+        Log.i(TAG, "onViewCreated: 3");
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(final int position, final float v, final int i2) {
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterTransactions.instantiateItem(viewPager, position);
+                if (intefrace != null) {
+                    Log.i(TAG, "onPageSelected: switched to: " + position);
+                    switch (position){
+                        case 0:
+                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+                            intefrace.notifyWhenSwitched();
+                            break;
+                        case 1:
+                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
+                            intefrace.notifyWhenSwitched();
+                            break;
+                        case 2:
+                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
+                            intefrace.notifyWhenSwitched();
+                            Log.i(TAG, "onPageSelected: after notify when switched");
+                            break;
+                        default:
+                            Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+                            break;
+                    }
+
+
+                } else
+                    Log.i(TAG, "onPageSelected: pomocy");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int position) {
+            }
+        });
+
+        Log.i(TAG, "onViewCreated: 4");
+
         tabLayout.setupWithViewPager(viewPager);
+        Log.i(TAG, "onViewCreated: 5");
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+        Log.i(TAG, "onViewCreated: 6, assigned, now subfragment is: " + MainActivity.subFragmentID);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_transactions,menu);
+        Log.i(TAG, "onCreateOptionsMenu: START");
+        inflater.inflate(R.menu.menu_transactions, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        Log.i(TAG, "onCreateOptionsMenu: END");
     }
 
     @Override
@@ -110,6 +176,7 @@ public class FragmentTransactions extends Fragment {
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
+        Log.i(TAG, "onAttach: END");
     }
 
     @Override
@@ -119,4 +186,15 @@ public class FragmentTransactions extends Fragment {
     }
 
 
+    public void hideFAB() {
+        if (categoryAdapterTransactions != null) {
+            categoryAdapterTransactions.hideFAB();
+        }
+    }
+
+    public void showFAB() {
+        if(categoryAdapterTransactions != null){
+            categoryAdapterTransactions.showFAB();
+        }
+    }
 }

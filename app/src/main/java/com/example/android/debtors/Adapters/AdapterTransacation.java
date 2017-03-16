@@ -38,12 +38,12 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     }
 
     public AdapterTransacation(List<TransactionForClient> listOfTransactions) {
-        Log.i(TAG, "AdapterTransacation: constructor");
+//        Log.i(TAG, "AdapterTransacation: constructor");
         this.listOfTransactions = listOfTransactions;
     }
 
     public AdapterTransacation(Context context, boolean purchaseOrSale) {
-        Log.i(TAG, "AdapterTransacation: START, constructor created ");
+//        Log.i(TAG, "AdapterTransacation: START, constructor created ");
         this.context = context;
         dbClients = new DatabaseClients(context);
         listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
@@ -56,7 +56,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder: ");
+//        Log.i(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_transaction, parent,
                 false);
         return new MyViewHolder(view);
@@ -65,8 +65,8 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         TransactionForClient transaction = listOfTransactions.get(position);
-        Log.i(TAG, "onBindViewHolder: halo: " + transaction.toString());
-        Log.i(TAG, "onBindViewHolder: client ID" + transaction.getTransactionClientID());
+//        Log.i(TAG, "onBindViewHolder: halo: " + transaction.toString());
+//        Log.i(TAG, "onBindViewHolder: client ID" + transaction.getTransactionClientID());
 
         Client client =  getClientById(transaction.getTransactionClientID());
 
@@ -118,9 +118,9 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
         List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
 
-        for (Transaction t : list){
-            Log.i(TAG, "getListOfTransactionsSale: " + t.toString());
-        }
+//        for (Transaction t : list){
+//            Log.i(TAG, "getListOfTransactionsSale: " + t.toString());
+//        }
 
         return list;
     }

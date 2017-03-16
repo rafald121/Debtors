@@ -15,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
-public class FragmentTransactionsSales extends Fragment {
+public class FragmentTransactionsSales extends Fragment implements InterfaceViewPager{
 
 
     private static final String TAG = FragmentTransactionsSales.class.getSimpleName();
@@ -35,7 +38,7 @@ public class FragmentTransactionsSales extends Fragment {
     public FragmentTransactionsSales() {
     }
 
-    public static FragmentTransactionsSales newInstance(String param1, String param2) {
+    public static FragmentTransactionsSales newInstance() {
         FragmentTransactionsSales fragment = new FragmentTransactionsSales();
         return fragment;
     }
@@ -48,7 +51,6 @@ public class FragmentTransactionsSales extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
         adapterTransacation = new AdapterTransacation(getContext(), true);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
@@ -126,5 +128,29 @@ public class FragmentTransactionsSales extends Fragment {
         super.onDetach();
     }
 
+    public void showFAB() {
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
+    }
 
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
+        Log.i(TAG, "notifyWhenSwitched: sales");
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        if (fab != null) {
+            fab.show();
+        }else
+            Log.e(TAG, "notifyWhenSwitched: fab is null");
+    }
 }

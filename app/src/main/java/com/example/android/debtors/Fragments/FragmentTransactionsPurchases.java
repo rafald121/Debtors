@@ -11,15 +11,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -34,7 +38,7 @@ import java.util.List;
 // * Use the {@link FragmentTransactionsPurchases#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class FragmentTransactionsPurchases extends Fragment {
+public class FragmentTransactionsPurchases extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentTransactionsPurchases.class.getSimpleName();
 
@@ -50,6 +54,7 @@ public class FragmentTransactionsPurchases extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
 
     }
@@ -57,7 +62,7 @@ public class FragmentTransactionsPurchases extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.i(TAG, "onCreateView: START");
         rootView = inflater.inflate(R.layout.fragment_transactions_purchases, container, false);
         adapterTransacation = new AdapterTransacation(getContext(),false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
@@ -83,7 +88,7 @@ public class FragmentTransactionsPurchases extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
+        Log.i(TAG, "onCreateView: END");
         return rootView;
     }
 
@@ -97,6 +102,7 @@ public class FragmentTransactionsPurchases extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_transactions_purchases_fab);
@@ -118,7 +124,7 @@ public class FragmentTransactionsPurchases extends Fragment {
             }
         });
 
-
+        Log.i(TAG, "onViewCreated: END");
     }
 
     public void onButtonPressed(Uri uri) {
@@ -127,15 +133,48 @@ public class FragmentTransactionsPurchases extends Fragment {
 
     @Override
     public void onAttach(Context context) {
+        Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+        Log.i(TAG, "onAttach: END");
 
     }
 
     @Override
     public void onDetach() {
+        Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
 
 
+    public void showFAB() {
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
+    }
+
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
+
+        Log.i(TAG, "notifyWhenSwitched: purchases");
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+
+        if (fab != null) {
+            fab.show();
+        }  else
+            Log.e(TAG, "notifyWhenSwitched: fab is null!");
+
+        Log.i(TAG, "notifyWhenSwitched: eee?");
+    }
 }

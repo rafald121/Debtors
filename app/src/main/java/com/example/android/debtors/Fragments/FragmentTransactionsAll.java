@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,16 +15,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
 /**
  * Created by admin on 10.03.2017.
  */
 
-public class FragmentTransactionsAll extends Fragment{
+public class FragmentTransactionsAll extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentTransactionsAll.class.getSimpleName();
 
@@ -35,7 +39,6 @@ public class FragmentTransactionsAll extends Fragment{
     RecyclerView recyclerView = null;
 
     public FragmentTransactionsAll(){
-
     }
 
     @Override
@@ -46,7 +49,6 @@ public class FragmentTransactionsAll extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.fragment_transactions_all, container, false);
         adapterTransaction = new AdapterTransacation(getContext());
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
@@ -123,4 +125,27 @@ public class FragmentTransactionsAll extends Fragment{
     }
 
 
+    public void showFAB() {
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
+    }
+
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: halo");
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+        Log.i(TAG, "notifyWhenSwitched: all");
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        fab.show();
+    }
 }

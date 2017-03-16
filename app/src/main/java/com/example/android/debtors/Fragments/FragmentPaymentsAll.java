@@ -18,13 +18,14 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
 /**
  * Created by admin on 10.03.2017.
  */
 
-public class FragmentPaymentsAll extends Fragment {
+public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentPaymentsAll.class.getSimpleName();
 
@@ -101,7 +102,7 @@ public class FragmentPaymentsAll extends Fragment {
 
                         Log.i(TAG, "reloadRecycler: ");
                         adapterPayment = new AdapterPayment(getContext());
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_all_fab);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_all_recycler);
                         recyclerView.setAdapter(adapterPayment);
 
                     }
@@ -122,4 +123,26 @@ public class FragmentPaymentsAll extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    public void showFAB() {
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
+    }
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
+    }
+
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: all");
+    }
+
+
 }

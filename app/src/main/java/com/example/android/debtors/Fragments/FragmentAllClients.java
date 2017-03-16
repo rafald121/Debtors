@@ -258,11 +258,19 @@ public class FragmentAllClients extends Fragment {
     }
 
 
-    private void toggleFabOn(){
+//    private void toggleFabOn(){
+//        fab.show();
+//    }
+//
+//    private void toggleFabOff(){
+//        fab.hide();
+//    }
+
+    public void showFAB() {
         fab.show();
     }
 
-    private void toggleFabOff(){
+    public void hideFAB() {
         fab.hide();
     }
 }

@@ -2,14 +2,17 @@ package com.example.android.debtors.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -130,6 +133,48 @@ public class DatabasePayments extends SQLiteOpenHelper {
         }
 
         return listOfPayments;
+    }
+
+    public HashMap<Integer, Integer> getHashMapWithMostCommonClients(int fromLastDays){
+        List<Payment> paymentList = new ArrayList<>();
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS;
+
+        Cursor c = db.rawQuery(query, null);
+//        int counter = 0
+
+        if(c.moveToFirst())
+            do{
+                Payment payment = new Payment();
+
+                payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+
+//                hashMap.put(payment.getPaymentID(),)
+                paymentList.add(payment);
+
+            }while (c.moveToNext());
+
+        for (Payment p : paymentList) {
+//            Log.i(TAG, "getHashMapWithMostCommonClients: payment: " + p.toString(true));
+            int val = 0;
+            if(!hashMap.containsKey(p.getPaymentClientID())) {
+                Log.i(TAG, "getHashMapWithMostCommonClients: client: " + p.getPaymentClientID());
+                hashMap.put(p.getPaymentClientID(), 1);
+                Log.i(TAG, "getHashMapWithMostCommonClients dla klucza: " + p.getPaymentClientID() + " wartosc: "  + hashMap.get(p.getPaymentClientID()).toString());
+            } else {
+                Log.i(TAG, "getHashMapWithMostCommonClients: client: " + p.getPaymentClientID());
+                val = hashMap.get(p.getPaymentClientID());
+                Log.i(TAG, "getHashMapWithMostCommonClients: val: " + val);
+                hashMap.put(p.getPaymentClientID(), val+1);
+            }
+        }
+
+        return hashMap;
     }
 
     public int getAmountOfPayments(){

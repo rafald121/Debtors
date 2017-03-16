@@ -8,6 +8,30 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_about_me">About me</string>
 
+    <string name="tag_allclients">AllClients</string>
+    <string name="tag_debtors">Debtors</string>
+    <string name="tag_transactions">Transactions</string>
+    <string name="tag_payments">Payments</string>
+    <string name="tag_clientinfo">ClientInfo</string>
+    <string name="tag_settings">Settings</string>
+
+    <string name="tag_debtors_forme">DebtorsForMe</string>
+    <string name="tag_debtors_metoother">DebtorsMeToOther</string>
+    
+    <string name="tag_transactions_all">TransactionsAll</string>
+    <string name="tag_transactions_sales">TransactionsSales</string>
+    <string name="tag_transactions_purchases">TransactionsPurchases</string>
+    
+    <string name="tag_payments_all">PaymentsAll</string>
+    <string name="tag_payments_received">PaymentsReceived</string>
+    <string name="tag_payments_given">PaymentsGiven</string>
+
+    <string name="tag_clientinfo_payments">ClientInfoPayments</string>
+    <string name="tag_clientinfo_transactions">ClientInfoTransactions</string>
+
+
+    <!--<string name=""-->
+
     <string-array name="nav_item_toolbar_title">
         <item>All Clients</item>
         <item>Debtors</item>
