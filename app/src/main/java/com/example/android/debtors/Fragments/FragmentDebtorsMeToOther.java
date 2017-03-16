@@ -26,6 +26,8 @@ import com.example.android.debtors.R;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Rafaello on 2017-02-18.
  */
@@ -37,6 +39,7 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     private List<Client> listOfClients;
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
+    private AdapterDebtors adapterDebtors;
 
 
 
@@ -54,13 +57,12 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
 
-
         View rootView = inflater.inflate(R.layout.fragment_debtors_metoother, container, false);
         listOfClients = getClientsLessThanZero();
-        AdapterDebtors adapter = new AdapterDebtors(fragmentActivity, listOfClients);
+        adapterDebtors  = new AdapterDebtors(fragmentActivity, listOfClients);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_debtors_metoother_recycler);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapterDebtors);
 
 //        class Threadd implements Runnable{
 
@@ -111,6 +113,10 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
+    public void onEvent(FragmentDebtors.SearchQuery query){
+        Log.i(TAG, "onEvent: " + query.getMessage());
+        adapterDebtors.filter(query.getMessage());
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -134,6 +140,8 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     @Override
     public void onAttach(Context context) {
         fragmentActivity = (FragmentActivity) context;
+        EventBus.getDefault().register(this); // this == your class instance
+
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
     }
@@ -141,6 +149,8 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     @Override
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
+        EventBus.getDefault().unregister(this);
+
         super.onDetach();
     }
 

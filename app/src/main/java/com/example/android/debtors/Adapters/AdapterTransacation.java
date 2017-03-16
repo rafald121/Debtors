@@ -29,29 +29,28 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     private DatabaseTransactions dbTransactions;
     private DatabaseClients dbClients;
     private List<TransactionForClient> listOfTransactions = new ArrayList<>();
+    private List<TransactionForClient> listOfTransactionsCopy = new ArrayList<>();
 
     private Context context;
 
     public AdapterTransacation(Context context){
         this.context = context;
-        listOfTransactions = getListOfAllTransactions();
-    }
-
-    public AdapterTransacation(List<TransactionForClient> listOfTransactions) {
-//        Log.i(TAG, "AdapterTransacation: constructor");
-        this.listOfTransactions = listOfTransactions;
+        this.listOfTransactions = getListOfAllTransactions();
+        this.listOfTransactionsCopy.addAll(listOfTransactions);
     }
 
     public AdapterTransacation(Context context, boolean purchaseOrSale) {
 //        Log.i(TAG, "AdapterTransacation: START, constructor created ");
         this.context = context;
-        dbClients = new DatabaseClients(context);
-        listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
+        this.dbClients = new DatabaseClients(context);
+        this.listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
+        this.listOfTransactionsCopy.addAll(listOfTransactions);
     }
 
     public AdapterTransacation(Context context, List<TransactionForClient> listOfTransactions){
         this.context = context;
         this.listOfTransactions = listOfTransactions;
+        this.listOfTransactionsCopy.addAll(listOfTransactions);
     }
 
     @Override
@@ -86,6 +85,22 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     }
 
+//    public void filter(String text) {
+//        listOfTransactions.clear();
+//        if(text.isEmpty()){
+//            listOfTransactions.addAll(listOfTransactionsCopy);
+//        } else{
+//            text = text.toLowerCase();
+//
+//            for(TransactionForClient transactionForClient: listOfTransactionsCopy){
+//                if(transactionForClient.getClientName().toLowerCase().contains(text))
+//                    listOfTransactions.add(transactionForClient);
+//            }
+//
+//        }
+//        notifyDataSetChanged();
+//    }
+//
     @Override
     public int getItemCount() {
         return listOfTransactions.size();
