@@ -48,7 +48,6 @@ public class FragmentDebtors extends Fragment  {
     private CategoryAdapterDebtors categoryAdapterDebtors;
 
     interface SearchViewQuery{
-
         void searchViewQueryChanged(String query);
     }
     private SearchViewQuery searchViewQuery;
@@ -153,6 +152,7 @@ public class FragmentDebtors extends Fragment  {
                 public boolean onQueryTextChange(String newText) {
 
                     Log.i("onQueryTextChange", newText);
+
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences((fragmentActivity));
                     sharedPreferences.edit().putString(QUERY_DEBTORS, newText).apply();
 
