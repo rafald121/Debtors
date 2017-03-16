@@ -15,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
@@ -42,13 +44,11 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate: all");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: all");
         rootView = inflater.inflate(R.layout.fragment_transactions_all, container, false);
         adapterTransaction = new AdapterTransacation(getContext());
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
@@ -135,7 +135,10 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
 
     @Override
     public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: halo");
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
         Log.i(TAG, "notifyWhenSwitched: all");
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
         fab.show();
     }
 }

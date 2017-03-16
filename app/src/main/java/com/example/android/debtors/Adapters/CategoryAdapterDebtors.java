@@ -45,9 +45,6 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     }
 
     public void showFAB() {
-//        switch (MainActivity.CURRENT_SUB_TAG){
-//            case "tagDebtors"
-//        }
     }
 
     public void hideFAB() {

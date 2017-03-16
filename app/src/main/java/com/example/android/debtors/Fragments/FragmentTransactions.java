@@ -64,6 +64,10 @@ public class FragmentTransactions extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.subFragmentID);
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+
         super.onViewCreated(view, savedInstanceState);
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
@@ -80,23 +84,28 @@ public class FragmentTransactions extends Fragment {
             public void onPageSelected(final int position) {
                 InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterTransactions.instantiateItem(viewPager, position);
                 if (intefrace != null) {
-                    Log.i(TAG, "onPageSelected: eyyy: " + position);
+                    Log.i(TAG, "onPageSelected: switched to: " + position);
                     switch (position){
                         case 0:
                             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+                            intefrace.notifyWhenSwitched();
                             break;
                         case 1:
                             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
+                            intefrace.notifyWhenSwitched();
                             break;
                         case 2:
                             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
+                            intefrace.notifyWhenSwitched();
                             break;
                         default:
                             Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
-
+                            break;
                     }
-                    intefrace.notifyWhenSwitched();
-                }
+
+
+                } else
+                    Log.i(TAG, "onPageSelected: pomocy");
             }
 
             @Override
@@ -164,7 +173,6 @@ public class FragmentTransactions extends Fragment {
     }
 
     public void showFAB() {
-        Log.i(TAG, "showFAB: 222");
         if(categoryAdapterTransactions != null){
             categoryAdapterTransactions.showFAB();
         }

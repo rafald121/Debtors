@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
@@ -149,7 +151,11 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     @Override
     public void notifyWhenSwitched() {
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
+
         Log.i(TAG, "notifyWhenSwitched: purchases");
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+
         fab.show();
     }
 }

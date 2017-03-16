@@ -28,6 +28,8 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
         fragmentTransactionsAll = new FragmentTransactionsAll();
         fragmentTransactionsSales = new FragmentTransactionsSales();
         fragmentTransactionsPurchases = new FragmentTransactionsPurchases();
+
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
     }
 
     @Override
@@ -78,20 +80,24 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
 
 
     public void showFAB() {
-        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.CURRENT_SUB_TAG);
+        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.subFragmentID);
+
         switch (MainActivity.subFragmentID){
 
             case FragmentsIDs.TRANSACTIONSALL:
+
                 Log.i(TAG, "showFAB: tagTransactionsAll");
                 fragmentTransactionsAll.showFAB();
                 break;
 
             case FragmentsIDs.TRANSACTIONSSALES:
+
                 Log.i(TAG, "showFAB: tagTransactionsSales ");
                 fragmentTransactionsSales.showFAB();
                 break;
 
             case FragmentsIDs.TRANSACTIONSPURCHASES:
+
                 Log.i(TAG, "showFAB: tagTransactionsPurchases");
                 fragmentTransactionsPurchases.showFAB();
                 break;
@@ -104,7 +110,10 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
     }
 
     public void hideFAB() {
+        Log.i(TAG, "hideFAB: current sub tag: " + MainActivity.subFragmentID);
+
         switch (MainActivity.subFragmentID){
+
             case FragmentsIDs.TRANSACTIONSALL:
                 fragmentTransactionsAll.hideFAB();
                 break;
@@ -121,9 +130,7 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
                 Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
 
         }
-//        if (fragmentTransactionsSales != null) {
-//            fragmentTransactionsSales.hideFAB();
-//        }
+
 
     }
 
