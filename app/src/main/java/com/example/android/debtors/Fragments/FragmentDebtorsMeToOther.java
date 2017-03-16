@@ -56,7 +56,7 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: START");
-        
+
         View rootView = inflater.inflate(R.layout.fragment_debtors_metoother, container, false);
         listOfClients = getClientsLessThanZero();
         adapterDebtors  = new AdapterDebtors(fragmentActivity, listOfClients);
