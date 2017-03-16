@@ -66,7 +66,7 @@ public class FragmentTransactions extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.subFragmentID);
-        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+//        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
 
         super.onViewCreated(view, savedInstanceState);
         viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
@@ -129,12 +129,16 @@ public class FragmentTransactions extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
         Log.i(TAG, "onViewCreated: 5");
+        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+        Log.i(TAG, "onViewCreated: 6, assigned, now subfragment is: " + MainActivity.subFragmentID);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.i(TAG, "onCreateOptionsMenu: START");
         inflater.inflate(R.menu.menu_transactions, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        Log.i(TAG, "onCreateOptionsMenu: END");
     }
 
     @Override
@@ -172,6 +176,7 @@ public class FragmentTransactions extends Fragment {
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
+        Log.i(TAG, "onAttach: END");
     }
 
     @Override

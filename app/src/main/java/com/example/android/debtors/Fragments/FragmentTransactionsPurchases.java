@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
 
     }
@@ -60,7 +62,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.i(TAG, "onCreateView: START");
         rootView = inflater.inflate(R.layout.fragment_transactions_purchases, container, false);
         adapterTransacation = new AdapterTransacation(getContext(),false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
@@ -86,7 +88,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
+        Log.i(TAG, "onCreateView: END");
         return rootView;
     }
 
@@ -100,6 +102,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_transactions_purchases_fab);
@@ -121,7 +124,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
             }
         });
 
-
+        Log.i(TAG, "onViewCreated: END");
     }
 
     public void onButtonPressed(Uri uri) {
@@ -130,13 +133,16 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     @Override
     public void onAttach(Context context) {
+        Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+        Log.i(TAG, "onAttach: END");
 
     }
 
     @Override
     public void onDetach() {
+        Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
 
