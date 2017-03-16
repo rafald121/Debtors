@@ -18,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
@@ -72,11 +74,18 @@ public class MainActivity extends AppCompatActivity {
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
     // tags used to attach the fragments
-    private static final String TAG_ALL_CLIENTS = "tagAllClients";
-    private static final String TAG_DEBTORS = "tagDebtors";
-    private static final String TAG_TRANSACTIONS = "tagTransactions";
-    private static final String TAG_PAYMENTS = "tagPayments";
-    private static final String TAG_SETTINGS = "settings";
+    public static int fragmentID;
+    public static int previousFragmentID;
+
+    public static int subFragmentID;
+    public static int previousSubFragmentID;
+
+
+    private static final String TAG_ALL_CLIENTS = String.valueOf(R.string.tag_allclients);
+    private static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
+    private static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
+    private static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);
+    private static final String TAG_SETTINGS = String.valueOf(R.string.tag_settings);
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
     public static String CURRENT_SUB_TAG = null;
@@ -137,8 +146,13 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Log.i(TAG, "onCreate: savedInstanceState == null");
             navItemIndex = 0;
+
+            subFragmentID = fragmentID;
+            fragmentID = FragmentsIDs.ALLCLIENTS;
+
             PREVIOUS_TAG = CURRENT_TAG;
             CURRENT_TAG = TAG_ALL_CLIENTS;
+
             loadSelectedFragment();
 //          TODO  loadDebtorsFragment();
         }
@@ -191,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
         Log.i(TAG, "loadSelectedFragment: CURRENT TAG: " + CURRENT_TAG);
+        Log.i(TAG, "loadSelectedFragment: CURRENT FRAGMENT ID : " + fragmentID);
+
 
         if (PREVIOUS_TAG == CURRENT_TAG) {
             Log.i(TAG, "loadSelectedFragment: wtf");
@@ -308,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void toggleFabOn() {
 //        fab.show();
-        switch (navItemIndex){
+        switch (fragmentID){
             case 0:
                 if (fragmentAllClients != null) {
                     fragmentAllClients.showFAB();
@@ -343,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void toggleFabOff() {
 //        fab.hide();
-        switch (navItemIndex){
+        switch (fragmentID){
             case 0:
                 if (fragmentAllClients != null) {
                     fragmentAllClients.hideFAB();
@@ -400,37 +416,63 @@ public class MainActivity extends AppCompatActivity {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_all_clients:
                         navItemIndex = 0;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.ALLCLIENTS;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_ALL_CLIENTS;
+
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_debtors:
                         navItemIndex = 1;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.DEBTORS;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_DEBTORS;
+
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_transactions:
                         navItemIndex = 2;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.TRANSACTIONS;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_TRANSACTIONS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_payments:
                         navItemIndex = 3;
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.PAYMENTS;
+
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_PAYMENTS;
                         Log.i(TAG, "onNavigationItemSelected: END");
                         break;
                     case R.id.nav_settings:
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.SETTINGS;
+
                         startActivity(new Intent(MainActivity.this, ActivitySettings.class));
-                        drawer.closeDrawers();
+//                        drawer.closeDrawers();
                         Log.i(TAG, "onNavigationItemSelected: END");
                         return true;
                     case R.id.nav_about_me:
                         // launch new intent instead of loading fragment
+
+                        previousFragmentID = fragmentID;
+                        fragmentID = FragmentsIDs.ABOUTME;
+
                         startActivity(new Intent(MainActivity.this, AboutMe.class));
-                        drawer.closeDrawers();
+//                        drawer.closeDrawers();
                         Log.i(TAG, "onNavigationItemSelected: END");
                         return true;
                     default:
@@ -496,6 +538,10 @@ public class MainActivity extends AppCompatActivity {
             // rather than home
             if (navItemIndex != 1) { // jeśli navItem nie jest 1
                 navItemIndex = 1;
+
+                previousFragmentID = fragmentID;
+                fragmentID = FragmentsIDs.DEBTORS;
+
                 PREVIOUS_TAG = CURRENT_TAG;
                 CURRENT_TAG = TAG_DEBTORS;
                 loadSelectedFragment();
@@ -543,10 +589,6 @@ public class MainActivity extends AppCompatActivity {
 //        navigationView.getMenu().getItem(3).setActionView(R.layout.dot_test);
     }
 
-
-    public void hideFABs() {
-
-    }
 
 
     public void createClients(String[] names) {

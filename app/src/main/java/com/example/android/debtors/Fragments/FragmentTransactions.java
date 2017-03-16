@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.InterfaceSearchInRecyclerView;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
@@ -82,14 +83,16 @@ public class FragmentTransactions extends Fragment {
                     Log.i(TAG, "onPageSelected: eyyy: " + position);
                     switch (position){
                         case 0:
-                            MainActivity.CURRENT_SUB_TAG = "tagTransactionsAll";
+                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
                             break;
                         case 1:
-                            MainActivity.CURRENT_SUB_TAG = "tagTransactionsSales";
+                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
                             break;
                         case 2:
-                            MainActivity.CURRENT_SUB_TAG = "tagTransactionsPurchases";
+                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
                             break;
+                        default:
+                            Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
 
                     }
                     intefrace.notifyWhenSwitched();

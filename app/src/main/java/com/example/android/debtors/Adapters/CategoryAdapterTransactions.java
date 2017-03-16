@@ -6,9 +6,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.example.android.debtors.Activities.MainActivity;
+import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Fragments.FragmentTransactionsAll;
 import com.example.android.debtors.Fragments.FragmentTransactionsSales;
 import com.example.android.debtors.Fragments.FragmentTransactionsPurchases;
+import com.example.android.debtors.R;
+import com.example.android.debtors.Utils.Utils;
 
 /**
  * Created by Rafaello on 2017-02-21.
@@ -20,7 +23,6 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
     private FragmentTransactionsAll fragmentTransactionsAll;
     private FragmentTransactionsSales fragmentTransactionsSales;
     private FragmentTransactionsPurchases fragmentTransactionsPurchases;
-
     public CategoryAdapterTransactions(FragmentManager fm) {
         super(fm);
         fragmentTransactionsAll = new FragmentTransactionsAll();
@@ -32,14 +34,26 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             MainActivity.CURRENT_SUB_TAG = "tagTransactionsAll";
+
+            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
+            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+
             return fragmentTransactionsAll;
         }
         if (position == 1) {
             MainActivity.CURRENT_SUB_TAG = "tagTransactionsSales";
+
+            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
+            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
+
             return fragmentTransactionsSales;
         }
         if (position == 2) {
             MainActivity.CURRENT_SUB_TAG = "tagTransactionsPurchases";
+
+            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
+            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
+
             return fragmentTransactionsPurchases;
         }
         return null;
@@ -65,38 +79,46 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
 
     public void showFAB() {
         Log.i(TAG, "showFAB: current sub tag: " + MainActivity.CURRENT_SUB_TAG);
-        switch (MainActivity.CURRENT_SUB_TAG){
-            case "tagTransactionsAll":
+        switch (MainActivity.subFragmentID){
+
+            case FragmentsIDs.TRANSACTIONSALL:
                 Log.i(TAG, "showFAB: tagTransactionsAll");
                 fragmentTransactionsAll.showFAB();
                 break;
-            case "tagTransactionsSales":
+
+            case FragmentsIDs.TRANSACTIONSSALES:
                 Log.i(TAG, "showFAB: tagTransactionsSales ");
                 fragmentTransactionsSales.showFAB();
                 break;
-            case "tagTransactionsPurchases":
+
+            case FragmentsIDs.TRANSACTIONSPURCHASES:
                 Log.i(TAG, "showFAB: tagTransactionsPurchases");
                 fragmentTransactionsPurchases.showFAB();
                 break;
+
             default:
-                Log.e(TAG, "showFAB: ERROR");
+                Log.d(TAG, "showFAB() called");
+                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
 
         }
     }
 
     public void hideFAB() {
-        switch (MainActivity.CURRENT_SUB_TAG){
-            case "tagTransactionsAll":
+        switch (MainActivity.subFragmentID){
+            case FragmentsIDs.TRANSACTIONSALL:
                 fragmentTransactionsAll.hideFAB();
                 break;
-            case "tagTransactionsSales":
+
+            case FragmentsIDs.TRANSACTIONSSALES:
                 fragmentTransactionsSales.hideFAB();
                 break;
-            case "tagTransactionsPurchases":
+
+            case FragmentsIDs.TRANSACTIONSPURCHASES:
                 fragmentTransactionsPurchases.hideFAB();
                 break;
+
             default:
-                Log.e(TAG, "hideFAB: ERROR");
+                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
 
         }
 //        if (fragmentTransactionsSales != null) {
@@ -104,4 +126,6 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
 //        }
 
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.android.debtors.Utils;
 
+import com.bumptech.glide.load.data.StreamAssetPathFetcher;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -14,5 +16,9 @@ public class Utils {
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public static String getStringFromResource(int r){
+        return String.valueOf(r);
     }
 }

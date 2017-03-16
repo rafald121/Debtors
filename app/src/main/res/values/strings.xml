@@ -13,6 +13,7 @@
     <string name="tag_transactions">Transactions</string>
     <string name="tag_payments">Payments</string>
     <string name="tag_clientinfo">ClientInfo</string>
+    <string name="tag_settings">Settings</string>
 
     <string name="tag_debtors_forme">DebtorsForMe</string>
     <string name="tag_debtors_metoother">DebtorsMeToOther</string>
