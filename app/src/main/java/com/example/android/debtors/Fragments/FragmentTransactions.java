@@ -37,6 +37,7 @@ import java.util.List;
 public class FragmentTransactions extends Fragment {
 
     private static final String TAG = FragmentTransactions.class.getSimpleName();
+    private CategoryAdapterTransactions categoryAdapterTransactions;
 
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
@@ -63,7 +64,7 @@ public class FragmentTransactions extends Fragment {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
 
-        CategoryAdapterTransactions categoryAdapterTransactions = new CategoryAdapterTransactions
+        categoryAdapterTransactions = new CategoryAdapterTransactions
                 (getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterTransactions);
         tabLayout.setupWithViewPager(viewPager);
@@ -71,7 +72,7 @@ public class FragmentTransactions extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_transactions,menu);
+        inflater.inflate(R.menu.menu_transactions, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -119,4 +120,9 @@ public class FragmentTransactions extends Fragment {
     }
 
 
+    public void hideFab() {
+        if (categoryAdapterTransactions != null) {
+            categoryAdapterTransactions.hideFAB();
+        }
+    }
 }

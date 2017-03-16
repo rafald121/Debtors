@@ -111,6 +111,10 @@ public class FragmentTransactionsSales extends Fragment {
 
     }
 
+    public void hideFAB(){
+        fab.hide();
+    }
+
     public void onButtonPressed(Uri uri) {
     }
 
