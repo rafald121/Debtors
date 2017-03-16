@@ -42,7 +42,7 @@ public class FragmentTransactions extends Fragment {
 
     private static final String TAG = FragmentTransactions.class.getSimpleName();
     private CategoryAdapterTransactions categoryAdapterTransactions;
-
+    ViewPager viewPager;
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
     }
@@ -69,11 +69,22 @@ public class FragmentTransactions extends Fragment {
         MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
 
         super.onViewCreated(view, savedInstanceState);
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
+        viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
+        Log.i(TAG, "onViewCreated: 1");
 
-        categoryAdapterTransactions = new CategoryAdapterTransactions(getChildFragmentManager());
-        viewPager.setAdapter(categoryAdapterTransactions);
+        if (categoryAdapterTransactions == null)
+            categoryAdapterTransactions = new CategoryAdapterTransactions(getChildFragmentManager());
+        else
+            Log.e(TAG, "onViewCreated: 11 ");
+
+        Log.i(TAG, "onViewCreated: 2");
+
+        if (viewPager != null) {
+            viewPager.setAdapter(categoryAdapterTransactions);
+        } else
+            Log.e(TAG, "onViewCreated: 22");
+        Log.i(TAG, "onViewCreated: 3");
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -97,6 +108,7 @@ public class FragmentTransactions extends Fragment {
                         case 2:
                             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
                             intefrace.notifyWhenSwitched();
+                            Log.i(TAG, "onPageSelected: after notify when switched");
                             break;
                         default:
                             Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
@@ -113,7 +125,10 @@ public class FragmentTransactions extends Fragment {
             }
         });
 
+        Log.i(TAG, "onViewCreated: 4");
+
         tabLayout.setupWithViewPager(viewPager);
+        Log.i(TAG, "onViewCreated: 5");
     }
 
     @Override

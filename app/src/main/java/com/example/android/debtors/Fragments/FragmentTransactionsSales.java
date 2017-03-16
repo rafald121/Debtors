@@ -129,12 +129,18 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
     }
 
     public void showFAB() {
-        fab.show();
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
     }
 
 
     public void hideFAB(){
-        fab.hide();
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
     }
 
     @Override
@@ -142,7 +148,9 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
         MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
         Log.i(TAG, "notifyWhenSwitched: sales");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
-
-        fab.show();
+        if (fab != null) {
+            fab.show();
+        }else
+            Log.e(TAG, "notifyWhenSwitched: fab is null");
     }
 }

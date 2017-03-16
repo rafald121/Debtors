@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Enum.FragmentsIDs;
@@ -20,15 +21,16 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
 
     private static final String TAG = CategoryAdapterTransactions.class.getSimpleName();
 
-    private FragmentTransactionsAll fragmentTransactionsAll;
-    private FragmentTransactionsSales fragmentTransactionsSales;
-    private FragmentTransactionsPurchases fragmentTransactionsPurchases;
+    private FragmentTransactionsAll fragmentTransactionsAll = null;
+    private FragmentTransactionsSales fragmentTransactionsSales = null;
+    private FragmentTransactionsPurchases fragmentTransactionsPurchases = null;
     public CategoryAdapterTransactions(FragmentManager fm) {
         super(fm);
+        Log.i(TAG, "CategoryAdapterTransactions: 1");
         fragmentTransactionsAll = new FragmentTransactionsAll();
         fragmentTransactionsSales = new FragmentTransactionsSales();
         fragmentTransactionsPurchases = new FragmentTransactionsPurchases();
-
+        Log.i(TAG, "CategoryAdapterTransactions: 2");
         MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
     }
 
@@ -133,6 +135,5 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
 
 
     }
-
 
 }

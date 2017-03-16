@@ -142,20 +142,33 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
 
     public void showFAB() {
-        fab.show();
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
     }
 
-    public void hideFAB() {
-        fab.hide();
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
     }
 
     @Override
     public void notifyWhenSwitched() {
+
         MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
 
         Log.i(TAG, "notifyWhenSwitched: purchases");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
 
-        fab.show();
+        if (fab != null) {
+            fab.show();
+        }  else
+            Log.e(TAG, "notifyWhenSwitched: fab is null!");
+
+        Log.i(TAG, "notifyWhenSwitched: eee?");
     }
 }

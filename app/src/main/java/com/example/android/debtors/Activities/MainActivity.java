@@ -232,6 +232,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "run: start run");
                 // update the main content by replacing fragments
                 Fragment fragment = getSelectedFragment();
+                if(fragment.isAdded()) {
+                    Log.i(TAG, "run: ");
+                    return;
+                }
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
@@ -347,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
 //                Log.i(TAG, "onNavigationItemSelected: START");
 //                Log.i(TAG, "onNavigationItemSelected: TAG BEFORE CLICK: " + CURRENT_TAG);
                 //Check to see which item was being clicked and perform appropriate action
-
+                initFragments();
                 if (menuItem.getItemId() != R.id.nav_debtors) // if user hasn't check debtors in
                     // navigation asign whenBackClickedOnDebtors=false again
                     whenBackClickedOnDebtors = false;

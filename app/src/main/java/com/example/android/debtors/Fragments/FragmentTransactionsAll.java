@@ -126,11 +126,18 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
 
 
     public void showFAB() {
-        fab.show();
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
     }
 
-    public void hideFAB() {
-        fab.hide();
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
+import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
 ///**
@@ -81,12 +85,50 @@ public class FragmentDebtors extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
 
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
 
         categoryAdapterDebtors = new CategoryAdapterDebtors
                 (getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterDebtors);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterDebtors.instantiateItem(viewPager, position);
+                if (intefrace != null) {
+                    Log.i(TAG, "onPageSelected: switched to: " + position);
+                    switch (position){
+                        case 0:
+                            MainActivity.subFragmentID = FragmentsIDs.DEBTORSFORME;
+                            intefrace.notifyWhenSwitched();
+                            break;
+                        case 1:
+                            MainActivity.subFragmentID = FragmentsIDs.DEBTORSMETOOTHER;
+                            intefrace.notifyWhenSwitched();
+                            break;
+                        default:
+                            Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+                            break;
+                    }
+
+
+                } else
+                    Log.i(TAG, "onPageSelected: pomocy");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         tabLayout.setupWithViewPager(viewPager);
 
     }
@@ -168,12 +210,7 @@ public class FragmentDebtors extends Fragment  {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
-//
-//        try{
-//            searchViewQuery = (SearchViewQuery) context;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(context.toString() + " must implement ");
-//        }
+
     }
 
     @Override
@@ -183,11 +220,17 @@ public class FragmentDebtors extends Fragment  {
     }
 
     public void showFAB() {
-        categoryAdapterDebtors.showFAB();
+        if (categoryAdapterDebtors != null) {
+            categoryAdapterDebtors.showFAB();
+        } else
+            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
     }
 
     public void hideFAB() {
-        categoryAdapterDebtors.hideFAB();
+        if (categoryAdapterDebtors != null) {
+            categoryAdapterDebtors.hideFAB();
+        } else
+            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
     }
 
 }

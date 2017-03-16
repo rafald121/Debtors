@@ -1,6 +1,7 @@
 package com.example.android.debtors.Fragments;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -27,7 +29,7 @@ import java.util.List;
 /**
  * Created by Rafaello on 2017-02-18.
  */
-public class FragmentDebtorsMeToOther extends Fragment {
+public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
 
@@ -147,4 +149,23 @@ public class FragmentDebtorsMeToOther extends Fragment {
         return clients;
     }
 
+    public void showFAB() {
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
+    }
+
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: ME TO OTHER");
+    }
 }
