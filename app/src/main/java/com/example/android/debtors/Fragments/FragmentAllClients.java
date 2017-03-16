@@ -127,7 +127,6 @@ public class FragmentAllClients extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.menu_search_view, menu);
         inflater.inflate(R.menu.menu_allclients, menu);
 
@@ -144,10 +143,8 @@ public class FragmentAllClients extends Fragment {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.i("onQueryTextChange", newText);
-                        adapterAllClients.filter(newText);
-//                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragmentActivity);
-//                    sharedPreferences.edit().putString(QUERY_ALLCLIENTS, newText).apply();
-//                    searchView.clearFocus();
+                    adapterAllClients.filter(newText);
+//                   searchView.clearFocus();
 //                    finish();
                     return true;
                 }

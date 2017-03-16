@@ -36,6 +36,8 @@ import com.example.android.debtors.Utils.UtilsDatabaseMethods;
 
 import java.util.HashMap;
 
+import de.greenrobot.event.EventBus;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         activityTitles = getResources().getStringArray(R.array.nav_item_toolbar_title);
+
+        EventBus myEventBus = EventBus.getDefault();
 
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_name);

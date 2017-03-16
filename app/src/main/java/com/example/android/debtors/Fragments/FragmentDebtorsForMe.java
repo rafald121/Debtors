@@ -25,6 +25,8 @@ import com.example.android.debtors.R;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Rafaello on 2017-02-18.
  */
@@ -37,7 +39,6 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
     }
 
     interface hideOrShowFab{
-
         void showFab();
     }
     private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
@@ -67,8 +68,15 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
         Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
 
+
         Log.i(TAG, "onCreate: end");
     }
+
+    public void onEvent(FragmentDebtors.SearchQuery query){
+        Log.i(TAG, "onEvent: " + query.getMessage());
+        adapterDebtors.filter(query.getMessage());
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -156,13 +164,14 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         fragmentActivity = (FragmentActivity) context;
-
+        EventBus.getDefault().register(this); // this == your class instance
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
+        EventBus.getDefault().unregister(this);
         super.onDetach();
     }
 

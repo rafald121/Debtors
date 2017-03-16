@@ -29,6 +29,8 @@ import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
+import de.greenrobot.event.EventBus;
+
 ///**
 // * A simple {@link Fragment} subclass.
 // * Activities that contain this fragment must implement the
@@ -131,12 +133,23 @@ public class FragmentDebtors extends Fragment  {
         tabLayout.setupWithViewPager(viewPager);
 
     }
+    public class SearchQuery{
+        private final String message;
+
+
+        public SearchQuery(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search_view, menu);
         inflater.inflate(R.menu.menu_debtors, menu);
-
 
         MenuItem searchItem = menu.findItem(R.id.search_view);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
@@ -153,10 +166,7 @@ public class FragmentDebtors extends Fragment  {
 
                     Log.i("onQueryTextChange", newText);
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences((fragmentActivity));
-                    sharedPreferences.edit().putString(QUERY_DEBTORS, newText).apply();
-
-                    searchViewQuery.searchViewQueryChanged(newText);
+                    EventBus.getDefault().post(new SearchQuery(newText));
 
                     return true;
                 }
@@ -168,9 +178,9 @@ public class FragmentDebtors extends Fragment  {
                     return true;
                 }
             };
-//            searchView.setOnQueryTextListener(queryTextListener);
+            searchView.setOnQueryTextListener(queryTextListener);
 
-        }
+        } else Log.e(TAG, "onCreateOptionsMenu: searchView is null");
 
         super.onCreateOptionsMenu(menu, inflater);
     }
