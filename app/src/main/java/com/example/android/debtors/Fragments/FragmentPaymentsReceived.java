@@ -22,10 +22,11 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
 
-public class FragmentPaymentsReceived extends Fragment {
+public class FragmentPaymentsReceived extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentPaymentsReceived.class.getSimpleName();
 
@@ -141,4 +142,25 @@ public class FragmentPaymentsReceived extends Fragment {
         super.onDetach();
     }
 
+    public void showFAB() {
+        if(!fab.isShown())
+            fab.show();
+        else
+            Log.e(TAG, "showFAB: ");
+    }
+
+    public void hideFAB(){
+        if(fab.isShown())
+            fab.hide();
+        else
+            Log.e(TAG, "hideFAB: ");
+    }
+
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: received");
+    }
+
+    
 }

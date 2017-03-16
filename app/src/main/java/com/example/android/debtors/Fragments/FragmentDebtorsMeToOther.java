@@ -137,6 +137,7 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
     }
+
     @Override
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
