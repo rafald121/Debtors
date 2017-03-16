@@ -111,4 +111,9 @@ public class FragmentPayments extends Fragment {
         super.onDetach();
     }
 
+    public void showFAB() {
+    }
+public void hideFAB() {
+    }
+
 }

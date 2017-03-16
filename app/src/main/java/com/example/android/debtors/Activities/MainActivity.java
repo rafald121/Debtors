@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_SETTINGS = "settings";
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
+    public static String CURRENT_SUB_TAG = null;
 
     public static boolean whenBackClickedOnDebtors = false; // if user click back button on
     // debtor fragment, whenBackClickedOnDebtors is set to true and when click another time app
@@ -170,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragments() {
+        fragmentAllClients = new FragmentAllClients();
+        fragmentDebtors = new FragmentDebtors();
+        fragmentPayments = new FragmentPayments();
         fragmentTransactions = new FragmentTransactions();
     }
 
@@ -223,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
         // show or hide the fab button
-        toggleFabOn();
+//        toggleFabOn();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -276,28 +280,20 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "getSelectedFragment: START");
         switch (navItemIndex) {
             case 0:
-                // all clients
-                FragmentAllClients allClients = new FragmentAllClients();
                 Log.i(TAG, "getSelectedFragment: END");
-                return allClients;
+                return fragmentAllClients;
             case 1:
-                // debtors
-                FragmentDebtors debtors = new FragmentDebtors();
                 Log.i(TAG, "getSelectedFragment: END");
-                return debtors;
+                return fragmentDebtors;
             case 2:
-                // fragmentTransactions
                 Log.i(TAG, "getSelectedFragment: END");
                 return fragmentTransactions;
             case 3:
-                // payments
-                FragmentPayments payments = new FragmentPayments();
                 Log.i(TAG, "getSelectedFragment: END");
-                return payments;
+                return fragmentPayments;
             default:
-//                debtors fragment is default
-                Log.i(TAG, "getSelectedFragment: END");
-                return new FragmentDebtors();
+                Log.e(TAG, "getSelectedFragment: ERROR");
+                return null;
         }
     }
 
@@ -312,14 +308,76 @@ public class MainActivity extends AppCompatActivity {
 
     private void toggleFabOn() {
 //        fab.show();
+        switch (navItemIndex){
+            case 0:
+                if (fragmentAllClients != null) {
+                    fragmentAllClients.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
+                break;
+            case 1:
+                if (fragmentDebtors != null) {
+                    fragmentDebtors.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
+                break;
+            case 2:
+                if (fragmentTransactions != null) {
+                    Log.i(TAG, "toggleFabOn: fragmentTransactions");
+                    fragmentTransactions.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
+                break;
+            case 3:
+                if (fragmentPayments != null) {
+
+                    fragmentPayments.showFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
+
+                break;
+            default:
+                Log.e(TAG, "toggleFabOn: ERROR");
+        }
     }
 
     private void toggleFabOff() {
 //        fab.hide();
+        switch (navItemIndex){
+            case 0:
+                if (fragmentAllClients != null) {
+                    fragmentAllClients.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
+                break;
+            case 1:
+                if (fragmentDebtors != null) {
 
-        if (fragmentTransactions != null) {
-            fragmentTransactions.hideFab();
+                    fragmentDebtors.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
+                break;
+            case 2:
+                if (fragmentTransactions != null) {
+
+                    fragmentTransactions.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
+                break;
+            case 3:
+                if (fragmentPayments != null) {
+
+                    fragmentPayments.hideFAB();
+                } else
+                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
+
+                break;
+            default:
+                Log.e(TAG, "toggleFabOn: ERROR");
         }
+//        if (fragmentTransactions != null) {
+//            fragmentTransactions.hideFab();
+//        }
     }
 
     private void setUpNavigationView() {

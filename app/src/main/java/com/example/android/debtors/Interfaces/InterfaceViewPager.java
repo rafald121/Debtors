@@ -5,4 +5,5 @@ package com.example.android.debtors.Interfaces;
  */
 
 public interface InterfaceViewPager {
+    void notifyWhenSwitched();
 }

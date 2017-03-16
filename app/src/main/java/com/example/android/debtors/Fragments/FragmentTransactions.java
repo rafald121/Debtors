@@ -18,8 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
 import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.Interfaces.InterfaceSearchInRecyclerView;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -61,12 +64,43 @@ public class FragmentTransactions extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
 
-        categoryAdapterTransactions = new CategoryAdapterTransactions
-                (getChildFragmentManager());
+        categoryAdapterTransactions = new CategoryAdapterTransactions(getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterTransactions);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(final int position, final float v, final int i2) {
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterTransactions.instantiateItem(viewPager, position);
+                if (intefrace != null) {
+                    Log.i(TAG, "onPageSelected: eyyy: " + position);
+                    switch (position){
+                        case 0:
+                            MainActivity.CURRENT_SUB_TAG = "tagTransactionsAll";
+                            break;
+                        case 1:
+                            MainActivity.CURRENT_SUB_TAG = "tagTransactionsSales";
+                            break;
+                        case 2:
+                            MainActivity.CURRENT_SUB_TAG = "tagTransactionsPurchases";
+                            break;
+
+                    }
+                    intefrace.notifyWhenSwitched();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int position) {
+            }
+        });
+
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -120,9 +154,16 @@ public class FragmentTransactions extends Fragment {
     }
 
 
-    public void hideFab() {
+    public void hideFAB() {
         if (categoryAdapterTransactions != null) {
             categoryAdapterTransactions.hideFAB();
+        }
+    }
+
+    public void showFAB() {
+        Log.i(TAG, "showFAB: 222");
+        if(categoryAdapterTransactions != null){
+            categoryAdapterTransactions.showFAB();
         }
     }
 }

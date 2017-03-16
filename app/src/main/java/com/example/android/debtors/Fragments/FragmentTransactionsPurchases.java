@@ -20,6 +20,7 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -34,7 +35,7 @@ import java.util.List;
 // * Use the {@link FragmentTransactionsPurchases#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class FragmentTransactionsPurchases extends Fragment {
+public class FragmentTransactionsPurchases extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentTransactionsPurchases.class.getSimpleName();
 
@@ -138,4 +139,17 @@ public class FragmentTransactionsPurchases extends Fragment {
     }
 
 
+    public void showFAB() {
+        fab.show();
+    }
+
+    public void hideFAB() {
+        fab.hide();
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: purchases");
+        fab.show();
+    }
 }

@@ -41,18 +41,18 @@ public class FragmentDebtors extends Fragment  {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private FragmentActivity fragmentActivity;
+    private CategoryAdapterDebtors categoryAdapterDebtors;
 
     interface SearchViewQuery{
+
         void searchViewQueryChanged(String query);
     }
-
     private SearchViewQuery searchViewQuery;
 
     public FragmentDebtors() {
         Log.i(TAG, "FragmentDebtors: START");
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class FragmentDebtors extends Fragment  {
         setHasOptionsMenu(true);
         Log.i(TAG, "onCreate: end");
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +84,7 @@ public class FragmentDebtors extends Fragment  {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
 
-        CategoryAdapterDebtors categoryAdapterDebtors = new CategoryAdapterDebtors
+        categoryAdapterDebtors = new CategoryAdapterDebtors
                 (getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterDebtors);
         tabLayout.setupWithViewPager(viewPager);
@@ -179,6 +180,14 @@ public class FragmentDebtors extends Fragment  {
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
+    }
+
+    public void showFAB() {
+        categoryAdapterDebtors.showFAB();
+    }
+
+    public void hideFAB() {
+        categoryAdapterDebtors.hideFAB();
     }
 
 }

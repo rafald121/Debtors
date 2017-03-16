@@ -18,9 +18,10 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
-public class FragmentTransactionsSales extends Fragment {
+public class FragmentTransactionsSales extends Fragment implements InterfaceViewPager{
 
 
     private static final String TAG = FragmentTransactionsSales.class.getSimpleName();
@@ -35,7 +36,7 @@ public class FragmentTransactionsSales extends Fragment {
     public FragmentTransactionsSales() {
     }
 
-    public static FragmentTransactionsSales newInstance(String param1, String param2) {
+    public static FragmentTransactionsSales newInstance() {
         FragmentTransactionsSales fragment = new FragmentTransactionsSales();
         return fragment;
     }
@@ -43,12 +44,13 @@ public class FragmentTransactionsSales extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate: sales");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.i(TAG, "onCreateView: sales");
         rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
         adapterTransacation = new AdapterTransacation(getContext(), true);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
@@ -111,10 +113,6 @@ public class FragmentTransactionsSales extends Fragment {
 
     }
 
-    public void hideFAB(){
-        fab.hide();
-    }
-
     public void onButtonPressed(Uri uri) {
     }
 
@@ -130,5 +128,18 @@ public class FragmentTransactionsSales extends Fragment {
         super.onDetach();
     }
 
+    public void showFAB() {
+        fab.show();
+    }
 
+
+    public void hideFAB(){
+        fab.hide();
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: sales");
+        fab.show();
+    }
 }

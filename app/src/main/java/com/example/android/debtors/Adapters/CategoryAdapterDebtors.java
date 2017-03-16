@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Fragments.FragmentDebtorsForMe;
 import com.example.android.debtors.Fragments.FragmentDebtorsMeToOther;
 
@@ -41,5 +42,14 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    public void showFAB() {
+//        switch (MainActivity.CURRENT_SUB_TAG){
+//            case "tagDebtors"
+//        }
+    }
+
+    public void hideFAB() {
     }
 }

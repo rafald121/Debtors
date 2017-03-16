@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +18,14 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
 /**
  * Created by admin on 10.03.2017.
  */
 
-public class FragmentTransactionsAll extends Fragment{
+public class FragmentTransactionsAll extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentTransactionsAll.class.getSimpleName();
 
@@ -35,18 +37,18 @@ public class FragmentTransactionsAll extends Fragment{
     RecyclerView recyclerView = null;
 
     public FragmentTransactionsAll(){
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate: all");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        Log.i(TAG, "onCreateView: all");
         rootView = inflater.inflate(R.layout.fragment_transactions_all, container, false);
         adapterTransaction = new AdapterTransacation(getContext());
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
@@ -123,4 +125,17 @@ public class FragmentTransactionsAll extends Fragment{
     }
 
 
+    public void showFAB() {
+        fab.show();
+    }
+
+    public void hideFAB() {
+        fab.hide();
+    }
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: all");
+        fab.show();
+    }
 }
