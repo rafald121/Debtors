@@ -22,6 +22,7 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
@@ -29,6 +30,8 @@ import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -131,12 +134,21 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     }
 
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+
+
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
         Log.i(TAG, "onAttach: END");
+        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
@@ -144,6 +156,8 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
+        EventBus.getDefault().unregister(this);
+
     }
 
 

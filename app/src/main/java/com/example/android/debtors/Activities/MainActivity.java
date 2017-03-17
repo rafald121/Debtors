@@ -25,6 +25,7 @@ import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
@@ -175,7 +176,8 @@ public class MainActivity extends AppCompatActivity {
         if (PREVIOUS_TAG == CURRENT_TAG) {
             Log.i(TAG, "loadSelectedFragment: wtf");
             drawer.closeDrawers();
-            toggleFabOn();
+            fabOn();
+//            toggleFabOn();
             return;
         }
 
@@ -406,8 +408,8 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.i(TAG, "onDrawerClosed: fragmentID: "  + fragmentID);
                         Log.i(TAG, "onDrawerClosed: subfragmentID: " + subFragmentID);
-
-                        toggleFabOn();
+                        fabOn();
+//                        toggleFabOn();
                         super.onDrawerClosed(drawerView);
                     }
 
@@ -416,8 +418,8 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.i(TAG, "onDrawerOpened: fragmentID: "  + fragmentID);
                         Log.i(TAG, "onDrawerOpened: subfragmentID: " + subFragmentID);
-
-                        toggleFabOff();
+                        fabOff();
+//                        toggleFabOff();
                         super.onDrawerOpened(drawerView);
                     }
                 };
@@ -486,6 +488,14 @@ public class MainActivity extends AppCompatActivity {
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
+    }
+
+    private void fabOn(){
+        EventBus.getDefault().post(new ToggleFabWhenDrawerMove(true));
+    }
+
+    private void fabOff(){
+        EventBus.getDefault().post(new ToggleFabWhenDrawerMove(false));
     }
 
     private void toggleFabOn() {

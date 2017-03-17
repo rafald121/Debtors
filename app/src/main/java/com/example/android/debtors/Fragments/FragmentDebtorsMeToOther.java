@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -113,7 +115,7 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void onEvent(FragmentDebtors.SearchQuery query){
+    public void onEvent(SearchQuery query){
         Log.i(TAG, "onEvent: " + query.getMessage());
         adapterDebtors.filter(query.getMessage());
     }
@@ -137,6 +139,14 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "onViewCreated: END");
     }
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+
     @Override
     public void onAttach(Context context) {
         fragmentActivity = (FragmentActivity) context;

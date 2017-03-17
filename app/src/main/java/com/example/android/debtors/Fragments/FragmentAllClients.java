@@ -27,12 +27,15 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -65,8 +68,6 @@ public class FragmentAllClients extends Fragment {
         // Required empty public constructor
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate: START");
@@ -89,8 +90,6 @@ public class FragmentAllClients extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterAllClients);
-
-        
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -229,6 +228,14 @@ public class FragmentAllClients extends Fragment {
         Log.i(TAG, "onButtonPressed: START");
     }
 
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+
+
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
@@ -237,6 +244,7 @@ public class FragmentAllClients extends Fragment {
         fragmentActivity = (FragmentActivity) context;
 
 
+        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
@@ -246,6 +254,8 @@ public class FragmentAllClients extends Fragment {
         super.onDetach();
 
         addInDialog = null;
+        EventBus.getDefault().unregister(this);
+
     }
 
     public List<Client> getAllClientsFromDatabase() {

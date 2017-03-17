@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
 import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
@@ -133,18 +134,7 @@ public class FragmentDebtors extends Fragment  {
         tabLayout.setupWithViewPager(viewPager);
 
     }
-    public class SearchQuery{
-        private final String message;
 
-
-        public SearchQuery(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

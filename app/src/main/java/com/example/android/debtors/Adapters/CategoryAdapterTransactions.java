@@ -81,59 +81,59 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
     }
 
 
-    public void showFAB() {
-        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.subFragmentID);
-
-        switch (MainActivity.subFragmentID){
-
-            case FragmentsIDs.TRANSACTIONSALL:
-
-                Log.i(TAG, "showFAB: tagTransactionsAll");
-                fragmentTransactionsAll.showFAB();
-                break;
-
-            case FragmentsIDs.TRANSACTIONSSALES:
-
-                Log.i(TAG, "showFAB: tagTransactionsSales ");
-                fragmentTransactionsSales.showFAB();
-                break;
-
-            case FragmentsIDs.TRANSACTIONSPURCHASES:
-
-                Log.i(TAG, "showFAB: tagTransactionsPurchases");
-                fragmentTransactionsPurchases.showFAB();
-                break;
-
-            default:
-                Log.d(TAG, "showFAB() called");
-                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
-
-        }
-    }
-
-    public void hideFAB() {
-        Log.i(TAG, "hideFAB: current sub tag: " + MainActivity.subFragmentID);
-
-        switch (MainActivity.subFragmentID){
-
-            case FragmentsIDs.TRANSACTIONSALL:
-                fragmentTransactionsAll.hideFAB();
-                break;
-
-            case FragmentsIDs.TRANSACTIONSSALES:
-                fragmentTransactionsSales.hideFAB();
-                break;
-
-            case FragmentsIDs.TRANSACTIONSPURCHASES:
-                fragmentTransactionsPurchases.hideFAB();
-                break;
-
-            default:
-                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
-
-        }
-
-
-    }
+//    public void showFAB() {
+//        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.subFragmentID);
+//
+//        switch (MainActivity.subFragmentID){
+//
+//            case FragmentsIDs.TRANSACTIONSALL:
+//
+//                Log.i(TAG, "showFAB: tagTransactionsAll");
+//                fragmentTransactionsAll.showFAB();
+//                break;
+//
+//            case FragmentsIDs.TRANSACTIONSSALES:
+//
+//                Log.i(TAG, "showFAB: tagTransactionsSales ");
+//                fragmentTransactionsSales.showFAB();
+//                break;
+//
+//            case FragmentsIDs.TRANSACTIONSPURCHASES:
+//
+//                Log.i(TAG, "showFAB: tagTransactionsPurchases");
+//                fragmentTransactionsPurchases.showFAB();
+//                break;
+//
+//            default:
+//                Log.d(TAG, "showFAB() called");
+//                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
+//
+//        }
+//    }
+//
+//    public void hideFAB() {
+//        Log.i(TAG, "hideFAB: current sub tag: " + MainActivity.subFragmentID);
+//
+//        switch (MainActivity.subFragmentID){
+//
+//            case FragmentsIDs.TRANSACTIONSALL:
+//                fragmentTransactionsAll.hideFAB();
+//                break;
+//
+//            case FragmentsIDs.TRANSACTIONSSALES:
+//                fragmentTransactionsSales.hideFAB();
+//                break;
+//
+//            case FragmentsIDs.TRANSACTIONSPURCHASES:
+//                fragmentTransactionsPurchases.hideFAB();
+//                break;
+//
+//            default:
+//                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
+//
+//        }
+//
+//
+//    }
 
 }
