@@ -136,7 +136,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
         return listOfPayments;
     }
 
-    public HashMap<Integer, Integer> getHashMapWithMostCommonClients(int fromLastDays){
+    public int[][] getArrayMapWithMostCommonClients(int fromLastDays){
 
         DatabaseClients dbClients = new DatabaseClients(context);
 
@@ -189,7 +189,7 @@ public class DatabasePayments extends SQLiteOpenHelper {
             Log.i(TAG, "for key: " + sortedArray[i][0] + ", value: " + sortedArray[i][1]) ;
         }
 
-        return hashMapWithClients;
+        return sortedArray;
     }
 
     public int getAmountOfPayments(){

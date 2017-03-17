@@ -118,10 +118,10 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         newPaymentCancel = (Button) findViewById(R.id.dialog_payment_cancel);
 
 
-        listOfClients = getListOfClients();
+//        listOfClients = getListOfClients();
         listOfClientsInOrder = getListOfClientsInMostCommonOrder(10);
 
-        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_item, listOfClients);
+        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_item, listOfClientsInOrder);
 
         newPaymentSpinner.setAdapter(adapter);
 
@@ -222,15 +222,19 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         DatabaseClients dbClients = new DatabaseClients(context);
         DatabasePayments dbPayments = new DatabasePayments(context);
 
-        HashMap<Integer,Integer> hashMap = dbPayments.getHashMapWithMostCommonClients(10);
-//        int[][] arrayOftenestClients = dbPayments.
-        
+        int[][] array = dbPayments.getArrayMapWithMostCommonClients(10);
 
-        Log.i(TAG, "getListOfClientsInMostCommonOrder: hashMap: " + hashMap.toString());
+        List<Client> list = new ArrayList<>();
 
-        List<Client> list = dbClients.fillListFromHashMap(hashMap);
+        for (int i = 0 ; i < array.length ; i ++){
 
+            Client client = dbClients.getClientByID(array[i][0]);
 
+            list.add(client);
+
+        }
+
+        list.toString();
 
         return list;
     }
