@@ -21,9 +21,12 @@ import android.widget.TextView;
 import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
+
+import de.greenrobot.event.EventBus;
 
 
 public class FragmentPaymentsReceived extends Fragment implements InterfaceViewPager{
@@ -130,16 +133,26 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
 
     }
 
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        EventBus.getDefault().unregister(this);
+
     }
 
     public void showFAB() {

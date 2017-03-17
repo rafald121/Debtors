@@ -19,9 +19,12 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
+
+import de.greenrobot.event.EventBus;
 
 public class FragmentTransactionsSales extends Fragment implements InterfaceViewPager{
 
@@ -116,16 +119,27 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
     public void onButtonPressed(Uri uri) {
     }
 
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        EventBus.getDefault().unregister(this);
+
     }
 
     public void showFAB() {

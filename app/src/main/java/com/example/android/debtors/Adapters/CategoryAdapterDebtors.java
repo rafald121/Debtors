@@ -35,9 +35,7 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==0) {
-//            
-//            if(fragmentDebtorsForMe.isAdded())
-//                return null;
+
             
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.DEBTORSFORME;
@@ -72,30 +70,30 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     }
 
 
+//    public void showFAB() {
+//        switch (MainActivity.subFragmentID){
+//            case FragmentsIDs.DEBTORSFORME:
+//                fragmentDebtorsForMe.showFAB();
+//                break;
+//            case FragmentsIDs.DEBTORSMETOOTHER:
+//                fragmentDebtorsMeToOther.showFAB();
+//                break;
+//            default:
+//                Log.e(TAG, "showFAB: ERROR with subFragment: " + MainActivity.subFragmentID);
+//        }
+//    }
+//
+//    public void hideFAB() {
+//        switch (MainActivity.subFragmentID){
+//            case FragmentsIDs.DEBTORSFORME:
+//                fragmentDebtorsForMe.hideFAB();
+//                break;
+//            case FragmentsIDs.DEBTORSMETOOTHER:
+//                fragmentDebtorsMeToOther.hideFAB();
+//                break;
+//            default:
+//                Log.e(TAG, "hideFAB: ERROR WITH SUBFRAGMENTID: " + MainActivity.subFragmentID);
+//        }
+//    }
 
-    public void showFAB() {
-        switch (MainActivity.subFragmentID){
-            case FragmentsIDs.DEBTORSFORME:
-                fragmentDebtorsForMe.showFAB();
-                break;
-            case FragmentsIDs.DEBTORSMETOOTHER:
-                fragmentDebtorsMeToOther.showFAB();
-                break;
-            default:
-                Log.e(TAG, "showFAB: ERROR with subFragment: " + MainActivity.subFragmentID);
-        }
-    }
-
-    public void hideFAB() {
-        switch (MainActivity.subFragmentID){
-            case FragmentsIDs.DEBTORSFORME:
-                fragmentDebtorsForMe.hideFAB();
-                break;
-            case FragmentsIDs.DEBTORSMETOOTHER:
-                fragmentDebtorsMeToOther.hideFAB();
-                break;
-            default:
-                Log.e(TAG, "hideFAB: ERROR WITH SUBFRAGMENTID: " + MainActivity.subFragmentID);
-        }
-    }
 }

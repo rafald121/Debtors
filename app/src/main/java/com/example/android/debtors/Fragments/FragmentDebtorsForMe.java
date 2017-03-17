@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -72,7 +74,7 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
         Log.i(TAG, "onCreate: end");
     }
 
-    public void onEvent(FragmentDebtors.SearchQuery query){
+    public void onEvent(SearchQuery query){
         Log.i(TAG, "onEvent: " + query.getMessage());
         adapterDebtors.filter(query.getMessage());
     }
@@ -158,6 +160,13 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
         });
 
         Log.i(TAG, "onViewCreated: END");
+    }
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
     }
 
     @Override
