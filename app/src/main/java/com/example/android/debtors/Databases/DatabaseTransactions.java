@@ -5,11 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.android.debtors.Model.TransactionForClient;
+import com.example.android.debtors.Utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -117,6 +120,54 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
             }while (c.moveToNext());
         }
         return listOfTransaction;
+    }
+
+    public int[][] getArrayMapWithMostCommonClients(int fromLastDay){
+
+        DatabaseClients databaseClients = new DatabaseClients(context);
+
+        List<TransactionForClient> transactionForClientsList = new ArrayList<>();
+
+        HashMap<Integer, Integer> hashMap = databaseClients.fillMapWithClientsIDs();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_TRANSACTIONS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst())
+            do {
+                TransactionForClient transactionForClient = new TransactionForClient();
+
+                transactionForClient.setTransactionID(c.getInt(c.getColumnIndex(TRANSACTION_ID)));
+                transactionForClient.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
+                transactionForClient.setTransactionDate(c.getString(c.getColumnIndex(TRANSACTION_DATE)));
+
+                transactionForClientsList.add(transactionForClient);
+
+            }while (c.moveToNext());
+
+        for(TransactionForClient transactionForClient : transactionForClientsList){
+            if(!hashMap.containsKey(transactionForClient.getTransactionClientID())){
+                hashMap.put(transactionForClient.getTransactionClientID(), 1);
+                Log.e(TAG, "getArrayMapWithMostCommonClients: ERROR? nie powinno sie zdazyc, zbadać!");
+            } else {
+                int val = hashMap.get(transactionForClient.getTransactionClientID());
+                hashMap.put(transactionForClient.getTransactionClientID(), val + 1);
+            }
+        }
+        Log.i(TAG, "getArrayMapWithMostCommonClients: before sort: " + hashMap.toString());
+
+        int[][] sortedArray = Utils.sortByHashMapValue(hashMap);
+
+        Log.i(TAG, "getArrayMapWithMostCommonClients: after sort,  length: " + sortedArray.length);
+
+        for(int i = 0 ; i < sortedArray.length ; i++){
+            Log.i(TAG, "for key: " + sortedArray[i][0] + ", value: " + sortedArray[i][1]) ;
+        }
+
+        return sortedArray;
     }
 
     public int getAmountOfTransactions(){

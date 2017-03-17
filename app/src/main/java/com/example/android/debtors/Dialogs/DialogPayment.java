@@ -222,7 +222,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         DatabaseClients dbClients = new DatabaseClients(context);
         DatabasePayments dbPayments = new DatabasePayments(context);
 
-        int[][] array = dbPayments.getArrayMapWithMostCommonClients(10);
+        int[][] array = dbPayments.getArrayMapWithMostCommonClients(fromLastDays);
 
         List<Client> list = new ArrayList<>();
 

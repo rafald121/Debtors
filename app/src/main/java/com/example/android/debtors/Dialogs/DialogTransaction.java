@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
+import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Logic.RealizeTransactionHelper;
 import com.example.android.debtors.Model.Client;
@@ -29,6 +30,7 @@ import com.example.android.debtors.Utils.Utils;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +61,8 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
     private DatabaseClients dbClients;
 
     private CallbackAddInDialog callbackAddInDialog = null;
+
+    private List<Client> listOfClientsInOrder = new ArrayList<>();
 
     public DialogTransaction(Context context) {
         super(context);
@@ -105,9 +109,11 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         newTransactionButtonOk = (Button) findViewById(R.id.dialog_transaction_ok);
         newTransactionButtonCancel = (Button) findViewById(R.id.dialog_transaction_cancel);
 
-        List<Client> listOfClients = getListOfClients();
+//        List<Client> listOfClients = getListOfClients();
+//        List<Client>
+        listOfClientsInOrder = getListOfClientsInOrder(10);
 
-        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_dropdown_item, listOfClients);
+        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_dropdown_item, listOfClientsInOrder);
 
         newTransactionSpinner.setAdapter(adapter);
 
@@ -209,6 +215,26 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         } else if(v.getId() == newTransactionButtonCancel.getId()){
             dismiss();
         }
+    }
+
+    private List<Client> getListOfClientsInOrder(int fromLastDays){
+        DatabaseClients dbClients = new DatabaseClients(context);
+        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
+
+        int[][] array = dbTransactions.getArrayMapWithMostCommonClients(fromLastDays);
+
+        List<Client> list = new ArrayList<>();
+
+        for (int i = 0 ; i < array.length ; i ++){
+
+            Client client = dbClients.getClientByID(array[i][0]);
+
+            list.add(client);
+        }
+
+        list.toString();
+
+        return list;
     }
 
     private List<Client> getListOfClients(){

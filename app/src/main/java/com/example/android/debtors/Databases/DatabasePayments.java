@@ -149,7 +149,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
         String query = "SELECT  * FROM " + TABLE_PAYMENTS;
 
         Cursor c = db.rawQuery(query, null);
-//        int counter = 0
 
         if(c.moveToFirst())
             do{
@@ -159,25 +158,18 @@ public class DatabasePayments extends SQLiteOpenHelper {
                 payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
                 payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
 
-//                hashMap.put(payment.getPaymentID(),)
                 paymentList.add(payment);
 
             }while (c.moveToNext());
 
         for (Payment p : paymentList) {
-//            Log.i(TAG, "getHashMapWithMostCommonClients: payment: " + p.toString(true));
-            int val = 0;
+//            int val = 0;
             if(!hashMapWithClients.containsKey(p.getPaymentClientID())) {
-                Log.i(TAG, "getHashMapWithMostCommonClients: client: " + p.getPaymentClientID());
                 hashMapWithClients.put(p.getPaymentClientID(), 1);
-                Log.i(TAG, "getHashMapWithMostCommonClients dla klucza: " + p.getPaymentClientID() + " wartosc: "  + hashMapWithClients.get(p.getPaymentClientID()).toString());
-
+                Log.e(TAG, "getArrayMapWithMostCommonClients: ERROR? nie powinno sie zdazyc, zbadać!");
             } else {
-                Log.i(TAG, "getHashMapWithMostCommonClients: client: " + p.getPaymentClientID());
-                val = hashMapWithClients.get(p.getPaymentClientID());
-                Log.i(TAG, "getHashMapWithMostCommonClients: val: " + val);
+                int val = hashMapWithClients.get(p.getPaymentClientID());
                 hashMapWithClients.put(p.getPaymentClientID(), val+1);
-
             }
         }
         Log.i(TAG, "getHashMapWithMostCommonClients: unsorted: " + hashMapWithClients.toString());
