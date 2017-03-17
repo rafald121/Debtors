@@ -498,85 +498,85 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(false));
     }
 
-    private void toggleFabOn() {
-        Log.i(TAG, "toggleFabOn: fragmentID: "  + fragmentID);
-        Log.i(TAG, "toggleFabOn: subfragmentID: " + subFragmentID);
-
-        switch (fragmentID){
-
-            case FragmentsIDs.ALLCLIENTS:
-
-                if (fragmentAllClients != null) {
-                    fragmentAllClients.showFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
-                break;
-
-            case FragmentsIDs.DEBTORS:
-
-                if (fragmentDebtors != null) {
-                    fragmentDebtors.showFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
-                break;
-
-            case FragmentsIDs.TRANSACTIONS:
-                if (fragmentTransactions != null) {
-                    fragmentTransactions.showFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
-                break;
-
-            case FragmentsIDs.PAYMENTS:
-
-                if (fragmentPayments != null) {
-                    fragmentPayments.showFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
-                break;
-
-            default:
-                Log.d(TAG, "toggleFabOn() called");
-                Log.e(TAG, "toggleFabOn: ERROR called ID: " + fragmentID );
-
-        }
-    }
-
-    private void toggleFabOff() {
-//        fab.hide();
-        switch (fragmentID){
-
-            case FragmentsIDs.ALLCLIENTS:
-                if (fragmentAllClients != null) {
-                    fragmentAllClients.hideFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
-                break;
-
-            case FragmentsIDs.DEBTORS:
-                if (fragmentDebtors != null) {
-                    fragmentDebtors.hideFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
-                break;
-
-            case FragmentsIDs.TRANSACTIONS:
-                if (fragmentTransactions != null) {
-                    fragmentTransactions.hideFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
-                break;
-
-            case FragmentsIDs.PAYMENTS:
-                if (fragmentPayments != null) {
-                    fragmentPayments.hideFAB();
-                } else
-                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
-                break;
-
-            default:
-                Log.e(TAG, "toggleFabOn: ERROR");
-        }
-    }
+//    private void toggleFabOn() {
+//        Log.i(TAG, "toggleFabOn: fragmentID: "  + fragmentID);
+//        Log.i(TAG, "toggleFabOn: subfragmentID: " + subFragmentID);
+//
+//        switch (fragmentID){
+//
+//            case FragmentsIDs.ALLCLIENTS:
+//
+//                if (fragmentAllClients != null) {
+//                    fragmentAllClients.showFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
+//                break;
+//
+//            case FragmentsIDs.DEBTORS:
+//
+//                if (fragmentDebtors != null) {
+//                    fragmentDebtors.showFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
+//                break;
+//
+//            case FragmentsIDs.TRANSACTIONS:
+//                if (fragmentTransactions != null) {
+//                    fragmentTransactions.showFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
+//                break;
+//
+//            case FragmentsIDs.PAYMENTS:
+//
+//                if (fragmentPayments != null) {
+//                    fragmentPayments.showFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
+//                break;
+//
+//            default:
+//                Log.d(TAG, "toggleFabOn() called");
+//                Log.e(TAG, "toggleFabOn: ERROR called ID: " + fragmentID );
+//
+//        }
+//    }
+//
+//    private void toggleFabOff() {
+////        fab.hide();
+//        switch (fragmentID){
+//
+//            case FragmentsIDs.ALLCLIENTS:
+//                if (fragmentAllClients != null) {
+//                    fragmentAllClients.hideFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
+//                break;
+//
+//            case FragmentsIDs.DEBTORS:
+//                if (fragmentDebtors != null) {
+//                    fragmentDebtors.hideFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
+//                break;
+//
+//            case FragmentsIDs.TRANSACTIONS:
+//                if (fragmentTransactions != null) {
+//                    fragmentTransactions.hideFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
+//                break;
+//
+//            case FragmentsIDs.PAYMENTS:
+//                if (fragmentPayments != null) {
+//                    fragmentPayments.hideFAB();
+//                } else
+//                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
+//                break;
+//
+//            default:
+//                Log.e(TAG, "toggleFabOn: ERROR");
+//        }
+//    }
 }
 

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
+import com.example.android.debtors.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,8 +137,12 @@ public class DatabasePayments extends SQLiteOpenHelper {
     }
 
     public HashMap<Integer, Integer> getHashMapWithMostCommonClients(int fromLastDays){
+
+        DatabaseClients dbClients = new DatabaseClients(context);
+
         List<Payment> paymentList = new ArrayList<>();
-        HashMap<Integer,Integer> hashMap = new HashMap<>();
+
+        HashMap<Integer, Integer> hashMapWithClients = dbClients.fillMapWithClientsIDs();// with zeros
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -162,19 +167,29 @@ public class DatabasePayments extends SQLiteOpenHelper {
         for (Payment p : paymentList) {
 //            Log.i(TAG, "getHashMapWithMostCommonClients: payment: " + p.toString(true));
             int val = 0;
-            if(!hashMap.containsKey(p.getPaymentClientID())) {
+            if(!hashMapWithClients.containsKey(p.getPaymentClientID())) {
                 Log.i(TAG, "getHashMapWithMostCommonClients: client: " + p.getPaymentClientID());
-                hashMap.put(p.getPaymentClientID(), 1);
-                Log.i(TAG, "getHashMapWithMostCommonClients dla klucza: " + p.getPaymentClientID() + " wartosc: "  + hashMap.get(p.getPaymentClientID()).toString());
+                hashMapWithClients.put(p.getPaymentClientID(), 1);
+                Log.i(TAG, "getHashMapWithMostCommonClients dla klucza: " + p.getPaymentClientID() + " wartosc: "  + hashMapWithClients.get(p.getPaymentClientID()).toString());
+
             } else {
                 Log.i(TAG, "getHashMapWithMostCommonClients: client: " + p.getPaymentClientID());
-                val = hashMap.get(p.getPaymentClientID());
+                val = hashMapWithClients.get(p.getPaymentClientID());
                 Log.i(TAG, "getHashMapWithMostCommonClients: val: " + val);
-                hashMap.put(p.getPaymentClientID(), val+1);
+                hashMapWithClients.put(p.getPaymentClientID(), val+1);
+
             }
         }
+        Log.i(TAG, "getHashMapWithMostCommonClients: unsorted: " + hashMapWithClients.toString());
 
-        return hashMap;
+        int[][] sortedArray = Utils.sortByHashMapValue(hashMapWithClients);
+
+        Log.i(TAG, "getHashMapWithMostCommonClients: length: " + sortedArray.length);
+        for(int i = 0 ; i < sortedArray.length ; i++){
+            Log.i(TAG, "for key: " + sortedArray[i][0] + ", value: " + sortedArray[i][1]) ;
+        }
+
+        return hashMapWithClients;
     }
 
     public int getAmountOfPayments(){

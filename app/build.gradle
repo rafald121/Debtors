@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
     compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }

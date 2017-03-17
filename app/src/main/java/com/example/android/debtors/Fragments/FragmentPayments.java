@@ -156,16 +156,16 @@ public class FragmentPayments extends Fragment {
         super.onDetach();
     }
 
-    public void hideFAB() {
-        if (categoryAdapterPayments != null) {
-            categoryAdapterPayments.hideFAB();
-        }
-    }
-
-    public void showFAB() {
-        if(categoryAdapterPayments != null){
-            categoryAdapterPayments.showFAB();
-        }
-    }
+//    public void hideFAB() {
+//        if (categoryAdapterPayments != null) {
+//            categoryAdapterPayments.hideFAB();
+//        }
+//    }
+//
+//    public void showFAB() {
+//        if(categoryAdapterPayments != null){
+//            categoryAdapterPayments.showFAB();
+//        }
+//    }
 
 }

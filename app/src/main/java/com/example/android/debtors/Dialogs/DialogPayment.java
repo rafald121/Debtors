@@ -223,10 +223,14 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         DatabasePayments dbPayments = new DatabasePayments(context);
 
         HashMap<Integer,Integer> hashMap = dbPayments.getHashMapWithMostCommonClients(10);
+//        int[][] arrayOftenestClients = dbPayments.
+        
 
         Log.i(TAG, "getListOfClientsInMostCommonOrder: hashMap: " + hashMap.toString());
 
         List<Client> list = dbClients.fillListFromHashMap(hashMap);
+
+
 
         return list;
     }

@@ -219,18 +219,18 @@ public class FragmentDebtors extends Fragment  {
         super.onDetach();
     }
 
-    public void showFAB() {
-        if (categoryAdapterDebtors != null) {
-            categoryAdapterDebtors.showFAB();
-        } else
-            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
-    }
-
-    public void hideFAB() {
-        if (categoryAdapterDebtors != null) {
-            categoryAdapterDebtors.hideFAB();
-        } else
-            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
-    }
+//    public void showFAB() {
+//        if (categoryAdapterDebtors != null) {
+//            categoryAdapterDebtors.showFAB();
+//        } else
+//            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
+//    }
+//
+//    public void hideFAB() {
+//        if (categoryAdapterDebtors != null) {
+//            categoryAdapterDebtors.hideFAB();
+//        } else
+//            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
+//    }
 
 }

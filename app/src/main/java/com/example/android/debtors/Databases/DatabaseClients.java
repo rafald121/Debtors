@@ -241,6 +241,19 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return listOfMap;
     }
 
+    public HashMap<Integer, Integer> fillMapWithClientsIDs() {
+
+        HashMap<Integer,Integer> map = new HashMap<>();
+
+        List<Client> listOfClients = getAllClient();
+
+        for(Client c: listOfClients){
+            map.put(c.getClientId(),0);
+        }
+
+        return map;
+    }
+
     public HashMap<Integer, String> getHashMapIntStringOfAllClients(){
 
         HashMap<Integer, String> hashmap = new HashMap<>();
@@ -318,7 +331,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         return clientsList;
     }
-
     public List<Client> getClientWithLeftAmountMoreOrLessZero(boolean flag) {//if true >0, false <0
         List<Client> clientList = new ArrayList<>();
 
@@ -354,6 +366,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
         }
         return clientList;
     }
+
     public void deleteClient(long clientID){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -368,6 +381,8 @@ public class DatabaseClients extends SQLiteOpenHelper{
         }
     }
 
+
+
     public int updateClient(Client client){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -378,8 +393,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return db.update(TABLE_CLIENTS, values, CLIENT_ID + " = ?", new String[]{String.valueOf
                 (client.getClientId())});
     }
-
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

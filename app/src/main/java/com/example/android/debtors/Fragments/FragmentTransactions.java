@@ -186,15 +186,15 @@ public class FragmentTransactions extends Fragment {
     }
 
 
-    public void hideFAB() {
-        if (categoryAdapterTransactions != null) {
-            categoryAdapterTransactions.hideFAB();
-        }
-    }
-
-    public void showFAB() {
-        if(categoryAdapterTransactions != null){
-            categoryAdapterTransactions.showFAB();
-        }
-    }
+//    public void hideFAB() {
+//        if (categoryAdapterTransactions != null) {
+//            categoryAdapterTransactions.hideFAB();
+//        }
+//    }
+//
+//    public void showFAB() {
+//        if(categoryAdapterTransactions != null){
+//            categoryAdapterTransactions.showFAB();
+//        }
+//    }
 }
