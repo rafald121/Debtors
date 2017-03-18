@@ -31,29 +31,33 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
     private static final String TAG = AdapterPayment.class.getSimpleName();
 
     private List<Payment> listOfPayments = new ArrayList<>();
-    private DatabasePayments dbPayments;
-    private DatabaseClients dbClients;
-    private long clientID;
-    private Context context;
-
-    public AdapterPayment(Context context, List<Payment> listOfPayments) {
-        this.context = context;
-        dbClients = new DatabaseClients(context);
-        this.listOfPayments = listOfPayments;
-        Log.i(TAG, "AdapterPayment: listOFPayments : " + listOfPayments.toString());
-    }
+    private DatabasePayments dbPayments = null;
+    private DatabaseClients dbClients = null;
+    private long clientID = -1;
+    private Context context = null;
 
     public AdapterPayment(Context context){
         this.context = context;
-        listOfPayments = getListOfPayments();
+        this.listOfPayments = getListOfPayments();
+    }
+
+    public AdapterPayment(Context context, List<Payment> listOfPayments) {
+        this.context = context;
+        this.dbClients = new DatabaseClients(context);
+        this.listOfPayments = listOfPayments;
     }
 
     public AdapterPayment(Context context, boolean receivedOrGive) {
-        Log.i(TAG, "AdapterPayment: start");
         this.context = context;
-        dbClients = new DatabaseClients(context);
-        listOfPayments = getListOfTransactionsByType(receivedOrGive);
-        Log.i(TAG, "AdapterPayment: end");
+        this.dbClients = new DatabaseClients(context);
+        this.listOfPayments = getListOfTransactionsByType(receivedOrGive);
+    }
+
+    public AdapterPayment(Context context, long clientID){
+        this.context = context;
+        this.dbPayments = new DatabasePayments(context);
+        this.listOfPayments = dbPayments.getPaymentsFromClient(clientID);
+        Log.i(TAG, "AdapterPayment: listOfPayments: " + listOfPayments.toString());
     }
 
     @Override

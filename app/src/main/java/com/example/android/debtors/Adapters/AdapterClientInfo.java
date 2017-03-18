@@ -26,6 +26,10 @@ public class AdapterClientInfo  extends RecyclerView.Adapter<AdapterClientInfo.M
     private List<Payment> listOfPayments;
     private Context context;
 
+    public AdapterClientInfo(Context context) {
+        this.context = context;
+    }
+
     public AdapterClientInfo(Context context, List<Payment> list) {
         Log.i(TAG, "AdapterClientInfo: ");
         this.context = context;

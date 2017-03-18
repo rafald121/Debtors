@@ -33,7 +33,7 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
-
+//TODO private\/
     View rootView = null;
     AdapterTransacation adapterTransacation = null;
     RecyclerView recyclerView = null;

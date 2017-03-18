@@ -42,6 +42,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
     private static final String TAG = DialogTransaction.class.getSimpleName();
 
     private boolean typeOfTransaction;
+    private long clientID = -1;
 
     private Spinner newTransactionSpinner;
     private EditText newTransactionQuantity;
@@ -78,6 +79,14 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         super(context);
         this.context = context;
         this.typeOfTransaction = type;
+        this.callbackAddInDialog = callbackAddInDialog;
+    }
+
+    public DialogTransaction(Context context, boolean type, long clientID, CallbackAddInDialog callbackAddInDialog){
+        super(context);
+        this.context = context;
+        this.typeOfTransaction = type;
+        this.clientID = clientID;
         this.callbackAddInDialog = callbackAddInDialog;
     }
 

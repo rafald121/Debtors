@@ -51,6 +51,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
     private static final String TAG = DialogPayment.class.getSimpleName();
 
     private boolean type;
+    private long clientID;
 
     private Spinner newPaymentSpinner;
     private EditText newPaymentAmount;
@@ -75,7 +76,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         super(context);
         this.context = context;
     }
-//    true - sale false - purchase
+
     public DialogPayment(Context context, boolean type) {
         super(context);
         this.context = context;
@@ -86,8 +87,20 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         super(context);
         this.context = context;
         this.type = type;
-        callbackAddInDialog = (CallbackAddInDialog) callback;
+        this.callbackAddInDialog = callback;
     }
+
+    public DialogPayment(Context context, long clientID, CallbackAddInDialog callbackAddInDialog){
+        super(context);
+        this.context = context;
+        this.clientID = clientID;
+        this.callbackAddInDialog = callbackAddInDialog;
+        //TODO
+        // type depends what type of payments client from clientID taken
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +199,9 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             }
 
             Payment payment = new Payment(Utils.getDateTime(), owner.getOwnerID(), selectedClientId, paymentAmount, paymentDetails, typeOfPayment );
+
+            Log.i(TAG, "onClick: payment: " + payment.toString());
+
             RealizePaymentHelper realizePaymentHelper = new RealizePaymentHelper();
             realizePaymentHelper.realizePayment(context, payment);
 
@@ -193,7 +209,6 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             callbackAddInDialog.reloadRecycler();
             Log.i(TAG, "onClick: po");
 
-            callbackAddInDialog.reloadRecycler();
 
 //            TODO add snackbar when client is added
             dismiss();
