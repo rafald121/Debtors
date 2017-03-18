@@ -33,15 +33,19 @@ public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if(position == 0) {
 
-            Log.i(TAG, "getItem: tworze newInstance dla: " + position);
-            Fragment fragmentSingleClientInfo = FragmentSingleClientInfoPayments.newInstance(clientID);
-            return fragmentSingleClientInfo;
+            Fragment fragmentSingleClientInfoPayments = FragmentSingleClientInfoPayments.newInstance(clientID);
+
+            if (fragmentSingleClientInfoPayments != null) {
+                return fragmentSingleClientInfoPayments;
+            }
 
         } else if(position == 1) {
 
-            Log.i(TAG, "getItem: tworze newInstance dla: " + position);
             Fragment fragmentSingleClientInfoTransactions = FragmentSingleClientInfoTransactions.newInstance(clientID);
-            return fragmentSingleClientInfoTransactions;
+
+            if (fragmentSingleClientInfoTransactions != null) {
+                return fragmentSingleClientInfoTransactions;
+            }
 
         }
         return null;
@@ -52,7 +56,6 @@ public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
             return "Payments";
         else if(position == 1)
             return "Transactions";
-
         return null;
     }
 
@@ -60,6 +63,5 @@ public class CategoryAdapterClientInfo extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
-
 
 }

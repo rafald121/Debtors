@@ -24,42 +24,41 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
     private FragmentTransactionsAll fragmentTransactionsAll = null;
     private FragmentTransactionsSales fragmentTransactionsSales = null;
     private FragmentTransactionsPurchases fragmentTransactionsPurchases = null;
+
     public CategoryAdapterTransactions(FragmentManager fm) {
         super(fm);
-        Log.i(TAG, "CategoryAdapterTransactions: 1");
         fragmentTransactionsAll = new FragmentTransactionsAll();
         fragmentTransactionsSales = new FragmentTransactionsSales();
         fragmentTransactionsPurchases = new FragmentTransactionsPurchases();
-        Log.i(TAG, "CategoryAdapterTransactions: 2");
         MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            MainActivity.CURRENT_SUB_TAG = "tagTransactionsAll";
-
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
-
-            return fragmentTransactionsAll;
+            if (fragmentTransactionsAll != null) {
+                return fragmentTransactionsAll;
+            }
         }
         if (position == 1) {
-            MainActivity.CURRENT_SUB_TAG = "tagTransactionsSales";
-
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
-
-            return fragmentTransactionsSales;
+            if (fragmentTransactionsSales != null) {
+                return fragmentTransactionsSales;
+            }
         }
         if (position == 2) {
             MainActivity.CURRENT_SUB_TAG = "tagTransactionsPurchases";
 
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
-
-            return fragmentTransactionsPurchases;
+            if (fragmentTransactionsPurchases != null) {
+                return fragmentTransactionsPurchases;
+            }
         }
+        Log.e(TAG, "getItem: ERROR, return null");
         return null;
     }
 
@@ -70,7 +69,6 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
             return "Sales";
         } else if (position == 2) {
             return "Purchases";
-
         }
         return null;
     }
@@ -79,61 +77,5 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
     public int getCount() {
         return 3;
     }
-
-
-//    public void showFAB() {
-//        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.subFragmentID);
-//
-//        switch (MainActivity.subFragmentID){
-//
-//            case FragmentsIDs.TRANSACTIONSALL:
-//
-//                Log.i(TAG, "showFAB: tagTransactionsAll");
-//                fragmentTransactionsAll.showFAB();
-//                break;
-//
-//            case FragmentsIDs.TRANSACTIONSSALES:
-//
-//                Log.i(TAG, "showFAB: tagTransactionsSales ");
-//                fragmentTransactionsSales.showFAB();
-//                break;
-//
-//            case FragmentsIDs.TRANSACTIONSPURCHASES:
-//
-//                Log.i(TAG, "showFAB: tagTransactionsPurchases");
-//                fragmentTransactionsPurchases.showFAB();
-//                break;
-//
-//            default:
-//                Log.d(TAG, "showFAB() called");
-//                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
-//
-//        }
-//    }
-//
-//    public void hideFAB() {
-//        Log.i(TAG, "hideFAB: current sub tag: " + MainActivity.subFragmentID);
-//
-//        switch (MainActivity.subFragmentID){
-//
-//            case FragmentsIDs.TRANSACTIONSALL:
-//                fragmentTransactionsAll.hideFAB();
-//                break;
-//
-//            case FragmentsIDs.TRANSACTIONSSALES:
-//                fragmentTransactionsSales.hideFAB();
-//                break;
-//
-//            case FragmentsIDs.TRANSACTIONSPURCHASES:
-//                fragmentTransactionsPurchases.hideFAB();
-//                break;
-//
-//            default:
-//                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
-//
-//        }
-//
-//
-//    }
 
 }
