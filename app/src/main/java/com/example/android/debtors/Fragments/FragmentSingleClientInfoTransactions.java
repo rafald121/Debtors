@@ -19,6 +19,7 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -26,6 +27,8 @@ import com.example.android.debtors.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by admin on 25.02.2017.
@@ -150,11 +153,22 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
     public void onAttach(Context context) {
         fragmentActivity = (FragmentActivity) context;
         super.onAttach(context);
+        EventBus.getDefault().register(this); // this == your class instance
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
     }
 
     private List<TransactionForClient> getTransactionsByClientId(long clientsID) {

@@ -19,11 +19,14 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
 import java.util.List;
 import java.util.concurrent.RecursiveAction;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by admin on 25.02.2017.
@@ -131,12 +134,15 @@ public class FragmentSingleClientInfoPayments extends Fragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        EventBus.getDefault().unregister(this);
+
     }
 
     private List<Payment> getPaymentsByClientId(long clientsID) {
@@ -147,5 +153,11 @@ public class FragmentSingleClientInfoPayments extends Fragment{
         return listOfPayments;
     }
 
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
 
 }
