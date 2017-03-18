@@ -99,7 +99,7 @@ public class UtilsDatabaseMethods {
         List<Payment> listOfPayments = dbPayment.getAllPayments();
 
         for(Payment p : listOfPayments)
-            Log.i(TAG, "getPayments: " + p.toString(true));
+            Log.i(TAG, "getPayments: " + p.toString());
 
         return listOfPayments;
     }

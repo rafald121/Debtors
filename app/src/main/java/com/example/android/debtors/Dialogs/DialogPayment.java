@@ -51,7 +51,8 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
     private static final String TAG = DialogPayment.class.getSimpleName();
 
     private boolean type;
-    private long clientID;
+    private long clientID = -1;
+    private Client firstClientInSpinner = null;
 
     private Spinner newPaymentSpinner;
     private EditText newPaymentAmount;
@@ -63,13 +64,14 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
     private Button newPaymentOk, newPaymentCancel;
 
+    private ArrayAdapter<Client> adapter;
+
     private Context context;
     private DatabaseClients dbClients;
     private DatabasePayments dbPayments;
 
     private CallbackAddInDialog callbackAddInDialog = null;
 
-    List<Client> listOfClients = new ArrayList<>();
     List<Client> listOfClientsInOrder = new ArrayList<>();
 
     public DialogPayment(Context context) {
@@ -95,11 +97,12 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         this.context = context;
         this.clientID = clientID;
         this.callbackAddInDialog = callbackAddInDialog;
+        this.firstClientInSpinner = getClientById(clientID);
+        Log.i(TAG, "DialogPayment: firstClientInSpinner: " + firstClientInSpinner.toString());
         //TODO
         // type depends what type of payments client from clientID taken
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
         newPaymentAmount = (EditText) findViewById(R.id.dialog_payment_amount);
         newPaymentAmount.setText("");
-        
+
         newPaymentDetails = (EditText) findViewById(R.id.dialog_payment_details);
 
         newPaymentError = (TextView) findViewById(R.id.dialog_payment_error);
@@ -130,11 +133,18 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         newPaymentOk = (Button) findViewById(R.id.dialog_payment_ok);
         newPaymentCancel = (Button) findViewById(R.id.dialog_payment_cancel);
 
-
-//        listOfClients = getListOfClients();
         listOfClientsInOrder = getListOfClientsInMostCommonOrder(10);
 
-        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_item, listOfClientsInOrder);
+        if(firstClientInSpinner != null){
+
+            if(!listOfClientsInOrder.get(0).equals(firstClientInSpinner)) {
+                List<Client> list = swapIndex(listOfClientsInOrder, firstClientInSpinner);
+                adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, list);
+
+            } else
+                Log.i(TAG, "onCreate: client is on first index, good!");
+        } else
+            adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listOfClientsInOrder);
 
         newPaymentSpinner.setAdapter(adapter);
 
@@ -159,6 +169,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -223,6 +234,19 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         }
     }
 
+    private List<Client> swapIndex(List<Client> listOfClientsInOrder, Client i) {
+        List<Client> swappedList = new ArrayList<>();
+        swappedList.add(i);
+        for (Client c: listOfClientsInOrder){
+            if(!c.equals(i))
+                swappedList.add(c);
+            else
+                Log.e(TAG, "swapIndex: natrafilem na to samo: " + c.toString() );
+        }
+
+        return swappedList;
+    }
+
     private List<Client> getListOfClients(){
         DatabaseClients dbClients = new DatabaseClients(context);
 
@@ -231,6 +255,12 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         listOfClients = dbClients.getAllClient();
 
         return listOfClients;
+    }
+
+    private Client getClientById(long clientID) {
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        return dbClients.getClientByID(clientID);
     }
 
     private List<Client> getListOfClientsInMostCommonOrder(int fromLastDays){
@@ -261,12 +291,12 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
 
         return list;
     }
-    
+
     private List<HashMap<Integer, String>> getListOfHashMapOfClientsIdAndNames(){
         DatabaseClients dbClients = new DatabaseClients(context);
 
         List<HashMap<Integer, String>> list = dbClients.getListOfMapIntStringOfAllClients();
-        
+
         return list;
     }
 

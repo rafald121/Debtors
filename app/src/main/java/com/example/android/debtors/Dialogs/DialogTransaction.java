@@ -43,6 +43,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
     private boolean typeOfTransaction;
     private long clientID = -1;
+    private Client firstClientInSpinner = null;
 
     private Spinner newTransactionSpinner;
     private EditText newTransactionQuantity;
@@ -57,6 +58,8 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
     private Button newTransactionButtonOk;
     private Button newTransactionButtonCancel;
+
+    private ArrayAdapter<Client> adapter = null;
 
     private Context context;
     private DatabaseClients dbClients;
@@ -82,13 +85,17 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         this.callbackAddInDialog = callbackAddInDialog;
     }
 
-    public DialogTransaction(Context context, boolean type, long clientID, CallbackAddInDialog callbackAddInDialog){
+    public DialogTransaction(Context context, long clientID, CallbackAddInDialog callbackAddInDialog){
         super(context);
         this.context = context;
-        this.typeOfTransaction = type;
         this.clientID = clientID;
         this.callbackAddInDialog = callbackAddInDialog;
+        this.firstClientInSpinner = getClientById(clientID);
+        //TODO
+        // type depends what type of transactions client from clientID that client did
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +125,19 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         newTransactionButtonOk = (Button) findViewById(R.id.dialog_transaction_ok);
         newTransactionButtonCancel = (Button) findViewById(R.id.dialog_transaction_cancel);
 
-//        List<Client> listOfClients = getListOfClients();
-//        List<Client>
         listOfClientsInOrder = getListOfClientsInOrder(10);
 
-        ArrayAdapter<Client> adapter = new ArrayAdapter<Client>(context, android.R.layout.simple_spinner_dropdown_item, listOfClientsInOrder);
+
+        if(firstClientInSpinner != null)
+            if(!listOfClientsInOrder.get(0).equals(firstClientInSpinner)){
+                List<Client> list = swapIndex(listOfClientsInOrder, firstClientInSpinner);
+                adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, list);
+
+            } else
+                Log.i(TAG, "onCreate: client is on first index, good!");
+        else
+            adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, listOfClientsInOrder);
+
 
         newTransactionSpinner.setAdapter(adapter);
 
@@ -224,6 +239,25 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         } else if(v.getId() == newTransactionButtonCancel.getId()){
             dismiss();
         }
+    }
+
+    private List<Client> swapIndex(List<Client> listOfClientsInOrder, Client i) {
+        List<Client> swappedList = new ArrayList<>();
+        swappedList.add(i);
+        for (Client c: listOfClientsInOrder){
+            if(!c.equals(i))
+                swappedList.add(c);
+            else
+                Log.e(TAG, "swapIndex: natrafilem na to samo: " + c.toString() );
+        }
+
+        return swappedList;
+    }
+
+    private Client getClientById(long clientID) {
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        return dbClients.getClientByID(clientID);
     }
 
     private List<Client> getListOfClientsInOrder(int fromLastDays){

@@ -74,7 +74,7 @@ public class FragmentSingleClientInfoPayments extends Fragment{
         listOfPayments = getPaymentsByClientId(clientsID);
 
         for( Payment p : listOfPayments ){
-            Log.i(TAG, "onCreateView: payment : " + p.toString(true));
+            Log.i(TAG, "onCreateView: payment : " + p.toString());
         }
 
         rootView = inflater.inflate(R.layout.fragment_singleclient_payments,container, false);

@@ -432,42 +432,42 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "setUpNavigationView: END");
     }
 
-    @Override
-    public void onBackPressed() {
-//        TODO when clicked two times ask if quit app
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawers();
-            return;
-        }
-
-        // This code loads home fragment when back key is pressed
-        // when user is in other fragment than home
-        if (shouldLoadHomeFragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
-            if (navItemIndex != 1) { // jeśli navItem nie jest 1
-                navItemIndex = 1;
-
-                previousFragmentID = fragmentID;
-                fragmentID = FragmentsIDs.DEBTORS;
-
-                PREVIOUS_TAG = CURRENT_TAG;
-                CURRENT_TAG = TAG_DEBTORS;
-                loadSelectedFragment();
-                return;
-            } else { // jesli navItem jest 1
-                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
-                    // nothing(do anything)
-                    whenBackClickedOnDebtors = true;
-                    return;
-                } else { // if true user have clicked back button once and next time minimalize app
-//                    minimalize app
-                }
-            }
-        }
-
-        super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+////        TODO when clicked two times ask if quit app
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawers();
+//            return;
+//        }
+//
+//        // This code loads home fragment when back key is pressed
+//        // when user is in other fragment than home
+//        if (shouldLoadHomeFragOnBackPress) {
+//            // checking if user is on other navigation menu
+//            // rather than home
+//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
+//                navItemIndex = 1;
+//
+//                previousFragmentID = fragmentID;
+//                fragmentID = FragmentsIDs.DEBTORS;
+//
+//                PREVIOUS_TAG = CURRENT_TAG;
+//                CURRENT_TAG = TAG_DEBTORS;
+//                loadSelectedFragment();
+//                return;
+//            } else { // jesli navItem jest 1
+//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
+//                    // nothing(do anything)
+//                    whenBackClickedOnDebtors = true;
+//                    return;
+//                } else { // if true user have clicked back button once and next time minimalize app
+////                    minimalize app
+//                }
+//            }
+//        }
+//
+//        super.onBackPressed();
+//    }
 
 
     private void loadNavHeader() {

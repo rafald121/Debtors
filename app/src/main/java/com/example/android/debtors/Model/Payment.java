@@ -131,24 +131,24 @@ public class Payment {
 
     //    OTHERS
 
-    @Override
-    public String toString() {
-        String revenueOrExpense = "";
-        if(this.paymentGotOrGiven)
-            revenueOrExpense = "revenue";
-        else
-            revenueOrExpense = "expense";
-        return "Payment{" +
-                "paymentID=" + paymentID +
-                ", paymentData='" + paymentDate + '\'' +
-                ", paymentOwner=" + paymentOwner +
-                ", paymentClient=" + paymentClient +
-                ", paymentAmount=" + paymentAmount +
-                ", revenueOrExpense? " + revenueOrExpense +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        String revenueOrExpense = "";
+//        if(this.paymentGotOrGiven)
+//            revenueOrExpense = "revenue";
+//        else
+//            revenueOrExpense = "expense";
+//        return "Payment{" +
+//                "paymentID=" + paymentID +
+//                ", paymentData='" + paymentDate + '\'' +
+//                ", paymentOwner=" + paymentOwner +
+//                ", paymentClient=" + paymentClient +
+//                ", paymentAmount=" + paymentAmount +
+//                ", revenueOrExpense? " + revenueOrExpense +
+//                '}';
+//    }
 //IF TO STRING WITH FLAGS WE GET INFO ABOUT PAYMENTS WITH CLIENT AND OWNER ID NOT OBJECT
-    public String toString(boolean flags) {
+    public String toString() {
         String revenueOrExpense = "";
         if(this.paymentGotOrGiven)
             revenueOrExpense = "revenue";

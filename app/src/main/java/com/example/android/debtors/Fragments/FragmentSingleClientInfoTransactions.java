@@ -19,7 +19,9 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
@@ -45,6 +47,9 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
+    private View rootView = null;
+    private RecyclerView recyclerView = null;
+    private AdapterTransacation adapterTransacation = null;
 
     public FragmentSingleClientInfoTransactions() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
@@ -77,11 +82,11 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         Log.i(TAG, "onCreateView: listOfTransactionsForClient: " + listOfTransactionsForClient.toString());
 //        fab = (FloatingActionButton)
 
-        View rootView = inflater.inflate(R.layout.fragment_singleclient_transactions, container, false);
-        AdapterTransacation adapterTransactions = new AdapterTransacation(getContext(), listOfTransactionsForClient);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_transactions_recycler);
+        rootView = inflater.inflate(R.layout.fragment_singleclient_transactions, container, false);
+        adapterTransacation = new AdapterTransacation(getContext(), listOfTransactionsForClient);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_transactions_recycler);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapterTransactions);
+        recyclerView.setAdapter(adapterTransacation);
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -125,8 +130,15 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
 //                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                DialogPayment dialogPayment = new DialogPayment(fragmentActivity,true);
-                dialogPayment.show();
+                DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, clientsID, new CallbackAddInDialog() {
+                    @Override
+                    public void reloadRecycler() {
+                        adapterTransacation = new AdapterTransacation(getContext(), clientsID);
+                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_transactions_recycler);
+                        recyclerView.setAdapter(adapterTransacation);
+                    }
+                });
+                dialogTransaction.show();
             }
         });
         Log.i(TAG, "onViewCreated: END");
