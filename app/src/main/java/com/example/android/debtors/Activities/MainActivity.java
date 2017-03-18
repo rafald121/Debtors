@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String urlNavHeaderBg = "http://4.bp.blogspot.com/_SJTl75q21RY/TDWCRlNqnTI/AAAAAAAAAMU/3avdZcJHwSw/s1600/money1.jpg";
     private static final String urlProfileImg = "https://avatars3.githubusercontent.com/u/16782428?v=3&u=d6d5d36732184328f00b7ee90c1ef6f23627005e&s=400";
 
-    public static int navItemAmount = 4;
     public static int navItemIndex = 0;
 
     private String[] activityTitles;
@@ -85,11 +84,6 @@ public class MainActivity extends AppCompatActivity {
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
     public static String CURRENT_SUB_TAG = null;
-
-    // if user click back button on
-    // minimalize
-    // debtor fragment, whenBackClickedOnDebtors is set to true and when click another time app
-    public static boolean whenBackClickedOnDebtors = false;
 
     private Handler mHandler;
     private FragmentAllClients fragmentAllClients;
@@ -126,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
-            Log.i(TAG, "onCreate: savedInstanceState == null");
             navItemIndex = 0;
 
             previousFragmentID = fragmentID;
@@ -157,33 +150,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadSelectedFragment() {
         Log.i(TAG, "loadSelectedFragment: START");
-//        count amount of items in every fragment
         setNavigationDrawerItemAmount();
-//        make that navigation item as selected in navigation layout
         selectNavigationMenuToBeChecked();
-//      set title of action bar depends on selected fragment
         setToolbarTitle();
 
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
-//        Log.i(TAG, "loadSelectedFragment: CURRENT TAG: " + CURRENT_TAG);
-        Log.i(TAG, "loadSelectedFragment: 11CURRENT FRAGMENT ID : " + fragmentID);
-        Log.i(TAG, "loadSelectedFragment: 11CURRENT SUBFRAGMENT ID : " + subFragmentID);
-
-//        Log.i(TAG, "onNavigationItemSelected: prev frag: " + fragmentID);
-//        Log.i(TAG, "onNavigationItemSelected: prev subfrag: " + subFragmentID);
-
         if (PREVIOUS_TAG == CURRENT_TAG) {
             Log.i(TAG, "loadSelectedFragment: wtf");
             drawer.closeDrawers();
             fabOn();
-//            toggleFabOn();
             return;
         }
-
-        Log.i(TAG, "loadSelectedFragment: fragment index before open it FRAGMENT ID: " + fragmentID);
-        Log.i(TAG, "loadSelectedFragment: fragment index before open it SUBFRAGMENT ID: " + subFragmentID);
-
 
         Runnable mPendingRunnable = new Runnable() {
             @Override
@@ -212,16 +190,11 @@ public class MainActivity extends AppCompatActivity {
         } else
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
-        // show or hide the fab button
-
         //Closing drawer on item click
         drawer.closeDrawers();
 
 //        TODO TEST IT
         invalidateOptionsMenu();
-
-        Log.i(TAG, "loadSelectedFragment:22 fragment index before open it FRAGMENT ID: " + fragmentID);
-        Log.i(TAG, "loadSelectedFragment:22 fragment index before open it SUBFRAGMENT ID: " + subFragmentID);
 
         Log.i(TAG, "loadSelectedFragment: END");
 
@@ -274,16 +247,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "getSelectedFragment: START");
         switch (navItemIndex) {
             case 0:
-                Log.i(TAG, "getSelectedFragment: END");
                 return fragmentAllClients;
             case 1:
-                Log.i(TAG, "getSelectedFragment: END");
                 return fragmentDebtors;
             case 2:
-                Log.i(TAG, "getSelectedFragment: END");
                 return fragmentTransactions;
             case 3:
-                Log.i(TAG, "getSelectedFragment: END");
                 return fragmentPayments;
             default:
                 Log.e(TAG, "getSelectedFragment: ERROR");
@@ -309,10 +278,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 initFragments();
-
-                if (menuItem.getItemId() != R.id.nav_debtors) // if user hasn't check debtors in
-                    // navigation asign whenBackClickedOnDebtors=false again
-                    whenBackClickedOnDebtors = false;
 
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
@@ -385,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "onNavigationItemSelected: selected index: " + navItemIndex);
 
                 //Checking if the item is in checked state or not, if not make it in checked state
-                //PODSWIETLA ELEMENT
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 } else {
@@ -405,26 +369,17 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
-
-                        Log.i(TAG, "onDrawerClosed: fragmentID: "  + fragmentID);
-                        Log.i(TAG, "onDrawerClosed: subfragmentID: " + subFragmentID);
                         fabOn();
-//                        toggleFabOn();
                         super.onDrawerClosed(drawerView);
                     }
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
-
-                        Log.i(TAG, "onDrawerOpened: fragmentID: "  + fragmentID);
-                        Log.i(TAG, "onDrawerOpened: subfragmentID: " + subFragmentID);
                         fabOff();
-//                        toggleFabOff();
                         super.onDrawerOpened(drawerView);
                     }
                 };
 
-        //Setting the actionbarToggle to drawer layout
         drawer.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
@@ -498,85 +453,5 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(false));
     }
 
-//    private void toggleFabOn() {
-//        Log.i(TAG, "toggleFabOn: fragmentID: "  + fragmentID);
-//        Log.i(TAG, "toggleFabOn: subfragmentID: " + subFragmentID);
-//
-//        switch (fragmentID){
-//
-//            case FragmentsIDs.ALLCLIENTS:
-//
-//                if (fragmentAllClients != null) {
-//                    fragmentAllClients.showFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
-//                break;
-//
-//            case FragmentsIDs.DEBTORS:
-//
-//                if (fragmentDebtors != null) {
-//                    fragmentDebtors.showFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
-//                break;
-//
-//            case FragmentsIDs.TRANSACTIONS:
-//                if (fragmentTransactions != null) {
-//                    fragmentTransactions.showFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
-//                break;
-//
-//            case FragmentsIDs.PAYMENTS:
-//
-//                if (fragmentPayments != null) {
-//                    fragmentPayments.showFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
-//                break;
-//
-//            default:
-//                Log.d(TAG, "toggleFabOn() called");
-//                Log.e(TAG, "toggleFabOn: ERROR called ID: " + fragmentID );
-//
-//        }
-//    }
-//
-//    private void toggleFabOff() {
-////        fab.hide();
-//        switch (fragmentID){
-//
-//            case FragmentsIDs.ALLCLIENTS:
-//                if (fragmentAllClients != null) {
-//                    fragmentAllClients.hideFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragmentAllClients is null");
-//                break;
-//
-//            case FragmentsIDs.DEBTORS:
-//                if (fragmentDebtors != null) {
-//                    fragmentDebtors.hideFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragmentDEBTors is null" );
-//                break;
-//
-//            case FragmentsIDs.TRANSACTIONS:
-//                if (fragmentTransactions != null) {
-//                    fragmentTransactions.hideFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragment transaction is null");
-//                break;
-//
-//            case FragmentsIDs.PAYMENTS:
-//                if (fragmentPayments != null) {
-//                    fragmentPayments.hideFAB();
-//                } else
-//                    Log.e(TAG, "toggleFabOn: fragment payments is null" );
-//                break;
-//
-//            default:
-//                Log.e(TAG, "toggleFabOn: ERROR");
-//        }
-//    }
 }
 
