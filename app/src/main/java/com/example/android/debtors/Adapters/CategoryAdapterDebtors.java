@@ -35,23 +35,21 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==0) {
-
-            
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.DEBTORSFORME;
-
-            return fragmentDebtorsForMe;
+            if (fragmentDebtorsForMe != null) {
+                return fragmentDebtorsForMe;
+            }
         }
         if(position==1) {
 
             MainActivity.previousFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.DEBTORSMETOOTHER;
-
-            return fragmentDebtorsMeToOther;
+            if (fragmentDebtorsMeToOther != null) {
+                return fragmentDebtorsMeToOther;
+            }
         }
-
         return null;
-
     }
 
     @Override
@@ -70,30 +68,5 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     }
 
 
-//    public void showFAB() {
-//        switch (MainActivity.subFragmentID){
-//            case FragmentsIDs.DEBTORSFORME:
-//                fragmentDebtorsForMe.showFAB();
-//                break;
-//            case FragmentsIDs.DEBTORSMETOOTHER:
-//                fragmentDebtorsMeToOther.showFAB();
-//                break;
-//            default:
-//                Log.e(TAG, "showFAB: ERROR with subFragment: " + MainActivity.subFragmentID);
-//        }
-//    }
-//
-//    public void hideFAB() {
-//        switch (MainActivity.subFragmentID){
-//            case FragmentsIDs.DEBTORSFORME:
-//                fragmentDebtorsForMe.hideFAB();
-//                break;
-//            case FragmentsIDs.DEBTORSMETOOTHER:
-//                fragmentDebtorsMeToOther.hideFAB();
-//                break;
-//            default:
-//                Log.e(TAG, "hideFAB: ERROR WITH SUBFRAGMENTID: " + MainActivity.subFragmentID);
-//        }
-//    }
 
 }

@@ -30,9 +30,7 @@ public class CategoryAdapterPayments extends FragmentPagerAdapter {
         fragmentPaymentsAll = new FragmentPaymentsAll();
         fragmentPaymentsReceived = new FragmentPaymentsReceived();
         fragmentPaymentsGiven = new FragmentPaymentsGiven();
-
         MainActivity.subFragmentID = FragmentsIDs.PAYMENTSALL;
-
     }
 
     @Override
@@ -40,21 +38,25 @@ public class CategoryAdapterPayments extends FragmentPagerAdapter {
         if(position == 0){
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.PAYMENTSALL;
-
-            return fragmentPaymentsAll;
+            if (fragmentPaymentsAll != null) {
+                return fragmentPaymentsAll;
+            }
         }
         if(position == 1) {
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.PAYMENTSRECEIVED;
-
-            return fragmentPaymentsReceived;
+            if (fragmentPaymentsReceived !=null) {
+                return fragmentPaymentsReceived;
+            }
         }
         if(position == 2) {
             MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
             MainActivity.subFragmentID = FragmentsIDs.PAYMENTSGIVEN;
-
-            return fragmentPaymentsGiven;
+            if (fragmentPaymentsGiven != null) {
+                return fragmentPaymentsGiven;
+            }
         }
+        Log.e(TAG, "getItem: ERROR, return null");
         return null;
     }
 
@@ -73,59 +75,5 @@ public class CategoryAdapterPayments extends FragmentPagerAdapter {
     public int getCount() {
         return 3;
     }
-
-
-//    public void showFAB() {
-//        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.subFragmentID);
-//
-//        switch (MainActivity.subFragmentID){
-//
-//            case FragmentsIDs.PAYMENTSALL:
-//                fragmentPaymentsAll.showFAB();
-//                break;
-//
-//            case FragmentsIDs.PAYMENTSRECEIVED:
-//                fragmentPaymentsReceived.showFAB();
-//                break;
-//
-//            case FragmentsIDs.PAYMENTSGIVEN:
-//                fragmentPaymentsGiven.showFAB();
-//                break;
-//
-//            default:
-//                Log.d(TAG, "showFAB() called");
-//                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
-//
-//        }
-//    }
-//
-//    public void hideFAB() {
-//        Log.i(TAG, "showFAB: current sub tag: " + MainActivity.subFragmentID);
-//
-//        switch (MainActivity.subFragmentID){
-//
-//            case FragmentsIDs.PAYMENTSALL:
-//
-//                fragmentPaymentsAll.hideFAB();
-//                break;
-//
-//            case FragmentsIDs.PAYMENTSRECEIVED:
-//
-//                fragmentPaymentsReceived.hideFAB();
-//                break;
-//
-//            case FragmentsIDs.PAYMENTSGIVEN:
-//
-//                fragmentPaymentsGiven.hideFAB();
-//                break;
-//
-//            default:
-//                Log.d(TAG, "showFAB() called");
-//                Log.e(TAG, "showFAB: ERROR, subFragmentID: " + MainActivity.subFragmentID);
-//
-//        }
-//
-//    }
-
 
 }
