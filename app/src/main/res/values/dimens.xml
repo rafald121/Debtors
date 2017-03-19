@@ -42,4 +42,6 @@
 
     <dimen name="item_debtors_width_leftamount">70sp</dimen>
 
+    <dimen name="dialog_menu_from_to_size">20sp</dimen>
+
 </resources>
