@@ -6,20 +6,41 @@
     android:layout_height="400dp"
     android:layout_width="250dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        tools:layout_editor_absoluteY="92dp"
-        tools:layout_editor_absoluteX="16dp"
-        android:id="@+id/editText" />
+    <DatePicker
+        android:layout_width="197dp"
+        android:layout_height="55dp"
+        tools:layout_editor_absoluteY="54dp"
+        tools:layout_editor_absoluteX="25dp"
+        android:id="@+id/datePicker" />
 
     <TextView
-        android:text="TextView"
+        android:text="From "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="33dp"
-        tools:layout_editor_absoluteX="67dp"
-        android:id="@+id/chujdupa" />
+        tools:layout_editor_absoluteY="29dp"
+        tools:layout_editor_absoluteX="25dp"
+        android:id="@+id/textView3" />
+
+    <TextView
+        android:text="To"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="125dp"
+        tools:layout_editor_absoluteX="27dp"
+        android:id="@+id/textView4" />
+
+    <DatePicker
+        android:layout_width="197dp"
+        android:layout_height="55dp"
+        tools:layout_editor_absoluteY="156dp"
+        tools:layout_editor_absoluteX="25dp"
+        android:id="@+id/datePicker2" />
+
+    <TextView
+        android:text="Amount range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="232dp"
+        tools:layout_editor_absoluteX="27dp"
+        android:id="@+id/textView5" />
 </android.support.constraint.ConstraintLayout>
