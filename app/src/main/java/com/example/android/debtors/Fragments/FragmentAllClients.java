@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -24,8 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
+import com.example.android.debtors.Dialogs.DialogAllClientsMenu;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
@@ -162,28 +165,47 @@ public class FragmentAllClients extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.search_view:
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
-            case R.id.menu_allclients_max_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_amount");
+            case R.id.show_dialog:{
+                Log.i(TAG, "onOptionsItemSelected: show dialog ?");
+
+                showDialog();
+
                 return true;
-            case R.id.menu_allclients_min_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_amount");
-                return true;
-            case R.id.menu_allclients_max_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_date");
-                return true;
-            case R.id.menu_allclients_min_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_date");
-                return true;
+
+            }
+//            case R.id.menu_allclients_min_amount:
+//                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_amount");
+//                return true;
+//            case R.id.menu_allclients_max_date:
+//                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_date");
+//                return true;
+//            case R.id.menu_allclients_min_date:
+//                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_date");
+//                return true;
             default:
                 break;
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
+        if(prev!=null)
+            ft.remove(prev);
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogAllClientsMenu.newInstance(2);
+        d.show(ft, "new");
+
     }
 
     @Override
@@ -208,7 +230,7 @@ public class FragmentAllClients extends Fragment {
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                                 android.R.anim.fade_out);
-                        fragmentTransaction.replace(R.id.frame, allClients);
+                        fragmentTransaction.replace(R.id.frame, allClients, MainActivity.TAG_ALL_CLIENTS);
                         fragmentTransaction.commitAllowingStateLoss();
 
 //                        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();

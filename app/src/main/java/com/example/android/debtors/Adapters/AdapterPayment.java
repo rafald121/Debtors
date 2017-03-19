@@ -33,7 +33,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
     private List<Payment> listOfPayments = new ArrayList<>();
     private DatabasePayments dbPayments = null;
     private DatabaseClients dbClients = null;
-    private long clientID = -1;
     private Context context = null;
 
     public AdapterPayment(Context context){
@@ -57,12 +56,10 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         this.context = context;
         this.dbPayments = new DatabasePayments(context);
         this.listOfPayments = dbPayments.getPaymentsFromClient(clientID);
-        Log.i(TAG, "AdapterPayment: listOfPayments: " + listOfPayments.toString());
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder: start");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_payments,
                 parent, false);
 
@@ -71,9 +68,8 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.i(TAG, "onBindViewHolder: start");
         Payment payment = listOfPayments.get(position);
-        Log.i(TAG, "onBindViewHolder: payment " + payment.toString());
+
         String clientName = getClientByID(payment.getPaymentClientID()).getClientName();
         String[] dateArray = payment.getPaymentDate().split(" ");
         String dateString = dateArray[0];
@@ -91,20 +87,16 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             holder.textViewDetails.setText(payment.getPaymentDetails());
         } else{
             holder.linearLayout.setVisibility(View.INVISIBLE);
-//            holder.textViewDetails.setVisibility(View.INVISIBLE);
-//            holder.textViewDetailsHeader.setVisibility(View.INVISIBLE);
         }
 
         if(payment.isPaymentGotOrGiven())//if tru
             holder.textViewType.setText("Received");
         else
             holder.textViewType.setText("Given");
-        Log.i(TAG, "onBindViewHolder: END");
     }
 
     @Override
     public int getItemCount() {
-    Log.i(TAG, "getItemCount: " + listOfPayments.size());
         return listOfPayments.size();
     }
 
@@ -115,7 +107,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            Log.i(TAG, "MyViewHolder: start");
             textViewClient = (TextView) itemView.findViewById(R.id.payment_item_client);
             textViewPaymentAmount = (TextView) itemView.findViewById(R.id.payments_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.payments_item_date);
@@ -123,15 +114,21 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             textViewDetails = (TextView) itemView.findViewById(R.id.payments_item_details);
             textViewDetailsHeader = (TextView) itemView.findViewById(R.id.payments_item_details_header);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.payments_item_linear_details);
-
-            Log.i(TAG, "MyViewHolder: end");
         }
     }
+    private Client getClientByID(long ID){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        Client client = dbClients.getClientByID(ID);
+
+        return client;
+    }
+
     private List<Payment> getListOfPaymentsByClient(long clientID){
         DatabasePayments dbPayments = new DatabasePayments(context);
 
         List<Payment> paymentList = dbPayments.getPaymentsFromClient(clientID);
-        Log.i(TAG, "getListOfPaymentsByClient: list of payments: " + paymentList.toString());
+
         return paymentList;
     }
 
@@ -149,13 +146,5 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         List<Payment> list = dbPayments.getPaymentsByType(receivedOrGive);
 
         return list;
-    }
-
-    private Client getClientByID(long ID){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        Client client = dbClients.getClientByID(ID);
-
-        return client;
     }
 }

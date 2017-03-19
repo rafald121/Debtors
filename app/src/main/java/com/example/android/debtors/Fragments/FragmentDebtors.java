@@ -90,8 +90,7 @@ public class FragmentDebtors extends Fragment  {
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.debtors_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.debtors_tabs);
 
-        categoryAdapterDebtors = new CategoryAdapterDebtors
-                (getChildFragmentManager());
+        categoryAdapterDebtors = new CategoryAdapterDebtors(getChildFragmentManager());
         viewPager.setAdapter(categoryAdapterDebtors);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){

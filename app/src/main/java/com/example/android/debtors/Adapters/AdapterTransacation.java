@@ -33,8 +33,6 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     private Context context;
 
-    private long clientID = -1;
-
     public AdapterTransacation(Context context){
         this.context = context;
         this.listOfTransactions = getListOfAllTransactions();
@@ -58,12 +56,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         this.context = context;
         this.dbTransactions = new DatabaseTransactions(context);
         this.listOfTransactions = dbTransactions.getTransactionFromClient(clientID);
-        Log.i(TAG, "AdapterTransacation: listOfTransactions: " + listOfTransactions.toString());
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        Log.i(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_transaction, parent,
                 false);
         return new MyViewHolder(view);
@@ -72,8 +68,6 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         TransactionForClient transaction = listOfTransactions.get(position);
-//        Log.i(TAG, "onBindViewHolder: halo: " + transaction.toString());
-//        Log.i(TAG, "onBindViewHolder: client ID" + transaction.getTransactionClientID());
 
         Client client =  getClientById(transaction.getTransactionClientID());
 
@@ -89,26 +83,8 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             holder.textViewType.setText("Sale");
         else
             holder.textViewType.setText("Purchase");
-
-
     }
 
-//    public void filter(String text) {
-//        listOfTransactions.clear();
-//        if(text.isEmpty()){
-//            listOfTransactions.addAll(listOfTransactionsCopy);
-//        } else{
-//            text = text.toLowerCase();
-//
-//            for(TransactionForClient transactionForClient: listOfTransactionsCopy){
-//                if(transactionForClient.getClientName().toLowerCase().contains(text))
-//                    listOfTransactions.add(transactionForClient);
-//            }
-//
-//        }
-//        notifyDataSetChanged();
-//    }
-//
     @Override
     public int getItemCount() {
         return listOfTransactions.size();
@@ -128,6 +104,14 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         }
     }
 
+    private Client getClientById(long ID){
+        DatabaseClients dbClients = new DatabaseClients(context);
+
+        Client client = dbClients.getClientByID(ID);
+
+        return client;
+    }
+
     private List<TransactionForClient> getListOfAllTransactions(){
         DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
 
@@ -141,26 +125,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
         List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
 
-//        for (Transaction t : list){
-//            Log.i(TAG, "getListOfTransactionsSale: " + t.toString());
-//        }
-
         return list;
     }
 
-    private Client getClientById(long ID){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        Client client = dbClients.getClientByID(ID);
-
-        return client;
-    }
-
-    private List<Client> getListOfClients(){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        List<Client> list = dbClients.getAllClient();
-
-        return list;
-    }
 }

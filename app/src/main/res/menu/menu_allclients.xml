@@ -5,28 +5,28 @@
 
 
     <item
-        android:id="@+id/menu_allclients_min_date"
+        android:id="@+id/show_dialog"
         android:orderInCategory="200"
-        android:title="@string/menu_min_date"
-        app:showAsAction="never" />
+        android:icon="@drawable/more"
+        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menu_allclients_max_date"
-        android:orderInCategory="201"
-        android:title="@string/menu_max_date"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/menu_allclients_max_date"-->
+        <!--android:orderInCategory="201"-->
+        <!--android:title="@string/menu_max_date"-->
+        <!--app:showAsAction="never" />-->
 
-    <item
-        android:id="@+id/menu_allclients_min_amount"
-        android:orderInCategory="202"
-        android:title="@string/menu_min_amount"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/menu_allclients_min_amount"-->
+        <!--android:orderInCategory="202"-->
+        <!--android:title="@string/menu_min_amount"-->
+        <!--app:showAsAction="never" />-->
 
-    <item
-        android:id="@+id/menu_allclients_max_amount"
-        android:orderInCategory="203"
-        android:title="@string/menu_max_amount"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/menu_allclients_max_amount"-->
+        <!--android:orderInCategory="203"-->
+        <!--android:title="@string/menu_max_amount"-->
+        <!--app:showAsAction="never" />-->
 
 
 </menu>

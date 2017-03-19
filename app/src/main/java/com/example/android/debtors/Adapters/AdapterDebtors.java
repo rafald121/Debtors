@@ -37,10 +37,7 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
     List<Client> clientList = new ArrayList<>();
     List<Client> clientListCopy = new ArrayList<>();
 
-    private Context context;
     private FragmentActivity fragmentActivity;
-
-
 
     public AdapterDebtors(FragmentActivity fragmentActivity, List<Client> clientList) {
         this.fragmentActivity = fragmentActivity;
@@ -60,7 +57,6 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
         Client client = clientList.get(position);
         holder.debtorsItemName.setText(client.getClientName());
         holder.debtorsItemAmount.setText(String.valueOf(client.getClientLeftAmount()));
-
     }
 
     @Override
@@ -104,13 +100,9 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
 
         @Override
         public void onClick(View v) {
-            Log.i(TAG, "onClick: clicked position " + getLayoutPosition());
             Client client = clientList.get(getLayoutPosition());
-            Log.i(TAG, "onClick: clicked client : " + client.toString());
-            Log.i(TAG, "onClick: client ID: " + client.getClientId());
 
             if(v.getId() == debtorsItemImageButton.getId()) {
-                Log.i(TAG, "onClick: expand item");
                 MainActivity.PREVIOUS_TAG = MainActivity.CURRENT_TAG;
                 MainActivity.CURRENT_TAG = "singleClient";
                 Fragment fragment = new FragmentSingleClientInfo();
@@ -134,10 +126,6 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
             return bundle;
         }
 
-
     }
-
-
-
 
 }

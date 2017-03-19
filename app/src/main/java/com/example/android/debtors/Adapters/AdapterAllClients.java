@@ -80,7 +80,6 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-//        TODO check if private
         private ImageView allClientsItemAvatar;
         private TextView allClientsItemName, allClientsItemLeftAmount;
         private ImageButton allClientsItemButton;
@@ -98,14 +97,9 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
 
         @Override
         public void onClick(View v) {
-            Log.i(TAG, "onClick: clicked position " + getLayoutPosition());
             Client client = clientList.get(getLayoutPosition());
-            Log.i(TAG, "onClick: clicked client : " + client.toString());
-            Log.i(TAG, "onClick: client ID: " + client.getClientId());
-
 
             if(v.getId() == allClientsItemButton.getId()) {
-                Log.i(TAG, "onClick: expand item");
                 MainActivity.PREVIOUS_TAG = MainActivity.CURRENT_TAG;
                 MainActivity.CURRENT_TAG = "singleClient";
                 Fragment fragment = new FragmentSingleClientInfo();
