@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
@@ -29,27 +30,24 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     private DatabaseTransactions dbTransactions = null;
     private DatabaseClients dbClients = null;
     private List<TransactionForClient> listOfTransactions = new ArrayList<>();
-    private List<TransactionForClient> listOfTransactionsCopy = new ArrayList<>();
 
     private Context context;
 
     public AdapterTransacation(Context context){
         this.context = context;
         this.listOfTransactions = getListOfAllTransactions();
-        this.listOfTransactionsCopy.addAll(listOfTransactions);
     }
+
 
     public AdapterTransacation(Context context, boolean purchaseOrSale) {
         this.context = context;
         this.dbClients = new DatabaseClients(context);
         this.listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
-        this.listOfTransactionsCopy.addAll(listOfTransactions);
     }
 
     public AdapterTransacation(Context context, List<TransactionForClient> listOfTransactions){
         this.context = context;
         this.listOfTransactions = listOfTransactions;
-        this.listOfTransactionsCopy.addAll(listOfTransactions);
     }
 
     public AdapterTransacation(Context context, long clientID) {
@@ -88,6 +86,12 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     @Override
     public int getItemCount() {
         return listOfTransactions.size();
+    }
+
+    public void updateList(List<TransactionForClient> list){
+        listOfTransactions.clear();
+        listOfTransactions.addAll(list);
+        this.notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -19,13 +19,17 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
 //import com.example.android.debtors.ItemListener.RecyclerItemClickListener;
+import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.ItemListener.RecyclerOnScrollListener;
+import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -36,15 +40,12 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
-    AdapterPayment adapterPayment = null;
-    View rootView;
-    RecyclerView recyclerView;
+    private AdapterPayment adapterPayment = null;
+    private View rootView = null;
+    private RecyclerView recyclerView = null;
 
-//    interface test{
-//        void hide();
-//        void show();
-//    }
-//    private test mtest;
+    private List<Payment> listOfPayments = null;
+
 
     public FragmentPaymentsGiven() {
     }
@@ -58,8 +59,10 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        listOfPayments = getListOfTransactionsByType(false);
+
         rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
-        adapterPayment = new AdapterPayment(getContext(), false);
+        adapterPayment = new AdapterPayment(getContext(), listOfPayments);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
@@ -111,23 +114,23 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-
-                        Log.i(TAG, "reloadRecycler: ");
-//                        adapterPayment.notifyDataSetChanged();
-                        adapterPayment = new AdapterPayment(getContext(), false);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
-//                        setupRecyclerView(recyclerView);
-                        recyclerView.setAdapter(adapterPayment);
-//                        FragmentPaymentsGiven fragmentPaymentsGiven = new FragmentPaymentsGiven();
-//                
-//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-//                                android.R.anim.fade_out);
-//                        Log.i(TAG, "reloadRecycler: 1");
-//                        fragmentTransaction.replace(R.id.fragment_payments_given_frame, fragmentPaymentsGiven);
-//                        Log.i(TAG, "reloadRecycler: 2");
-//                        fragmentTransaction.commitAllowingStateLoss();
-//                        Log.i(TAG, "reloadRecycler: 3");
+                    adapterPayment.updateList(getListOfTransactionsByType(false));
+//                        Log.i(TAG, "reloadRecycler: ");
+////                        adapterPayment.notifyDataSetChanged();
+//                        adapterPayment = new AdapterPayment(getContext(), false);
+//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
+////                        setupRecyclerView(recyclerView);
+//                        recyclerView.setAdapter(adapterPayment);
+////                        FragmentPaymentsGiven fragmentPaymentsGiven = new FragmentPaymentsGiven();
+////
+////                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+////                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+////                                android.R.anim.fade_out);
+////                        Log.i(TAG, "reloadRecycler: 1");
+////                        fragmentTransaction.replace(R.id.fragment_payments_given_frame, fragmentPaymentsGiven);
+////                        Log.i(TAG, "reloadRecycler: 2");
+////                        fragmentTransaction.commitAllowingStateLoss();
+////                        Log.i(TAG, "reloadRecycler: 3");
 
                     }
                 });
@@ -180,5 +183,13 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
     @Override
     public void notifyWhenSwitched() {
         Log.i(TAG, "notifyWhenSwitched: given");
+    }
+
+    private List<Payment> getListOfTransactionsByType(boolean receivedOrGive) {
+        DatabasePayments dbPayments = new DatabasePayments(fragmentActivity);
+
+        List<Payment> list = dbPayments.getPaymentsByType(receivedOrGive);
+
+        return list;
     }
 }

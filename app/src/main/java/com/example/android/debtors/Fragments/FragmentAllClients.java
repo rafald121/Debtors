@@ -53,7 +53,6 @@ public class FragmentAllClients extends Fragment {
 
     private static final String TAG = FragmentAllClients.class.getSimpleName();
 
-    private AdapterAllClients adapterAllClients;
     private List<Client> listOfAllClients = new ArrayList<>();
 
     private DatabaseClients dbClients;
@@ -63,6 +62,10 @@ public class FragmentAllClients extends Fragment {
     private FragmentActivity fragmentActivity;
 
     private FloatingActionButton fab;
+
+    private View rootView = null;
+    private RecyclerView recyclerView = null;
+    private AdapterAllClients adapterAllClients = null;
 
     private CallbackAddInDialog addInDialog = null;
 
@@ -88,9 +91,9 @@ public class FragmentAllClients extends Fragment {
 
         listOfAllClients = getAllClientsFromDatabase();
 
-        View rootView = inflater.inflate(R.layout.fragment_all_clients, container, false);
+        rootView = inflater.inflate(R.layout.fragment_all_clients, container, false);
         adapterAllClients = new AdapterAllClients(fragmentActivity, listOfAllClients);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_without_viewpager);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterAllClients);
 
@@ -222,16 +225,17 @@ public class FragmentAllClients extends Fragment {
                 DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-
-                        FragmentAllClients allClients = new FragmentAllClients();
-
-                        Fragment fragment = allClients ;
-
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                                android.R.anim.fade_out);
-                        fragmentTransaction.replace(R.id.frame, allClients, MainActivity.TAG_ALL_CLIENTS);
-                        fragmentTransaction.commitAllowingStateLoss();
+//    adapterAllClients.notifyDataSetChanged();
+                        adapterAllClients.updateList(getAllClientsFromDatabase());
+//                        FragmentAllClients allClients = new FragmentAllClients();
+//
+//                        Fragment fragment = allClients ;
+//
+//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+//                                android.R.anim.fade_out);
+//                        fragmentTransaction.replace(R.id.frame, allClients, MainActivity.TAG_ALL_CLIENTS);
+//                        fragmentTransaction.commitAllowingStateLoss();
 
 //                        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
 //                        Fragment f = get

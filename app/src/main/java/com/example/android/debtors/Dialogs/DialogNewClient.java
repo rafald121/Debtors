@@ -64,6 +64,15 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
         this.type = type;
     }
 
+    public DialogNewClient(Context context, boolean type, CallbackAddInDialog callback) {
+        super(context);
+        this.context = context;
+        this.dbClients = new DatabaseClients(context);
+        this.type = type;
+        this.callbackAddInDialog =  callback;
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

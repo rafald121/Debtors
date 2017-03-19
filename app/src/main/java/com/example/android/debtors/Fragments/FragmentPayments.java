@@ -41,20 +41,18 @@ public class FragmentPayments extends Fragment {
     private static final String TAG = FragmentPayments.class.getSimpleName();
     private CategoryAdapterPayments categoryAdapterPayments;
     private ViewPager viewPager;
+
     public FragmentPayments() {
-        Log.i(TAG, "FragmentPayments: START");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: START");
         return inflater.inflate(R.layout.fragment_payments, container, false);
     }
 
@@ -105,10 +103,8 @@ public class FragmentPayments extends Fragment {
             }
         });
 
-        Log.i(TAG, "onViewCreated: 4");
 
         tabLayout.setupWithViewPager(viewPager);
-        Log.i(TAG, "onViewCreated: 5");
     }
 
     @Override
@@ -140,32 +136,17 @@ public class FragmentPayments extends Fragment {
     }
 
     public void onButtonPressed(Uri uri) {
-        Log.i(TAG, "onButtonPressed: START");
 
     }
 
     @Override
     public void onAttach(Context context) {
-        Log.i(TAG, "onAttach: START");
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
-        Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
-
-//    public void hideFAB() {
-//        if (categoryAdapterPayments != null) {
-//            categoryAdapterPayments.hideFAB();
-//        }
-//    }
-//
-//    public void showFAB() {
-//        if(categoryAdapterPayments != null){
-//            categoryAdapterPayments.showFAB();
-//        }
-//    }
 
 }

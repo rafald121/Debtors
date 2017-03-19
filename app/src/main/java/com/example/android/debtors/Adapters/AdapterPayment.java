@@ -42,7 +42,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     public AdapterPayment(Context context, List<Payment> listOfPayments) {
         this.context = context;
-        this.dbClients = new DatabaseClients(context);
         this.listOfPayments = listOfPayments;
     }
 
@@ -64,6 +63,12 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
                 parent, false);
 
         return new MyViewHolder(itemView);
+    }
+
+    public void updateList(List<Payment> list){
+        listOfPayments.clear();
+        listOfPayments.addAll(list);
+        this.notifyDataSetChanged();
     }
 
     @Override

@@ -42,7 +42,7 @@ public class FragmentTransactions extends Fragment {
 
     private static final String TAG = FragmentTransactions.class.getSimpleName();
     private CategoryAdapterTransactions categoryAdapterTransactions;
-    ViewPager viewPager;
+    private ViewPager viewPager;
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
     }

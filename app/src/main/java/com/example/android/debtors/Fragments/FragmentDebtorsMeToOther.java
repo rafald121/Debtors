@@ -22,6 +22,7 @@ import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -38,31 +39,29 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
 
     private DatabaseClients dbClients;
-    private List<Client> listOfClients;
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
-    private AdapterDebtors adapterDebtors;
 
+    private View rootView = null;
+    private AdapterDebtors adapterDebtors = null;
+    private RecyclerView recyclerView = null;
 
+    private List<Client> listOfClients = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
-
-        Log.i(TAG, "onCreate: end");
     }
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: START");
 
-        View rootView = inflater.inflate(R.layout.fragment_debtors_metoother, container, false);
         listOfClients = getClientsLessThanZero();
+
+        rootView = inflater.inflate(R.layout.fragment_debtors_metoother, container, false);
         adapterDebtors  = new AdapterDebtors(fragmentActivity, listOfClients);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_debtors_metoother_recycler);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_debtors_metoother_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterDebtors);
 
@@ -81,10 +80,8 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0){
-                    Log.i(TAG, "onScrolled: w dol");
                     fab.hide();
                 }else if(dy<0 ) {
-                    Log.i(TAG, "onScrolled: w gore");
                     fab.show();
                 }
             }
@@ -98,10 +95,6 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
-
-//        Runnable r = new Threadd(rootView);
-//        new Thread(r).run();
 
         Log.i(TAG, "onCreateView: END");
         return rootView;
@@ -131,7 +124,12 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
                 Snackbar.make(view, "Debtors me to other", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity,false);
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, false, new CallbackAddInDialog() {
+                    @Override
+                    public void reloadRecycler() {
+                        adapterDebtors.updateList(getClientsLessThanZero());
+                    }
+                });
                 dialogNewClient.show();
             }
         });
@@ -164,19 +162,12 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         super.onDetach();
     }
 
-    public List<Client> getClientsLessThanZero(){
-        dbClients = new DatabaseClients(getContext());
-        List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(false);
-        return clients;
-    }
-
     public void showFAB() {
         if(!fab.isShown())
             fab.show();
         else
             Log.e(TAG, "showFAB: ");
     }
-
 
     public void hideFAB(){
         if(fab.isShown())
@@ -188,5 +179,11 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
     @Override
     public void notifyWhenSwitched() {
         Log.i(TAG, "notifyWhenSwitched: ME TO OTHER");
+    }
+
+    public List<Client> getClientsLessThanZero(){
+        dbClients = new DatabaseClients(getContext());
+        List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(false);
+        return clients;
     }
 }

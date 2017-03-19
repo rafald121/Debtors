@@ -21,6 +21,7 @@ import com.example.android.debtors.Fragments.FragmentDebtorsForMe;
 import com.example.android.debtors.Fragments.FragmentSingleClientInfo;
 import com.example.android.debtors.Fragments.FragmentTransactions;
 import com.example.android.debtors.Model.Client;
+import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
 import java.util.ArrayList;
@@ -78,6 +79,12 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
 
         }
         notifyDataSetChanged();
+    }
+
+    public void updateList(List<Client> list){
+        clientList.clear();
+        clientList.addAll(list);
+        this.notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

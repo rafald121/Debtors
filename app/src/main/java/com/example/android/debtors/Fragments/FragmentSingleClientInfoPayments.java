@@ -36,7 +36,6 @@ public class FragmentSingleClientInfoPayments extends Fragment{
 
     private static final String TAG = FragmentSingleClientInfoPayments.class.getSimpleName();
     private long clientsID;
-    private List<Payment> listOfPayments;
     private DatabasePayments dbPayments;
 
     private FloatingActionButton fab;
@@ -46,36 +45,29 @@ public class FragmentSingleClientInfoPayments extends Fragment{
     private RecyclerView recyclerView = null;
     private AdapterPayment adapterPayment = null;
 
+    private List<Payment> listOfPayments = null;
 
     public FragmentSingleClientInfoPayments() {
 
     }
 
     public static Fragment newInstance(long clientID) {
-        Log.i(TAG, "newInstance: start");
         FragmentSingleClientInfoPayments f = new FragmentSingleClientInfoPayments();
         f.clientsID = clientID;
 
-        Log.i(TAG, "newInstance: before return ");
         return f;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
-
-        Log.i(TAG, "onCreate: end");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        listOfPayments = getPaymentsByClientId(clientsID);
 
-        for( Payment p : listOfPayments ){
-            Log.i(TAG, "onCreateView: payment : " + p.toString());
-        }
+        listOfPayments = getPaymentsByClientId(clientsID);
 
         rootView = inflater.inflate(R.layout.fragment_singleclient_payments,container, false);
         adapterPayment = new AdapterPayment(getContext(),listOfPayments);
@@ -95,8 +87,6 @@ public class FragmentSingleClientInfoPayments extends Fragment{
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     Log.i(TAG, "onScrollStateChanged: ");
                 }
@@ -118,23 +108,17 @@ public class FragmentSingleClientInfoPayments extends Fragment{
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_singleclient_payments_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, clientsID, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-//                        adapterPayment.notifyDataSetChanged();
-                        adapterPayment = new AdapterPayment(getContext(), clientsID);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_payments_recycler);
-                        recyclerView.setAdapter(adapterPayment);
+                        adapterPayment.updateList(getPaymentsByClientId(clientsID));
                     }
                 });
                 dialogPayment.show();

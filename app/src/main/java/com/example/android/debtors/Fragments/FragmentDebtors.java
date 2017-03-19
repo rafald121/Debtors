@@ -43,6 +43,7 @@ import de.greenrobot.event.EventBus;
 public class FragmentDebtors extends Fragment  {
 
     private static final String TAG = FragmentDebtors.class.getSimpleName();
+
     static final String QUERY_DEBTORS = "QUERY_DEBTORS";
 
     private SearchView searchView = null;
@@ -50,35 +51,19 @@ public class FragmentDebtors extends Fragment  {
     private FragmentActivity fragmentActivity;
     private CategoryAdapterDebtors categoryAdapterDebtors;
 
-    interface SearchViewQuery{
-        void searchViewQueryChanged(String query);
-    }
-    private SearchViewQuery searchViewQuery;
-
     public FragmentDebtors() {
-        Log.i(TAG, "FragmentDebtors: START");
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: start");
-
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Log.i(TAG, "onCreate: end");
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: start");
-
-        Log.i(TAG, "onCreateView: end");
-
-
-
         return inflater.inflate(R.layout.fragment_debtors, container, false);
     }
 
@@ -152,18 +137,12 @@ public class FragmentDebtors extends Fragment  {
             queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-
-                    Log.i("onQueryTextChange", newText);
-
                     EventBus.getDefault().post(new SearchQuery(newText));
-
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    Log.i("onQueryTextSubmit", query);
-
                     return true;
                 }
             };
@@ -217,19 +196,5 @@ public class FragmentDebtors extends Fragment  {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
-
-//    public void showFAB() {
-//        if (categoryAdapterDebtors != null) {
-//            categoryAdapterDebtors.showFAB();
-//        } else
-//            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
-//    }
-//
-//    public void hideFAB() {
-//        if (categoryAdapterDebtors != null) {
-//            categoryAdapterDebtors.hideFAB();
-//        } else
-//            Log.e(TAG, "showFAB: categoryAdapterDebtors is null");
-//    }
 
 }

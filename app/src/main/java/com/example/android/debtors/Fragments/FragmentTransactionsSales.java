@@ -17,12 +17,16 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
+import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
+import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -33,10 +37,12 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
-//TODO private\/
-    View rootView = null;
-    AdapterTransacation adapterTransacation = null;
-    RecyclerView recyclerView = null;
+
+    private View rootView = null;
+    private AdapterTransacation adapterTransacation = null;
+    private RecyclerView recyclerView = null;
+
+    private List<TransactionForClient> listOfTransactions = null;
 
     public FragmentTransactionsSales() {
     }
@@ -54,8 +60,11 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        listOfTransactions = getListOfTransactionsByType(true);
+
         rootView = inflater.inflate(R.layout.fragment_transactions_sales, container, false);
-        adapterTransacation = new AdapterTransacation(getContext(), true);
+        adapterTransacation = new AdapterTransacation(getContext(), listOfTransactions);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransacation);
@@ -105,9 +114,10 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                        adapterTransacation = new AdapterTransacation(getContext(), true);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
-                        recyclerView.setAdapter(adapterTransacation);
+                        adapterTransacation.updateList(getListOfTransactionsByType(true));
+//                        adapterTransacation = new AdapterTransacation(getContext(), true);
+//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
+//                        recyclerView.setAdapter(adapterTransacation);
                     }
                 });
                 dialogTransaction.show();
@@ -166,5 +176,13 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
             fab.show();
         }else
             Log.e(TAG, "notifyWhenSwitched: fab is null");
+    }
+
+    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
+        DatabaseTransactions dbTransactions = new DatabaseTransactions(fragmentActivity);
+
+        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
+
+        return list;
     }
 }

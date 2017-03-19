@@ -21,6 +21,7 @@ import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
+import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -32,7 +33,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Rafaello on 2017-02-18.
  */
-public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.SearchViewQuery, InterfaceViewPager{
+public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager{
 
 
     @Override
@@ -53,25 +54,13 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
     private FragmentActivity fragmentActivity;
     private AdapterDebtors adapterDebtors;
     private RecyclerView recyclerView;
-    @Override
-    public void searchViewQueryChanged(String query) {
-        Log.i(TAG, "searchViewQueryChanged: halo");
-        this.query = query;
-        adapterDebtors.filter(query);
-    }
 
     public FragmentDebtorsForMe() {
-        Log.i(TAG, "FragmentDebtorsForMe: START");
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
-
-
-        Log.i(TAG, "onCreate: end");
     }
 
     public void onEvent(SearchQuery query){
@@ -82,7 +71,7 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: START");
+
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
         listOfClients = getClientsMoreThanZero();
@@ -97,12 +86,8 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0){
-                    Log.i(TAG, "onScrolled: w dol");
-
                     fab.hide();
                 }else if(dy<0 ) {
-                    Log.i(TAG, "onScrolled: w gore");
-
                     fab.show();
                 }
             }
@@ -124,7 +109,6 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
 
     }
 
-
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
@@ -133,13 +117,8 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void scrolling(boolean direction){
-
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_debtors_forme_fab);
@@ -147,19 +126,16 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view, "Debtors forme ", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity,true);
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity,true, new CallbackAddInDialog(){
+                    @Override
+                    public void reloadRecycler() {
+                        adapterDebtors.updateList(getClientsMoreThanZero());
+                    }
+                });
                 dialogNewClient.show();
-
-//                adapterDebtors.notifyDataSetChanged();
-
 
             }
         });
-
-        Log.i(TAG, "onViewCreated: END");
     }
 
     public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
@@ -171,15 +147,13 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
 
     @Override
     public void onAttach(Context context) {
-        Log.i(TAG, "onAttach: START");
         fragmentActivity = (FragmentActivity) context;
-        EventBus.getDefault().register(this); // this == your class instance
+        EventBus.getDefault().register(this);
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
-        Log.i(TAG, "onDetach: START");
         EventBus.getDefault().unregister(this);
         super.onDetach();
     }
@@ -198,7 +172,7 @@ public class FragmentDebtorsForMe extends Fragment implements FragmentDebtors.Se
         else
             Log.e(TAG, "hideFAB: ");
     }
-    public List<Client> getClientsMoreThanZero() {
+    private List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
         return clients;

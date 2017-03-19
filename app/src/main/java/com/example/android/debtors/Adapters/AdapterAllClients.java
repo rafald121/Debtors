@@ -79,6 +79,12 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
         notifyDataSetChanged();
     }
 
+    public void updateList(List<Client> list){
+        clientList.clear();
+        clientList.addAll(list);
+        this.notifyDataSetChanged();
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView allClientsItemAvatar;
         private TextView allClientsItemName, allClientsItemLeftAmount;

@@ -51,6 +51,8 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
     private RecyclerView recyclerView = null;
     private AdapterTransacation adapterTransacation = null;
 
+    private List<TransactionForClient> listofTransactions = null;
+
     public FragmentSingleClientInfoTransactions() {
         Log.i(TAG, "FragmentDebtorsForMe: START");
         // Required empty public constructor
@@ -79,8 +81,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
         listOfTransactionsForClient = getTransactionsByClientId(clientsID);
-        Log.i(TAG, "onCreateView: listOfTransactionsForClient: " + listOfTransactionsForClient.toString());
-//        fab = (FloatingActionButton)
 
         rootView = inflater.inflate(R.layout.fragment_singleclient_transactions, container, false);
         adapterTransacation = new AdapterTransacation(getContext(), listOfTransactionsForClient);
@@ -112,36 +112,28 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
 
         Log.i(TAG, "onCreateView: END");
 
-//        recyclerView.setAdapter(adapterDebtors);
-
         return rootView;
 
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_singleclient_transactions_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, clientsID, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                        adapterTransacation = new AdapterTransacation(getContext(), clientsID);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_transactions_recycler);
-                        recyclerView.setAdapter(adapterTransacation);
+                        //TODO when transaction with payment, payment page isn't reload
+                    adapterTransacation.updateList(getTransactionsByClientId(clientsID));
                     }
                 });
                 dialogTransaction.show();
             }
         });
-        Log.i(TAG, "onViewCreated: END");
     }
 
 

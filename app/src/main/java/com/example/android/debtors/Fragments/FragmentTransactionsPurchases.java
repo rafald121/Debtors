@@ -48,16 +48,17 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
-    View rootView = null;
-    AdapterTransacation adapterTransacation = null;
-    RecyclerView recyclerView = null;
+    private View rootView = null;
+    private AdapterTransacation adapterTransacation = null;
+    private RecyclerView recyclerView = null;
+
+    private List<TransactionForClient> listOfTransactions = null;
 
     public FragmentTransactionsPurchases() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
 
     }
@@ -65,9 +66,10 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: START");
+        listOfTransactions = getListOfTransactionsByType(false);
+
         rootView = inflater.inflate(R.layout.fragment_transactions_purchases, container, false);
-        adapterTransacation = new AdapterTransacation(getContext(),false);
+        adapterTransacation = new AdapterTransacation(getContext(),listOfTransactions);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterTransacation);
@@ -118,9 +120,10 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                        adapterTransacation = new AdapterTransacation(getContext(), false);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
-                        recyclerView.setAdapter(adapterTransacation);
+                    adapterTransacation.updateList(getListOfTransactionsByType(false));
+//                        adapterTransacation = new AdapterTransacation(getContext(), false);
+//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
+//                        recyclerView.setAdapter(adapterTransacation);
                     }
                 });
                 dialogTransaction.show();
@@ -191,4 +194,13 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
         Log.i(TAG, "notifyWhenSwitched: eee?");
     }
+
+    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
+        DatabaseTransactions dbTransactions = new DatabaseTransactions(fragmentActivity);
+
+        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
+
+        return list;
+    }
+
 }

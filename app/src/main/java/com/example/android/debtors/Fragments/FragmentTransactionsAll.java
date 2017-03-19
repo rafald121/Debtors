@@ -17,12 +17,16 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
+import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
+import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -37,9 +41,11 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
-    View rootView = null;
-    AdapterTransacation adapterTransaction = null;
-    RecyclerView recyclerView = null;
+    private View rootView = null;
+    private AdapterTransacation adapterTransaction = null;
+    private RecyclerView recyclerView = null;
+
+    private List<TransactionForClient> listOfTransactions = null;
 
     public FragmentTransactionsAll(){
     }
@@ -52,8 +58,11 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        listOfTransactions = getListOfAllTransactions();
+
         rootView = inflater.inflate(R.layout.fragment_transactions_all, container, false);
-        adapterTransaction = new AdapterTransacation(getContext());
+        adapterTransaction = new AdapterTransacation(getContext(), listOfTransactions);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
         setupRecyclerView(recyclerView);
 
@@ -98,16 +107,15 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "transaction purchases", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
+                    adapterTransaction.updateList(getListOfAllTransactions());
 //                       // zaleznei od ustawien albo domyslnie true albo false    \/
-                        adapterTransaction = new AdapterTransacation(getContext(), true);
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
-                        recyclerView.setAdapter(adapterTransaction);
+//                        adapterTransaction = new AdapterTransacation(getContext(), true);
+//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
+//                        recyclerView.setAdapter(adapterTransaction);
                     }
                 });
                 dialogTransaction.show();
@@ -159,5 +167,13 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
         Log.i(TAG, "notifyWhenSwitched: all");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
         fab.show();
+    }
+
+    private List<TransactionForClient> getListOfAllTransactions(){
+        DatabaseTransactions dbTransactions = new DatabaseTransactions(fragmentActivity);
+
+        List<TransactionForClient> list = dbTransactions.getAllTransactions();
+
+        return list;
     }
 }
