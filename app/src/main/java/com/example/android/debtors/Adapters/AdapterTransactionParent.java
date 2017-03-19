@@ -29,7 +29,6 @@ public class AdapterTransactionParent extends ParentViewHolder {
 
     public AdapterTransactionParent(View itemView) {
         super(itemView);
-
         textViewClient = (TextView) itemView.findViewById(R.id.transaction_item_client);
         textViewTotalAmount = (TextView) itemView.findViewById(R.id.transaction_item_totalamount);
         textViewDate = (TextView) itemView.findViewById(R.id.transaction_item_date);

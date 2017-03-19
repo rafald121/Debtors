@@ -37,7 +37,6 @@ public class AdapterTransasctionsExpandable extends ExpandableRecyclerAdapter<Ad
         super(context, transaction);
     }
 
-
     @Override
     public AdapterTransactionParent onCreateParentViewHolder(ViewGroup viewGroup) {
         View parent;
@@ -63,40 +62,5 @@ public class AdapterTransasctionsExpandable extends ExpandableRecyclerAdapter<Ad
         adapterTransactonChild.bind((TransactionForClient) o);
 
     }
-////
-//    private List<TransactionForClient> getListOfAllTransactions(){
-//        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
-//
-//        List<TransactionForClient> list = dbTransactions.getAllTransactions();
-//
-//        return list;
-//    }
-//
-//    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
-//        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
-//
-//        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
-//
-//        for (Transaction t : list){
-//            Log.i(TAG, "getListOfTransactionsSale: " + t.toString());
-//        }
-//
-//        return list;
-//    }
-//
-//    private Client getClientById(long ID){
-//        DatabaseClients dbClients = new DatabaseClients(context);
-//
-//        Client client = dbClients.getClientByID(ID);
-//
-//        return client;
-//    }
-//
-//    private List<Client> getListOfClients(){
-//        DatabaseClients dbClients = new DatabaseClients(context);
-//
-//        List<Client> list = dbClients.getAllClient();
-//
-//        return list;
-//    }
+
 }
