@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     public static int previousSubFragmentID = -1;
 
 
-    private static final String TAG_ALL_CLIENTS = String.valueOf(R.string.tag_allclients);
+    public static final String TAG_ALL_CLIENTS = String.valueOf(R.string.tag_allclients);
     private static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
     private static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
     private static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);

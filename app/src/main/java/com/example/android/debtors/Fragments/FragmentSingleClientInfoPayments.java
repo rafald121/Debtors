@@ -131,6 +131,7 @@ public class FragmentSingleClientInfoPayments extends Fragment{
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, clientsID, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
+//                        adapterPayment.notifyDataSetChanged();
                         adapterPayment = new AdapterPayment(getContext(), clientsID);
                         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_singleclient_payments_recycler);
                         recyclerView.setAdapter(adapterPayment);
