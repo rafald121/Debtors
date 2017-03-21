@@ -308,6 +308,31 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return debtorsAmount;
     }
 
+    public List<Client> getListOfClientWithLeftAmountInRange(int min, int max){
+        List<Client> clientsList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " >= "
+                + min + " AND " + CLIENT_LEFT_AMOUNT + " <= " + max;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()) {
+            do {
+                Client client = null;
+                client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                clientsList.add(client);
+            } while (c.moveToNext());
+        }
+
+            return clientsList;
+
+    }
+
     public List<Client> getClientWithLeftAmountInRange(int min, int max){
         List<Client> clientsList = new ArrayList<>();
 

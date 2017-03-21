@@ -4,57 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:rsb="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="400dp"
+    android:layout_height="200dp"
     android:layout_width="250dp">
-
-    <TextView
-        android:id="@+id/textView3"
-        android:text="@string/dialog_newclient_menu_from"
-        android:layout_width="218dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        style="@style/DialogMenuHeader"
-        android:layout_marginTop="16dp" />
-
-    <EditText
-        android:id="@+id/dialog_allclient_menu_edittext_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:hint="DD-MM-YYYY"
-        style="@style/DialogMenuEditText"/>
-
-    <TextView
-        android:id="@+id/textView4"
-        android:text="@string/dialog_newclient_menu_to"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_from_validate"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        style="@style/DialogMenuHeader"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-
-    <EditText
-        android:id="@+id/dialog_allclient_menu_edittext_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:hint="DD-MM-YYYY"
-        style="@style/DialogMenuEditText"
-        />
-        <!--android:text="Click to select date"-->
-
-
 
     <TextView
         android:id="@+id/textView5"
@@ -63,7 +14,7 @@
         android:layout_height="wrap_content"
         style="@style/DialogMenuHeader"
         android:layout_marginTop="@dimen/dialog_header"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_to_validate"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -115,20 +66,5 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_edittext_from"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/dialog_allclient_menu_from_validate" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_edittext_to"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/dialog_allclient_menu_to_validate" />
 
 </android.support.constraint.ConstraintLayout>
