@@ -131,33 +131,53 @@ public class DialogAllClientsMenu extends DialogFragment {
 
     private boolean validate(Editable s) {
         String string =  s.toString();
+
         if(string.length()==10) {
 
             String[] dateSplit = string.split("-");
 
             if (dateSplit.length == 3) {
 
-                if(dateSplit[0].length()==2 && dateSplit[1].length()==2 && dateSplit[2].length()==4){
+                if(dateSplit[0].length()==2 && dateSplit[1].length()==2 && dateSplit[2].length()==4) {
 
-                    if(Integer.parseInt(dateSplit[0]) >= 1   && Integer.parseInt(dateSplit[0]) <= 30 )
+                    if (Integer.parseInt(dateSplit[2]) > 1970 && Integer.parseInt(dateSplit[2]) < 2018) {
 
-                        if(Integer.parseInt(dateSplit[1]) >= 1 && Integer.parseInt(dateSplit[0])  <= 12 )
+                        if (Integer.parseInt(dateSplit[1]) >= 1 && Integer.parseInt(dateSplit[1]) <= 12){
 
-                            if (Integer.parseInt(dateSplit[2]) > 1970 && Integer.parseInt(dateSplit[0]) < 2018 )
-                                return true;
+//                            KWIE CZER WRZE LIS
+                            if (Integer.parseInt(dateSplit[1]) == 4 || Integer.parseInt(dateSplit[1]) == 6 || Integer.parseInt(dateSplit[1]) == 9 || Integer.parseInt(dateSplit[1]) == 11) {
 
-                            else {
-                                Log.e(TAG, "validate: blad w roku");
-                                return false;
+                                if (Integer.parseInt(dateSplit[0]) >= 1 && Integer.parseInt(dateSplit[0]) <= 30) {
+                                    return true;
+                                } else {
+                                    Log.e(TAG, "validate: kwie czer wrze lis musi miec 30 dni");
+                                    return false;
+                                }
+//                            LUTY
+                            } else if(Integer.parseInt(dateSplit[1])==2){
+                                if (Integer.parseInt(dateSplit[0]) >= 1 && Integer.parseInt(dateSplit[0]) <= 28) {
+                                    return true;
+                                } else {
+                                    Log.e(TAG, "validate: luty!!");
+                                    return false;
+                                }
+//                              ZWYKLY INNY MIESIAC
+                            } else {
+                                if (Integer.parseInt(dateSplit[0]) >= 1 && Integer.parseInt(dateSplit[0]) <= 31) {
+                                    return true;
+                                } else {
+                                    Log.e(TAG, "validate: ZWYKLY MIESIAC MA 31 dni !!");
+                                    return false;
+                                }
                             }
 
-                        else{
+                        } else {
                             Log.e(TAG, "validate: blad w miesiacach");
                             return false;
                         }
 
-                    else {
-                        Log.e(TAG, "validate: blad w dniach ");
+                    }else {
+                        Log.e(TAG, "validate: blad w roku");
                         return false;
                     }
 
@@ -165,9 +185,7 @@ public class DialogAllClientsMenu extends DialogFragment {
                     Log.e(TAG, "validate: zly format między myslnikami");
                     return false;
                 }
-
-            }
-            else {
+            } else {
                 Log.e(TAG, "validate: zly format, nie ma dwóch myslinikow");
                 return false;
             }
@@ -175,9 +193,7 @@ public class DialogAllClientsMenu extends DialogFragment {
             Log.e(TAG, "validate: dlugosc nei równa się 10, a równa sie: " +  string.length());
             return false;
         }
-//        if(s.length()>10)
-//            return false;
-//        else if(s.length()<)
+
     }
 
     @Override
