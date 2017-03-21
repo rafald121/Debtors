@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.android.debtors.Interfaces.CallbackAllclientMenuDialog;
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
 
@@ -44,6 +45,8 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
     private RangeSeekBar rangeSeekBarTextColorWithCode = null;
 
+    private CallbackAllclientMenuDialog callbackMenuDialog;
+
     public static DialogMenuAllClients newInstance(int num) {
         DialogMenuAllClients f = new DialogMenuAllClients();
 
@@ -61,6 +64,8 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        callbackMenuDialog = (CallbackAllclientMenuDialog) getParentFragment();
+//        callbackMenuDialog = fragmentActivity;
     }
 
     @Nullable
@@ -93,6 +98,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
 
+//        callbackMenuDialog = (CallbackAllclientMenuDialog) fragmentActivity;
     }
 
     @Override
@@ -105,8 +111,9 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
             int maxAmount = (Integer) rangeSeekBarTextColorWithCode.getSelectedMaxValue();
             Log.i(TAG, "onClick: maxAmount: " + maxAmount);
 
-
+            callbackMenuDialog.reloadRecycler(minAmount, maxAmount);
             //query
+            dismiss();
         } else if(v.getId() == buttonCancel.getId()){
             dismiss();
             Log.e(TAG, "onClick: eeee????????");

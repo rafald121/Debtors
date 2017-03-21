@@ -320,7 +320,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         if(c.moveToFirst()) {
             do {
-                Client client = null;
+                Client client = new Client();
                 client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
                 client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
                 client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
