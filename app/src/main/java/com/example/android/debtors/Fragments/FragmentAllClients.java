@@ -2,10 +2,8 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,7 +26,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
-import com.example.android.debtors.Dialogs.DialogAllClientsMenu;
+import com.example.android.debtors.Dialogs.DialogMenuAllClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Helper.SwipeableRecyclerViewTouchListener;
@@ -247,7 +245,7 @@ public class FragmentAllClients extends Fragment {
 
         ft.addToBackStack(null);
 
-        DialogFragment d = DialogAllClientsMenu.newInstance(2);
+        DialogFragment d = DialogMenuAllClients.newInstance(2);
         d.show(ft, "new");
 
     }

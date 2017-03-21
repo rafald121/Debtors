@@ -1,14 +1,10 @@
 package com.example.android.debtors.Dialogs;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.icu.util.Output;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.os.CancellationSignal;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,28 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
-import org.w3c.dom.Text;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by admin on 19.03.2017.
  */
 
-public class DialogAllClientsMenu extends DialogFragment implements View.OnClickListener{
+public class DialogMenuAllClients extends DialogFragment implements View.OnClickListener{
 
-    private static final String TAG = DialogAllClientsMenu.class.getSimpleName();
+    private static final String TAG = DialogMenuAllClients.class.getSimpleName();
 
     private EditText editTextFrom, editTextTo = null;
     private TextView validateFrom, validateTo, textViewError = null;
@@ -63,8 +55,8 @@ public class DialogAllClientsMenu extends DialogFragment implements View.OnClick
     RangeSeekBar rangeSeekBarTextColorWithCode = null;
     private RangeSeekBar<Integer> rangeSeekBar = null;
 
-    public static DialogAllClientsMenu newInstance(int num) {
-        DialogAllClientsMenu f = new DialogAllClientsMenu();
+    public static DialogMenuAllClients newInstance(int num) {
+        DialogMenuAllClients f = new DialogMenuAllClients();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
@@ -74,7 +66,7 @@ public class DialogAllClientsMenu extends DialogFragment implements View.OnClick
         return f;
     }
 
-    public DialogAllClientsMenu() {
+    public DialogMenuAllClients() {
     }
 
     @Override
@@ -86,7 +78,7 @@ public class DialogAllClientsMenu extends DialogFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.dialog_allclients_menu, container, false);
+        view = inflater.inflate(R.layout.dialog_menu_allclients, container, false);
 
         editTextFrom = (EditText) view.findViewById(R.id.dialog_allclient_menu_edittext_from);
         editTextTo = (EditText) view.findViewById(R.id.dialog_allclient_menu_edittext_to);
