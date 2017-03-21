@@ -19,11 +19,26 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
 
+    static SimpleDateFormat dateFormat;
+
     public static String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
+        dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public static String getDate(){
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        Date date = new Date();
+
+        return dateFormat.format(date);
+    }
+
+    public static String getDateTimeTrimmed(){
+        String[] string = getDateTime().split(" ");
+        return string[0];
     }
 
     public static String getStringFromResource(int r){

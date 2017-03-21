@@ -19,7 +19,7 @@
         android:layout_marginTop="16dp" />
 
     <EditText
-        android:id="@+id/dialog_allclient_menu_textview_from"
+        android:id="@+id/dialog_allclient_menu_edittext_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
@@ -27,7 +27,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:ems="10"
-        android:hint="Click to select date"
+        android:hint="DD-MM-YYYY"
         style="@style/DialogMenuEditText"/>
 
     <TextView
@@ -35,23 +35,26 @@
         android:text="@string/dialog_newclient_menu_to"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_textview_from"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_edittext_from"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         style="@style/DialogMenuHeader"
         app:layout_constraintHorizontal_bias="0.0" />
 
-    <TextView
-        android:id="@+id/dialog_allclient_menu_textview_to"
+
+    <EditText
+        android:id="@+id/dialog_allclient_menu_edittext_to"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:inputType="date"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:ems="10"
-        android:text="Click to select date"
-        style="@style/DialogMenuEditText"/>
+        style="@style/DialogMenuEditText"
+        android:hint="DD-MM-YYYY"
+        />
+        <!--android:text="Click to select date"-->
+
 
 
     <TextView
@@ -60,19 +63,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/DialogMenuHeader"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_textview_to"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_edittext_to"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <org.florescu.android.rangeseekbar.RangeSeekBar
         android:id="@+id/dialog_allclients_menu_rangeseekbar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        rsb:absoluteMaxValue="150"
-        rsb:absoluteMinValue="20" />
+        rsb:valuesAboveThumbs="true"
+        app:activateOnDefaultValues="true"
+        android:layout_height="82dp" />
 
     <LinearLayout
         android:id="@+id/dialog_allclientlinear"
