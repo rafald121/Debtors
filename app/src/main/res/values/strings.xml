@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Debtors</string>
 
+    <string name="nav_header_for_me">Your money in debtors: </string>
+    <string name="nav_header_me_to_other">Your debts in others: </string>
+
+
     <string name="nav_all_clients">All Clients</string>
     <string name="nav_debtors">Debtors</string>
     <string name="nav_transactions">Transactions</string>

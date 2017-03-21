@@ -398,6 +398,44 @@ public class DatabaseClients extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    public int getAmountForMe() {
+//        List<Client> listOfClients = new ArrayList<>();
+
+        SQLiteDatabase db= this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " > 0";
+
+        Cursor c = db.rawQuery(query, null);
+
+        int amountForMe = 0;
+
+        if(c.moveToFirst())
+            do{
+                amountForMe += c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+            } while (c.moveToNext());
+
+        return amountForMe;
+    }
+
+    public int getAmountMeToOther() {
+
+        SQLiteDatabase db= this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " < 0";
+
+        Cursor c = db.rawQuery(query, null);
+
+        int amountMeToOther = 0;
+
+        if(c.moveToFirst())
+            do{
+                amountMeToOther += c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+            } while (c.moveToNext());
+
+        return amountMeToOther;
+
+    }
 }
 
 

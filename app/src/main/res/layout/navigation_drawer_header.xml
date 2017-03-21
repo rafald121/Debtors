@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/view_container"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/nav_header_height"
-                android:gravity="bottom"
-                android:orientation="vertical"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
         android:id="@+id/navigation_drawer_header_background"
@@ -15,33 +15,60 @@
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher" />
 
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin">
-<!--TODO MOZNA ZAPROJEKTOWAC JAKOS LEPIEJ NP LACZNA KWOTA, ILOSC KLIENTOW ITD-->
-        <ImageView
-            android:id="@+id/navigation_drawer_header_profile"
-            android:layout_width="@dimen/profile_width"
-            android:layout_height="@dimen/profile_height"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_alignParentStart="true">
+        <!--android:padding="@dimen/activity_horizontal_margin"-->
+        <!--TODO MOZNA ZAPROJEKTOWAC JAKOS LEPIEJ NP LACZNA KWOTA, ILOSC KLIENTOW ITD-->
 
         <TextView
-            android:id="@+id/navigation_drawer_header_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorHeaderText"/>
-
-        <TextView
-            android:id="@+id/navigation_drawer_header_mail"
+            android:id="@+id/navigation_drawer_header_all_amount_for_me"
+            android:text="@string/nav_header_for_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorHeaderText"/>
+            android:textColor="@color/red"
+            android:textSize="@dimen/nav_header_textsize"
+            />
+
+        <TextView
+            android:id="@+id/navigation_drawer_header_all_amount_me_to_other"
+            android:text="@string/nav_header_me_to_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:textSize="@dimen/nav_header_textsize"
+            />
+        <!--<TextView-->
+            <!--android:id="@+id/navigation_drawer_header_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+            <!--android:textColor="@color/colorHeaderText"-->
+            <!--/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/navigation_drawer_header_mail"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/colorHeaderText"/>-->
 
     </LinearLayout>
+
+    <!--<ImageView-->
+    <!--android:id="@+id/navigation_drawer_header_profile"-->
+    <!--android:layout_width="@dimen/profile_width"-->
+    <!--android:layout_height="@dimen/profile_height"-->
+    <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+    <!--app:srcCompat="@android:drawable/sym_def_app_icon"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginStart="16dp" />-->
+
 </RelativeLayout>

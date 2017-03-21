@@ -31,6 +31,7 @@ import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogAllClientsMenu;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
+import com.example.android.debtors.Helper.SwipeableRecyclerViewTouchListener;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -117,6 +118,46 @@ public class FragmentAllClients extends Fragment {
             }
         });
 
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+            new SwipeableRecyclerViewTouchListener(recyclerView,
+                new SwipeableRecyclerViewTouchListener.SwipeListener() {
+//                            @Override
+//                            public boolean canSwipe(int position) {
+//                                return true;
+//                            }
+
+                    @Override
+                    public boolean canSwipeLeft(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean canSwipeRight(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                        Log.i(TAG, "onDismissedBySwipeLeft: left");
+                        for (int position : reverseSortedPositions) {
+                            listOfAllClients.remove(position);
+                            adapterAllClients.notifyItemRemoved(position);
+                        }
+                        adapterAllClients.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                        Log.i(TAG, "onDismissedBySwipeRight: right");
+                        for (int position : reverseSortedPositions) {
+                            listOfAllClients.remove(position);
+                            adapterAllClients.notifyItemRemoved(position);
+                        }
+                        adapterAllClients.notifyDataSetChanged();
+                    }
+                });
+
+        recyclerView.addOnItemTouchListener(swipeTouchListener);
 
         return rootView;
     }

@@ -78,12 +78,12 @@ public class DialogAllClientsMenu extends DialogFragment {
 
 
         view = inflater.inflate(R.layout.dialog_allclients_menu, container, false);
-        textViewFrom = (EditText) view.findViewById(R.id.dialog_allclient_menu_edittext_from);
-        textViewTo = (EditText) view.findViewById(R.id.dialog_allclient_menu_edittext_to);
+//        textViewFrom = (EditText) view.findViewById(R.id.dialog_allclient_menu_edittext_from);
+//        textViewTo = (EditText) view.findViewById(R.id.dialog_allclient_menu_edittext_to);
 
         rangeSeekBar = new RangeSeekBar<Integer>(fragmentActivity);
 
-        
+
 
 
         return view;
