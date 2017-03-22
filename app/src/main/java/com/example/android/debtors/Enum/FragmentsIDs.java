@@ -23,5 +23,21 @@ public class FragmentsIDs {
     public static final int CLIENTINFOTRANSACTIONS = 40;
     public static final int CLIENTINFOPAYMENTS = 41;
 
-
+    public static final String TAG_ALLCLIENTS   = "tagAllClient";
+    public static final String TAG_DEBTORS      = "tagDebtors";
+    public static final String TAG_TRANSACTIONS = "tagTransactions";
+    public static final String TAG_PAYMENTS     = "tagPayments";
+    public static final String TAG_CLIENTINFO   = "tagClientInfo";
+    public static final String TAG_SETTINGS     = "tagSettings";
+    public static final String TAG_ABOUTME      = "tagAboutMe";
+    public static final String TAG_DEBTORSFORME         = "tagDebtorsForMe";
+    public static final String TAG_DEBTORSMETOOTHER     = "tagDebtorsMeToOther";
+    public static final String TAG_TRANSACTIONSALL      = "tagTransactionsAll";
+    public static final String TAG_TRANSACTIONSSALES    = "tagTransactionsSales";
+    public static final String TAG_TRANSACTIONSPURCHASES= "tagTransactionsPurhases";
+    public static final String TAG_PAYMENTSALL          = "tagPaymentsAll";
+    public static final String TAG_PAYMENTSRECEIVED     = "tagPaymentsReceived";
+    public static final String TAG_PAYMENTSGIVEN        = "tagPaymentsGiven";
+    public static final String TAG_CLIENTINFOTRANSACTIONS = "tagClientInfoTransactions";
+    public static final String TAG_CLIENTINFOPAYMENTS     = "tagClientInfoPayments";
 }
