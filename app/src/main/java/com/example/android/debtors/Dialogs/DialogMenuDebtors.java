@@ -53,7 +53,7 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callbackMenuDebtorsDialog = (CallbackMenuDebtorsDialog) getParentFragment();
+        callbackMenuDebtorsDialog = (CallbackMenuDebtorsDialog) getParentFragment().getParentFragment();
 //        callbackMenuDialog = fragmentActivity;
     }
 

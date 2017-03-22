@@ -23,6 +23,7 @@ import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.CallbackMenuDebtorsDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -34,7 +35,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Rafaello on 2017-02-18.
  */
-public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewPager{
+public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewPager,CallbackMenuDebtorsDialog{
 
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
 
@@ -174,6 +175,12 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
             fab.hide();
         else
             Log.e(TAG, "hideFAB: ");
+    }
+
+    @Override
+    public void reloadRecycler(int min, int max) {
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
+        adapterDebtors.updateList(listOfClients);
     }
 
     @Override

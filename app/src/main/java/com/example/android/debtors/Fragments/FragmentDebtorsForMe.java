@@ -22,6 +22,7 @@ import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.CallbackMenuDebtorsDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -33,13 +34,14 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Rafaello on 2017-02-18.
  */
-public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager{
+public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager, CallbackMenuDebtorsDialog{
 
 
     @Override
     public void notifyWhenSwitched() {
         Log.i(TAG, "notifyWhenSwitched: FOR ME");
     }
+
 
     interface hideOrShowFab{
         void showFab();
@@ -158,20 +160,13 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         super.onDetach();
     }
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
+    @Override
+    public void reloadRecycler(int min, int max) {
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
+        adapterDebtors.updateList(listOfClients);
     }
 
 
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
     private List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
