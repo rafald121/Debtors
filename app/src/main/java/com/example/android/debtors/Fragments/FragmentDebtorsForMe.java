@@ -35,27 +35,17 @@ import de.greenrobot.event.EventBus;
  */
 public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager, CallbackMenuDebtorsDialog{
 
+    public static boolean isMenuRangeActive = false;
 
-    @Override
-    public void notifyWhenSwitched() {
-        Log.i(TAG, "notifyWhenSwitched: FOR ME");
-    }
-
-
-    interface hideOrShowFab{
-        void showFab();
-    }
     private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
 
-    private String query;
-
     private DatabaseClients dbClients;
+
     private List<Client> listOfClients;
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
     private AdapterDebtors adapterDebtors;
     private RecyclerView recyclerView;
-
     public FragmentDebtorsForMe() {
     }
 
@@ -63,8 +53,6 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-
 
     @Nullable
     @Override
@@ -106,6 +94,8 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         return rootView;
 
     }
+
+
 
     @Override
     public void reloadRecycler(int min, int max) {
@@ -155,11 +145,16 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         super.onDetach();
     }
 
-
     private List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
         return clients;
+    }
+
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: FOR ME");
     }
 
     public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
@@ -170,12 +165,16 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
     }
     public void onEvent(DialogMenuDebtorsForMeApply dialogMenuDebtorsForMeApply){
         Log.i(TAG, "onEvent: halo for me");
+        isMenuRangeActive = true;
         listOfClients = dbClients.getListOfClientWithLeftAmountInRange(dialogMenuDebtorsForMeApply.getMin(), dialogMenuDebtorsForMeApply.getMax());
         adapterDebtors.updateList(listOfClients);
     }
 
     public void onEvent(SearchQuery query){
         Log.i(TAG, "onEvent: " + query.getMessage());
-        adapterDebtors.filter(query.getMessage());
+        if(!isMenuRangeActive)
+            adapterDebtors.filter(query.getMessage());
+        else
+            adapterDebtors.filter(query.getMessage(),listOfClients);
     }
 }

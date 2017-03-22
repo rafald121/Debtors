@@ -81,6 +81,22 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
         notifyDataSetChanged();
     }
 
+    public void filter(String text, List<Client> list) {
+        clientList.clear();
+        if(text.isEmpty()){
+            clientList.addAll(list);
+        } else{
+            text = text.toLowerCase();
+
+            for(Client client: list){
+                if(client.getClientName().toLowerCase().contains(text))
+                    clientList.add(client);
+            }
+
+        }
+        notifyDataSetChanged();
+    }
+
     public void updateList(List<Client> list){
         clientList.clear();
         clientList.addAll(list);

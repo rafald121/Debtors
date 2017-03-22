@@ -39,6 +39,8 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
 
     private static final String TAG = FragmentDebtorsMeToOther.class.getSimpleName();
 
+    public static boolean isMenuRangeActive = false;
+
     private DatabaseClients dbClients;
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
@@ -172,20 +174,25 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
 
     public void onEvent(DialogMenuDebtorsMeToOtherApply dialog){
         Log.i(TAG, "onEvent: halo me to other");
+        isMenuRangeActive = true;
         listOfClients = dbClients.getListOfClientWithLeftAmountInRange(dialog.getMin(),dialog.getMax());
         adapterDebtors.updateList(listOfClients);
     }
     
-    public void onEvent(SearchQuery query){
-        Log.i(TAG, "onEvent: " + query.getMessage());
-        adapterDebtors.filter(query.getMessage());
-    }
-
     public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
         if(toggleFabWhenDrawerMove.isDirection())
             fab.show();
         else
             fab.hide();
     }
-    
+
+    public void onEvent(SearchQuery query){
+        Log.i(TAG, "onEvent: " + query.getMessage());
+        if(!isMenuRangeActive)
+            adapterDebtors.filter(query.getMessage());
+        else
+            adapterDebtors.filter(query.getMessage(), listOfClients);
+
+    }
+
 }
