@@ -393,7 +393,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
     }
 
     public int getClientWithHighestLeftAmount(){
-//        Client clientWithHighestLeftAmount = this.getClientByID(1);
 
         int highestLeftAmount = 0;
         int indexOfHighest = 0;
@@ -424,6 +423,39 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         return highestLeftAmount;
     }
+
+    public int getClientWithLowestLeftAmount(){
+
+        int lowestLeftAmount = 0;
+        int indexOflowest = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int currLeftAmount = 0;
+        int currIndex = 0;
+
+        if(c.moveToFirst()){
+            do{
+                currLeftAmount = c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+                currIndex = c.getInt(c.getColumnIndex(CLIENT_ID));
+
+                if(currLeftAmount < lowestLeftAmount ){
+                    lowestLeftAmount = currLeftAmount;
+                    indexOflowest = currIndex;
+                }
+            }while (c.moveToNext());
+        }
+
+
+        Log.i(TAG, "getClientWithLowestLeftAmount: najmniejszy indeks: " + indexOflowest + " najmniejsza kwota: " + lowestLeftAmount);
+
+        return lowestLeftAmount;
+    }
+
 
     public void deleteClient(long clientID){
         SQLiteDatabase db = this.getWritableDatabase();

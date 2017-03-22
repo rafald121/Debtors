@@ -81,7 +81,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
         rangeSeekBarTextColorWithCode = (RangeSeekBar) view.findViewById(R.id.dialog_allclients_menu_rangeseekbar);
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
-        rangeSeekBarTextColorWithCode.setRangeValues(0,5000);
+        rangeSeekBarTextColorWithCode.setRangeValues(-5000,5000);
 //        rangeSeekBarTextColorWithCode.
 //        rangeSeekBarTextColorWithCode.setSelectedMinValue(100);
 //        rangeSeekBarTextColorWithCode.setSelectedMaxValue(900);
@@ -93,7 +93,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
         buttonApply.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
 
-        return view;r
+        return view;
     }
 
 
@@ -119,6 +119,10 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
                 dbClients = new DatabaseClients(fragmentActivity);
                 maxAmount = dbClients.getClientWithHighestLeftAmount();
                 Log.i(TAG, "onClick: a tukej: " + maxAmount);
+            } else if(minAmount == (Integer) rangeSeekBarTextColorWithCode.getAbsoluteMinValue()){
+                dbClients = new DatabaseClients(fragmentActivity);
+                minAmount = dbClients.getClientWithLowestLeftAmount();
+                Log.i(TAG, "onClick: najmniejsza: " + minAmount);
             }
 
             callbackMenuDialog.reloadRecycler(minAmount, maxAmount);
