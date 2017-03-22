@@ -12,6 +12,10 @@ public class FragmentsIDsAndTags {
     public static final int CLIENTINFO = 4;
     public static final int SETTINGS = 5;
     public static final int ABOUTME = 6;
+    public static final int CATEGORYADAPTER_DEBTORS = 100;
+    public static final int CATEGORYADAPTER_TRANSACTIONS = 200;
+    public static final int CATEGORYADAPTER_PAYMENTS = 300;
+    public static final int CATEGORYADAPTER_CLIENTINFO = 400;
     public static final int DEBTORSFORME = 10;
     public static final int DEBTORSMETOOTHER = 11;
     public static final int TRANSACTIONSALL = 20;
@@ -30,6 +34,10 @@ public class FragmentsIDsAndTags {
     public static final String TAG_CLIENTINFO   = "tagClientInfo";
     public static final String TAG_SETTINGS     = "tagSettings";
     public static final String TAG_ABOUTME      = "tagAboutMe";
+    public static final String TAG_CATEGORYADAPTER_DEBTORS      = "tagCategoryAdapterDebtors";
+    public static final String TAG_CATEGORYADAPTER_TRANSACTIONS = "tagCategoryAdapterTransactions";
+    public static final String TAG_CATEGORYADAPTER_PAYMENTS     = "tagCategoryAdapterPayments";
+    public static final String TAG_CATEGORYADAPTER_CLIENTINFO   = "tagCategoryAdapterClientInfo";
     public static final String TAG_DEBTORSFORME         = "tagDebtorsForMe";
     public static final String TAG_DEBTORSMETOOTHER     = "tagDebtorsMeToOther";
     public static final String TAG_TRANSACTIONSALL      = "tagTransactionsAll";
