@@ -11,8 +11,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -25,6 +27,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
+import com.example.android.debtors.Dialogs.DialogMenuDebtors;
 import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -160,23 +163,47 @@ public class FragmentDebtors extends Fragment  {
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
-            case R.id.menu_debtors_max_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_amount");
-                return true;
-            case R.id.menu_debtors_min_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_amount");
-                return true;
-            case R.id.menu_debtors_max_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_date");
-                return true;
-            case R.id.menu_debtors_min_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_date");
-                return true;
-            default:
+            case R.id.dialog_menu_debtors_show_dialog:
+                Log.i(TAG, "onOptionsItemSelected: show dialog in debtors: " );
+                showDialog();
                 break;
+            default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR ");
+
+//            case R.id.menu_debtors_max_amount:
+//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_amount");
+//                return true;
+//            case R.id.menu_debtors_min_amount:
+//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_amount");
+//                return true;
+//            case R.id.menu_debtors_max_date:
+//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_date");
+//                return true;
+//            case R.id.menu_debtors_min_date:
+//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_date");
+//                return true;
+//            default:
+//                break;
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(MainActivity.TAG_DEBTORS);
+
+        if(prev!=null)
+            ft.remove(prev);
+        else
+            Log.e(TAG, "showDialog: prev is not null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogMenuDebtors.newInstance();
+
+        d.show(getChildFragmentManager(), "dialogMenuDebtors");
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

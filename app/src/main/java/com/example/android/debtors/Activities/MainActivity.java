@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static final String TAG_ALL_CLIENTS = String.valueOf(R.string.tag_allclients);
-    private static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
-    private static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
-    private static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);
-    private static final String TAG_SETTINGS = String.valueOf(R.string.tag_settings);
+    public static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
+    public static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
+    public static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);
+    public static final String TAG_SETTINGS = String.valueOf(R.string.tag_settings);
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
     public static String CURRENT_SUB_TAG = null;
