@@ -308,6 +308,31 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return debtorsAmount;
     }
 
+    public List<Client> getListOfClientWithLeftAmountInRange(int min, int max){
+        List<Client> clientsList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " >= "
+                + min + " AND " + CLIENT_LEFT_AMOUNT + " <= " + max;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()) {
+            do {
+                Client client = new Client();
+                client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
+                client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
+                client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
+
+                clientsList.add(client);
+            } while (c.moveToNext());
+        }
+
+            return clientsList;
+
+    }
+
     public List<Client> getClientWithLeftAmountInRange(int min, int max){
         List<Client> clientsList = new ArrayList<>();
 
@@ -367,6 +392,71 @@ public class DatabaseClients extends SQLiteOpenHelper{
         return clientList;
     }
 
+    public int getClientWithHighestLeftAmount(){
+
+        int highestLeftAmount = 0;
+        int indexOfHighest = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int currLeftAmount = 0;
+        int currIndex = 0;
+
+        if(c.moveToFirst()){
+            do{
+                currLeftAmount = c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+                currIndex = c.getInt(c.getColumnIndex(CLIENT_ID));
+
+                if(currLeftAmount > highestLeftAmount ){
+                    highestLeftAmount = currLeftAmount;
+                    indexOfHighest = currIndex;
+                }
+            }while (c.moveToNext());
+        }
+
+
+        Log.i(TAG, "getClientWithHighestLeftAmount: najwiekszy indeks: " + indexOfHighest + " najwieksza kwota: " + highestLeftAmount);
+
+        return highestLeftAmount;
+    }
+
+    public int getClientWithLowestLeftAmount(){
+
+        int lowestLeftAmount = 0;
+        int indexOflowest = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int currLeftAmount = 0;
+        int currIndex = 0;
+
+        if(c.moveToFirst()){
+            do{
+                currLeftAmount = c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+                currIndex = c.getInt(c.getColumnIndex(CLIENT_ID));
+
+                if(currLeftAmount < lowestLeftAmount ){
+                    lowestLeftAmount = currLeftAmount;
+                    indexOflowest = currIndex;
+                }
+            }while (c.moveToNext());
+        }
+
+
+        Log.i(TAG, "getClientWithLowestLeftAmount: najmniejszy indeks: " + indexOflowest + " najmniejsza kwota: " + lowestLeftAmount);
+
+        return lowestLeftAmount;
+    }
+
+
     public void deleteClient(long clientID){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -396,6 +486,44 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    public int getAmountForMe() {
+//        List<Client> listOfClients = new ArrayList<>();
+
+        SQLiteDatabase db= this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " > 0";
+
+        Cursor c = db.rawQuery(query, null);
+
+        int amountForMe = 0;
+
+        if(c.moveToFirst())
+            do{
+                amountForMe += c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+            } while (c.moveToNext());
+
+        return amountForMe;
+    }
+
+    public int getAmountMeToOther() {
+
+        SQLiteDatabase db= this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS + " WHERE " + CLIENT_LEFT_AMOUNT + " < 0";
+
+        Cursor c = db.rawQuery(query, null);
+
+        int amountMeToOther = 0;
+
+        if(c.moveToFirst())
+            do{
+                amountMeToOther += c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT));
+            } while (c.moveToNext());
+
+        return amountMeToOther;
 
     }
 }

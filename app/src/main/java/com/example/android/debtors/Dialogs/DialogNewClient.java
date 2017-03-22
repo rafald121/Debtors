@@ -110,22 +110,34 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
                 String clientName = newClientName.getText().toString();
                 int clientLeftAmount;
 
-                if(newClientToggle.isChecked())
-                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
-                else
-                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString())*(-1);
+                Log.e(TAG, "onClick: auuu: " + newClientLeftAmount.getText().toString());
 
-//                if(!type)
-//                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
-//                else
-//                    clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString())*(-1);
+                if(newClientLeftAmount.getText().toString().equals("")) {
 
-                Client client = new Client(clientName, clientLeftAmount);
-                dbClients.createClient(client);
+                    clientLeftAmount = 0;
 
-                callbackAddInDialog.reloadRecycler();
 
-                dismiss();
+
+                    Client client = new Client(clientName, clientLeftAmount);
+                    dbClients.createClient(client);
+
+                    callbackAddInDialog.reloadRecycler();
+
+                    dismiss();
+                } else {
+
+                    if (newClientToggle.isChecked())
+                        clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
+                    else
+                        clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString()) * (-1);
+
+                    Client client = new Client(clientName, clientLeftAmount);
+                    dbClients.createClient(client);
+
+                    callbackAddInDialog.reloadRecycler();
+
+                    dismiss();
+                }
 
             } else {
                 newClientError.setText("Name of client must have at least one sign");

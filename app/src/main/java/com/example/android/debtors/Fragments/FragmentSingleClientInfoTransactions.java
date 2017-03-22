@@ -136,8 +136,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         });
     }
 
-
-
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
@@ -145,7 +143,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
-
 
     private List<TransactionForClient> getTransactionsByClient() {
 

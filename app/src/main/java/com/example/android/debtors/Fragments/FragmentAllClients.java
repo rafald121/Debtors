@@ -2,10 +2,8 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,10 +26,12 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
-import com.example.android.debtors.Dialogs.DialogAllClientsMenu;
+import com.example.android.debtors.Dialogs.DialogMenuAllClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
+import com.example.android.debtors.Helper.SwipeableRecyclerViewTouchListener;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.CallbackAllclientMenuDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -49,7 +49,10 @@ import de.greenrobot.event.EventBus;
 // * create an instance of this fragment.
 // */
 
-public class FragmentAllClients extends Fragment {
+public class FragmentAllClients extends Fragment implements CallbackAllclientMenuDialog{
+    //IF USER SELECTED USERS IN RANGE IT  \/ CHANGE TO TRUE
+    public static boolean isMenuRangeActive = false;
+// AND THEN SEARCHING IN SEARCHVIEW GIVE RESULT ONLY FROM CLIENT FROM RANGE SELECTED IN MENU
 
     private static final String TAG = FragmentAllClients.class.getSimpleName();
 
@@ -117,6 +120,46 @@ public class FragmentAllClients extends Fragment {
             }
         });
 
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+            new SwipeableRecyclerViewTouchListener(recyclerView,
+                new SwipeableRecyclerViewTouchListener.SwipeListener() {
+//                            @Override
+//                            public boolean canSwipe(int position) {
+//                                return true;
+//                            }
+
+                    @Override
+                    public boolean canSwipeLeft(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean canSwipeRight(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                        Log.i(TAG, "onDismissedBySwipeLeft: left");
+                        for (int position : reverseSortedPositions) {
+                            listOfAllClients.remove(position);
+                            adapterAllClients.notifyItemRemoved(position);
+                        }
+                        adapterAllClients.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                        Log.i(TAG, "onDismissedBySwipeRight: right");
+                        for (int position : reverseSortedPositions) {
+                            listOfAllClients.remove(position);
+                            adapterAllClients.notifyItemRemoved(position);
+                        }
+                        adapterAllClients.notifyDataSetChanged();
+                    }
+                });
+
+        recyclerView.addOnItemTouchListener(swipeTouchListener);
 
         return rootView;
     }
@@ -148,7 +191,10 @@ public class FragmentAllClients extends Fragment {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.i("onQueryTextChange", newText);
-                    adapterAllClients.filter(newText);
+                    if(!isMenuRangeActive)
+                        adapterAllClients.filter(newText);
+                    else
+                        adapterAllClients.filter(newText,listOfAllClients);
 //                   searchView.clearFocus();
 //                    finish();
                     return true;
@@ -179,6 +225,8 @@ public class FragmentAllClients extends Fragment {
 
                 showDialog();
 
+
+
                 return true;
 
             }
@@ -200,14 +248,18 @@ public class FragmentAllClients extends Fragment {
 
     private void showDialog() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
+//        Fragment prev = getFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
+        Fragment prev = getChildFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
         if(prev!=null)
             ft.remove(prev);
+        else
+            Log.e(TAG, "showDialog: prev isnot null");
 
         ft.addToBackStack(null);
 
-        DialogFragment d = DialogAllClientsMenu.newInstance(2);
-        d.show(ft, "new");
+        DialogFragment d = DialogMenuAllClients.newInstance(2);
+
+        d.show(getChildFragmentManager(), "dialogMenuAllClient");
 
     }
 
@@ -306,5 +358,14 @@ public class FragmentAllClients extends Fragment {
             fab.hide();
         else
             Log.e(TAG, "hideFAB: ");
+    }
+
+    @Override
+    public void reloadRecycler(int min, int max) {
+        Log.i(TAG, "reloadRecycler: halo korwa: " + min + max);
+        listOfAllClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
+//        adapterAllClients.notifyDataSetChanged();
+        adapterAllClients.updateList(listOfAllClients);
+        isMenuRangeActive = true;
     }
 }

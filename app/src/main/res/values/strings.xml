@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Debtors</string>
 
+    <string name="nav_header_for_me">Your money in debtors: </string>
+    <string name="nav_header_me_to_other">Your debts in others: </string>
+
+
     <string name="nav_all_clients">All Clients</string>
     <string name="nav_debtors">Debtors</string>
     <string name="nav_transactions">Transactions</string>
@@ -75,6 +79,9 @@
     <string name="dialog_transaction_toggle_purchase">Purchase</string>
     <string name="dialog_transaction_toggle_sale">Sale</string>
 
+    <string name="dialog_newclient_menu_from">From date</string>
+    <string name="dialog_newclient_menu_to">To date</string>
+    <string name="dialog_newclient_menu_range">Left amount range</string>
 
-
+    <!--<string name="dialog_newclient_menu_error"></string>-->
 </resources>

@@ -80,6 +80,27 @@
         <item name="android:gravity">center_vertical|bottom</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="DialogMenuStyle">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="DialogMenuHeader" parent="DialogMenuStyle">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dialog_menu_from_to_size</item>
+    </style>
+
+    <style name="DialogMenuComponent" parent="DialogMenuStyle">
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="DialogMenuEditText" parent="DialogMenuStyle">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <!--<dialog_payment_radio_shape name="RecyclerView">-->
         <!--<item name="recyclerViewItemBackgroundColor">@android:colors-->
             <!--/colorRecyclerViewDebtorsItem</item>-->

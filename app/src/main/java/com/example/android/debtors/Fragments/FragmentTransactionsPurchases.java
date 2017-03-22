@@ -23,6 +23,7 @@ import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDs;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
+import com.example.android.debtors.Helper.SwipeableRecyclerViewTouchListener;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
@@ -94,6 +95,8 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
             }
         });
         Log.i(TAG, "onCreateView: END");
+
+
         return rootView;
     }
 

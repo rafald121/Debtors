@@ -35,6 +35,8 @@ import com.example.android.debtors.Others.CircleTransform;
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.UtilsDatabaseMethods;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
@@ -55,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
-    private ImageView imgNavHeaderBg, imgProfile;
-    private TextView txtName, txtWebsite;
+    private ImageView imgNavHeaderBg;
+//            , imgProfile;
+    private TextView amountForMe, amountMeToOther;
     private Toolbar toolbar;
+
 
     private static final String urlNavHeaderBg = "http://4.bp.blogspot.com/_SJTl75q21RY/TDWCRlNqnTI/AAAAAAAAAMU/3avdZcJHwSw/s1600/money1.jpg";
     private static final String urlProfileImg = "https://avatars3.githubusercontent.com/u/16782428?v=3&u=d6d5d36732184328f00b7ee90c1ef6f23627005e&s=400";
@@ -100,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
         initFragments();
 
+        dbClient = new DatabaseClients(getApplicationContext());
+        dbOwner = new DatabaseOwner(getApplicationContext());
+        dbPayment = new DatabasePayments(getApplicationContext());
+        dbTransaction = new DatabaseTransactions(getApplicationContext());
+
+        Log.e(TAG, "onCreate: OWNER: " + dbOwner.getOwner(1).toString() );
+
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,13 +121,13 @@ public class MainActivity extends AppCompatActivity {
         EventBus myEventBus = EventBus.getDefault();
 
         navHeader = navigationView.getHeaderView(0);
-        txtName = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_name);
-        txtWebsite = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_mail);
+        amountForMe = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_all_amount_for_me);
+        amountMeToOther = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_all_amount_me_to_other);
         imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_background);
-        imgProfile = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_profile);
+//        imgProfile = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_profile);
 
         loadNavHeader();
-
+        countWholeDebtsAmounInHeader();
         setUpNavigationView();
 
         if (savedInstanceState == null) {
@@ -134,10 +145,16 @@ public class MainActivity extends AppCompatActivity {
 
         loadSelectedFragment();
 
-        dbClient = new DatabaseClients(getApplicationContext());
-        dbOwner = new DatabaseOwner(getApplicationContext());
-        dbPayment = new DatabasePayments(getApplicationContext());
-        dbTransaction = new DatabaseTransactions(getApplicationContext());
+
+
+    }
+
+    private void countWholeDebtsAmounInHeader() {
+        int forme = dbClient.getAmountForMe();
+        int metoother = dbClient.getAmountMeToOther();
+
+        amountForMe.append(String.valueOf(forme));
+        amountMeToOther.append(String.valueOf(metoother));
 
     }
 
@@ -427,8 +444,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Rafał Dołęga");
-        txtWebsite.setText("rafald121@gmail.com");
+//        txtName.setText("Rafał Dołęga");
+//        txtWebsite.setText("rafald121@gmail.com");
 
         // loading header background image
         Glide.with(this).load(urlNavHeaderBg)
@@ -437,12 +454,12 @@ public class MainActivity extends AppCompatActivity {
                 .into(imgNavHeaderBg);
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
+//        Glide.with(this).load(urlProfileImg)
+//                .crossFade()
+//                .thumbnail(0.5f)
+//                .bitmapTransform(new CircleTransform(this))
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(imgProfile);
     }
 
     private void fabOn(){
