@@ -25,6 +25,8 @@ import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
 import com.example.android.debtors.Dialogs.DialogMenuDebtors;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.SearchQueryForMe;
+import com.example.android.debtors.EventBus.SearchQueryMeToOther;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
@@ -144,13 +146,25 @@ public class FragmentDebtors extends Fragment  {
             queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    EventBus.getDefault().post(new SearchQuery(newText));
+
+                    if(formeORmetoother == 0)
+                        EventBus.getDefault().post(new SearchQueryForMe(newText));
+                    else
+                        EventBus.getDefault().post(new SearchQueryMeToOther(newText));
+
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    return true;
+                    Log.i(TAG, "onQueryTextSubmit: hmmmmmqwe");
+
+                    if(formeORmetoother == 0)
+                        EventBus.getDefault().post(new SearchQueryForMe(query));
+                    else
+                        EventBus.getDefault().post(new SearchQueryMeToOther(query));
+
+                    return false;
                 }
             };
             searchView.setOnQueryTextListener(queryTextListener);

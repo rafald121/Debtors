@@ -21,6 +21,7 @@ import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.DialogMenuDebtorsForMeApply;
 import com.example.android.debtors.EventBus.DialogMenuDebtorsMeToOtherApply;
 import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.SearchQueryMeToOther;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.CallbackMenuDebtorsDialog;
@@ -186,7 +187,7 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
             fab.hide();
     }
 
-    public void onEvent(SearchQuery query){
+    public void onEvent(SearchQueryMeToOther query){
         Log.i(TAG, "onEvent: " + query.getMessage());
         if(!isMenuRangeActive)
             adapterDebtors.filter(query.getMessage());

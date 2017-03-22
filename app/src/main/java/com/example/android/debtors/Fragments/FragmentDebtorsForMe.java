@@ -19,6 +19,7 @@ import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.DialogMenuDebtorsForMeApply;
 import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.SearchQueryForMe;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.CallbackMenuDebtorsDialog;
@@ -170,7 +171,7 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         adapterDebtors.updateList(listOfClients);
     }
 
-    public void onEvent(SearchQuery query){
+    public void onEvent(SearchQueryForMe query){
         Log.i(TAG, "onEvent: " + query.getMessage());
         if(!isMenuRangeActive)
             adapterDebtors.filter(query.getMessage());
