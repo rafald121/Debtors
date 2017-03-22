@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,26 +17,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
 import com.example.android.debtors.Fragments.FragmentTransactions;
-import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Others.CircleTransform;
 import com.example.android.debtors.R;
-import com.example.android.debtors.Utils.UtilsDatabaseMethods;
-
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
 
@@ -134,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             navItemIndex = 0;
 
             previousFragmentID = fragmentID;
-            fragmentID = FragmentsIDs.ALLCLIENTS;
+            fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
 
             PREVIOUS_TAG = CURRENT_TAG;
             CURRENT_TAG = TAG_ALL_CLIENTS;
@@ -302,8 +293,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.ALLCLIENTS;
-                        subFragmentID = FragmentsIDs.ALLCLIENTS;
+                        fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
+                        subFragmentID = FragmentsIDsAndTags.ALLCLIENTS;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_ALL_CLIENTS;
@@ -313,8 +304,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 1;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.DEBTORS;
-                        subFragmentID = FragmentsIDs.DEBTORSFORME;
+                        fragmentID = FragmentsIDsAndTags.DEBTORS;
+                        subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_DEBTORS;
@@ -324,8 +315,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 2;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.TRANSACTIONS;
-                        subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+                        fragmentID = FragmentsIDsAndTags.TRANSACTIONS;
+                        subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_TRANSACTIONS;
@@ -335,8 +326,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 3;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.PAYMENTS;
-                        subFragmentID = FragmentsIDs.PAYMENTSALL;
+                        fragmentID = FragmentsIDsAndTags.PAYMENTS;
+                        subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_PAYMENTS;
@@ -346,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_settings:
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.SETTINGS;
+                        fragmentID = FragmentsIDsAndTags.SETTINGS;
 
                         startActivity(new Intent(MainActivity.this, ActivitySettings.class));
                         return true;
@@ -354,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_about_me:
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.ABOUTME;
+                        fragmentID = FragmentsIDsAndTags.ABOUTME;
 
                         startActivity(new Intent(MainActivity.this, AboutMe.class));
                         return true;
@@ -421,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
 //                navItemIndex = 1;
 //
 //                previousFragmentID = fragmentID;
-//                fragmentID = FragmentsIDs.DEBTORS;
+//                fragmentID = FragmentsIDsAndTags.DEBTORS;
 //
 //                PREVIOUS_TAG = CURRENT_TAG;
 //                CURRENT_TAG = TAG_DEBTORS;

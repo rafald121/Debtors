@@ -7,9 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,15 +17,9 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
-import com.example.android.debtors.Databases.DatabaseTransactions;
-import com.example.android.debtors.Enum.FragmentsIDs;
-import com.example.android.debtors.Interfaces.InterfaceSearchInRecyclerView;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
-import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
-
-import java.util.List;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -66,7 +57,7 @@ public class FragmentTransactions extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.subFragmentID);
-//        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+//        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
 
         super.onViewCreated(view, savedInstanceState);
         viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
@@ -98,15 +89,15 @@ public class FragmentTransactions extends Fragment {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 2:
-                            MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSPURCHASES;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
                             intefrace.notifyWhenSwitched();
                             Log.i(TAG, "onPageSelected: after notify when switched");
                             break;
@@ -129,7 +120,7 @@ public class FragmentTransactions extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
         Log.i(TAG, "onViewCreated: 5");
-        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
         Log.i(TAG, "onViewCreated: 6, assigned, now subfragment is: " + MainActivity.subFragmentID);
     }
 

@@ -4,7 +4,7 @@ package com.example.android.debtors.Enum;
  * Created by admin on 16.03.2017.
  */
 
-public class FragmentsIDs {
+public class FragmentsIDsAndTags {
     public static final int ALLCLIENTS = 0;
     public static final int DEBTORS = 1;
     public static final int TRANSACTIONS = 2;

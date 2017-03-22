@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,7 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -163,7 +162,7 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
     @Override
     public void notifyWhenSwitched() {
         Log.i(TAG, "notifyWhenSwitched: halo");
-        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
         Log.i(TAG, "notifyWhenSwitched: all");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
         fab.show();

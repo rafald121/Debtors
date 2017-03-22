@@ -19,7 +19,7 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -169,7 +169,7 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
     @Override
     public void notifyWhenSwitched() {
-        MainActivity.subFragmentID = FragmentsIDs.TRANSACTIONSSALES;
+        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
         Log.i(TAG, "notifyWhenSwitched: sales");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
         if (fab != null) {

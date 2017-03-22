@@ -2,14 +2,9 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -28,7 +23,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
 import com.example.android.debtors.Dialogs.DialogMenuDebtors;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
@@ -95,11 +90,11 @@ public class FragmentDebtors extends Fragment  {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDs.DEBTORSFORME;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDs.DEBTORSMETOOTHER;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSMETOOTHER;
                             intefrace.notifyWhenSwitched();
                             break;
                         default:
