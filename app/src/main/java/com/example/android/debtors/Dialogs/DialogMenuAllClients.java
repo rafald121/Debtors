@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Interfaces.CallbackAllclientMenuDialog;
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
@@ -47,6 +48,8 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
     private CallbackAllclientMenuDialog callbackMenuDialog;
 
+    private DatabaseClients dbClients  = null;
+
     public static DialogMenuAllClients newInstance(int num) {
         DialogMenuAllClients f = new DialogMenuAllClients();
 
@@ -78,9 +81,10 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
         rangeSeekBarTextColorWithCode = (RangeSeekBar) view.findViewById(R.id.dialog_allclients_menu_rangeseekbar);
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
-        rangeSeekBarTextColorWithCode.setRangeValues(0,1000);
-        rangeSeekBarTextColorWithCode.setSelectedMinValue(100);
-        rangeSeekBarTextColorWithCode.setSelectedMaxValue(900);
+        rangeSeekBarTextColorWithCode.setRangeValues(0,5000);
+//        rangeSeekBarTextColorWithCode.
+//        rangeSeekBarTextColorWithCode.setSelectedMinValue(100);
+//        rangeSeekBarTextColorWithCode.setSelectedMaxValue(900);
         rangeSeekBarTextColorWithCode.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
         buttonApply = (Button) view.findViewById(R.id.dialog_allclient_menu_apply);
@@ -89,7 +93,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
         buttonApply.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
 
-        return view;
+        return view;r
     }
 
 
@@ -110,6 +114,12 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
             int maxAmount = (Integer) rangeSeekBarTextColorWithCode.getSelectedMaxValue();
             Log.i(TAG, "onClick: maxAmount: " + maxAmount);
+
+            if(maxAmount == (Integer) rangeSeekBarTextColorWithCode.getAbsoluteMaxValue()){
+                dbClients = new DatabaseClients(fragmentActivity);
+                maxAmount = dbClients.getClientWithHighestLeftAmount();
+                Log.i(TAG, "onClick: a tukej: " + maxAmount);
+            }
 
             callbackMenuDialog.reloadRecycler(minAmount, maxAmount);
             //query
