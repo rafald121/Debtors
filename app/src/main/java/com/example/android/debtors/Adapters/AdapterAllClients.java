@@ -64,6 +64,7 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
     }
 
     public void filter(String text) {
+//        clientListCopy.addAll(clientList)
         clientList.clear();
         if(text.isEmpty()){
             clientList.addAll(clientListCopy);
@@ -71,6 +72,23 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
             text = text.toLowerCase();
 
             for(Client client: clientListCopy){
+                if(client.getClientName().toLowerCase().contains(text))
+                    clientList.add(client);
+            }
+
+        }
+        notifyDataSetChanged();
+    }
+
+    public void filter(String text, List<Client> list) {
+//        clientListCopy.addAll(clientList)
+        clientList.clear();
+        if(text.isEmpty()){
+            clientList.addAll(list);
+        } else{
+            text = text.toLowerCase();
+
+            for(Client client: list){
                 if(client.getClientName().toLowerCase().contains(text))
                     clientList.add(client);
             }

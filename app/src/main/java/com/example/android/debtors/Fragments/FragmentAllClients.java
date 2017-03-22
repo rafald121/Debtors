@@ -50,6 +50,9 @@ import de.greenrobot.event.EventBus;
 // */
 
 public class FragmentAllClients extends Fragment implements CallbackAllclientMenuDialog{
+    //IF USER SELECTED USERS IN RANGE IT  \/ CHANGE TO TRUE
+    public static boolean isMenuRangeActive = false;
+// AND THEN SEARCHING IN SEARCHVIEW GIVE RESULT ONLY FROM CLIENT FROM RANGE SELECTED IN MENU
 
     private static final String TAG = FragmentAllClients.class.getSimpleName();
 
@@ -188,7 +191,10 @@ public class FragmentAllClients extends Fragment implements CallbackAllclientMen
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.i("onQueryTextChange", newText);
-                    adapterAllClients.filter(newText);
+                    if(!isMenuRangeActive)
+                        adapterAllClients.filter(newText);
+                    else
+                        adapterAllClients.filter(newText,listOfAllClients);
 //                   searchView.clearFocus();
 //                    finish();
                     return true;
@@ -360,5 +366,6 @@ public class FragmentAllClients extends Fragment implements CallbackAllclientMen
         listOfAllClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
 //        adapterAllClients.notifyDataSetChanged();
         adapterAllClients.updateList(listOfAllClients);
+        isMenuRangeActive = true;
     }
 }
