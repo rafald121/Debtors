@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabaseClients;
-import com.example.android.debtors.Interfaces.CallbackMenuAllclientDialog;
-import com.example.android.debtors.Interfaces.CallbackMenuDebtorsDialog;
+import com.example.android.debtors.EventBus.DialogMenuDebtorsForMeApply;
+import com.example.android.debtors.EventBus.DialogMenuDebtorsMeToOtherApply;
 import com.example.android.debtors.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by admin on 22.03.2017.
@@ -26,23 +28,22 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
 
     private static final String TAG = DialogMenuDebtors.class.getSimpleName();
 
+    private View view = null;
     private TextView textViewError = null;
-
     private Button buttonApply,buttonCancel = null;
+    private RangeSeekBar rangeSeekBar = null;
 
     private FragmentActivity fragmentActivity = null;
 
-    private View view = null;
-
-    private RangeSeekBar rangeSeekBar = null;
-
-    private CallbackMenuDebtorsDialog callbackMenuDebtorsDialog = null;
-
     private DatabaseClients dbClients  = null;
 
-    public static DialogMenuDebtors newInstance() {
+    private int forMeOrMeToOther;
 
+    public static DialogMenuDebtors newInstance(int i) {
         DialogMenuDebtors dialogMenuDebtors = new DialogMenuDebtors();
+
+        dialogMenuDebtors.forMeOrMeToOther = i;
+
         return dialogMenuDebtors;
     }
 
@@ -53,14 +54,13 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callbackMenuDebtorsDialog = (CallbackMenuDebtorsDialog) getParentFragment().getParentFragment();
-//        callbackMenuDialog = fragmentActivity;
+        EventBus myEventBus = EventBus.getDefault();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        Log.i(TAG, "onCreateView: utworzono i formeormetoother = " + forMeOrMeToOther);
         view = inflater.inflate(R.layout.dialog_menu_debtors, container, false);
 
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_debtors_error);
@@ -68,7 +68,10 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
         rangeSeekBar = (RangeSeekBar) view.findViewById(R.id.dialog_menu_debtors_rangeseekbar);
         
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
-        rangeSeekBar.setRangeValues(-5000,5000);
+        if(forMeOrMeToOther == 0)
+            rangeSeekBar.setRangeValues(0,5000);
+        else
+            rangeSeekBar.setRangeValues(-5000,0);
 
         rangeSeekBar.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
@@ -88,6 +91,11 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
     public void onClick(View v) {
         if(v.getId() == buttonApply.getId()){
 
@@ -97,17 +105,41 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
             int maxAmount = (Integer) rangeSeekBar.getSelectedMaxValue();
             Log.i(TAG, "onClick: maxAmount: " + maxAmount);
 
-            if(maxAmount == (Integer) rangeSeekBar.getAbsoluteMaxValue()){
-                dbClients = new DatabaseClients(fragmentActivity);
-                maxAmount = dbClients.getClientWithHighestLeftAmount();
-                Log.i(TAG, "onClick: a tukej: " + maxAmount);
-            } else if(minAmount == (Integer) rangeSeekBar.getAbsoluteMinValue()){
-                dbClients = new DatabaseClients(fragmentActivity);
-                minAmount = dbClients.getClientWithLowestLeftAmount();
-                Log.i(TAG, "onClick: najmniejsza: " + minAmount);
+            if(forMeOrMeToOther == 0)//for me
+
+                if(maxAmount == (Integer) rangeSeekBar.getAbsoluteMaxValue()){
+                    dbClients = new DatabaseClients(fragmentActivity);
+                    maxAmount = dbClients.getClientWithHighestLeftAmount();
+                    Log.i(TAG, "onClick: a najwieksza: " + maxAmount);
+                }
+
+            else if(forMeOrMeToOther == 1){//me to other
+
+                if(minAmount == (Integer) rangeSeekBar.getAbsoluteMinValue()){
+                    dbClients = new DatabaseClients(fragmentActivity);
+                    minAmount = dbClients.getClientWithLowestLeftAmount();
+                    Log.i(TAG, "onClick: najmniejsza: " + minAmount);
+                }
             }
 
-            callbackMenuDebtorsDialog.reloadRecycler(minAmount, maxAmount);
+
+//            if(maxAmount == (Integer) rangeSeekBar.getAbsoluteMaxValue()){
+//                dbClients = new DatabaseClients(fragmentActivity);
+//                maxAmount = dbClients.getClientWithHighestLeftAmount();
+//                Log.i(TAG, "onClick: a tukej: " + maxAmount);
+//            } else if(minAmount == (Integer) rangeSeekBar.getAbsoluteMinValue()){
+//                dbClients = new DatabaseClients(fragmentActivity);
+//                minAmount = dbClients.getClientWithLowestLeftAmount();
+//                Log.i(TAG, "onClick: najmniejsza: " + minAmount);
+//            }
+            Log.d(TAG, "min: " + minAmount + " max: " + maxAmount);
+
+            if(forMeOrMeToOther == 0)
+                EventBus.getDefault().post(new DialogMenuDebtorsForMeApply(minAmount,maxAmount));
+            else
+                EventBus.getDefault().post(new DialogMenuDebtorsMeToOtherApply(minAmount,maxAmount));
+
+//            callbackMenuDebtorsDialog.reloadRecycler(minAmount, maxAmount);
             //query
             dismiss();
         } else if(v.getId() == buttonCancel.getId()){

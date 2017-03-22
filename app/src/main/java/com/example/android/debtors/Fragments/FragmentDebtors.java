@@ -49,6 +49,8 @@ public class FragmentDebtors extends Fragment  {
     private FragmentActivity fragmentActivity;
     private CategoryAdapterDebtors categoryAdapterDebtors;
 
+    private int formeORmetoother = 0; // 0 -- position = for me
+
     public FragmentDebtors() {
     }
 
@@ -56,6 +58,8 @@ public class FragmentDebtors extends Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        EventBus myEventBus = EventBus.getDefault();
+
     }
 
 
@@ -88,13 +92,18 @@ public class FragmentDebtors extends Fragment  {
                 InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterDebtors.instantiateItem(viewPager, position);
                 if (intefrace != null) {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
+                    Log.i(TAG, "onPageSelected: a obecny subFragmen to: " + MainActivity.subFragmentID);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
+                            Log.d(TAG, "onPageSelected() called111 with: position = [" + position + "]");
+//                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
+                            formeORmetoother = 0;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSMETOOTHER;
+                            Log.d(TAG, "onPageSelected() called222 with: position = [" + position + "]");
+//                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSMETOOTHER;
+                            formeORmetoother = 1;
                             intefrace.notifyWhenSwitched();
                             break;
                         default:
@@ -165,20 +174,6 @@ public class FragmentDebtors extends Fragment  {
             default:
                 Log.e(TAG, "onOptionsItemSelected: ERROR ");
 
-//            case R.id.menu_debtors_max_amount:
-//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_amount");
-//                return true;
-//            case R.id.menu_debtors_min_amount:
-//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_amount");
-//                return true;
-//            case R.id.menu_debtors_max_date:
-//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_date");
-//                return true;
-//            case R.id.menu_debtors_min_date:
-//                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_date");
-//                return true;
-//            default:
-//                break;
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
@@ -194,8 +189,8 @@ public class FragmentDebtors extends Fragment  {
             Log.e(TAG, "showDialog: prev is not null");
 
         ft.addToBackStack(null);
-
-        DialogFragment d = DialogMenuDebtors.newInstance();
+        Log.i(TAG, "showDialog: TAGSSS : " + MainActivity.subFragmentID);
+        DialogFragment d = DialogMenuDebtors.newInstance(formeORmetoother);
 
         d.show(getChildFragmentManager(), "dialogMenuDebtors");
 
@@ -210,6 +205,7 @@ public class FragmentDebtors extends Fragment  {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+//        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
@@ -217,6 +213,7 @@ public class FragmentDebtors extends Fragment  {
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
+//        EventBus.getDefault().unregister(this);
     }
 
 }

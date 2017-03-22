@@ -1,7 +1,6 @@
 package com.example.android.debtors.Fragments;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,11 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.EventBus.DialogMenuDebtorsForMeApply;
+import com.example.android.debtors.EventBus.DialogMenuDebtorsMeToOtherApply;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
@@ -109,11 +109,6 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void onEvent(SearchQuery query){
-        Log.i(TAG, "onEvent: " + query.getMessage());
-        adapterDebtors.filter(query.getMessage());
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated: START");
@@ -139,12 +134,7 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         Log.i(TAG, "onViewCreated: END");
     }
 
-    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
-        if(toggleFabWhenDrawerMove.isDirection())
-            fab.show();
-        else
-            fab.hide();
-    }
+   
 
     @Override
     public void onAttach(Context context) {
@@ -163,20 +153,6 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         super.onDetach();
     }
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
-
     @Override
     public void reloadRecycler(int min, int max) {
         listOfClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
@@ -193,4 +169,23 @@ public class FragmentDebtorsMeToOther extends Fragment implements InterfaceViewP
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(false);
         return clients;
     }
+
+    public void onEvent(DialogMenuDebtorsMeToOtherApply dialog){
+        Log.i(TAG, "onEvent: halo me to other");
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(dialog.getMin(),dialog.getMax());
+        adapterDebtors.updateList(listOfClients);
+    }
+    
+    public void onEvent(SearchQuery query){
+        Log.i(TAG, "onEvent: " + query.getMessage());
+        adapterDebtors.filter(query.getMessage());
+    }
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+    
 }

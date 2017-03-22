@@ -42,13 +42,8 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
     private DatabaseClients dbClients  = null;
 
-    public static DialogMenuAllClients newInstance(int num) {
+    public static DialogMenuAllClients newInstance() {
         DialogMenuAllClients f = new DialogMenuAllClients();
-
-        // Supply num input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("num", num);
-        f.setArguments(args);
 
         return f;
     }

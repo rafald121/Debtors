@@ -1,11 +1,9 @@
 package com.example.android.debtors.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.EventBus.DialogMenuDebtorsForMeApply;
 import com.example.android.debtors.EventBus.SearchQuery;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
@@ -65,10 +64,7 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         super.onCreate(savedInstanceState);
     }
 
-    public void onEvent(SearchQuery query){
-        Log.i(TAG, "onEvent: " + query.getMessage());
-        adapterDebtors.filter(query.getMessage());
-    }
+
 
     @Nullable
     @Override
@@ -111,6 +107,12 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
 
     }
 
+    @Override
+    public void reloadRecycler(int min, int max) {
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
+        adapterDebtors.updateList(listOfClients);
+    }
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
@@ -140,13 +142,6 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         });
     }
 
-    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
-        if(toggleFabWhenDrawerMove.isDirection())
-            fab.show();
-        else
-            fab.hide();
-    }
-
     @Override
     public void onAttach(Context context) {
         fragmentActivity = (FragmentActivity) context;
@@ -160,16 +155,27 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         super.onDetach();
     }
 
-    @Override
-    public void reloadRecycler(int min, int max) {
-        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
-        adapterDebtors.updateList(listOfClients);
-    }
-
 
     private List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
         return clients;
+    }
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+    public void onEvent(DialogMenuDebtorsForMeApply dialogMenuDebtorsForMeApply){
+        Log.i(TAG, "onEvent: halo for me");
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(dialogMenuDebtorsForMeApply.getMin(), dialogMenuDebtorsForMeApply.getMax());
+        adapterDebtors.updateList(listOfClients);
+    }
+
+    public void onEvent(SearchQuery query){
+        Log.i(TAG, "onEvent: " + query.getMessage());
+        adapterDebtors.filter(query.getMessage());
     }
 }

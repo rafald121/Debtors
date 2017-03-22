@@ -24,6 +24,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/rangeSeekBarMargin"
+        android:layout_marginEnd="@dimen/rangeSeekBarMargin"
         rsb:valuesAboveThumbs="true"
         android:layout_height="62dp" />
         <!--app:activateOnDefaultValues="true"-->

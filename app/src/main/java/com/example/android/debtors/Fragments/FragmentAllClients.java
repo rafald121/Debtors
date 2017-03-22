@@ -257,7 +257,7 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
 
         ft.addToBackStack(null);
 
-        DialogFragment d = DialogMenuAllClients.newInstance(2);
+        DialogFragment d = DialogMenuAllClients.newInstance();
 
         d.show(getChildFragmentManager(), "dialogMenuAllClient");
 
