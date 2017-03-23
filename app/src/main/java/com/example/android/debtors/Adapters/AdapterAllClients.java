@@ -133,6 +133,7 @@ public class AdapterAllClients extends RecyclerView.Adapter<AdapterAllClients.My
 
                 FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
                 FragmentTransaction fragmenttransaction = fragmentManager.beginTransaction();
+                Log.i(TAG, "onClick: CURRENT TAG: " + MainActivity.CURRENT_TAG);
                 fragmenttransaction.replace(R.id.frame, fragment, MainActivity.CURRENT_TAG);
                 fragmenttransaction.addToBackStack(null);
                 fragmenttransaction.commit();

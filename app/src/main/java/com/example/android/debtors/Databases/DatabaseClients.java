@@ -180,22 +180,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         return clientsList;
     }
-//    public List<Client> getClientInMostCommonOrder(int fromLastDays){
-//        List<Client> clientsList = new ArrayList<>();
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        String query = "SELECT  * FROM " + TABLE_CLIENTS;
-//
-//        Cursor c = db.rawQuery(query, null);
-//
-//        if(c.moveToFirst())
-//            do{
-//                Client c = new Client();
-//
-//
-//            }while (c.moveToNext());
-//    }
+
 
     public List<String> getListOfClientsNames(){
 
@@ -486,6 +471,31 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    public boolean isClientWithNameAlreadyExist(String name){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_CLIENTS;
+
+        Cursor c= db.rawQuery(query, null);
+
+//        HashMap<Integer, String> hashMap = new HashMap<>();
+    int index;
+
+        if(c.moveToFirst())
+            do{
+                if(c.getString(c.getColumnIndex(CLIENT_NAME)).equals(name)) {
+                    index = c.getInt(c.getColumnIndex(CLIENT_ID));
+                    Log.i(TAG, "isClientWithNameAlreadyExist: index: " + index );
+                    return true;
+                }
+            } while (c.moveToNext());
+
+
+        return false;
 
     }
 

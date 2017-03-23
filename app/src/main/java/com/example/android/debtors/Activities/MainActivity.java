@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -104,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
         dbOwner = new DatabaseOwner(getApplicationContext());
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
+
+
+
+
 
         Log.e(TAG, "onCreate: OWNER: " + dbOwner.getOwner(1).toString() );
 
@@ -446,17 +451,30 @@ public class MainActivity extends AppCompatActivity {
 
         int count = getFragmentManager().getBackStackEntryCount();
         Log.i(TAG, "onBackPressed: count: " + count);
-
-        if (count == 0) {
-            super.onBackPressed();
-            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
-            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
-            setToolbarTitle();
-//TODO tutaj powinno sie cofac na podstawie historii fragmentow
-
-        } else {
-            getFragmentManager().popBackStack();
-        }
+//
+//        if (count == 0) {
+//            super.onBackPressed();
+//        }
+//}
+//            android.app.Fragm2entTransaction ft = getFragmentManager().beginTransaction();
+//            android.app.Fragment prev = getFragmentManager().findFragmentByTag(PREVIOUS_TAG);
+//            android.app.Fragment curr = getFragmentManager().findFragmentByTag(CURRENT_TAG);
+//            if(curr!=null)
+//                ft.remove(curr);
+//
+//            ft.addToBackStack(null);
+//            ft.replace(R.id.frame, prev, PREVIOUS_TAG);
+//            ft.commit();
+//
+//
+//            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
+//            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
+//            setToolbarTitle();
+////TODO tutaj powinno sie cofac na podstawie historii fragmentow
+//
+//        } else {
+//            getFragmentManager().popBackStack();
+//        }
 
     }
 

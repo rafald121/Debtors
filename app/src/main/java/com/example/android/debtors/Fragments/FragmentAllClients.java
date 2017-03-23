@@ -327,9 +327,6 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
         return list;
     }
 
-
-
-
     public void showFAB() {
         if(!fab.isShown())
             fab.show();
