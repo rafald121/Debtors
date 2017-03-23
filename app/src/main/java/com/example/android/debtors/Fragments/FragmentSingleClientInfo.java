@@ -80,6 +80,8 @@ public class FragmentSingleClientInfo extends Fragment {
 
     }
 
+
+
     private String getNameOfClientForID(long clientID) {
         dbClients = new DatabaseClients(fragmentActivity);
         String name = dbClients.getClientByID(clientID).getClientName();

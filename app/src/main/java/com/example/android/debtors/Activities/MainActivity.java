@@ -1,11 +1,14 @@
 package com.example.android.debtors.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentDebtors fragmentDebtors;
     private FragmentTransactions fragmentTransactions;
     private FragmentPayments fragmentPayments;
+    private boolean keyboardOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+        getSupportActionBar().setTitle(activityTitles[fragmentID]);
     }
 
     private void setUpNavigationView() {
@@ -395,43 +400,39 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "setUpNavigationView: END");
     }
 
-//    @Override
-//    public void onBackPressed() {
-////        TODO when clicked two times ask if quit app
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawers();
-//            return;
-//        }
-//
-//        // This code loads home fragment when back key is pressed
-//        // when user is in other fragment than home
-//        if (shouldLoadHomeFragOnBackPress) {
-//            // checking if user is on other navigation menu
-//            // rather than home
-//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
-//                navItemIndex = 1;
-//
-//                previousFragmentID = fragmentID;
-//                fragmentID = FragmentsIDsAndTags.DEBTORS;
-//
-//                PREVIOUS_TAG = CURRENT_TAG;
-//                CURRENT_TAG = TAG_DEBTORS;
-//                loadSelectedFragment();
-//                return;
-//            } else { // jesli navItem jest 1
-//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
-//                    // nothing(do anything)
-//                    whenBackClickedOnDebtors = true;
-//                    return;
-//                } else { // if true user have clicked back button once and next time minimalize app
-////                    minimalize app
-//                }
-//            }
-//        }
-//
-//        super.onBackPressed();
-//    }
+    @Override
+    public void onBackPressed() {
 
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawers();
+            return;
+        }
+
+        if (isKeyboardOpen()) {
+            closeKeyboard();
+            return;
+        }
+
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.i(TAG, "onBackPressed: count: " + count);
+
+        if (count == 0) {
+            super.onBackPressed();
+            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
+            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
+            setToolbarTitle();
+//            switch (MainActivity.fragmentID){
+//                case 0:
+//                    toolbar.setTitle();
+//            }
+
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
+
+    //    @Override
 
     private void loadNavHeader() {
         // name, website
@@ -453,6 +454,7 @@ public class MainActivity extends AppCompatActivity {
 //                .into(imgProfile);
     }
 
+
     private void fabOn(){
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(true));
     }
@@ -461,5 +463,71 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(false));
     }
 
+    //    }
+//        super.onBackPressed();
+//
+//        }
+//            }
+//                }
+////                    minimalize app
+//                } else { // if true user have clicked back button once and next time minimalize app
+//                    return;
+//                    whenBackClickedOnDebtors = true;
+//                    // nothing(do anything)
+//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
+//            } else { // jesli navItem jest 1
+//                return;
+//                loadSelectedFragment();
+//                CURRENT_TAG = TAG_DEBTORS;
+//                PREVIOUS_TAG = CURRENT_TAG;
+//
+//                fragmentID = FragmentsIDsAndTags.DEBTORS;
+//                previousFragmentID = fragmentID;
+//
+//                navItemIndex = 1;
+//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
+//            // rather than home
+//            // checking if user is on other navigation menu
+//        if (shouldLoadHomeFragOnBackPress) {
+//        // when user is in other fragment than home
+//        // This code loads home fragment when back key is pressed
+//
+//        }
+//            return;
+//            drawer.closeDrawers();
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+////        TODO when clicked two times ask if quit app
+//    public void onBackPressed() {
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public boolean isKeyboardOpen() {
+        Rect r = new Rect();
+        View view = this.findViewById(android.R.id.content);
+        view.getWindowVisibleDisplayFrame(r);
+
+        int screenHeight = view.getRootView().getHeight();
+
+        // r.bottom is the position above soft keypad or device button.
+        // if keypad is shown, the r.bottom is smaller than that before.
+        int keypadHeight = screenHeight - r.bottom;
+
+        Log.d(TAG, "keypadHeight = " + keypadHeight);
+
+        if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+           return true;
+        }
+        else {
+            return false;
+        }
+
+
+    }
 }
 
