@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/menu_payment_min_date"
+        android:id="@+id/dialog_menu_payment_showdialog"
         android:orderInCategory="200"
-        android:title="@string/menu_min_date"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_payment_max_date"
-        android:orderInCategory="201"
-        android:title="@string/menu_max_date"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_payment_min_amount"
-        android:orderInCategory="202"
-        android:title="@string/menu_min_amount"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_payment_max_amount"
-        android:orderInCategory="203"
-        android:title="@string/menu_max_amount"
-        app:showAsAction="never" />
+        android:icon="@drawable/more"
+        app:showAsAction="always" />
 
 
 </menu>
