@@ -19,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <org.florescu.android.rangeseekbar.RangeSeekBar
-        android:id="@+id/dialog_allclients_menu_rangeseekbar"
+        android:id="@+id/dialog_menu_debtors_rangeseekbar"
         android:layout_width="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,31 +28,31 @@
         android:layout_marginEnd="@dimen/rangeSeekBarMargin"
         rsb:valuesAboveThumbs="true"
         android:layout_height="62dp" />
-        <!--app:activateOnDefaultValues="true"-->
+    <!--app:activateOnDefaultValues="true"-->
 
 
 
     <LinearLayout
-        android:id="@+id/dialog_allclientlinear"
+        android:id="@+id/dialog_debtorslinear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclients_menu_rangeseekbar"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_menu_debtors_rangeseekbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         style="@style/DialogMenuHeader"
         >
 
         <Button
-            android:id="@+id/dialog_allclient_menu_apply"
+            android:id="@+id/dialog_menu_debtors_apply"
             android:text="Apply"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50"/>
 
         <Button
-            android:id="@+id/dialog_allclient_menu_cancel"
+            android:id="@+id/dialog_menu_debtors_cancel"
             android:text="Cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -61,11 +61,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/dialog_allclient_menu_error"
+        android:id="@+id/dialog_menu_debtors_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/DialogMenuComponent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_allclientlinear"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_debtorslinear"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />

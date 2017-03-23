@@ -31,7 +31,7 @@ import com.example.android.debtors.Dialogs.DialogNewClient;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Helper.SwipeableRecyclerViewTouchListener;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
-import com.example.android.debtors.Interfaces.CallbackAllclientMenuDialog;
+import com.example.android.debtors.Interfaces.CallbackMenuAllclientDialog;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
 
@@ -49,7 +49,7 @@ import de.greenrobot.event.EventBus;
 // * create an instance of this fragment.
 // */
 
-public class FragmentAllClients extends Fragment implements CallbackAllclientMenuDialog{
+public class FragmentAllClients extends Fragment implements CallbackMenuAllclientDialog {
     //IF USER SELECTED USERS IN RANGE IT  \/ CHANGE TO TRUE
     public static boolean isMenuRangeActive = false;
 // AND THEN SEARCHING IN SEARCHVIEW GIVE RESULT ONLY FROM CLIENT FROM RANGE SELECTED IN MENU
@@ -220,7 +220,7 @@ public class FragmentAllClients extends Fragment implements CallbackAllclientMen
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
-            case R.id.show_dialog:{
+            case R.id.dialog_menu_allclient_show_dialog:{
                 Log.i(TAG, "onOptionsItemSelected: show dialog ?");
 
                 showDialog();
@@ -257,7 +257,7 @@ public class FragmentAllClients extends Fragment implements CallbackAllclientMen
 
         ft.addToBackStack(null);
 
-        DialogFragment d = DialogMenuAllClients.newInstance(2);
+        DialogFragment d = DialogMenuAllClients.newInstance();
 
         d.show(getChildFragmentManager(), "dialogMenuAllClient");
 
@@ -277,20 +277,7 @@ public class FragmentAllClients extends Fragment implements CallbackAllclientMen
                 DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-//    adapterAllClients.notifyDataSetChanged();
                         adapterAllClients.updateList(getAllClientsFromDatabase());
-//                        FragmentAllClients allClients = new FragmentAllClients();
-//
-//                        Fragment fragment = allClients ;
-//
-//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-//                                android.R.anim.fade_out);
-//                        fragmentTransaction.replace(R.id.frame, allClients, MainActivity.TAG_ALL_CLIENTS);
-//                        fragmentTransaction.commitAllowingStateLoss();
-
-//                        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-//                        Fragment f = get
                     }
                 });
                 dialogNewClient.show();
@@ -299,8 +286,6 @@ public class FragmentAllClients extends Fragment implements CallbackAllclientMen
         });
 
     }
-
-
 
     public void onButtonPressed(Uri uri) {
         Log.i(TAG, "onButtonPressed: START");

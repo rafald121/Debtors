@@ -41,6 +41,7 @@
         <item>Debtors</item>
         <item>Transactions</item>
         <item>Payments</item>
+        <!--<item>Client Info</item>-->
         <item>Settings</item>
         <!--<item>About me</item>-->
     </string-array>
@@ -81,7 +82,7 @@
 
     <string name="dialog_newclient_menu_from">From date</string>
     <string name="dialog_newclient_menu_to">To date</string>
-    <string name="dialog_newclient_menu_range">Left amount range</string>
+    <string name="dialog_newclientdebtors_menu_range">Left amount range</string>
 
     <!--<string name="dialog_newclient_menu_error"></string>-->
 </resources>

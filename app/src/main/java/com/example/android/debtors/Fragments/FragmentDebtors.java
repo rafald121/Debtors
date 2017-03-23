@@ -2,17 +2,14 @@ package com.example.android.debtors.Fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -25,8 +22,11 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterDebtors;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Dialogs.DialogMenuDebtors;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.SearchQueryForMe;
+import com.example.android.debtors.EventBus.SearchQueryMeToOther;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
 
@@ -51,6 +51,8 @@ public class FragmentDebtors extends Fragment  {
     private FragmentActivity fragmentActivity;
     private CategoryAdapterDebtors categoryAdapterDebtors;
 
+    private int formeORmetoother = 0; // 0 -- position = for me
+
     public FragmentDebtors() {
     }
 
@@ -58,6 +60,8 @@ public class FragmentDebtors extends Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        EventBus myEventBus = EventBus.getDefault();
+
     }
 
 
@@ -90,13 +94,18 @@ public class FragmentDebtors extends Fragment  {
                 InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterDebtors.instantiateItem(viewPager, position);
                 if (intefrace != null) {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
+                    Log.i(TAG, "onPageSelected: a obecny subFragmen to: " + MainActivity.subFragmentID);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDs.DEBTORSFORME;
+                            Log.d(TAG, "onPageSelected() called111 with: position = [" + position + "]");
+//                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
+                            formeORmetoother = 0;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDs.DEBTORSMETOOTHER;
+                            Log.d(TAG, "onPageSelected() called222 with: position = [" + position + "]");
+//                            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSMETOOTHER;
+                            formeORmetoother = 1;
                             intefrace.notifyWhenSwitched();
                             break;
                         default:
@@ -137,13 +146,25 @@ public class FragmentDebtors extends Fragment  {
             queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    EventBus.getDefault().post(new SearchQuery(newText));
+
+                    if(formeORmetoother == 0)
+                        EventBus.getDefault().post(new SearchQueryForMe(newText));
+                    else
+                        EventBus.getDefault().post(new SearchQueryMeToOther(newText));
+
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    return true;
+                    Log.i(TAG, "onQueryTextSubmit: hmmmmmqwe");
+
+                    if(formeORmetoother == 0)
+                        EventBus.getDefault().post(new SearchQueryForMe(query));
+                    else
+                        EventBus.getDefault().post(new SearchQueryMeToOther(query));
+
+                    return false;
                 }
             };
             searchView.setOnQueryTextListener(queryTextListener);
@@ -160,23 +181,33 @@ public class FragmentDebtors extends Fragment  {
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
-            case R.id.menu_debtors_max_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_amount");
-                return true;
-            case R.id.menu_debtors_min_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_amount");
-                return true;
-            case R.id.menu_debtors_max_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_max_date");
-                return true;
-            case R.id.menu_debtors_min_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_debtors_min_date");
-                return true;
-            default:
+            case R.id.dialog_menu_debtors_show_dialog:
+                Log.i(TAG, "onOptionsItemSelected: show dialog in debtors: " );
+                showDialog();
                 break;
+            default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR ");
+
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(MainActivity.TAG_DEBTORS);
+
+        if(prev!=null)
+            ft.remove(prev);
+        else
+            Log.e(TAG, "showDialog: prev is not null");
+
+        ft.addToBackStack(null);
+        Log.i(TAG, "showDialog: TAGSSS : " + MainActivity.subFragmentID);
+        DialogFragment d = DialogMenuDebtors.newInstance(formeORmetoother);
+
+        d.show(getChildFragmentManager(), "dialogMenuDebtors");
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -188,6 +219,7 @@ public class FragmentDebtors extends Fragment  {
         Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
+//        EventBus.getDefault().register(this); // this == your class instance
 
     }
 
@@ -195,6 +227,7 @@ public class FragmentDebtors extends Fragment  {
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
+//        EventBus.getDefault().unregister(this);
     }
 
 }

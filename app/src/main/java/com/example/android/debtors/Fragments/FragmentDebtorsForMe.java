@@ -1,11 +1,9 @@
 package com.example.android.debtors.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,9 +17,12 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Adapters.AdapterDebtors;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.EventBus.DialogMenuDebtorsForMeApply;
 import com.example.android.debtors.EventBus.SearchQuery;
+import com.example.android.debtors.EventBus.SearchQueryForMe;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
+import com.example.android.debtors.Interfaces.CallbackMenuDebtorsDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.R;
@@ -33,39 +34,25 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Rafaello on 2017-02-18.
  */
-public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager{
+public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager, CallbackMenuDebtorsDialog{
 
+    public static boolean isMenuRangeActive = false;
 
-    @Override
-    public void notifyWhenSwitched() {
-        Log.i(TAG, "notifyWhenSwitched: FOR ME");
-    }
-
-    interface hideOrShowFab{
-        void showFab();
-    }
     private static final String TAG = FragmentDebtorsForMe.class.getSimpleName();
 
-    private String query;
-
     private DatabaseClients dbClients;
+
     private List<Client> listOfClients;
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
     private AdapterDebtors adapterDebtors;
     private RecyclerView recyclerView;
-
     public FragmentDebtorsForMe() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    public void onEvent(SearchQuery query){
-        Log.i(TAG, "onEvent: " + query.getMessage());
-        adapterDebtors.filter(query.getMessage());
     }
 
     @Nullable
@@ -109,6 +96,14 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
 
     }
 
+
+
+    @Override
+    public void reloadRecycler(int min, int max) {
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
+        adapterDebtors.updateList(listOfClients);
+    }
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity()
@@ -138,13 +133,6 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         });
     }
 
-    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
-        if(toggleFabWhenDrawerMove.isDirection())
-            fab.show();
-        else
-            fab.hide();
-    }
-
     @Override
     public void onAttach(Context context) {
         fragmentActivity = (FragmentActivity) context;
@@ -158,23 +146,36 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         super.onDetach();
     }
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
     private List<Client> getClientsMoreThanZero() {
         dbClients = new DatabaseClients(getContext());
         List<Client> clients = dbClients.getClientWithLeftAmountMoreOrLessZero(true);
         return clients;
+    }
+
+
+    @Override
+    public void notifyWhenSwitched() {
+        Log.i(TAG, "notifyWhenSwitched: FOR ME");
+    }
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+    public void onEvent(DialogMenuDebtorsForMeApply dialogMenuDebtorsForMeApply){
+        Log.i(TAG, "onEvent: halo for me");
+        isMenuRangeActive = true;
+        listOfClients = dbClients.getListOfClientWithLeftAmountInRange(dialogMenuDebtorsForMeApply.getMin(), dialogMenuDebtorsForMeApply.getMax());
+        adapterDebtors.updateList(listOfClients);
+    }
+
+    public void onEvent(SearchQueryForMe query){
+        Log.i(TAG, "onEvent: " + query.getMessage());
+        if(!isMenuRangeActive)
+            adapterDebtors.filter(query.getMessage());
+        else
+            adapterDebtors.filter(query.getMessage(),listOfClients);
     }
 }

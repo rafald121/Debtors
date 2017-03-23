@@ -4,8 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,14 +17,9 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterPayments;
-import com.example.android.debtors.Databases.DatabasePayments;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
-import com.example.android.debtors.ItemListener.RecyclerOnScrollListener;
-import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
-
-import java.util.List;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -78,15 +71,15 @@ public class FragmentPayments extends Fragment {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDs.PAYMENTSALL;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDs.PAYMENTSRECEIVED;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSRECEIVED;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 2:
-                            MainActivity.subFragmentID = FragmentsIDs.PAYMENTSGIVEN;
+                            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSGIVEN;
                             intefrace.notifyWhenSwitched();
                             break;
                         default:

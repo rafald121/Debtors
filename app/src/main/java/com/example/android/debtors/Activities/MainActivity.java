@@ -1,6 +1,8 @@
 package com.example.android.debtors.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -14,30 +16,23 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Databases.DatabaseTransactions;
-import com.example.android.debtors.Enum.FragmentsIDs;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
 import com.example.android.debtors.Fragments.FragmentTransactions;
-import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Others.CircleTransform;
 import com.example.android.debtors.R;
-import com.example.android.debtors.Utils.UtilsDatabaseMethods;
-
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
 
@@ -81,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static final String TAG_ALL_CLIENTS = String.valueOf(R.string.tag_allclients);
-    private static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
-    private static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
-    private static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);
-    private static final String TAG_SETTINGS = String.valueOf(R.string.tag_settings);
+    public static final String TAG_DEBTORS = String.valueOf(R.string.tag_debtors);
+    public static final String TAG_TRANSACTIONS = String.valueOf(R.string.tag_transactions);
+    public static final String TAG_PAYMENTS = String.valueOf(R.string.tag_payments);
+    public static final String TAG_SETTINGS = String.valueOf(R.string.tag_settings);
     public static String PREVIOUS_TAG = null;
     public static String CURRENT_TAG = TAG_DEBTORS;
     public static String CURRENT_SUB_TAG = null;
@@ -94,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentDebtors fragmentDebtors;
     private FragmentTransactions fragmentTransactions;
     private FragmentPayments fragmentPayments;
+    private boolean keyboardOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             navItemIndex = 0;
 
             previousFragmentID = fragmentID;
-            fragmentID = FragmentsIDs.ALLCLIENTS;
+            fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
 
             PREVIOUS_TAG = CURRENT_TAG;
             CURRENT_TAG = TAG_ALL_CLIENTS;
@@ -282,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+        getSupportActionBar().setTitle(activityTitles[fragmentID]);
     }
 
     private void setUpNavigationView() {
@@ -302,8 +298,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.ALLCLIENTS;
-                        subFragmentID = FragmentsIDs.ALLCLIENTS;
+                        fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
+                        subFragmentID = FragmentsIDsAndTags.ALLCLIENTS;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_ALL_CLIENTS;
@@ -313,8 +309,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 1;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.DEBTORS;
-                        subFragmentID = FragmentsIDs.DEBTORSFORME;
+                        fragmentID = FragmentsIDsAndTags.DEBTORS;
+                        subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_DEBTORS;
@@ -324,8 +320,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 2;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.TRANSACTIONS;
-                        subFragmentID = FragmentsIDs.TRANSACTIONSALL;
+                        fragmentID = FragmentsIDsAndTags.TRANSACTIONS;
+                        subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_TRANSACTIONS;
@@ -335,8 +331,8 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 3;
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.PAYMENTS;
-                        subFragmentID = FragmentsIDs.PAYMENTSALL;
+                        fragmentID = FragmentsIDsAndTags.PAYMENTS;
+                        subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
 
                         PREVIOUS_TAG = CURRENT_TAG;
                         CURRENT_TAG = TAG_PAYMENTS;
@@ -346,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_settings:
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.SETTINGS;
+                        fragmentID = FragmentsIDsAndTags.SETTINGS;
 
                         startActivity(new Intent(MainActivity.this, ActivitySettings.class));
                         return true;
@@ -354,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_about_me:
 
                         previousFragmentID = fragmentID;
-                        fragmentID = FragmentsIDs.ABOUTME;
+                        fragmentID = FragmentsIDsAndTags.ABOUTME;
 
                         startActivity(new Intent(MainActivity.this, AboutMe.class));
                         return true;
@@ -404,43 +400,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "setUpNavigationView: END");
     }
 
-//    @Override
-//    public void onBackPressed() {
-////        TODO when clicked two times ask if quit app
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawers();
-//            return;
-//        }
-//
-//        // This code loads home fragment when back key is pressed
-//        // when user is in other fragment than home
-//        if (shouldLoadHomeFragOnBackPress) {
-//            // checking if user is on other navigation menu
-//            // rather than home
-//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
-//                navItemIndex = 1;
-//
-//                previousFragmentID = fragmentID;
-//                fragmentID = FragmentsIDs.DEBTORS;
-//
-//                PREVIOUS_TAG = CURRENT_TAG;
-//                CURRENT_TAG = TAG_DEBTORS;
-//                loadSelectedFragment();
-//                return;
-//            } else { // jesli navItem jest 1
-//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
-//                    // nothing(do anything)
-//                    whenBackClickedOnDebtors = true;
-//                    return;
-//                } else { // if true user have clicked back button once and next time minimalize app
-////                    minimalize app
-//                }
-//            }
-//        }
-//
-//        super.onBackPressed();
-//    }
-
+    //    @Override
 
     private void loadNavHeader() {
         // name, website
@@ -466,9 +426,104 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(true));
     }
 
+
     private void fabOff(){
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(false));
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawers();
+            return;
+        }
+
+        if (isKeyboardOpen()) {
+            closeKeyboard();
+            return;
+        }
+
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.i(TAG, "onBackPressed: count: " + count);
+
+        if (count == 0) {
+            super.onBackPressed();
+            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
+            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
+            setToolbarTitle();
+//TODO tutaj powinno sie cofac na podstawie historii fragmentow
+
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
+
+//    public void onBackPressed() {
+////        TODO when clicked two times ask if quit app
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawers();
+//            return;
+//        }
+//
+//        // This code loads home fragment when back key is pressed
+//        // when user is in other fragment than home
+//        if (shouldLoadHomeFragOnBackPress) {
+//            // checking if user is on other navigation menu
+//            // rather than home
+//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
+//                navItemIndex = 1;
+//
+//                previousFragmentID = fragmentID;
+//                fragmentID = FragmentsIDsAndTags.DEBTORS;
+//
+//                PREVIOUS_TAG = CURRENT_TAG;
+//                CURRENT_TAG = TAG_DEBTORS;
+//                loadSelectedFragment();
+//                return;
+//            } else { // jesli navItem jest 1
+//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
+//                    // nothing(do anything)
+//                    whenBackClickedOnDebtors = true;
+//                    return;
+//                } else { // if true user have clicked back button once and next time minimalize app
+////                    minimalize app
+//                }
+//        }
+//
+//        super.onBackPressed();
+//    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public boolean isKeyboardOpen() {
+        Rect r = new Rect();
+        View view = this.findViewById(android.R.id.content);
+        view.getWindowVisibleDisplayFrame(r);
+
+        int screenHeight = view.getRootView().getHeight();
+
+        // r.bottom is the position above soft keypad or device button.
+        // if keypad is shown, the r.bottom is smaller than that before.
+        int keypadHeight = screenHeight - r.bottom;
+
+        Log.d(TAG, "keypadHeight = " + keypadHeight);
+
+        if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+           return true;
+        }
+        else {
+            return false;
+        }
+
+
+    }
 }
 

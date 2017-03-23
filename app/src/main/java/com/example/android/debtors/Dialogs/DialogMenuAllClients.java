@@ -5,26 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabaseClients;
-import com.example.android.debtors.Interfaces.CallbackAllclientMenuDialog;
+import com.example.android.debtors.Interfaces.CallbackMenuAllclientDialog;
 import com.example.android.debtors.R;
-import com.example.android.debtors.Utils.Utils;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by admin on 19.03.2017.
@@ -46,17 +38,12 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
     private RangeSeekBar rangeSeekBarTextColorWithCode = null;
 
-    private CallbackAllclientMenuDialog callbackMenuDialog;
+    private CallbackMenuAllclientDialog callbackMenuDialog;
 
     private DatabaseClients dbClients  = null;
 
-    public static DialogMenuAllClients newInstance(int num) {
+    public static DialogMenuAllClients newInstance() {
         DialogMenuAllClients f = new DialogMenuAllClients();
-
-        // Supply num input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("num", num);
-        f.setArguments(args);
 
         return f;
     }
@@ -67,7 +54,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callbackMenuDialog = (CallbackAllclientMenuDialog) getParentFragment();
+        callbackMenuDialog = (CallbackMenuAllclientDialog) getParentFragment();
 //        callbackMenuDialog = fragmentActivity;
     }
 
@@ -82,9 +69,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
         rangeSeekBarTextColorWithCode = (RangeSeekBar) view.findViewById(R.id.dialog_allclients_menu_rangeseekbar);
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
         rangeSeekBarTextColorWithCode.setRangeValues(-5000,5000);
-//        rangeSeekBarTextColorWithCode.
-//        rangeSeekBarTextColorWithCode.setSelectedMinValue(100);
-//        rangeSeekBarTextColorWithCode.setSelectedMaxValue(900);
+
         rangeSeekBarTextColorWithCode.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
         buttonApply = (Button) view.findViewById(R.id.dialog_allclient_menu_apply);
@@ -102,7 +87,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
 
-//        callbackMenuDialog = (CallbackAllclientMenuDialog) fragmentActivity;
+//        callbackMenuDialog = (CallbackMenuAllclientDialog) fragmentActivity;
     }
 
     @Override
