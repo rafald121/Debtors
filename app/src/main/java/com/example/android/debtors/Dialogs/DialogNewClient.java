@@ -5,7 +5,10 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -72,7 +75,10 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
         this.callbackAddInDialog =  callback;
 
     }
-
+//       if (dbClient.isClientWithNameAlreadyExist("maniek"))
+//    Log.i(TAG, "onCreate: istnieje");
+//    else
+//            Log.i(TAG, "onCreate: nie istnieje");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +87,31 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
         
         newClientName = (EditText) findViewById(R.id.dialog_newclient_name);
 
+        newClientName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().equals(""))
+                    if(dbClients.isClientWithNameAlreadyExist(s.toString()))
+                        newClientError.setText("User already exist");
+                    else
+                        newClientError.setText("Name free");
+                else
+                    newClientError.setText("User name must be at least one sign");
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         newClientLeftAmount = (EditText) findViewById(R.id.dialog_newclient_leftamount);
-//        newClientLeftAmount.setText("0");
 
         newClientToggle = (ToggleButton) findViewById(R.id.dialog_newclient_type);
 
@@ -111,34 +140,33 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
                 int clientLeftAmount;
 
                 Log.e(TAG, "onClick: auuu: " + newClientLeftAmount.getText().toString());
+                if(!dbClients.isClientWithNameAlreadyExist(newClientName.getText().toString())) {
+                    if (newClientLeftAmount.getText().toString().equals("")) {
 
-                if(newClientLeftAmount.getText().toString().equals("")) {
+                        clientLeftAmount = 0;
 
-                    clientLeftAmount = 0;
+                        Client client = new Client(clientName, clientLeftAmount);
+                        dbClients.createClient(client);
 
+                        callbackAddInDialog.reloadRecycler();
 
+                        dismiss();
+                    } else {
 
-                    Client client = new Client(clientName, clientLeftAmount);
-                    dbClients.createClient(client);
+                        if (newClientToggle.isChecked())
+                            clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
+                        else
+                            clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString()) * (-1);
 
-                    callbackAddInDialog.reloadRecycler();
+                        Client client = new Client(clientName, clientLeftAmount);
+                        dbClients.createClient(client);
 
-                    dismiss();
-                } else {
+                        callbackAddInDialog.reloadRecycler();
 
-                    if (newClientToggle.isChecked())
-                        clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString());
-                    else
-                        clientLeftAmount = Integer.parseInt(newClientLeftAmount.getText().toString()) * (-1);
-
-                    Client client = new Client(clientName, clientLeftAmount);
-                    dbClients.createClient(client);
-
-                    callbackAddInDialog.reloadRecycler();
-
-                    dismiss();
-                }
-
+                        dismiss();
+                    }
+                } else
+                    newClientError.setText("User name is already exist");
             } else {
                 newClientError.setText("Name of client must have at least one sign");
                 Log.e(TAG, "onClick: trzeba wpisac imie usera");
