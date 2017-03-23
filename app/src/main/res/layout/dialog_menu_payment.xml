@@ -1,36 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:rsb="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="400dp"
-    android:layout_width="250dp">
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:text="@string/dialog_newclient_menu_from"
-        android:layout_width="218dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        style="@style/DialogMenuHeader"
-        android:layout_marginTop="16dp" />
-
-    <DatePicker
-        android:id="@+id/dp_datepicker"
+    <LinearLayout
+        android:id="@+id/dialog_menu_payments_datelinear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="-30dp"
-        android:layout_marginRight="-30dp"
-        android:datePickerMode="spinner"
-        android:scaleY="0.7"
-        android:scaleX="0.7"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_gravity="center"
+        >
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_marginTop="8dp"
+            >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:text="@string/dialog_newclient_menu_from"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                style="@style/DialogMenuPaymentsHeader"
+                />
+
+            <DatePicker
+                android:id="@+id/dialog_menu_payments_fromdate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="85"
+                style="@style/DialogMenuPaymentsDatePicker"
+                android:layout_gravity="start"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_marginTop="8dp"
+            >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:text="@string/dialog_newclient_menu_to"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                style="@style/DialogMenuPaymentsHeader"
+                />
+
+            <DatePicker
+                android:id="@+id/dialog_menu_payments_todate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="85"
+                style="@style/DialogMenuPaymentsDatePicker"
+                android:layout_gravity="end"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:text="@string/dialog_menu_payments_amount_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/DialogMenuHeader"
+        android:layout_gravity="center" />
+
+    <org.florescu.android.rangeseekbar.RangeSeekBar
+        android:id="@+id/dialog_menu_payments_amount_range_seekbar"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/rangeSeekBarMargin"
+        android:layout_marginEnd="@dimen/rangeSeekBarMargin"
+        rsb:valuesAboveThumbs="true"
         />
+
+
+
+    <LinearLayout
+        android:id="@+id/dialog_menu_payments_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        style="@style/DialogMenuHeader"
+        android:layout_gravity="center"
+        >
+
+            <Button
+            android:id="@+id/dialog_menu_payments_apply"
+            android:text="Apply"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"/>
+
+            <Button
+            android:id="@+id/dialog_menu_payments_cancel"
+            android:text="Cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/dialog_menu_payments_menu_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/DialogMenuComponent"
+    />
 
     <!--<EditText-->
         <!--android:id="@+id/dialog_allclient_menu_edittext_from"-->
@@ -43,16 +142,7 @@
         <!--android:hint="DD-MM-YYYY"-->
         <!--style="@style/DialogMenuEditText"/>-->
 
-    <!--<TextView-->
-        <!--android:id="@+id/textView4"-->
-        <!--android:text="@string/dialog_newclient_menu_to"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/dialog_allclient_menu_from_validate"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--style="@style/DialogMenuHeader"-->
-        <!--app:layout_constraintHorizontal_bias="0.0" />-->
+
 
 
     <!--<EditText-->
@@ -145,4 +235,4 @@
         <!--app:layout_constraintRight_toRightOf="parent"-->
         <!--android:id="@+id/dialog_allclient_menu_to_validate" />-->
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

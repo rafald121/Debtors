@@ -92,6 +92,12 @@
         <item name="android:textSize">@dimen/dialog_menu_from_to_size</item>
     </style>
 
+    <style name="DialogMenuPaymentsHeader" parent="DialogMenuStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/dialog_menu_from_to_size</item>
+    </style>
+
     <style name="DialogMenuComponent" parent="DialogMenuStyle">
         <item name="android:layout_marginTop">8dp</item>
     </style>
@@ -99,6 +105,12 @@
     <style name="DialogMenuEditText" parent="DialogMenuStyle">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DialogMenuPaymentsDatePicker" parent="@android:style/Widget.DatePicker">
+        <item name="android:scaleY">0.7</item>
+        <item name="android:scaleX">0.7</item>
+        <item name="android:layout_margin">-32dp</item>
     </style>
 
     <!--<dialog_payment_radio_shape name="RecyclerView">-->
