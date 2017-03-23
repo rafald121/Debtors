@@ -41,6 +41,7 @@
         <item>Debtors</item>
         <item>Transactions</item>
         <item>Payments</item>
+        <!--<item>Client Info</item>-->
         <item>Settings</item>
         <!--<item>About me</item>-->
     </string-array>

@@ -8,12 +8,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.CategoryAdapterClientInfo;
+import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.R;
 
 //
@@ -31,29 +33,13 @@ public class FragmentSingleClientInfo extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private FragmentActivity fragmentActivity;
+    private DatabaseClients dbClients;
     private long clientID;
 
     public FragmentSingleClientInfo() {
         // Required empty public constructor
     }
 
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment FragmentSingleClientInfo.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static FragmentSingleClientInfo newInstance(String param1, String param2) {
-//        FragmentSingleClientInfo fragment = new FragmentSingleClientInfo();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +69,8 @@ public class FragmentSingleClientInfo extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getNameOfClientForID(clientID));
+
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.clientsinfo_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.clientsinfo_tabs);
 
@@ -90,6 +78,12 @@ public class FragmentSingleClientInfo extends Fragment {
         viewPager.setAdapter(categoryAdapterClientInfo);
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    private String getNameOfClientForID(long clientID) {
+        dbClients = new DatabaseClients(fragmentActivity);
+        String name = dbClients.getClientByID(clientID).getClientName();
+        return name;
     }
 
     @Override

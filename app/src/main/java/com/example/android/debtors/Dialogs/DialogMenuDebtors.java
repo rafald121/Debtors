@@ -60,13 +60,13 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: utworzono i formeormetoother = " + forMeOrMeToOther);
+        //TODO dodac przycisk "DEFAULT SETTINGS
         view = inflater.inflate(R.layout.dialog_menu_debtors, container, false);
 
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_debtors_error);
 
         rangeSeekBar = (RangeSeekBar) view.findViewById(R.id.dialog_menu_debtors_rangeseekbar);
-        
+
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
         if(forMeOrMeToOther == 0)
             rangeSeekBar.setRangeValues(0,5000);
@@ -100,10 +100,8 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
         if(v.getId() == buttonApply.getId()){
 
             int minAmount = (Integer) rangeSeekBar.getSelectedMinValue();
-            Log.i(TAG, "onClick: minAmount: " + minAmount);
 
             int maxAmount = (Integer) rangeSeekBar.getSelectedMaxValue();
-            Log.i(TAG, "onClick: maxAmount: " + maxAmount);
 
             if(forMeOrMeToOther == 0)//for me
 
@@ -122,25 +120,11 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
                 }
             }
 
-
-//            if(maxAmount == (Integer) rangeSeekBar.getAbsoluteMaxValue()){
-//                dbClients = new DatabaseClients(fragmentActivity);
-//                maxAmount = dbClients.getClientWithHighestLeftAmount();
-//                Log.i(TAG, "onClick: a tukej: " + maxAmount);
-//            } else if(minAmount == (Integer) rangeSeekBar.getAbsoluteMinValue()){
-//                dbClients = new DatabaseClients(fragmentActivity);
-//                minAmount = dbClients.getClientWithLowestLeftAmount();
-//                Log.i(TAG, "onClick: najmniejsza: " + minAmount);
-//            }
-            Log.d(TAG, "min: " + minAmount + " max: " + maxAmount);
-
             if(forMeOrMeToOther == 0)
                 EventBus.getDefault().post(new DialogMenuDebtorsForMeApply(minAmount,maxAmount));
             else
                 EventBus.getDefault().post(new DialogMenuDebtorsMeToOtherApply(minAmount,maxAmount));
 
-//            callbackMenuDebtorsDialog.reloadRecycler(minAmount, maxAmount);
-            //query
             dismiss();
         } else if(v.getId() == buttonCancel.getId()){
             dismiss();
