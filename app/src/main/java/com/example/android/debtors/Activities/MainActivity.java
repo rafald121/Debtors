@@ -400,38 +400,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "setUpNavigationView: END");
     }
 
-    @Override
-    public void onBackPressed() {
-
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawers();
-            return;
-        }
-
-        if (isKeyboardOpen()) {
-            closeKeyboard();
-            return;
-        }
-
-        int count = getFragmentManager().getBackStackEntryCount();
-        Log.i(TAG, "onBackPressed: count: " + count);
-
-        if (count == 0) {
-            super.onBackPressed();
-            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
-            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
-            setToolbarTitle();
-//            switch (MainActivity.fragmentID){
-//                case 0:
-//                    toolbar.setTitle();
-//            }
-
-        } else {
-            getFragmentManager().popBackStack();
-        }
-
-    }
-
     //    @Override
 
     private void loadNavHeader() {
@@ -454,50 +422,78 @@ public class MainActivity extends AppCompatActivity {
 //                .into(imgProfile);
     }
 
-
     private void fabOn(){
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(true));
     }
+
 
     private void fabOff(){
         EventBus.getDefault().post(new ToggleFabWhenDrawerMove(false));
     }
 
-    //    }
-//        super.onBackPressed();
-//
-//        }
-//            }
-//                }
-////                    minimalize app
-//                } else { // if true user have clicked back button once and next time minimalize app
-//                    return;
-//                    whenBackClickedOnDebtors = true;
-//                    // nothing(do anything)
-//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
-//            } else { // jesli navItem jest 1
-//                return;
-//                loadSelectedFragment();
-//                CURRENT_TAG = TAG_DEBTORS;
-//                PREVIOUS_TAG = CURRENT_TAG;
-//
-//                fragmentID = FragmentsIDsAndTags.DEBTORS;
-//                previousFragmentID = fragmentID;
-//
-//                navItemIndex = 1;
-//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
-//            // rather than home
-//            // checking if user is on other navigation menu
-//        if (shouldLoadHomeFragOnBackPress) {
-//        // when user is in other fragment than home
-//        // This code loads home fragment when back key is pressed
-//
-//        }
-//            return;
-//            drawer.closeDrawers();
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-////        TODO when clicked two times ask if quit app
+    @Override
+    public void onBackPressed() {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawers();
+            return;
+        }
+
+        if (isKeyboardOpen()) {
+            closeKeyboard();
+            return;
+        }
+
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.i(TAG, "onBackPressed: count: " + count);
+
+        if (count == 0) {
+            super.onBackPressed();
+            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
+            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
+            setToolbarTitle();
+//TODO tutaj powinno sie cofac na podstawie historii fragmentow
+
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
+
 //    public void onBackPressed() {
+////        TODO when clicked two times ask if quit app
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawers();
+//            return;
+//        }
+//
+//        // This code loads home fragment when back key is pressed
+//        // when user is in other fragment than home
+//        if (shouldLoadHomeFragOnBackPress) {
+//            // checking if user is on other navigation menu
+//            // rather than home
+//            if (navItemIndex != 1) { // jeśli navItem nie jest 1
+//                navItemIndex = 1;
+//
+//                previousFragmentID = fragmentID;
+//                fragmentID = FragmentsIDsAndTags.DEBTORS;
+//
+//                PREVIOUS_TAG = CURRENT_TAG;
+//                CURRENT_TAG = TAG_DEBTORS;
+//                loadSelectedFragment();
+//                return;
+//            } else { // jesli navItem jest 1
+//                if (!whenBackClickedOnDebtors) { //if false, change variable to true and return
+//                    // nothing(do anything)
+//                    whenBackClickedOnDebtors = true;
+//                    return;
+//                } else { // if true user have clicked back button once and next time minimalize app
+////                    minimalize app
+//                }
+//        }
+//
+//        super.onBackPressed();
+//    }
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();

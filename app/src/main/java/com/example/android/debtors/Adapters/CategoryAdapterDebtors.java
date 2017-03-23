@@ -23,10 +23,8 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
 
     public CategoryAdapterDebtors(FragmentManager fm) {
         super(fm);
-        Log.i(TAG, "CategoryAdapterDebtors: 1");
         fragmentDebtorsForMe = new FragmentDebtorsForMe();
         fragmentDebtorsMeToOther = new FragmentDebtorsMeToOther();
-        Log.i(TAG, "CategoryAdapterDebtors: 2");
     }
 
 
