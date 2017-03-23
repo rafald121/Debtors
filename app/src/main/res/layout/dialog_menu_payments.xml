@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:rsb="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:id="@+id/dialog_menu_payments_datelinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_gravity="center"
+        >
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_marginTop="8dp"
+            >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:text="@string/dialog_menu_date_from"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                style="@style/DialogMenuPaymentsHeader"
+                />
+
+            <DatePicker
+                android:id="@+id/dialog_menu_payments_fromdate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="85"
+                style="@style/DialogMenuPaymentsDatePicker"
+                android:layout_gravity="start"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_marginTop="8dp"
+            >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:text="@string/dialog_menu_date_to"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                style="@style/DialogMenuPaymentsHeader"
+                />
+
+            <DatePicker
+                android:id="@+id/dialog_menu_payments_todate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="85"
+                style="@style/DialogMenuPaymentsDatePicker"
+                android:layout_gravity="end"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:text="@string/dialog_menu_payments_amount_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/DialogMenuHeader"
+        android:layout_gravity="center" />
+
+    <org.florescu.android.rangeseekbar.RangeSeekBar
+        android:id="@+id/dialog_menu_payments_amount_range_seekbar"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/rangeSeekBarMargin"
+        android:layout_marginEnd="@dimen/rangeSeekBarMargin"
+        rsb:valuesAboveThumbs="true"
+        />
+
+
+
+    <LinearLayout
+        android:id="@+id/dialog_menu_payments_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        style="@style/DialogMenuHeader"
+        android:layout_gravity="center"
+        >
+
+            <Button
+            android:id="@+id/dialog_menu_payments_apply"
+            android:text="Apply"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"/>
+
+            <Button
+            android:id="@+id/dialog_menu_payments_cancel"
+            android:text="Cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/dialog_menu_payments_menu_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/DialogMenuComponent"
+    />
+
+
+</LinearLayout>

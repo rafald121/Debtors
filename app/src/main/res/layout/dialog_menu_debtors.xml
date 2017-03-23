@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:text="@string/dialog_newclientdebtors_menu_range"
+        android:text="@string/dialog_menu_newclientdebtors_range"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/DialogMenuHeader"

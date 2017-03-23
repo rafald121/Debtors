@@ -80,11 +80,16 @@
     <string name="dialog_transaction_toggle_purchase">Purchase</string>
     <string name="dialog_transaction_toggle_sale">Sale</string>
 
-    <string name="dialog_newclient_menu_from">From date</string>
-    <string name="dialog_newclient_menu_to">To date</string>
-    <string name="dialog_newclientdebtors_menu_range">Left amount range</string>
+    <string name="dialog_menu_date_from">From date</string>
+    <string name="dialog_menu_date_to">To date</string>
+    <string name="dialog_menu_newclientdebtors_range">Left amount range</string>
 
     <string name="dialog_menu_payments_amount_range">Payments range</string>
+
+    <string name="dialog_menu_transactions_totalamount_range">Total amount range</string>
+    <string name="dialog_menu_transactions_quantity_range">Quantity range</string>
+
+
 
     <!--<string name="dialog_newclient_menu_error"></string>-->
 </resources>

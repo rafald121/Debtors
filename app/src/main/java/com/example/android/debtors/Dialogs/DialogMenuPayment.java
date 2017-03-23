@@ -6,24 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.debtors.R;
-import com.example.android.debtors.Utils.Utils;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -67,7 +59,7 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.dialog_menu_payment, container, false);
+        view = inflater.inflate(R.layout.dialog_menu_payments, container, false);
 
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_payments_menu_error);
         rangeSeekBar = (RangeSeekBar) view.findViewById(R.id.dialog_menu_payments_amount_range_seekbar);
