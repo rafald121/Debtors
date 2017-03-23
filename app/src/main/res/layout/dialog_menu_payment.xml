@@ -7,17 +7,30 @@
     android:layout_height="400dp"
     android:layout_width="250dp">
 
-    <!--<TextView-->
-        <!--android:id="@+id/textView3"-->
-        <!--android:text="@string/dialog_newclient_menu_from"-->
-        <!--android:layout_width="218dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--style="@style/DialogMenuHeader"-->
-        <!--android:layout_marginTop="16dp" />-->
+    <TextView
+        android:id="@+id/textView3"
+        android:text="@string/dialog_newclient_menu_from"
+        android:layout_width="218dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/DialogMenuHeader"
+        android:layout_marginTop="16dp" />
 
+    <DatePicker
+        android:id="@+id/dp_datepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginRight="-30dp"
+        android:datePickerMode="spinner"
+        android:scaleY="0.7"
+        android:scaleX="0.7"
+        />
     <!--<EditText-->
         <!--android:id="@+id/dialog_allclient_menu_edittext_from"-->
         <!--android:layout_width="wrap_content"-->
