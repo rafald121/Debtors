@@ -195,18 +195,18 @@ public class FragmentDebtors extends Fragment  {
 
     private void showDialog() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getChildFragmentManager().findFragmentByTag(MainActivity.TAG_DEBTORS);
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_DEBTORS);
 
         if(prev!=null)
             ft.remove(prev);
         else
-            Log.e(TAG, "showDialog: prev is not null");
+            Log.e(TAG, "showDialog: prev is null");
 
         ft.addToBackStack(null);
         Log.i(TAG, "showDialog: TAGSSS : " + MainActivity.subFragmentID);
         DialogFragment d = DialogMenuDebtors.newInstance(formeORmetoother);
 
-        d.show(getChildFragmentManager(), "dialogMenuDebtors");
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_DEBTORS);
 
     }
 

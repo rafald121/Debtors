@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterPayments;
+import com.example.android.debtors.Dialogs.DialogMenuPayment;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
@@ -110,22 +113,28 @@ public class FragmentPayments extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_payment_max_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_payment_max_amount");
-                return true;
-            case R.id.menu_payment_min_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_payment_min_amount");
-                return true;
-            case R.id.menu_payment_max_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_payment_max_date");
-                return true;
-            case R.id.menu_payment_min_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_payment_min_date");
-                return true;
+            case R.id.dialog_menu_payment_showdialog:
+                showDialog();
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_PAYMENTS);
+
+        if(prev!=null)
+            ft.remove(prev);
+        else
+            Log.e(TAG, "showDialog: prev is null" );
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogMenuPayment.newInstance();
+
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_PAYMENTS);
     }
 
     public void onButtonPressed(Uri uri) {

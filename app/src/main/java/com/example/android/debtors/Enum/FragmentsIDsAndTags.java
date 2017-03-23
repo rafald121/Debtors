@@ -48,4 +48,13 @@ public class FragmentsIDsAndTags {
     public static final String TAG_PAYMENTSGIVEN        = "tagPaymentsGiven";
     public static final String TAG_CLIENTINFOTRANSACTIONS = "tagClientInfoTransactions";
     public static final String TAG_CLIENTINFOPAYMENTS     = "tagClientInfoPayments";
+    public static final String TAG_DIALOG_MENU_ALLCLIENT        = "tagDialogMenuAllClient";
+    public static final String TAG_DIALOG_MENU_DEBTORS          = "tagDialogMenuDebtors";
+    public static final String TAG_DIALOG_MENU_TRANSACTIONS     = "tagDialogMenuTransactions";
+    public static final String TAG_DIALOG_MENU_PAYMENTS         = "tagDialogMenuPayments";
+
+
+
+
+
 }
