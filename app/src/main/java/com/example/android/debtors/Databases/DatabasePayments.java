@@ -11,8 +11,10 @@ import android.util.Log;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Utils.Utils;
+import com.example.android.debtors.Utils.UtilsDate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -277,6 +279,32 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
     }
 
+    public int getTheHighestPaymentAmount(){
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int highestAmount = 0;
+        int currentHighest = 0;
+
+        if(c.moveToFirst()) {
+            do {
+                currentHighest = c.getInt(c.getColumnIndex(PAYMENT_AMOUNT));
+
+                if (currentHighest > highestAmount) {
+                    highestAmount = currentHighest;
+                }
+
+            } while (c.moveToNext());
+        }
+
+        return highestAmount;
+
+    }
 
     public List<Payment> getPaymentsByType(boolean receivedOrGive) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -311,6 +339,93 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return listOfPayments;
     }
+
+    public List<Payment> getPaymentsByDateAndRange(Date fromDate, Date toDate, int minRange, int maxRange) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Payment> listOfPayments = new ArrayList<>();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_AMOUNT + " >= " + minRange + " AND " +
+                PAYMENT_AMOUNT + " <= " + maxRange;
+
+        Log.e(TAG, "getPaymentsByDateAndRange: query: " + query );
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                String dateOfPayment = c.getString(c.getColumnIndex(PAYMENT_DATE));
+                Date date = UtilsDate.getDateFromSting(dateOfPayment);
+                Log.e(TAG, "getPaymentsByDateAndRange: DATETOSTRING: " + date.toString());
+
+                if(date.before(toDate) && date.after(fromDate)){
+                    Payment payment = new Payment();
+
+                    payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                    payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                    payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                    payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                    payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                    payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
+                    payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                    listOfPayments.add(payment);
+                }
+
+            }while (c.moveToNext());
+        }
+
+
+        return listOfPayments;
+    }
+
+    public List<Payment> getPaymentsByDateAndRange(Date fromDate, Date toDate, int minRange, int maxRange, int type) {
+
+        int tmpType = -1;
+        if(type == 1)
+            tmpType = 1;
+        if(type == 2)
+            tmpType = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Payment> listOfPayments = new ArrayList<>();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_AMOUNT + " >= " + minRange + " AND " +
+                PAYMENT_AMOUNT + " <= " + maxRange + " AND " + PAYMENT_GOT_OR_GIVEN + " = " + tmpType;
+
+        Log.e(TAG, "getPaymentsByDateAndRange: query: " + query );
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                String dateOfPayment = c.getString(c.getColumnIndex(PAYMENT_DATE));
+                Date date = UtilsDate.getDateFromSting(dateOfPayment);
+                Log.e(TAG, "getPaymentsByDateAndRange: DATETOSTRING: " + date.toString());
+
+                if(date.before(toDate) && date.after(fromDate)){
+                    Payment payment = new Payment();
+
+                    payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                    payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                    payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                    payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                    payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                    payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
+                    payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                    listOfPayments.add(payment);
+                }
+
+            }while (c.moveToNext());
+        }
+
+
+        return listOfPayments;
+    }
+
 }
 
 

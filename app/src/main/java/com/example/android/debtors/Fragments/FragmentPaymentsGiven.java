@@ -22,6 +22,7 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyReceivedOrGiven;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -36,6 +37,8 @@ import de.greenrobot.event.EventBus;
 public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentPaymentsGiven.class.getSimpleName();
+
+    private DatabasePayments dbPayment;
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
@@ -191,5 +194,15 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
         List<Payment> list = dbPayments.getPaymentsByType(receivedOrGive);
 
         return list;
+    }
+
+    public void onEvent(DialogMenuPaymentsApplyReceivedOrGiven dialogMenuPaymentsApplyReceivedOrGiven){
+        dbPayment = new DatabasePayments(fragmentActivity);
+        if(dialogMenuPaymentsApplyReceivedOrGiven.getType() == 2) {
+            listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApplyReceivedOrGiven.getFromDate(), dialogMenuPaymentsApplyReceivedOrGiven.getToDate(), dialogMenuPaymentsApplyReceivedOrGiven.getMinRange(), dialogMenuPaymentsApplyReceivedOrGiven.getMaxRange(), dialogMenuPaymentsApplyReceivedOrGiven.getType());
+            adapterPayment.updateList(listOfPayments);
+        } else
+            Log.e(TAG, "onEvent: czekam bo oddaję GIVEN ");
+
     }
 }

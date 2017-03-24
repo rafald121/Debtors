@@ -344,7 +344,6 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
 
     @Override
     public void reloadRecycler(int min, int max) {
-        Log.i(TAG, "reloadRecycler: halo korwa: " + min + max);
         listOfAllClients = dbClients.getListOfClientWithLeftAmountInRange(min,max);
 //        adapterAllClients.notifyDataSetChanged();
         adapterAllClients.updateList(listOfAllClients);

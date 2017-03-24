@@ -38,6 +38,8 @@ public class FragmentPayments extends Fragment {
     private CategoryAdapterPayments categoryAdapterPayments;
     private ViewPager viewPager;
 
+    private int receivedOrGiven = 0; // 0 - all 1 - received, 2 - given
+
     public FragmentPayments() {
     }
 
@@ -75,15 +77,18 @@ public class FragmentPayments extends Fragment {
                     switch (position){
                         case 0:
                             MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
+                            receivedOrGiven = 0;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
                             MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSRECEIVED;
                             intefrace.notifyWhenSwitched();
+                            receivedOrGiven = 1;
                             break;
                         case 2:
                             MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSGIVEN;
                             intefrace.notifyWhenSwitched();
+                            receivedOrGiven = 2;
                             break;
                         default:
                             Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
@@ -132,7 +137,7 @@ public class FragmentPayments extends Fragment {
 
         ft.addToBackStack(null);
 
-        DialogFragment d = DialogMenuPayment.newInstance();
+        DialogFragment d = DialogMenuPayment.newInstance(receivedOrGiven);
 
         d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_PAYMENTS);
     }

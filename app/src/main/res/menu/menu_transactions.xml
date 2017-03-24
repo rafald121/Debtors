@@ -1,41 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/menu_transaction_min_date"
+        android:id="@+id/dialog_menu_transactions_showdialog"
         android:orderInCategory="100"
-        android:title="@string/menu_transaction_min_date"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_transaction_max_date"
-        android:orderInCategory="101"
-        android:title="@string/menu_transaction_max_date"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_transaction_min_total_amount"
-        android:orderInCategory="102"
-        android:title="@string/menu_transaction_min_total_amount"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_transaction_max_total_amount"
-        android:orderInCategory="103"
-        android:title="@string/menu_transaction_max_total_amount"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_transaction_min_quantity"
-        android:orderInCategory="104"
-        android:title="@string/menu_transaction_min_quantity"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_transaction_max_quantity"
-        android:orderInCategory="105"
-        android:title="@string/menu_transaction_max_quantity"
-        app:showAsAction="never" />
-
+        android:icon="@drawable/more"
+        app:showAsAction="always" />
 
 </menu>
