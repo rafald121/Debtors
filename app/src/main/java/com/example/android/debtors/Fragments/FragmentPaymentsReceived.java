@@ -22,6 +22,7 @@ import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyReceivedOrGiven;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -45,6 +46,7 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
     private RecyclerView recyclerView = null;
 
     private List<Payment> listOfPayments = null;
+    private DatabasePayments dbPayment = null;
 
     public FragmentPaymentsReceived() {
     }
@@ -191,5 +193,13 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         return list;
     }
 
+    public void onEvent(DialogMenuPaymentsApplyReceivedOrGiven dialogMenuPaymentsApplyReceivedOrGiven) {
+        dbPayment = new DatabasePayments(fragmentActivity);
+        if (dialogMenuPaymentsApplyReceivedOrGiven.getType() == 1) {
+            listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApplyReceivedOrGiven.getFromDate(), dialogMenuPaymentsApplyReceivedOrGiven.getToDate(), dialogMenuPaymentsApplyReceivedOrGiven.getMinRange(), dialogMenuPaymentsApplyReceivedOrGiven.getMaxRange(), dialogMenuPaymentsApplyReceivedOrGiven.getType());
+            adapterPayment.updateList(listOfPayments);
+        } else
+            Log.e(TAG, "onEvent: czekam  bo oddaję RECEIVED :)");
 
+    }
 }
