@@ -20,6 +20,7 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -41,6 +42,8 @@ import de.greenrobot.event.EventBus;
 public class FragmentTransactionsPurchases extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentTransactionsPurchases.class.getSimpleName();
+
+    private DatabaseTransactions dbTransactions = null;
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
@@ -200,6 +203,16 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
         List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
 
         return list;
+    }
+
+    public void onEvent(DialogMenuTransactionsApplySalesOrPurchases dialogMenuTransactionsApplySalesOrPurchases){
+        Log.i(TAG, "onEvent: hlao tukej SALES !!!!!??");
+        dbTransactions = new DatabaseTransactions(fragmentActivity);
+        if(dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions() == 2) {
+            listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplySalesOrPurchases.getFromDate(), dialogMenuTransactionsApplySalesOrPurchases.getToDate(), dialogMenuTransactionsApplySalesOrPurchases.getMinQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMaxQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMinTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getMaxTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions());
+            adapterTransacation.updateList(listOfTransactions);
+        } else
+            Log.e(TAG, "onEvent: error typeOfTransactions in purchase on Event: " + dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions());
     }
 
 }
