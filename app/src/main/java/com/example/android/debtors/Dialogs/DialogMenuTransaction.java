@@ -16,6 +16,10 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyAll;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplyAll;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
 import com.example.android.debtors.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
@@ -32,7 +36,7 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
 
     private static final String TAG = DialogMenuTransaction.class.getSimpleName();
 
-    private DatabasePayments dbPayments = null;
+    private DatabaseTransactions dbTransactions = null;
 
     private TextView textViewError = null;
 
@@ -79,7 +83,7 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        dbPayments = new DatabasePayments(fragmentActivity);
+        dbTransactions = new DatabaseTransactions(fragmentActivity);
 
         view = inflater.inflate(R.layout.dialog_menu_transactions, container, false);
 
@@ -143,7 +147,22 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
                 minTotalAmount = (Integer) rangeSeekBarTotalAmount.getSelectedMinValue();
                 maxTotalAmount = (Integer) rangeSeekBarTotalAmount.getSelectedMaxValue();
 
+                if(maxQuantity == (Integer) rangeSeekBarQuantity.getAbsoluteMaxValue()){
+                    maxQuantity = dbTransactions.getHighestQuantityOfTransactions();
+                }
 
+                if(maxTotalAmount == (Integer) rangeSeekBarTotalAmount.getAbsoluteMaxValue()){
+                    maxTotalAmount = dbTransactions.getHighestTotalAmountOfTransaction();
+                }
+
+                if(typeOfTransactions == 0){
+                    EventBus.getDefault().post(new DialogMenuTransactionsApplyAll(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount));
+                } else if(typeOfTransactions == 1 || typeOfTransactions == 2){
+                    EventBus.getDefault().post(new DialogMenuTransactionsApplySalesOrPurchases(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount, typeOfTransactions));
+                } else
+                    Log.e(TAG, "onClick: ERROR typeOfTransactions: " + typeOfTransactions);
+
+                dismiss();
 
             } else
                 textViewError.setText("From date has to be before To Date");
