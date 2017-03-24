@@ -11,8 +11,10 @@ import android.util.Log;
 import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.Utils.Utils;
+import com.example.android.debtors.Utils.UtilsDate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -337,6 +339,48 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return listOfPayments;
     }
+
+    public List<Payment> getPaymentsByDateAndRange(Date fromDate, Date toDate, int minRange, int maxRange) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Payment> listOfPayments = new ArrayList<>();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_AMOUNT + " >= " + minRange + " AND " +
+                PAYMENT_AMOUNT + " <= " + maxRange;
+
+        Log.e(TAG, "getPaymentsByDateAndRange: query: " + query );
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                String dateOfPayment = c.getString(c.getColumnIndex(PAYMENT_DATE));
+                Date date = UtilsDate.getDateFromSting(dateOfPayment);
+                Log.e(TAG, "getPaymentsByDateAndRange: DATETOSTRING: " + date.toString());
+
+                if(date.before(toDate) && date.after(fromDate)){
+                    Payment payment = new Payment();
+
+                    payment.setPaymentID(c.getInt(c.getColumnIndex(PAYMENT_ID)));
+                    payment.setPaymentDate(c.getString(c.getColumnIndex(PAYMENT_DATE)));
+                    payment.setPaymentOwnerID(c.getInt(c.getColumnIndex(PAYMENT_OWNER)));
+                    payment.setPaymentClientID(c.getInt(c.getColumnIndex(PAYMENT_CLIENT)));
+                    payment.setPaymentAmount(c.getInt(c.getColumnIndex(PAYMENT_AMOUNT)));
+                    payment.setPaymentDetails(c.getString(c.getColumnIndex(PAYMENT_DETAILS)));
+                    payment.setPaymentGotOrGiven(c.getInt(c.getColumnIndex(PAYMENT_GOT_OR_GIVEN)));
+
+                    listOfPayments.add(payment);
+                }
+
+            }while (c.moveToNext());
+        }
+
+
+        return listOfPayments;
+    }
+
+
 }
 
 
