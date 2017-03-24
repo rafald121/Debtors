@@ -37,9 +37,13 @@ public class FragmentTransactions extends Fragment {
     private static final String TAG = FragmentTransactions.class.getSimpleName();
     private CategoryAdapterTransactions categoryAdapterTransactions;
     private ViewPager viewPager;
+
+    private int typeOfTransactions = 0; //0 - all, 1- sales, 2- purchases
+
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,14 +98,17 @@ public class FragmentTransactions extends Fragment {
                         case 0:
                             MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
                             intefrace.notifyWhenSwitched();
+                            typeOfTransactions = 0;
                             break;
                         case 1:
                             MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
                             intefrace.notifyWhenSwitched();
+                            typeOfTransactions = 1;
                             break;
                         case 2:
                             MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
                             intefrace.notifyWhenSwitched();
+                            typeOfTransactions = 2;
                             Log.i(TAG, "onPageSelected: after notify when switched");
                             break;
                         default:
@@ -160,7 +167,7 @@ public class FragmentTransactions extends Fragment {
 
         ft.addToBackStack(null);
 
-        DialogFragment d = DialogMenuTransaction.newInstance();
+        DialogFragment d = DialogMenuTransaction.newInstance(typeOfTransactions);
         d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_TRANSACTIONS);
     }
 
@@ -182,15 +189,4 @@ public class FragmentTransactions extends Fragment {
     }
 
 
-//    public void hideFAB() {
-//        if (categoryAdapterTransactions != null) {
-//            categoryAdapterTransactions.hideFAB();
-//        }
-//    }
-//
-//    public void showFAB() {
-//        if(categoryAdapterTransactions != null){
-//            categoryAdapterTransactions.showFAB();
-//        }
-//    }
 }
