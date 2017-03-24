@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Utils.Utils;
+import com.example.android.debtors.Utils.UtilsDate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -343,6 +344,49 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
     public List<TransactionForClient> getTransactionsByQueryInMenuDialog(Date fromDate, Date toDate, int minQuantity, int maxQuantity, int minTotalAmount, int maxTotalAmount) {
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+        List<TransactionForClient> listOfTransactions = new ArrayList<>();
+        
+        String query = "SELECT  * FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANSACTION_QUANTITY + " >= " + minQuantity + " AND " + TRANSACTION_QUANTITY + " <= " + maxQuantity;
+
+        Cursor c = db.rawQuery(query, null);
+        
+        int paymentTotalAmount = 0;
+        
+        if(c.moveToFirst()){
+            do{
+                String dateOfTransaction = c.getString(c.getColumnIndex(TRANSACTION_DATE));
+                Date date = UtilsDate.getDateFromSting(dateOfTransaction);
+                
+                if(date.before(toDate) && date.after(fromDate)){
+                    
+                    paymentTotalAmount = c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY))*c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE));
+                    
+                    if(paymentTotalAmount>=minTotalAmount && paymentTotalAmount<=maxTotalAmount){
+
+                        TransactionForClient transaction = new TransactionForClient();
+
+                        transaction.setTransactionID(c.getInt(c.getColumnIndex(TRANSACTION_ID)));
+                        transaction.setTransactionDate(c.getString(c.getColumnIndex(TRANSACTION_DATE)));
+                        transaction.setTransactionOwnerID(c.getInt(c.getColumnIndex(TRANSACTION_OWNER)));
+                        transaction.setTransactionClientID(c.getInt(c.getColumnIndex(TRANSACTION_CLIENT)));
+                        transaction.setTransactionQuantity(c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)));
+                        transaction.setTransactionProductValue(c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE)));
+                        transaction.setTransactionDetails(c.getString(c.getColumnIndex(TRANSACTION_DETAILS)));
+                        transaction.setTransactionEntryPayment(c.getInt(c.getColumnIndex(TRANSACTION_ENTRY)));
+                        transaction.setTransactionBuyOrSell(c.getInt(c.getColumnIndex(TRANSACTION_BUY_OR_SELL)));
+
+                        listOfTransactions.add(transaction);
+                        
+                    } else
+                        Log.e(TAG, "getTransactionsByQueryInMenuDialog: totalAmount isn't fulfill condition, totalAmount: " + paymentTotalAmount );
+                } else
+                    Log.e(TAG, "getTransactionsByQueryInMenuDialog: date isn't fullfill condition" );
+            }while (c.moveToNext());
+        }
+
+        return listOfTransactions;
 
     }
 }
