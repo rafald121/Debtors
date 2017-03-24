@@ -292,7 +292,52 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
     }
 
-    
+    public int getHighestQuantityOfTransaction(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = " SELECT  * FROM " + TABLE_TRANSACTIONS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int highestQuantity = 0;
+        int currentQuantity = 0;
+
+        if(c.moveToFirst()){
+            do{
+                currentQuantity = c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY));
+
+                if(currentQuantity > highestQuantity)
+                    highestQuantity = currentQuantity;
+                
+            }while (c.moveToNext());
+        }
+
+        return highestQuantity;
+
+    }
+
+    public int getHighestTotalAmountOfTransaction(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = " SELECT  * FROM " + TABLE_TRANSACTIONS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int highestTotalAmount = 0;
+        int currentTotalAmount = 0;
+
+        if(c.moveToFirst()){
+            do{
+                currentTotalAmount = c.getInt(c.getColumnIndex(TRANSACTION_QUANTITY)) * c.getInt(c.getColumnIndex(TRANSACTION_PRODUCT_VALUE));
+
+                if(currentTotalAmount > highestTotalAmount)
+                    highestTotalAmount = currentTotalAmount;
+
+            }while (c.moveToNext());
+        }
+
+        return highestTotalAmount;
+    }
 
 
 
