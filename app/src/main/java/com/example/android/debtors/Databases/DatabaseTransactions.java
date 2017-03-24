@@ -12,6 +12,7 @@ import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.Utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -292,7 +293,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
     }
 
-    public int getHighestQuantityOfTransaction(){
+    public int getHighestQuantityOfTransactions(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = " SELECT  * FROM " + TABLE_TRANSACTIONS;
@@ -308,7 +309,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
                 if(currentQuantity > highestQuantity)
                     highestQuantity = currentQuantity;
-                
+
             }while (c.moveToNext());
         }
 
@@ -340,6 +341,8 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
     }
 
 
+    public List<TransactionForClient> getTransactionsByQueryInMenuDialog(Date fromDate, Date toDate, int minQuantity, int maxQuantity, int minTotalAmount, int maxTotalAmount) {
 
 
+    }
 }

@@ -233,8 +233,7 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
                 else
                     Log.e(TAG, "onClick: ERROR typeOfPayment: " + typeOfPaymentt);
                 dismiss();
-            }
-            else
+            } else
                 textViewError.setText("From date has to be before To Date");
 
 

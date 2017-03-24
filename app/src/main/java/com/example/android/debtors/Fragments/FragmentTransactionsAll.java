@@ -19,6 +19,7 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -36,6 +37,8 @@ import de.greenrobot.event.EventBus;
 public class FragmentTransactionsAll extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentTransactionsAll.class.getSimpleName();
+
+    private DatabaseTransactions dbTransactions = null;
 
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
@@ -166,6 +169,12 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
         Log.i(TAG, "notifyWhenSwitched: all");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
         fab.show();
+    }
+
+    public void onEvent(DialogMenuTransactionsApplySalesOrPurchases dialogMenuTransactionsApplySalesOrPurchases){
+        dbTransactions = new DatabaseTransactions(fragmentActivity);
+        listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplySalesOrPurchases.getFromDate(), dialogMenuTransactionsApplySalesOrPurchases.getToDate(), dialogMenuTransactionsApplySalesOrPurchases.getMinQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMaxQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMinTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getMaxTotalAmount());
+        adapterTransaction.updateList(listOfTransactions);
     }
 
     private List<TransactionForClient> getListOfAllTransactions(){
