@@ -1,7 +1,5 @@
 package com.example.android.debtors.Dialogs;
 
-import android.app.DatePickerDialog;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +14,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabasePayments;
-import com.example.android.debtors.EventBus.DialogMenuPaymentsApply;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyAll;
 import com.example.android.debtors.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
@@ -223,7 +221,7 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
 
                 Log.e(TAG, "onClick: minRange: " + minRange + " maxRange:  " +maxRange);
 
-                EventBus.getDefault().post(new DialogMenuPaymentsApply(dateFrom, dateTo, minRange, maxRange));
+                EventBus.getDefault().post(new DialogMenuPaymentsApplyAll(dateFrom, dateTo, minRange, maxRange));
 
                 dismiss();
             }

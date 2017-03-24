@@ -192,4 +192,6 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
 
         return list;
     }
+
+
 }

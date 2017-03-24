@@ -15,10 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
-import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
-import com.example.android.debtors.EventBus.DialogMenuPaymentsApply;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyAll;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
@@ -162,15 +161,10 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
             fab.hide();
     }
 
-    public void onEvent(DialogMenuPaymentsApply dialogMenuPaymentsApply){
+    public void onEvent(DialogMenuPaymentsApplyAll dialogMenuPaymentsApplyAll){
         dbPayment = new DatabasePayments(fragmentActivity);
-        listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApply.getFromDate(), dialogMenuPaymentsApply.getToDate(), dialogMenuPaymentsApply.getMinRange(), dialogMenuPaymentsApply.getMaxRange());
-
-        for(Payment p : listOfPayments)
-            p.toString();
-
+        listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApplyAll.getFromDate(), dialogMenuPaymentsApplyAll.getToDate(), dialogMenuPaymentsApplyAll.getMinRange(), dialogMenuPaymentsApplyAll.getMaxRange());
         adapterPayment.updateList(listOfPayments);
-
     }
 
 }
