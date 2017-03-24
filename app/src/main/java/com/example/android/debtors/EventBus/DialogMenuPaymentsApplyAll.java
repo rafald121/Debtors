@@ -7,14 +7,14 @@ import java.util.Date;
  * Created by admin on 24.03.2017.
  */
 
-public class DialogMenuPaymentsApply {
+public class DialogMenuPaymentsApplyAll {
 
     private Date fromDate = null;
     private Date toDate = null;
     private int minRange = 0;
     private int maxRange = 0;
 
-    public DialogMenuPaymentsApply(Date fromDate, Date toDate, int minRange, int maxRange) {
+    public DialogMenuPaymentsApplyAll(Date fromDate, Date toDate, int minRange, int maxRange) {
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.minRange = minRange;
