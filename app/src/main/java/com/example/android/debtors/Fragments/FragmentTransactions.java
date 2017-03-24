@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
+import com.example.android.debtors.Dialogs.DialogMenuTransaction;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
@@ -135,28 +138,30 @@ public class FragmentTransactions extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_transaction_max_total_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_transaction_max_total_amount");
+            case R.id.dialog_menu_transactions_showdialog:
+                showDialog();
+
                 return true;
-            case R.id.menu_transaction_min_total_amount:
-                Log.i(TAG, "onOptionsItemSelected: menu_transaction_min_total_amount");
-                return true;
-            case R.id.menu_transaction_max_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_transaction_max_date");
-                return true;
-            case R.id.menu_transaction_min_date:
-                Log.i(TAG, "onOptionsItemSelected: menu_transaction_min_date");
-                return true;
-            case R.id.menu_transaction_max_quantity:
-                Log.i(TAG, "onOptionsItemSelected: menu_transaction_max_quantity");
-                return true;
-            case R.id.menu_transaction_min_quantity:
-                Log.i(TAG, "onOptionsItemSelected: menu_transaction_min_quantity");
-                return true;
+
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        FragmentTransaction ft =  getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_TRANSACTIONS);
+
+        if(prev!=null)
+            ft.remove(prev);
+        else
+            Log.e(TAG, "showDialog: prev is null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogMenuTransaction.newInstance();
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_TRANSACTIONS);
     }
 
     public void onButtonPressed(Uri uri) {

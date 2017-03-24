@@ -87,7 +87,7 @@
         android:layout_gravity="center" />
 
     <org.florescu.android.rangeseekbar.RangeSeekBar
-        android:id="@+id/dialog_menu_transactions_quantity_range_seekbar"
+        android:id="@+id/dialog_menu_transactions_range_seekbar_quantity"
         android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:layout_gravity="center"
@@ -106,7 +106,7 @@
         />
 
     <org.florescu.android.rangeseekbar.RangeSeekBar
-        android:id="@+id/dialog_menu_transactions_totalamount_range_seekbar"
+        android:id="@+id/dialog_menu_transactions_range_seekbar_totalamount"
         android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:layout_gravity="center"
