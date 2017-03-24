@@ -19,6 +19,7 @@ import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplyAll;
 import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
@@ -147,20 +148,6 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
     }
 
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
 
     @Override
     public void notifyWhenSwitched() {
@@ -171,9 +158,10 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
         fab.show();
     }
 
-    public void onEvent(DialogMenuTransactionsApplySalesOrPurchases dialogMenuTransactionsApplySalesOrPurchases){
+    public void onEvent(DialogMenuTransactionsApplyAll dialogMenuTransactionsApplyAll){
+        Log.i(TAG, "onEvent: hlao tukej??");
         dbTransactions = new DatabaseTransactions(fragmentActivity);
-        listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplySalesOrPurchases.getFromDate(), dialogMenuTransactionsApplySalesOrPurchases.getToDate(), dialogMenuTransactionsApplySalesOrPurchases.getMinQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMaxQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMinTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getMaxTotalAmount());
+        listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplyAll.getFromDate(), dialogMenuTransactionsApplyAll.getToDate(), dialogMenuTransactionsApplyAll.getMinQuantity(), dialogMenuTransactionsApplyAll.getMaxQuantity(), dialogMenuTransactionsApplyAll.getMinTotalAmount(), dialogMenuTransactionsApplyAll.getMaxTotalAmount());
         adapterTransaction.updateList(listOfTransactions);
     }
 
