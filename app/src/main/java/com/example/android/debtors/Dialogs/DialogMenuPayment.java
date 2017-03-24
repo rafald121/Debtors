@@ -86,7 +86,6 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
         view = inflater.inflate(R.layout.dialog_menu_payments, container, false);
 
         fromDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_payments_fromdate);
-
         toDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_payments_todate);
 
         calendarFrom = Calendar.getInstance();
