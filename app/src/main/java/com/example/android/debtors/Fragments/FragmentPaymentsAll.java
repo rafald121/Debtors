@@ -16,11 +16,16 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
 import com.example.android.debtors.Adapters.AdapterTransacation;
+import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApply;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
+import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -32,12 +37,16 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
 
     private static final String TAG = FragmentPaymentsAll.class.getSimpleName();
 
+    private DatabasePayments dbPayment = null;
+
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
-    View rootView = null;
-    AdapterPayment adapterPayment = null;
-    RecyclerView recyclerView = null;
+    private View rootView = null;
+    private AdapterPayment adapterPayment = null;
+    private RecyclerView recyclerView = null;
+
+    private List<Payment> listOfPayments = null;
 
     public FragmentPaymentsAll(){
     }
@@ -51,8 +60,10 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        listOfPayments = getAllPayments();
+
         rootView = inflater.inflate(R.layout.fragment_payments_all, container, false);
-        adapterPayment = new AdapterPayment(getContext());
+        adapterPayment = new AdapterPayment(getContext(),listOfPayments);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_all_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPayment);
@@ -79,6 +90,7 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
 
         return rootView;
     }
+
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);//czy bedzie miala zmienny rozmiar podczas dzialania apki
@@ -116,13 +128,6 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
         });
     }
 
-    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
-        if(toggleFabWhenDrawerMove.isDirection())
-            fab.show();
-        else
-            fab.hide();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -138,25 +143,34 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
 
     }
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
-
-
     @Override
     public void notifyWhenSwitched() {
         Log.i(TAG, "notifyWhenSwitched: all");
     }
 
+    private List<Payment> getAllPayments() {
+        dbPayment = new DatabasePayments(fragmentActivity);
+        listOfPayments = dbPayment.getAllPayments();
+        return listOfPayments;
+    }
+
+
+    public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
+        if(toggleFabWhenDrawerMove.isDirection())
+            fab.show();
+        else
+            fab.hide();
+    }
+
+    public void onEvent(DialogMenuPaymentsApply dialogMenuPaymentsApply){
+        dbPayment = new DatabasePayments(fragmentActivity);
+        listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApply.getFromDate(), dialogMenuPaymentsApply.getToDate(), dialogMenuPaymentsApply.getMinRange(), dialogMenuPaymentsApply.getMaxRange());
+
+        for(Payment p : listOfPayments)
+            p.toString();
+
+        adapterPayment.updateList(listOfPayments);
+
+    }
 
 }
