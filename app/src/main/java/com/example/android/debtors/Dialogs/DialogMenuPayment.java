@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyAll;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyReceivedOrGiven;
 import com.example.android.debtors.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
@@ -54,9 +55,15 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
     private int toDay,toMonth,toYear = 0;
     private int minRange, maxRange = 0;
 
+    private int typeOfPaymentt;
 
-    public static DialogMenuPayment newInstance() {
+    //TODO DODAC DWIE OPCJE: OD DATY do teraz, DO DATY od początku (np 1970 xd),
+    // aby nie trzeba bylo wybierac OD DO jesli chce tylko albo OD albo DO
+// TODO dodac przycisk kasujący ustawione opcje WE WSZYSTKICH DIALOGACH MENU
+    public static DialogMenuPayment newInstance(int typeOfPayment) {
         DialogMenuPayment f = new DialogMenuPayment();
+
+        f.typeOfPaymentt = typeOfPayment;
 
         return f;
     }
@@ -220,9 +227,12 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
                 }
 
                 Log.e(TAG, "onClick: minRange: " + minRange + " maxRange:  " +maxRange);
-
-                EventBus.getDefault().post(new DialogMenuPaymentsApplyAll(dateFrom, dateTo, minRange, maxRange));
-
+                if(typeOfPaymentt == 0)
+                    EventBus.getDefault().post(new DialogMenuPaymentsApplyAll(dateFrom, dateTo, minRange, maxRange));
+                else if(typeOfPaymentt == 1 || typeOfPaymentt == 2)
+                    EventBus.getDefault().post(new DialogMenuPaymentsApplyReceivedOrGiven(dateFrom, dateTo, minRange, maxRange, typeOfPaymentt));
+                else
+                    Log.e(TAG, "onClick: ERROR typeOfPayment: " + typeOfPaymentt);
                 dismiss();
             }
             else

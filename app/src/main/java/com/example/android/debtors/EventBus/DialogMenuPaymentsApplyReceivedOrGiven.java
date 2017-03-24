@@ -12,9 +12,9 @@ public class DialogMenuPaymentsApplyReceivedOrGiven {
     private Date toDate = null;
     private int minRange = 0;
     private int maxRange = 0;
-    private boolean type; //true = received , false = given
+    private int type; //true = received , false = given
 
-    public DialogMenuPaymentsApplyReceivedOrGiven(Date fromDate, Date toDate, int minRange, int maxRange, boolean type) {
+    public DialogMenuPaymentsApplyReceivedOrGiven(Date fromDate, Date toDate, int minRange, int maxRange, int type) {
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.minRange = minRange;
@@ -38,7 +38,7 @@ public class DialogMenuPaymentsApplyReceivedOrGiven {
         return maxRange;
     }
 
-    public boolean isReceivedOrGiven() {
+    public int getType() {
         return type;
     }
 }
