@@ -12,11 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.Databases.DatabaseTransactions;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyAll;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplyAll;
+import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
 import com.example.android.debtors.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -27,21 +36,36 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
 
     private static final String TAG = DialogMenuTransaction.class.getSimpleName();
 
+    private DatabaseTransactions dbTransactions = null;
+
     private TextView textViewError = null;
 
     private Button buttonApply,buttonCancel;
-
-    private DatePickerDialog fromDatePickerDialog;
-    private DatePickerDialog toDatePickerDialog;
+    private DatePicker fromDatePickerDialog = null;
+    private DatePicker toDatePickerDialog = null;
     private RangeSeekBar rangeSeekBarQuantity = null;
+
     private RangeSeekBar rangeSeekBarTotalAmount = null;
 
     private FragmentActivity fragmentActivity;
 
     private View view = null;
 
-    public static DialogMenuTransaction newInstance() {
+    private Calendar calendarFrom,calendarTo = null;
+    private Date dateFrom, dateTo = null;
+
+    private int fromDay,fromMonth,fromYear = 0;
+    private int toDay,toMonth,toYear = 0;
+
+    private int minQuantity, maxQuantity = 0;
+    private int minTotalAmount, maxTotalAmount = 0;
+
+    private int typeOfTransactions;
+
+    public static DialogMenuTransaction newInstance(int typeOfTransactions) {
         DialogMenuTransaction f = new DialogMenuTransaction();
+
+        f.typeOfTransactions = typeOfTransactions;
 
         return f;
     }
@@ -59,8 +83,16 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        dbTransactions = new DatabaseTransactions(fragmentActivity);
+
         view = inflater.inflate(R.layout.dialog_menu_transactions, container, false);
 
+        fromDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_transactions_fromdate);
+        toDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_transactions_todate);
+
+        calendarFrom = Calendar.getInstance();
+        calendarTo = Calendar.getInstance();
+        
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_transactions_menu_error);
 
         rangeSeekBarQuantity = (RangeSeekBar) view.findViewById(R.id.dialog_menu_transactions_range_seekbar_quantity);
@@ -69,7 +101,7 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
 
         rangeSeekBarTotalAmount = (RangeSeekBar) view.findViewById(R.id.dialog_menu_transactions_range_seekbar_totalamount);
         //todo najwieksza wartosc z bazy danych    \/
-        rangeSeekBarTotalAmount.setRangeValues(0, 200);
+        rangeSeekBarTotalAmount.setRangeValues(0, 2000);
         rangeSeekBarTotalAmount.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
         buttonApply = (Button) view.findViewById(R.id.dialog_menu_transactions_apply);
@@ -93,6 +125,53 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
         if(v.getId() == buttonApply.getId()){
             Log.i(TAG, "onClick: apply in transaction menu");
 
+
+            fromDay = fromDatePickerDialog.getDayOfMonth();
+            fromMonth = fromDatePickerDialog.getMonth();
+            fromYear = fromDatePickerDialog.getYear();
+
+            toDay = toDatePickerDialog.getDayOfMonth();
+            toMonth = toDatePickerDialog.getMonth();
+            toYear = toDatePickerDialog.getYear();
+
+            calendarFrom.set(fromYear, fromMonth, fromDay);
+            calendarTo.set(toYear, toMonth, toDay);
+
+            dateFrom =  calendarFrom.getTime();
+            dateTo =  calendarTo.getTime();
+
+
+            if(dateFrom.before(dateTo)){
+
+                minQuantity = (Integer) rangeSeekBarQuantity.getSelectedMinValue();
+                maxQuantity = (Integer) rangeSeekBarQuantity.getSelectedMaxValue();
+
+                minTotalAmount = (Integer) rangeSeekBarTotalAmount.getSelectedMinValue();
+                maxTotalAmount = (Integer) rangeSeekBarTotalAmount.getSelectedMaxValue();
+
+                if(maxQuantity == (Integer) rangeSeekBarQuantity.getAbsoluteMaxValue()){
+                    maxQuantity = dbTransactions.getHighestQuantityOfTransactions();
+                }
+
+                if(maxTotalAmount == (Integer) rangeSeekBarTotalAmount.getAbsoluteMaxValue()){
+                    maxTotalAmount = dbTransactions.getHighestTotalAmountOfTransaction();
+                }
+
+                Log.i(TAG, "onClick: typeOfTransactions: " + typeOfTransactions);
+
+                if(typeOfTransactions == 0){
+                    EventBus.getDefault().post(new DialogMenuTransactionsApplyAll(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount));
+                    Log.i(TAG, "onClick: 0");
+                } else if(typeOfTransactions == 1 || typeOfTransactions == 2){
+                    EventBus.getDefault().post(new DialogMenuTransactionsApplySalesOrPurchases(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount, typeOfTransactions));
+                    Log.i(TAG, "onClick: 1 lub 2");
+                } else
+                    Log.e(TAG, "onClick: ERROR typeOfTransactions: " + typeOfTransactions);
+
+                dismiss();
+
+            } else
+                textViewError.setText("From date has to be before To Date");
 
         } else if(v.getId() == buttonCancel.getId()){
 
