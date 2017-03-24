@@ -90,7 +90,9 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
         fromDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_transactions_fromdate);
         toDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_transactions_todate);
 
-
+        calendarFrom = Calendar.getInstance();
+        calendarTo = Calendar.getInstance();
+        
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_transactions_menu_error);
 
         rangeSeekBarQuantity = (RangeSeekBar) view.findViewById(R.id.dialog_menu_transactions_range_seekbar_quantity);
@@ -155,10 +157,14 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
                     maxTotalAmount = dbTransactions.getHighestTotalAmountOfTransaction();
                 }
 
+                Log.i(TAG, "onClick: typeOfTransactions: " + typeOfTransactions);
+
                 if(typeOfTransactions == 0){
                     EventBus.getDefault().post(new DialogMenuTransactionsApplyAll(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount));
+                    Log.i(TAG, "onClick: 0");
                 } else if(typeOfTransactions == 1 || typeOfTransactions == 2){
                     EventBus.getDefault().post(new DialogMenuTransactionsApplySalesOrPurchases(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount, typeOfTransactions));
+                    Log.i(TAG, "onClick: 1 lub 2");
                 } else
                     Log.e(TAG, "onClick: ERROR typeOfTransactions: " + typeOfTransactions);
 
