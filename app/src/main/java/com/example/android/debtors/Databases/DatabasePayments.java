@@ -277,6 +277,32 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
     }
 
+    public int getTheHighestPaymentAmount(){
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT  * FROM " + TABLE_PAYMENTS;
+
+        Cursor c = db.rawQuery(query, null);
+
+        int highestAmount = 0;
+        int currentHighest = 0;
+
+        if(c.moveToFirst()) {
+            do {
+                currentHighest = c.getInt(c.getColumnIndex(PAYMENT_AMOUNT));
+
+                if (currentHighest > highestAmount) {
+                    highestAmount = currentHighest;
+                }
+
+            } while (c.moveToNext());
+        }
+
+        return highestAmount;
+
+    }
 
     public List<Payment> getPaymentsByType(boolean receivedOrGive) {
         SQLiteDatabase db = this.getReadableDatabase();
