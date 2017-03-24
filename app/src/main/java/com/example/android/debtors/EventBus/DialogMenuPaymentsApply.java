@@ -21,11 +21,11 @@ public class DialogMenuPaymentsApply {
         this.maxRange = maxRange;
     }
 
-    public Date getMinDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public Date getMaxDate() {
+    public Date getToDate() {
         return toDate;
     }
 

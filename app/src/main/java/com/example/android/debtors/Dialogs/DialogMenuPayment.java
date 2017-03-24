@@ -81,6 +81,7 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
         view = inflater.inflate(R.layout.dialog_menu_payments, container, false);
 
         fromDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_payments_fromdate);
+
         toDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_payments_todate);
 
         calendarFrom = Calendar.getInstance();
@@ -88,7 +89,7 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
 
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_payments_menu_error);
         rangeSeekBar = (RangeSeekBar) view.findViewById(R.id.dialog_menu_payments_amount_range_seekbar);
-        rangeSeekBar.setRangeValues(0, 5000);
+        rangeSeekBar.setRangeValues(0, 1000);
         rangeSeekBar.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
         buttonApply = (Button) view.findViewById(R.id.dialog_menu_payments_apply);
@@ -211,14 +212,16 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
 
             if(dateFrom.before(dateTo)) {
 
-                minRange = (Integer) rangeSeekBar.getSelectedMaxValue();
+                minRange = (Integer) rangeSeekBar.getSelectedMinValue();
                 maxRange = (Integer) rangeSeekBar.getSelectedMaxValue();
 
-                if(maxRange == (Integer) rangeSeekBar.getSelectedMaxValue()) {
-
+                if(maxRange == (Integer) rangeSeekBar.getAbsoluteMaxValue()) {
+                    Log.e(TAG, "onClick: hauuo");
                     maxRange = dbPayments.getTheHighestPaymentAmount();
 
                 }
+
+                Log.e(TAG, "onClick: minRange: " + minRange + " maxRange:  " +maxRange);
 
                 EventBus.getDefault().post(new DialogMenuPaymentsApply(dateFrom, dateTo, minRange, maxRange));
 
