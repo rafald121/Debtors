@@ -93,6 +93,7 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
         if(v.getId() == buttonApply.getId()){
             Log.i(TAG, "onClick: apply in transaction menu");
 
+
         } else if(v.getId() == buttonCancel.getId()){
 
             dismiss();

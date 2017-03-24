@@ -1,6 +1,7 @@
 package com.example.android.debtors.Dialogs;
 
 import android.app.DatePickerDialog;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.example.android.debtors.Databases.DatabasePayments;
+import com.example.android.debtors.EventBus.DialogMenuPaymentsApply;
 import com.example.android.debtors.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -28,17 +35,27 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
 
     private static final String TAG = DialogMenuPayment.class.getSimpleName();
 
+    private DatabasePayments dbPayments = null;
+
     private TextView textViewError = null;
 
     private Button buttonApply,buttonCancel;
 
-    private DatePickerDialog fromDatePickerDialog;
-    private DatePickerDialog toDatePickerDialog;
+    private DatePicker fromDatePickerDialog = null;
+    private DatePicker toDatePickerDialog = null;
     private RangeSeekBar rangeSeekBar = null;
 
     private FragmentActivity fragmentActivity;
 
     private View view = null;
+
+    private Calendar calendarFrom, calendarTo = null;
+    private Date dateFrom, dateTo = null;
+
+    private int fromDay,fromMonth,fromYear = 0;
+    private int toDay,toMonth,toYear = 0;
+    private int minRange, maxRange = 0;
+
 
     public static DialogMenuPayment newInstance() {
         DialogMenuPayment f = new DialogMenuPayment();
@@ -59,7 +76,15 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        dbPayments = new DatabasePayments(fragmentActivity);
+
         view = inflater.inflate(R.layout.dialog_menu_payments, container, false);
+
+        fromDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_payments_fromdate);
+        toDatePickerDialog = (DatePicker) view.findViewById(R.id.dialog_menu_payments_todate);
+
+        calendarFrom = Calendar.getInstance();
+        calendarTo = Calendar.getInstance();
 
         textViewError = (TextView) view.findViewById(R.id.dialog_menu_payments_menu_error);
         rangeSeekBar = (RangeSeekBar) view.findViewById(R.id.dialog_menu_payments_amount_range_seekbar);
@@ -163,6 +188,46 @@ public class DialogMenuPayment extends DialogFragment implements View.OnClickLis
     public void onClick(View v) {
         if(v.getId() == buttonApply.getId()){
             Log.i(TAG, "onClick: apply in payment menu");
+
+
+            fromDay = fromDatePickerDialog.getDayOfMonth();
+            fromMonth = fromDatePickerDialog.getMonth();
+            fromYear = fromDatePickerDialog.getYear();
+
+            toDay = toDatePickerDialog.getDayOfMonth();
+            toMonth = toDatePickerDialog.getMonth();
+            toYear = toDatePickerDialog.getYear();
+
+            calendarFrom.set(fromYear, fromMonth, fromDay);
+            calendarTo.set(toYear, toMonth, toDay);
+
+            dateFrom =  calendarFrom.getTime();
+            dateTo =  calendarTo.getTime();
+
+            minRange = (Integer) rangeSeekBar.getSelectedMinValue();
+            maxRange = (Integer) rangeSeekBar.getSelectedMaxValue();
+
+            Log.e(TAG, "onClick: dateFrom: " + dateFrom.toString() + " dateTo: " + dateTo.toString() );
+
+            if(dateFrom.before(dateTo)) {
+
+                minRange = (Integer) rangeSeekBar.getSelectedMaxValue();
+                maxRange = (Integer) rangeSeekBar.getSelectedMaxValue();
+
+                if(maxRange == (Integer) rangeSeekBar.getSelectedMaxValue()) {
+
+                    maxRange = dbPayments.getTheHighestPaymentAmount();
+
+                }
+
+                EventBus.getDefault().post(new DialogMenuPaymentsApply(dateFrom, dateTo, minRange, maxRange));
+
+                dismiss();
+            }
+            else
+                textViewError.setText("From date has to be before To Date");
+
+
 
         } else if(v.getId() == buttonCancel.getId()){
 

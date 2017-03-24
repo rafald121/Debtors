@@ -5,7 +5,7 @@ package com.example.android.debtors.EventBus;
  */
 
 public class DialogMenuDebtorsForMeApply {
-    private int min;
+    private int min = 0 ;
     private int max = 0;
 
     public DialogMenuDebtorsForMeApply(int min, int max) {
