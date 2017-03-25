@@ -29,10 +29,6 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
     private static final String TAG = DialogNewClient.class.getSimpleName();
 
-//    interface CallbackAddInDialog{
-//        void reloadRecycler();
-//    }
-
     private TextView newClientError;
     private EditText newClientName, newClientLeftAmount;
     private Button newClientButtonOK, newClientButtonCancel;
@@ -125,7 +121,7 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
         newClientButtonOK = (Button) findViewById(R.id.dialog_newclient_button_ok);
         newClientButtonCancel = (Button) findViewById(R.id.dialog_newclient_button_cancel);
-        
+
         newClientButtonOK.setOnClickListener(this);
         newClientButtonCancel.setOnClickListener(this);
     }

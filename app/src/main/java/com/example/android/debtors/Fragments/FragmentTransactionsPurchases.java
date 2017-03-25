@@ -166,21 +166,6 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     }
 
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
-
     @Override
     public void notifyWhenSwitched() {
 
