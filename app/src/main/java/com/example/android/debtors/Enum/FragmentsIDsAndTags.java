@@ -52,6 +52,9 @@ public class FragmentsIDsAndTags {
     public static final String TAG_DIALOG_MENU_DEBTORS          = "tagDialogMenuDebtors";
     public static final String TAG_DIALOG_MENU_TRANSACTIONS     = "tagDialogMenuTransactions";
     public static final String TAG_DIALOG_MENU_PAYMENTS         = "tagDialogMenuPayments";
+    public static final String TAG_DIALOG_CREATE_NEWCLIENT  = "tagDialogCreateNewClient";
+    public static final String TAG_DIALOG_CREATE_TRASACTIONS= "tagDialogCreateTransactions";
+    public static final String TAG_DIALOG_CREATE_PAYMENTS   = "tagDialogCreatePayments";
 
 
 

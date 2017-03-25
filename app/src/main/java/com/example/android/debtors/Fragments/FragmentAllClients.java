@@ -27,7 +27,10 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterAllClients;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Dialogs.DialogMenuAllClients;
+import com.example.android.debtors.Dialogs.DialogMenuPayment;
 import com.example.android.debtors.Dialogs.DialogNewClient;
+import com.example.android.debtors.Dialogs.DialogNewClientTMP;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Helper.SwipeableRecyclerViewTouchListener;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
@@ -49,7 +52,7 @@ import de.greenrobot.event.EventBus;
 // * create an instance of this fragment.
 // */
 
-public class FragmentAllClients extends Fragment implements CallbackMenuAllclientDialog {
+public class FragmentAllClients extends Fragment implements CallbackMenuAllclientDialog, CallbackAddInDialog{
     //IF USER SELECTED USERS IN RANGE IT  \/ CHANGE TO TRUE
     public static boolean isMenuRangeActive = false;
 // AND THEN SEARCHING IN SEARCHVIEW GIVE RESULT ONLY FROM CLIENT FROM RANGE SELECTED IN MENU
@@ -246,22 +249,6 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        Fragment prev = getFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
-        Fragment prev = getChildFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
-        if(prev!=null)
-            ft.remove(prev);
-        else
-            Log.e(TAG, "showDialog: prev isnot null");
-
-        ft.addToBackStack(null);
-
-        DialogFragment d = DialogMenuAllClients.newInstance();
-
-        d.show(getChildFragmentManager(), "dialogMenuAllClient");
-
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -274,13 +261,15 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
                 Snackbar.make(view, "Allclients", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
-                    @Override
-                    public void reloadRecycler() {
-                        adapterAllClients.updateList(getAllClientsFromDatabase());
-                    }
-                });
-                dialogNewClient.show();
+//                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
+//                    @Override
+//                    public void reloadRecycler() {
+//                        adapterAllClients.updateList(getAllClientsFromDatabase());
+//                    }
+//                });
+                showDialogNewClient();
+
+//                dialogNewClient.show();
 
             }
         });
@@ -327,20 +316,38 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
         return list;
     }
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
+    private void showDialog() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        Fragment prev = getFragmentManager().findFragmentByTag(MainActivity.TAG_ALL_CLIENTS);
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_ALLCLIENTS);
+        if(prev!=null)
+            ft.remove(prev);
         else
-            Log.e(TAG, "showFAB: ");
+            Log.e(TAG, "showDialog: prev isnot null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogMenuAllClients.newInstance();
+
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_ALLCLIENT);
+
     }
 
+    private void showDialogNewClient(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_ALLCLIENTS);
 
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
+        if(prev!=null)
+            ft.remove(prev);
         else
-            Log.e(TAG, "hideFAB: ");
+            Log.e(TAG, "showDialogNewClient: prev is not null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogNewClientTMP.newInstance();
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_CREATE_NEWCLIENT);
     }
+
 
     @Override
     public void reloadRecycler(int min, int max) {
@@ -348,5 +355,10 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
 //        adapterAllClients.notifyDataSetChanged();
         adapterAllClients.updateList(listOfAllClients);
         isMenuRangeActive = true;
+    }
+
+    @Override
+    public void reloadRecycler() {
+        adapterAllClients.notifyDataSetChanged();
     }
 }

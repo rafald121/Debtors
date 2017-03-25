@@ -158,6 +158,7 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         Log.i(TAG, "notifyWhenSwitched: FOR ME");
     }
 
+    //region EventBus
     public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
         if(toggleFabWhenDrawerMove.isDirection())
             fab.show();
@@ -178,4 +179,5 @@ public class FragmentDebtorsForMe extends Fragment implements InterfaceViewPager
         else
             adapterDebtors.filter(query.getMessage(),listOfClients);
     }
+    //endregion
 }
