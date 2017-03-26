@@ -40,6 +40,9 @@ public class FragmentPayments extends Fragment {
 
     private int receivedOrGiven = 0; // 0 - all 1 - received, 2 - given
 
+    private MenuItem menuItemArrow = null;
+    private boolean sortUpOrDown = false;
+
     public FragmentPayments() {
     }
 
@@ -112,6 +115,17 @@ public class FragmentPayments extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_payments,menu);
 
+        menuItemArrow = menu.findItem(R.id.arrowtosort_payments);
+        menuItemArrow.setVisible(false);
+
+        menuItemArrow.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                rotateSortArrow();
+                return true;
+            }
+        });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -119,13 +133,50 @@ public class FragmentPayments extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_payment_showdialog:
+                menuItemArrow.setVisible(false);
                 showDialog();
                 break;
+            case R.id.menu_payments_sortbyname:
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
             case R.id.menu_payments_sortbyamount:
                 Log.i(TAG, "onOptionsItemSelected: sort by amount");
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
                 break;
             case R.id.menu_payments_sortbydate:
                 Log.i(TAG, "onOptionsItemSelected: sort by date");
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
                 break;
             default:
                 Log.e(TAG, "onOptionsItemSelected: ERROR" );
@@ -133,6 +184,17 @@ public class FragmentPayments extends Fragment {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void rotateSortArrow() {
+        if(sortUpOrDown) {
+            menuItemArrow.setIcon(R.drawable.arrow_up);
+            sortUpOrDown = false;
+        }
+        else {
+            menuItemArrow.setIcon(R.drawable.arrow_down);
+            sortUpOrDown = true;
+        }
     }
 
     private void showDialog() {

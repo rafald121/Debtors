@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Dialogs.DialogTransactionTMP;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.DialogMenuTransactionsApplyAll;
 import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
@@ -124,6 +127,8 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
                     }
                 });
                 dialogTransaction.show();
+
+//          showDialogTransactions();
             }
         });
 
@@ -155,20 +160,22 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
     }
 
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
+
+    private void showDialogTransactions(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_TRANSACTIONSSALES);
+
+        if(prev!=null)
+            ft.remove(prev);
         else
-            Log.e(TAG, "showFAB: ");
+            Log.i(TAG, "showDialogTransactions: prev is not null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogTransactionTMP.newInstance(true);
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_CREATE_TRASACTIONS);
     }
 
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
 
     @Override
     public void notifyWhenSwitched() {

@@ -188,7 +188,7 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
         MenuItem searchItem = menu.findItem(R.id.search_view);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
-        menuItemArrow = menu.findItem(R.id.arrowtosort);
+        menuItemArrow = menu.findItem(R.id.arrowtosort_allclients);
         menuItemArrow.setVisible(false);
 
         menuItemArrow.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -241,11 +241,11 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
 
     private void rotateSortArrow() {
         if(sortUpOrDown) {
-            menuItemArrow.setIcon(R.drawable.arrow_up_48);
+            menuItemArrow.setIcon(R.drawable.arrow_up);
             sortUpOrDown = false;
         }
         else {
-            menuItemArrow.setIcon(R.drawable.arrow_expand_24);
+            menuItemArrow.setIcon(R.drawable.arrow_down);
             sortUpOrDown = true;
         }
     }
@@ -264,13 +264,14 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
             case R.id.menu_allclients_sortbyname:
                 Log.i(TAG, "onOptionsItemSelected: sort by name");
                 menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
 
                 if (sortUpOrDown) {
-                    menuItemArrow.setIcon(R.drawable.arrow_up_48);
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
                     sortUpOrDown = false;
                 }
                 else {
-                    menuItemArrow.setIcon(R.drawable.arrow_expand_24);
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
                     sortUpOrDown = true;
                 }
 
@@ -278,6 +279,16 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
             case R.id.menu_allclients_sortbyamount:
                 Log.i(TAG, "onOptionsItemSelected: sort by amount");
                 menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
                 return true;
             default:
                 break;
@@ -298,15 +309,15 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
                 Snackbar.make(view, "Allclients", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-//                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
-//                    @Override
-//                    public void reloadRecycler() {
-//                        adapterAllClients.updateList(getAllClientsFromDatabase());
-//                    }
-//                });
-                showDialogNewClient();
+                DialogNewClient dialogNewClient = new DialogNewClient(fragmentActivity, new CallbackAddInDialog() {
+                    @Override
+                    public void reloadRecycler() {
+                        adapterAllClients.updateList(getAllClientsFromDatabase());
+                    }
+                });
+//                showDialogNewClient();
 
-//                dialogNewClient.show();
+                dialogNewClient.show();
 
             }
         });
@@ -328,11 +339,8 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
     @Override
     public void onAttach(Context context) {
         Log.i(TAG, "onAttach: START");
-
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
-
-
         EventBus.getDefault().register(this); // this == your class instance
 
     }
@@ -341,7 +349,6 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
     public void onDetach() {
         Log.i(TAG, "onDetach: START");
         super.onDetach();
-
         addInDialog = null;
         EventBus.getDefault().unregister(this);
 

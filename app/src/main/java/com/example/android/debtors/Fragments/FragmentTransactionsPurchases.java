@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Dialogs.DialogTransactionTMP;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
@@ -118,7 +121,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
             public void onClick(View view) {
 //                Snackbar.make(view, "transaction purchases", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-
+//
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
@@ -129,11 +132,30 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
                     }
                 });
                 dialogTransaction.show();
+//                showDialogTransactions();
+
             }
         });
 
         Log.i(TAG, "onViewCreated: END");
     }
+
+
+    private void showDialogTransactions(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_TRANSACTIONSPURCHASES);
+
+        if(prev!=null)
+            ft.remove(prev);
+        else
+            Log.i(TAG, "showDialogTransactions: prev is not null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogTransactionTMP.newInstance(false);
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_CREATE_TRASACTIONS);
+    }
+
 
     public void onButtonPressed(Uri uri) {
 
