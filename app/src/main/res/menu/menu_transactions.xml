@@ -3,9 +3,34 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/dialog_menu_transactions_showdialog"
+        android:id="@+id/menu_transactions_showdialog"
         android:orderInCategory="100"
-        android:icon="@drawable/more"
-        app:showAsAction="always" />
+        android:title="@string/menu_filter"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_transactions_sortbyname"
+        android:orderInCategory="201"
+        android:title="@string/sort_by_name"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_transactions_sortbyamount"
+        android:orderInCategory="202"
+        android:title="@string/sort_by_amount"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_transactions_sortbyquantity"
+        android:orderInCategory="202"
+        android:title="@string/sort_by_quantity"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/menu_transactions_sortbydate"
+        android:orderInCategory="203"
+        android:title="@string/sort_by_date"
+        app:showAsAction="never"/>
 
 </menu>

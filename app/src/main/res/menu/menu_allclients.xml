@@ -3,30 +3,28 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <item
+        android:id="@+id/arrowtosort"
+        android:orderInCategory="199"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/dialog_menu_allclient_show_dialog"
         android:orderInCategory="200"
-        android:icon="@drawable/more"
-        app:showAsAction="always" />
+        android:title="@string/menu_filter"
+        app:showAsAction="never" />
 
-    <!--<item-->
-        <!--android:id="@+id/menu_allclients_max_date"-->
-        <!--android:orderInCategory="201"-->
-        <!--android:title="@string/menu_max_date"-->
-        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/menu_allclients_sortbyname"
+        android:orderInCategory="201"
+        android:title="@string/sort_by_name"
+        app:showAsAction="never" />
 
-    <!--<item-->
-        <!--android:id="@+id/menu_allclients_min_amount"-->
-        <!--android:orderInCategory="202"-->
-        <!--android:title="@string/menu_min_amount"-->
-        <!--app:showAsAction="never" />-->
-
-    <!--<item-->
-        <!--android:id="@+id/menu_allclients_max_amount"-->
-        <!--android:orderInCategory="203"-->
-        <!--android:title="@string/menu_max_amount"-->
-        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/menu_allclients_sortbyamount"
+        android:orderInCategory="202"
+        android:title="@string/sort_by_amount"
+        app:showAsAction="never" />
 
 
 </menu>
