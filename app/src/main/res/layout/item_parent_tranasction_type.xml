@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorHeaderText"
+    android:weightSum="100"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:weightSum="50">
+
+        <TextView
+            android:text="Client"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/textView8"
+            android:layout_weight="15"
+            style="@style/ItemTransacationHeaderTextView"
+            />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/transaction_item_client"
+            android:layout_weight="35"
+            style="@style/ItemTransacationInfoTextView"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:weightSum="50">
+
+        <TextView
+            android:text="Date"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/textView13"
+            android:layout_weight="15"
+            style="@style/ItemTransacationHeaderTextView"
+            />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/transaction_item_date"
+            android:layout_weight="35"
+            style="@style/ItemTransacationInfoTextView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:weightSum="50">
+
+        <TextView
+            android:text="Transaction amount"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/textView9"
+            android:layout_weight="15"
+            style="@style/ItemTransacationHeaderTextView"
+            />
+
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/transaction_item_totalamount"
+            android:layout_weight="35"
+            style="@style/ItemTransacationInfoTextView"/>
+
+
+    </LinearLayout>
+    <!--TODO jak bedzie po wszystkim to wyrzucic TYP ( określony w TabLayout)-->
+
+
 
 </LinearLayout>

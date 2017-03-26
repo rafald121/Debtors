@@ -154,7 +154,7 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
 
     private void showDialogTransactions(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_TRANSACTIONSSALES);
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_TRANSACTIONSALL);
 
         if(prev!=null)
             ft.remove(prev);

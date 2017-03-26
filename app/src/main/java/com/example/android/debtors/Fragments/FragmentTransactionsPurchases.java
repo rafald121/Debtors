@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
+import com.example.android.debtors.Adapters.AdapterTransactionType;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
 import com.example.android.debtors.Dialogs.DialogTransactionTMP;
@@ -52,7 +53,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     private FragmentActivity fragmentActivity;
 
     private View rootView = null;
-    private AdapterTransacation adapterTransacation = null;
+    private AdapterTransactionType adapterTransactionType = null;
     private RecyclerView recyclerView = null;
 
     private List<TransactionForClient> listOfTransactions = null;
@@ -72,10 +73,10 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
         listOfTransactions = getListOfTransactionsByType(false);
 
         rootView = inflater.inflate(R.layout.fragment_transactions_purchases, container, false);
-        adapterTransacation = new AdapterTransacation(getContext(),listOfTransactions);
+        adapterTransactionType = new AdapterTransactionType(getContext(),listOfTransactions);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapterTransacation);
+        recyclerView.setAdapter(adapterTransactionType);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -125,7 +126,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                    adapterTransacation.updateList(getListOfTransactionsByType(false));
+                        adapterTransactionType.updateList(getListOfTransactionsByType(false));
 //                        adapterTransacation = new AdapterTransacation(getContext(), false);
 //                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
 //                        recyclerView.setAdapter(adapterTransacation);
@@ -217,7 +218,7 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
         dbTransactions = new DatabaseTransactions(fragmentActivity);
         if(dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions() == 2) {
             listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplySalesOrPurchases.getFromDate(), dialogMenuTransactionsApplySalesOrPurchases.getToDate(), dialogMenuTransactionsApplySalesOrPurchases.getMinQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMaxQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMinTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getMaxTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions());
-            adapterTransacation.updateList(listOfTransactions);
+            adapterTransactionType.updateList(listOfTransactions);
         } else
             Log.e(TAG, "onEvent: error typeOfTransactions in purchase on Event: " + dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions());
     }

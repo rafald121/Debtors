@@ -96,7 +96,7 @@ public class DialogTransactionTMP extends DialogFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.dialog_new_transaction, container, false);
+        view = inflater.inflate(R.layout.dialog_new_transaction_tmp, container, false);
         
         newTransactionSpinner = (Spinner) view.findViewById(R.id.dialog_transaction_spinner);
 
