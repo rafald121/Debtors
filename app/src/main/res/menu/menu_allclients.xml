@@ -9,7 +9,7 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/dialog_menu_allclient_show_dialog"
+        android:id="@+id/dialog_menu_allclient_filter"
         android:orderInCategory="200"
         android:title="@string/menu_filter"
         app:showAsAction="never" />

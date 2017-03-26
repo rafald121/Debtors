@@ -255,14 +255,18 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
 
         switch (item.getItemId()) {
             case R.id.search_view:
+
                 menuItemArrow.setVisible(false);
                 return false;
-            case R.id.dialog_menu_allclient_show_dialog:
+
+            case R.id.dialog_menu_allclient_filter:
+
                 showDialog();
                 menuItemArrow.setVisible(false);
                 return true;
+
             case R.id.menu_allclients_sortbyname:
-                Log.i(TAG, "onOptionsItemSelected: sort by name");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -274,10 +278,10 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
                     menuItemArrow.setIcon(R.drawable.arrow_down);
                     sortUpOrDown = true;
                 }
-
                 return true;
+
             case R.id.menu_allclients_sortbyamount:
-                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -290,7 +294,9 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
                     sortUpOrDown = true;
                 }
                 return true;
+
             default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR");
                 break;
         }
         searchView.setOnQueryTextListener(queryTextListener);

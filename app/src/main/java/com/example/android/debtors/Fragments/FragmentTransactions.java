@@ -161,13 +161,14 @@ public class FragmentTransactions extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_transactions_showdialog:
+            case R.id.menu_transactions_filter:
+
                 menuItemArrow.setVisible(false);
-
                 showDialog();
-
                 return true;
+
             case R.id.menu_transactions_sortbyname:
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -179,10 +180,10 @@ public class FragmentTransactions extends Fragment {
                     menuItemArrow.setIcon(R.drawable.arrow_down);
                     sortUpOrDown = true;
                 }
-
                 break;
+
             case R.id.menu_transactions_sortbyamount:
-                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -194,10 +195,10 @@ public class FragmentTransactions extends Fragment {
                     menuItemArrow.setIcon(R.drawable.arrow_down);
                     sortUpOrDown = true;
                 }
-
                 break;
+
             case R.id.menu_transactions_sortbyquantity:
-                Log.i(TAG, "onOptionsItemSelected: sort by quantity");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -210,8 +211,9 @@ public class FragmentTransactions extends Fragment {
                     sortUpOrDown = true;
                 }
                 break;
+
             case R.id.menu_transactions_sortbydate:
-                Log.i(TAG, "onOptionsItemSelected: sort by date");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -224,7 +226,9 @@ public class FragmentTransactions extends Fragment {
                     sortUpOrDown = true;
                 }
                 break;
+
             default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR");
                 break;
         }
         return super.onOptionsItemSelected(item);

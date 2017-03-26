@@ -132,11 +132,14 @@ public class FragmentPayments extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_payment_showdialog:
+            case R.id.menu_payment_filter:
+
                 menuItemArrow.setVisible(false);
                 showDialog();
                 break;
+
             case R.id.menu_payments_sortbyname:
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -151,7 +154,7 @@ public class FragmentPayments extends Fragment {
                 break;
 
             case R.id.menu_payments_sortbyamount:
-                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -164,8 +167,9 @@ public class FragmentPayments extends Fragment {
                     sortUpOrDown = true;
                 }
                 break;
+
             case R.id.menu_payments_sortbydate:
-                Log.i(TAG, "onOptionsItemSelected: sort by date");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -178,6 +182,7 @@ public class FragmentPayments extends Fragment {
                     sortUpOrDown = true;
                 }
                 break;
+
             default:
                 Log.e(TAG, "onOptionsItemSelected: ERROR" );
                 break;

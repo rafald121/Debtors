@@ -192,17 +192,17 @@ public class FragmentDebtors extends Fragment  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search_view:
-                Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 menuItemArrow.setVisible(false);
-                // Not implemented here
                 return false;
-            case R.id.menu_debtors_show_dialog:
-                Log.i(TAG, "onOptionsItemSelected: show dialog in debtors: " );
+
+            case R.id.menu_debtors_filter:
+
                 menuItemArrow.setVisible(false);
                 showDialog();
                 break;
+
             case R.id.menu_debtors_sort_by_name:
-                Log.i(TAG, "onOptionsItemSelected: sort by name");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -214,11 +214,10 @@ public class FragmentDebtors extends Fragment  {
                     menuItemArrow.setIcon(R.drawable.arrow_down);
                     sortUpOrDown = true;
                 }
-
-
                 break;
+
             case R.id.menu_debtors_sort_by_amount:
-                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+
                 menuItemArrow.setVisible(true);
                 sortUpOrDown = false;
 
@@ -230,9 +229,8 @@ public class FragmentDebtors extends Fragment  {
                     menuItemArrow.setIcon(R.drawable.arrow_down);
                     sortUpOrDown = true;
                 }
-
-
                 break;
+
             default:
                 Log.e(TAG, "onOptionsItemSelected: ERROR ");
 

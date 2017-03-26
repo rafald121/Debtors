@@ -8,7 +8,7 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/menu_debtors_show_dialog"
+        android:id="@+id/menu_debtors_filter"
         android:orderInCategory="200"
         android:title="@string/menu_filter"
         app:showAsAction="never" />
