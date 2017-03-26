@@ -145,11 +145,19 @@ public class FragmentTransactions extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.dialog_menu_transactions_showdialog:
+            case R.id.menu_transactions_showdialog:
                 showDialog();
 
                 return true;
-
+            case R.id.menu_transactions_sortbyamount:
+                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+                break;
+            case R.id.menu_transactions_sortbyquantity:
+                Log.i(TAG, "onOptionsItemSelected: sort by quantity");
+                break;
+            case R.id.menu_transactions_sortbydate:
+                Log.i(TAG, "onOptionsItemSelected: sort by date");
+                break;
             default:
                 break;
         }

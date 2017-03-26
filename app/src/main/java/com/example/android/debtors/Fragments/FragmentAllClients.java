@@ -73,7 +73,11 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
     private RecyclerView recyclerView = null;
     private AdapterAllClients adapterAllClients = null;
 
+    private MenuItem menuItemArrow = null;
+
     private CallbackAddInDialog addInDialog = null;
+
+    private boolean sortUpOrDown = false;//false - strzalka w doł, malejaco,// true - strzalka w gore rosnaco
 
     public FragmentAllClients() {
         Log.i(TAG, "FragmentAllClients: START");
@@ -184,6 +188,17 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
         MenuItem searchItem = menu.findItem(R.id.search_view);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
+        menuItemArrow = menu.findItem(R.id.arrowtosort);
+        menuItemArrow.setVisible(false);
+
+        menuItemArrow.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                rotateSortArrow();
+                return true;
+            }
+        });
+
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
         }
@@ -209,10 +224,30 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
                     return true;
                 }
             };
+
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    menuItemArrow.setVisible(false);
+                    return false;
+                }
+            });
+
             searchView.setOnQueryTextListener(queryTextListener);
 
         }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void rotateSortArrow() {
+        if(sortUpOrDown) {
+            menuItemArrow.setIcon(R.drawable.arrow_up_48);
+            sortUpOrDown = false;
+        }
+        else {
+            menuItemArrow.setIcon(R.drawable.arrow_expand_24);
+            sortUpOrDown = true;
+        }
     }
 
     @Override
@@ -220,28 +255,30 @@ public class FragmentAllClients extends Fragment implements CallbackMenuAllclien
 
         switch (item.getItemId()) {
             case R.id.search_view:
-                Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
-                // Not implemented here
+                menuItemArrow.setVisible(false);
                 return false;
-            case R.id.dialog_menu_allclient_show_dialog:{
-                Log.i(TAG, "onOptionsItemSelected: show dialog ?");
-
+            case R.id.dialog_menu_allclient_show_dialog:
                 showDialog();
+                menuItemArrow.setVisible(false);
+                return true;
+            case R.id.menu_allclients_sortbyname:
+                Log.i(TAG, "onOptionsItemSelected: sort by name");
+                menuItemArrow.setVisible(true);
 
-
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up_48);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_expand_24);
+                    sortUpOrDown = true;
+                }
 
                 return true;
-
-            }
-//            case R.id.menu_allclients_min_amount:
-//                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_amount");
-//                return true;
-//            case R.id.menu_allclients_max_date:
-//                Log.i(TAG, "onOptionsItemSelected: menu_allclients_max_date");
-//                return true;
-//            case R.id.menu_allclients_min_date:
-//                Log.i(TAG, "onOptionsItemSelected: menu_allclients_min_date");
-//                return true;
+            case R.id.menu_allclients_sortbyamount:
+                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+                menuItemArrow.setVisible(true);
+                return true;
             default:
                 break;
         }

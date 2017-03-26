@@ -118,10 +118,19 @@ public class FragmentPayments extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.dialog_menu_payment_showdialog:
+            case R.id.menu_payment_showdialog:
                 showDialog();
-            default:
                 break;
+            case R.id.menu_payments_sortbyamount:
+                Log.i(TAG, "onOptionsItemSelected: sort by amount");
+                break;
+            case R.id.menu_payments_sortbydate:
+                Log.i(TAG, "onOptionsItemSelected: sort by date");
+                break;
+            default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR" );
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

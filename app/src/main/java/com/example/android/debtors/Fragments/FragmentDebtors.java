@@ -181,9 +181,15 @@ public class FragmentDebtors extends Fragment  {
                 Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
                 // Not implemented here
                 return false;
-            case R.id.dialog_menu_debtors_show_dialog:
+            case R.id.menu_debtors_show_dialog:
                 Log.i(TAG, "onOptionsItemSelected: show dialog in debtors: " );
                 showDialog();
+                break;
+            case R.id.menu_debtors_sort_by_name:
+                Log.i(TAG, "onOptionsItemSelected: sort by name");
+                break;
+            case R.id.menu_debtors_sort_by_amount:
+                Log.i(TAG, "onOptionsItemSelected: sort by amount");
                 break;
             default:
                 Log.e(TAG, "onOptionsItemSelected: ERROR ");
