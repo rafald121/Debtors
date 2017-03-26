@@ -3,6 +3,11 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/arrowtosort_payments"
+        android:orderInCategory="199"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/menu_payment_showdialog"
         android:orderInCategory="200"
         android:title="@string/menu_filter"

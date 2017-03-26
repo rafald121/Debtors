@@ -4,7 +4,7 @@
     >
 
     <item
-        android:id="@+id/arrowtosort"
+        android:id="@+id/arrowtosort_allclients"
         android:orderInCategory="199"
         app:showAsAction="always"/>
 
