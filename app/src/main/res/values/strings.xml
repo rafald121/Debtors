@@ -45,6 +45,12 @@
         <item>Settings</item>
         <!--<item>About me</item>-->
     </string-array>
+    <string name="menu_filter">Filter</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_amount">Sort by amount</string>
+    <string name="sort_by_quantity">Sort by quantity</string>
+    <string name="sort_by_date">Sort by date</string>
+    w
     <!--MENU TRANSACTION-->
     <string name="menu_transaction_min_date">From date</string>
     <string name="menu_transaction_max_date">To date</string>
