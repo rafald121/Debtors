@@ -64,7 +64,7 @@ public class DialogNewClientTMP extends DialogFragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.dialog_newclient, container, false);
+        view = inflater.inflate(R.layout.dialog_new_client, container, false);
 
         newClientName = (EditText) view.findViewById(R.id.dialog_newclient_name);
 

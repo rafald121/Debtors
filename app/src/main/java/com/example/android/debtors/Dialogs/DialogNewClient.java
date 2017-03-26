@@ -1,14 +1,11 @@
 package com.example.android.debtors.Dialogs;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -79,7 +76,7 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_newclient);
+        setContentView(R.layout.dialog_new_client);
         
         newClientName = (EditText) findViewById(R.id.dialog_newclient_name);
 

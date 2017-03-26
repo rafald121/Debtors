@@ -2,16 +2,9 @@ package com.example.android.debtors.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.telecom.Call;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,11 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabasePayments;
@@ -36,12 +26,9 @@ import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by admin on 03.03.2017.
@@ -109,7 +96,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         //TODO co robi \/?
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_payment);
+        setContentView(R.layout.dialog_new_payment);
 
         newPaymentAmount = (EditText) findViewById(R.id.dialog_payment_amount);
         newPaymentAmount.setText("");

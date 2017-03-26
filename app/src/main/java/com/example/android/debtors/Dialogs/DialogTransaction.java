@@ -3,7 +3,6 @@ package com.example.android.debtors.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -16,7 +15,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.data.StreamAssetPathFetcher;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseOwner;
 import com.example.android.debtors.Databases.DatabaseTransactions;
@@ -27,8 +25,6 @@ import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 import com.example.android.debtors.Utils.Utils;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +98,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_transaction);
+        setContentView(R.layout.dialog_new_transaction);
 
         newTransactionSpinner = (Spinner) findViewById(R.id.dialog_transaction_spinner);
 
