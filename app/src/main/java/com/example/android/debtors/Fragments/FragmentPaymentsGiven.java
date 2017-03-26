@@ -66,7 +66,7 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
         listOfPayments = getListOfTransactionsByType(false);
 
         rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
-        adapterPaymentType = new AdapterPaymentType(getContext(), listOfPayments,2);
+        adapterPaymentType = new AdapterPaymentType(getContext(), listOfPayments);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
         setupRecyclerView(recyclerView);
         recyclerView.setAdapter(adapterPaymentType);

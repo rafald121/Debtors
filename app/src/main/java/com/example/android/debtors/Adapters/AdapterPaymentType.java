@@ -37,7 +37,6 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
 
     private View itemView = null;
 
-    private int viewPagerPosition;
 
     public AdapterPaymentType(Context context){
         this.context = context;
@@ -47,13 +46,6 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
     public AdapterPaymentType(Context context, List<Payment> listOfPayments) {
         this.context = context;
         this.listOfPayments = listOfPayments;
-        this.viewPagerPosition = viewPagerPosition;
-    }
-
-    public AdapterPaymentType(Context context, List<Payment> listOfPayments, int viewPagerPosition) {
-        this.context = context;
-        this.listOfPayments = listOfPayments;
-        this.viewPagerPosition = viewPagerPosition;
     }
 
     public AdapterPaymentType(Context context, boolean receivedOrGive) {
