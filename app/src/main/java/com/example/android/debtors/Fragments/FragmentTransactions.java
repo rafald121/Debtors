@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.CategoryAdapterTransactions;
 import com.example.android.debtors.Dialogs.DialogMenuTransaction;
+import com.example.android.debtors.Dialogs.DialogTransactionTMP;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
 import com.example.android.debtors.R;
@@ -39,6 +40,9 @@ public class FragmentTransactions extends Fragment {
     private ViewPager viewPager;
 
     private int typeOfTransactions = 0; //0 - all, 1- sales, 2- purchases
+
+    private MenuItem menuItemArrow = null;
+    private boolean sortUpOrDown = false;
 
     public FragmentTransactions() {
         Log.i(TAG, "FragmentTransactions: START");
@@ -138,6 +142,18 @@ public class FragmentTransactions extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.i(TAG, "onCreateOptionsMenu: START");
         inflater.inflate(R.menu.menu_transactions, menu);
+
+        menuItemArrow = menu.findItem(R.id.arrowtosort_transactions);
+        menuItemArrow.setVisible(false);
+
+        menuItemArrow.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                rotateSortArrow();
+                return true;
+            }
+        });
+
         super.onCreateOptionsMenu(menu, inflater);
         Log.i(TAG, "onCreateOptionsMenu: END");
     }
@@ -145,15 +161,88 @@ public class FragmentTransactions extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.dialog_menu_transactions_showdialog:
-                showDialog();
+            case R.id.menu_transactions_filter:
 
+                menuItemArrow.setVisible(false);
+                showDialog();
                 return true;
 
+            case R.id.menu_transactions_sortbyname:
+
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
+            case R.id.menu_transactions_sortbyamount:
+
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
+            case R.id.menu_transactions_sortbyquantity:
+
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
+            case R.id.menu_transactions_sortbydate:
+
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
             default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR");
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void rotateSortArrow() {
+        if(sortUpOrDown) {
+            menuItemArrow.setIcon(R.drawable.arrow_up);
+            sortUpOrDown = false;
+        }
+        else {
+            menuItemArrow.setIcon(R.drawable.arrow_down);
+            sortUpOrDown = true;
+        }
     }
 
     private void showDialog() {

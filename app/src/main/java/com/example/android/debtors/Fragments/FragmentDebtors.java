@@ -53,6 +53,9 @@ public class FragmentDebtors extends Fragment  {
 
     private int formeORmetoother = 0; // 0 -- position = for me
 
+    private MenuItem menuItemArrow = null;
+    private boolean sortUpOrDown = false;
+
     public FragmentDebtors() {
     }
 
@@ -134,6 +137,17 @@ public class FragmentDebtors extends Fragment  {
         inflater.inflate(R.menu.menu_search_view, menu);
         inflater.inflate(R.menu.menu_debtors, menu);
 
+        menuItemArrow = menu.findItem(R.id.arrowtosort_debtors);
+        menuItemArrow.setVisible(false);
+
+        menuItemArrow.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                rotateSortArrow();
+                return true;
+            }
+        });
+
         MenuItem searchItem = menu.findItem(R.id.search_view);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
@@ -178,19 +192,62 @@ public class FragmentDebtors extends Fragment  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search_view:
-                Log.i(TAG, "onOptionsItemSelected case R.id.allclients_search:");
-                // Not implemented here
+                menuItemArrow.setVisible(false);
                 return false;
-            case R.id.dialog_menu_debtors_show_dialog:
-                Log.i(TAG, "onOptionsItemSelected: show dialog in debtors: " );
+
+            case R.id.menu_debtors_filter:
+
+                menuItemArrow.setVisible(false);
                 showDialog();
                 break;
+
+            case R.id.menu_debtors_sort_by_name:
+
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
+            case R.id.menu_debtors_sort_by_amount:
+
+                menuItemArrow.setVisible(true);
+                sortUpOrDown = false;
+
+                if (sortUpOrDown) {
+                    menuItemArrow.setIcon(R.drawable.arrow_up);
+                    sortUpOrDown = false;
+                }
+                else {
+                    menuItemArrow.setIcon(R.drawable.arrow_down);
+                    sortUpOrDown = true;
+                }
+                break;
+
             default:
                 Log.e(TAG, "onOptionsItemSelected: ERROR ");
 
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void rotateSortArrow() {
+        if(sortUpOrDown) {
+            menuItemArrow.setIcon(R.drawable.arrow_up);
+            sortUpOrDown = false;
+        }
+        else {
+            menuItemArrow.setIcon(R.drawable.arrow_down);
+            sortUpOrDown = true;
+        }
     }
 
     private void showDialog() {

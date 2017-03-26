@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.example.android.debtors.Activities.MainActivity;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Dialogs.DialogTransaction;
+import com.example.android.debtors.Dialogs.DialogTransactionTMP;
 import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.EventBus.DialogMenuTransactionsApplyAll;
 import com.example.android.debtors.EventBus.DialogMenuTransactionsApplySalesOrPurchases;
@@ -122,6 +125,8 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
                     }
                 });
                 dialogTransaction.show();
+//                showDialogTransactions();
+
             }
         });
     }
@@ -146,6 +151,22 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
         EventBus.getDefault().unregister(this);
 
     }
+
+    private void showDialogTransactions(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getChildFragmentManager().findFragmentByTag(FragmentsIDsAndTags.TAG_TRANSACTIONSSALES);
+
+        if(prev!=null)
+            ft.remove(prev);
+        else
+            Log.i(TAG, "showDialogTransactions: prev is not null");
+
+        ft.addToBackStack(null);
+
+        DialogFragment d = DialogTransactionTMP.newInstance();
+        d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_CREATE_TRASACTIONS);
+    }
+
 
 
 
