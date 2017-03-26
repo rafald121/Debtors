@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
  * Created by Rafaello on 2017-02-22.
  */
 
-public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHolder>{
+public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.MyViewHolder>{
 
     private static final String TAG = AdapterPayment.class.getSimpleName();
 
@@ -37,24 +37,32 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     private View itemView = null;
 
+    private int viewPagerPosition;
 
-    public AdapterPayment(Context context){
+    public AdapterPaymentType(Context context){
         this.context = context;
         this.listOfPayments = getListOfPayments();
     }
 
-    public AdapterPayment(Context context, List<Payment> listOfPayments) {
+    public AdapterPaymentType(Context context, List<Payment> listOfPayments) {
         this.context = context;
         this.listOfPayments = listOfPayments;
+        this.viewPagerPosition = viewPagerPosition;
     }
 
-    public AdapterPayment(Context context, boolean receivedOrGive) {
+    public AdapterPaymentType(Context context, List<Payment> listOfPayments, int viewPagerPosition) {
+        this.context = context;
+        this.listOfPayments = listOfPayments;
+        this.viewPagerPosition = viewPagerPosition;
+    }
+
+    public AdapterPaymentType(Context context, boolean receivedOrGive) {
         this.context = context;
         this.dbClients = new DatabaseClients(context);
         this.listOfPayments = getListOfTransactionsByType(receivedOrGive);
     }
 
-    public AdapterPayment(Context context, long clientID){
+    public AdapterPaymentType(Context context, long clientID){
         this.context = context;
         this.dbPayments = new DatabasePayments(context);
         this.listOfPayments = dbPayments.getPaymentsFromClient(clientID);
@@ -62,8 +70,8 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_payments,
-                parent, false);
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_payments_type,
+                    parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -96,10 +104,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         } else{
             holder.linearLayout.setVisibility(View.INVISIBLE);
         }
-        if (payment.isPaymentGotOrGiven())//if tru
-            holder.textViewType.setText("Received");
-        else
-            holder.textViewType.setText("Given");
     }
 
     @Override
@@ -109,7 +113,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     public class MyViewHolder  extends RecyclerView.ViewHolder{
 
-        private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewType, textViewDetails, textViewDetailsHeader;
+        private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewDetails, textViewDetailsHeader;
         private LinearLayout linearLayout;
 
         public MyViewHolder(View itemView) {
@@ -117,7 +121,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             textViewClient = (TextView) itemView.findViewById(R.id.payment_item_client);
             textViewPaymentAmount = (TextView) itemView.findViewById(R.id.payments_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.payments_item_date);
-            textViewType = (TextView) itemView.findViewById(R.id.payments_item_type);
             textViewDetails = (TextView) itemView.findViewById(R.id.payments_item_details);
             textViewDetailsHeader = (TextView) itemView.findViewById(R.id.payments_item_details_header);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.payments_item_linear_details);

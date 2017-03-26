@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
+import com.example.android.debtors.Adapters.AdapterPaymentType;
 import com.example.android.debtors.Adapters.AdapterTransacation;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
@@ -41,7 +42,7 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
-    private AdapterPayment adapterPayment = null;
+    private AdapterPaymentType adapterPaymentType = null;
     private View rootView = null;
     private RecyclerView recyclerView = null;
 
@@ -63,10 +64,10 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         listOfPayments = getListOfTransactionsByType(true);
 
         rootView = inflater.inflate(R.layout.fragment_payments_received, container, false);
-        adapterPayment = new AdapterPayment(getContext(), listOfPayments);
+        adapterPaymentType = new AdapterPaymentType(getContext(), listOfPayments, 1);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapterPayment);
+        recyclerView.setAdapter(adapterPaymentType);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -105,7 +106,7 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                            adapterPayment.updateList(getListOfTransactionsByType(true));
+                        adapterPaymentType.updateList(getListOfTransactionsByType(true));
 //                        adapterPayment.notifyDataSetChanged();
 //                        adapterPayment = new AdapterPayment(getContext(), true);
 //                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
@@ -197,7 +198,7 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         dbPayment = new DatabasePayments(fragmentActivity);
         if (dialogMenuPaymentsApplyReceivedOrGiven.getType() == 1) {
             listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApplyReceivedOrGiven.getFromDate(), dialogMenuPaymentsApplyReceivedOrGiven.getToDate(), dialogMenuPaymentsApplyReceivedOrGiven.getMinRange(), dialogMenuPaymentsApplyReceivedOrGiven.getMaxRange(), dialogMenuPaymentsApplyReceivedOrGiven.getType());
-            adapterPayment.updateList(listOfPayments);
+            adapterPaymentType.updateList(listOfPayments);
         } else
             Log.e(TAG, "onEvent: czekam  bo oddaję RECEIVED :)");
 

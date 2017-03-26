@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.android.debtors.Adapters.AdapterPayment;
 //import com.example.android.debtors.ItemListener.RecyclerItemClickListener;
+import com.example.android.debtors.Adapters.AdapterPaymentType;
 import com.example.android.debtors.Databases.DatabasePayments;
 import com.example.android.debtors.Dialogs.DialogPayment;
 import com.example.android.debtors.Dialogs.DialogTransaction;
@@ -43,7 +44,7 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
     private FloatingActionButton fab;
     private FragmentActivity fragmentActivity;
 
-    private AdapterPayment adapterPayment = null;
+    private AdapterPaymentType adapterPaymentType = null;
     private View rootView = null;
     private RecyclerView recyclerView = null;
 
@@ -65,10 +66,10 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
         listOfPayments = getListOfTransactionsByType(false);
 
         rootView = inflater.inflate(R.layout.fragment_payments_given, container, false);
-        adapterPayment = new AdapterPayment(getContext(), listOfPayments);
+        adapterPaymentType = new AdapterPaymentType(getContext(), listOfPayments,2);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
         setupRecyclerView(recyclerView);
-        recyclerView.setAdapter(adapterPayment);
+        recyclerView.setAdapter(adapterPaymentType);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -117,7 +118,7 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-                    adapterPayment.updateList(getListOfTransactionsByType(false));
+                        adapterPaymentType.updateList(getListOfTransactionsByType(false));
 //                        Log.i(TAG, "reloadRecycler: ");
 ////                        adapterPayment.notifyDataSetChanged();
 //                        adapterPayment = new AdapterPayment(getContext(), false);
@@ -200,7 +201,7 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
         dbPayment = new DatabasePayments(fragmentActivity);
         if(dialogMenuPaymentsApplyReceivedOrGiven.getType() == 2) {
             listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApplyReceivedOrGiven.getFromDate(), dialogMenuPaymentsApplyReceivedOrGiven.getToDate(), dialogMenuPaymentsApplyReceivedOrGiven.getMinRange(), dialogMenuPaymentsApplyReceivedOrGiven.getMaxRange(), dialogMenuPaymentsApplyReceivedOrGiven.getType());
-            adapterPayment.updateList(listOfPayments);
+            adapterPaymentType.updateList(listOfPayments);
         } else
             Log.e(TAG, "onEvent: czekam bo oddaję GIVEN ");
 
