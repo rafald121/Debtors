@@ -46,15 +46,11 @@ public class MainActivity extends AppCompatActivity {
     DatabasePayments dbPayment;
     DatabaseTransactions dbTransaction;
 
-//    String[] names = {"rafal", "marek", "karol", "adrian", "tomek", "jan", "andrzejek",
-//            "maniek", "maniok", "chamiok", "krzysztof", "zofia", "alfons", "kamil", "pawel"};
-//    String[] names2 = {"ania", "ula", "ciocia", "marianna", "ola", "ada", "marysia", "izabela"};
-
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
     private ImageView imgNavHeaderBg;
-//            , imgProfile;
+
     private TextView amountForMe, amountMeToOther;
     private Toolbar toolbar;
 
@@ -150,14 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void countWholeDebtsAmounInHeader() {
-        int forme = dbClient.getAmountForMe();
-        int metoother = dbClient.getAmountMeToOther();
 
-        amountForMe.append(String.valueOf(forme));
-        amountMeToOther.append(String.valueOf(metoother));
-
-    }
 
     private void initFragments() {
         fragmentAllClients = new FragmentAllClients();
@@ -172,10 +161,7 @@ public class MainActivity extends AppCompatActivity {
         selectNavigationMenuToBeChecked();
         setToolbarTitle();
 
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
         if (PREVIOUS_TAG == CURRENT_TAG) {
-            Log.i(TAG, "loadSelectedFragment: wtf");
             drawer.closeDrawers();
             fabOn();
             return;
@@ -201,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
 
@@ -214,7 +199,6 @@ public class MainActivity extends AppCompatActivity {
 //        TODO TEST IT
         invalidateOptionsMenu();
 
-        Log.i(TAG, "loadSelectedFragment: END");
 
     }
 
@@ -287,18 +271,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationView() {
-        Log.i(TAG, "setUpNavigationView: START");
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
-            // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 initFragments();
 
                 switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
+
                     case R.id.nav_all_clients:
                         navItemIndex = 0;
 
@@ -365,9 +347,7 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
 
                 }
-                Log.i(TAG, "onNavigationItemSelected: selected index: " + navItemIndex);
 
-                //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 } else {
@@ -376,7 +356,6 @@ public class MainActivity extends AppCompatActivity {
                 menuItem.setChecked(true);
 
                 loadSelectedFragment();
-                Log.i(TAG, "onNavigationItemSelected: END");
                 return true;
             }
         });
@@ -400,31 +379,16 @@ public class MainActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(actionBarDrawerToggle);
 
-        //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-        Log.i(TAG, "setUpNavigationView: END");
     }
 
-    //    @Override
-
     private void loadNavHeader() {
-        // name, website
-//        txtName.setText("Rafał Dołęga");
-//        txtWebsite.setText("rafald121@gmail.com");
 
-        // loading header background image
         Glide.with(this).load(urlNavHeaderBg)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgNavHeaderBg);
 
-        // Loading profile image
-//        Glide.with(this).load(urlProfileImg)
-//                .crossFade()
-//                .thumbnail(0.5f)
-//                .bitmapTransform(new CircleTransform(this))
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(imgProfile);
     }
 
     private void fabOn(){
@@ -512,6 +476,14 @@ public class MainActivity extends AppCompatActivity {
 //
 //        super.onBackPressed();
 //    }
+    private void countWholeDebtsAmounInHeader() {
+        int forme = dbClient.getAmountForMe();
+        int metoother = dbClient.getAmountMeToOther();
+
+        amountForMe.append(String.valueOf(forme));
+        amountMeToOther.append(String.valueOf(metoother));
+
+    }
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
