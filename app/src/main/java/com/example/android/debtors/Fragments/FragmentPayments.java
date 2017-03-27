@@ -79,17 +79,17 @@ public class FragmentPayments extends Fragment {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
+                            MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSALL;
                             receivedOrGiven = 0;
                             intefrace.notifyWhenSwitched();
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSRECEIVED;
+                            MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSRECEIVED;
                             intefrace.notifyWhenSwitched();
                             receivedOrGiven = 1;
                             break;
                         case 2:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSGIVEN;
+                            MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSGIVEN;
                             intefrace.notifyWhenSwitched();
                             receivedOrGiven = 2;
                             break;

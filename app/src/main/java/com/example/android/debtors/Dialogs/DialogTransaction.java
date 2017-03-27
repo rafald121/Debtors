@@ -64,15 +64,6 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
     private List<Client> listOfClientsInOrder = new ArrayList<>();
 
-    public DialogTransaction(Context context) {
-        super(context);
-    }
-
-    public DialogTransaction(Context context, boolean type) {
-        super(context);
-        this.context = context;
-        this.typeOfTransaction = type;
-    }
 
     public DialogTransaction(Context context, boolean type, CallbackAddInDialog callbackAddInDialog) {
         super(context);
@@ -87,11 +78,7 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         this.clientID = clientID;
         this.callbackAddInDialog = callbackAddInDialog;
         this.firstClientInSpinner = getClientById(clientID);
-        //TODO
-        // type depends what type of transactions client from clientID that client did
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +128,6 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Client client = (Client) parent.getSelectedItem();
-
                 Log.i(TAG, "onItemSelected: "+ client.toString(true));
             }
 
@@ -165,8 +151,6 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
             Owner owner = dbOwner.getOwner(1);
 
             Client selectedClient = (Client) newTransactionSpinner.getSelectedItem();
-
-            Log.i(TAG, "onClick: selectedClient from spinner: " + selectedClient.toString());
 
             int selectedClientId = selectedClient.getClientId();
 
@@ -213,20 +197,9 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
 
             TransactionForClient transaction = new TransactionForClient(Utils.getDateTime(), owner.getOwnerID(), selectedClient.getClientId(),  transactionQuantity, transactionProductValue, transactionEntryPayment, transactionDetails, _typeOfTransaction);
 
-            Log.i(TAG, "onClick: transaction: " + transaction.toString());
-
-            Client client = dbClients.getClientByID(selectedClientId);
-
-            Log.i(TAG, "onClick: before tranzaction: " + client.toString(true));
 
             RealizeTransactionHelper realizeTransactionHelper = new RealizeTransactionHelper();
             realizeTransactionHelper.realizeTransaction(context, transaction);
-
-//            dbClients.updateClient(client);
-
-            Client client1 = dbClients.getClientByID(selectedClientId);
-
-            Log.i(TAG, "onClick: after tranzaction: " + client1.toString(true));
 
             callbackAddInDialog.reloadRecycler();
 
@@ -276,19 +249,4 @@ public class DialogTransaction extends Dialog implements View.OnClickListener {
         return list;
     }
 
-    private List<Client> getListOfClients(){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        List<Client> listOfClients = dbClients.getAllClient();
-
-        return listOfClients;
-    }
-
-    private List<String> getListOfClientsNames(){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        List<String> list = dbClients.getListOfClientsNames();
-
-        return list;
-    }
 }

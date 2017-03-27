@@ -97,7 +97,7 @@ public class FragmentDebtors extends Fragment  {
                 InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterDebtors.instantiateItem(viewPager, position);
                 if (intefrace != null) {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
-                    Log.i(TAG, "onPageSelected: a obecny subFragmen to: " + MainActivity.subFragmentID);
+                    Log.i(TAG, "onPageSelected: a obecny subFragmen to: " + MainActivity.fragmentID);
                     switch (position){
                         case 0:
                             Log.d(TAG, "onPageSelected() called111 with: position = [" + position + "]");
@@ -260,7 +260,7 @@ public class FragmentDebtors extends Fragment  {
             Log.e(TAG, "showDialog: prev is null");
 
         ft.addToBackStack(null);
-        Log.i(TAG, "showDialog: TAGSSS : " + MainActivity.subFragmentID);
+        Log.i(TAG, "showDialog: TAGSSS : " + MainActivity.fragmentID);
         DialogFragment d = DialogMenuDebtors.newInstance(formeORmetoother);
 
         d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_MENU_DEBTORS);

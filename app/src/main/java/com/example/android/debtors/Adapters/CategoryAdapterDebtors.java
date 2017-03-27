@@ -31,16 +31,16 @@ public class CategoryAdapterDebtors extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==0) {
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.DEBTORSFORME;
             if (fragmentDebtorsForMe != null) {
                 return fragmentDebtorsForMe;
             }
         }
         if(position==1) {
 
-            MainActivity.previousFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.DEBTORSMETOOTHER;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.DEBTORSMETOOTHER;
             if (fragmentDebtorsMeToOther != null) {
                 return fragmentDebtorsMeToOther;
             }

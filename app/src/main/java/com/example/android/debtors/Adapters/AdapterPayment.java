@@ -46,18 +46,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         this.listOfPayments = listOfPayments;
     }
 
-    public AdapterPayment(Context context, boolean receivedOrGive) {
-        this.context = context;
-        this.dbClients = new DatabaseClients(context);
-        this.listOfPayments = getListOfTransactionsByType(receivedOrGive);
-    }
-
-    public AdapterPayment(Context context, long clientID){
-        this.context = context;
-        this.dbPayments = new DatabasePayments(context);
-        this.listOfPayments = dbPayments.getPaymentsFromClient(clientID);
-    }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_payments,
@@ -111,7 +99,6 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         private LinearLayout linearLayout;
         private ImageButton itemPaymentDelete;
 
-
         public MyViewHolder(View itemView) {
             super(itemView);
             textViewClient = (TextView) itemView.findViewById(R.id.payment_item_client);
@@ -125,8 +112,8 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
             itemView.setOnClickListener(this);
             itemPaymentDelete.setOnClickListener(this);
-        }
 
+        }
 
         @Override
         public void onClick(View v) {
@@ -145,20 +132,13 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             dbPayments.deletePayment(paymentID);
         }
     }
+
     private Client getClientByID(long ID){
         DatabaseClients dbClients = new DatabaseClients(context);
 
         Client client = dbClients.getClientByID(ID);
 
         return client;
-    }
-
-    private List<Payment> getListOfPaymentsByClient(long clientID){
-        DatabasePayments dbPayments = new DatabasePayments(context);
-
-        List<Payment> paymentList = dbPayments.getPaymentsFromClient(clientID);
-
-        return paymentList;
     }
 
     private List<Payment> getListOfPayments(){
@@ -169,11 +149,4 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         return list;
     }
 
-    private List<Payment> getListOfTransactionsByType(boolean receivedOrGive) {
-        DatabasePayments dbPayments = new DatabasePayments(context);
-
-        List<Payment> list = dbPayments.getPaymentsByType(receivedOrGive);
-
-        return list;
-    }
 }

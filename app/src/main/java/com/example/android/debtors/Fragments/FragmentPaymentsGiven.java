@@ -27,7 +27,6 @@ import com.example.android.debtors.EventBus.DialogMenuPaymentsApplyReceivedOrGiv
 import com.example.android.debtors.EventBus.ToggleFabWhenDrawerMove;
 import com.example.android.debtors.Interfaces.CallbackAddInDialog;
 import com.example.android.debtors.Interfaces.InterfaceViewPager;
-import com.example.android.debtors.ItemListener.RecyclerOnScrollListener;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
@@ -112,33 +111,14 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "payments given ", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Log.i(TAG, "onClick: halo fab");
+
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
                         adapterPaymentType.updateList(getListOfTransactionsByType(false));
-//                        Log.i(TAG, "reloadRecycler: ");
-////                        adapterPayment.notifyDataSetChanged();
-//                        adapterPayment = new AdapterPayment(getContext(), false);
-//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_given_recycler);
-////                        setupRecyclerView(recyclerView);
-//                        recyclerView.setAdapter(adapterPayment);
-////                        FragmentPaymentsGiven fragmentPaymentsGiven = new FragmentPaymentsGiven();
-////
-////                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-////                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-////                                android.R.anim.fade_out);
-////                        Log.i(TAG, "reloadRecycler: 1");
-////                        fragmentTransaction.replace(R.id.fragment_payments_given_frame, fragmentPaymentsGiven);
-////                        Log.i(TAG, "reloadRecycler: 2");
-////                        fragmentTransaction.commitAllowingStateLoss();
-////                        Log.i(TAG, "reloadRecycler: 3");
-
                     }
                 });
-                Log.i(TAG, "onClick: 4");
+
                 dialogPayment.show();
             }
         });
@@ -166,22 +146,6 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
     public void onDetach() {
         super.onDetach();
         EventBus.getDefault().unregister(this);
-
-    }
-
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
     }
 
     @Override
@@ -204,6 +168,5 @@ public class FragmentPaymentsGiven extends Fragment implements InterfaceViewPage
             adapterPaymentType.updateList(listOfPayments);
         } else
             Log.e(TAG, "onEvent: czekam bo oddaję GIVEN ");
-
     }
 }

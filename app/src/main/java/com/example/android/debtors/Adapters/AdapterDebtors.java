@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.debtors.Activities.MainActivity;
+import com.example.android.debtors.Enum.FragmentsIDsAndTags;
 import com.example.android.debtors.Fragments.FragmentDebtorsForMe;
 import com.example.android.debtors.Fragments.FragmentSingleClientInfo;
 import com.example.android.debtors.Fragments.FragmentTransactions;
@@ -126,8 +127,10 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
             Client client = clientList.get(getLayoutPosition());
 
             if(v.getId() == debtorsItemImageButton.getId()) {
+
                 MainActivity.PREVIOUS_TAG = MainActivity.CURRENT_TAG;
-                MainActivity.CURRENT_TAG = "singleClient";
+                MainActivity.CURRENT_TAG = FragmentsIDsAndTags.TAG_CLIENTINFO;
+
                 Fragment fragment = new FragmentSingleClientInfo();
 
                 Bundle bundleArgument = setArgument(client.getClientId());
@@ -135,11 +138,11 @@ public class AdapterDebtors extends RecyclerView.Adapter<AdapterDebtors.MyViewHo
 
                 FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
                 FragmentTransaction fragmenttransaction = fragmentManager.beginTransaction();
-                Log.i(TAG, "onClick: CURRENT TAG: " + MainActivity.CURRENT_TAG);
-
                 fragmenttransaction.replace(R.id.frame, fragment, MainActivity.CURRENT_TAG);
                 fragmenttransaction.addToBackStack(null);
                 fragmenttransaction.commit();
+
+
             } else {
                 Log.i(TAG, "onClick: item content clicked");
             }

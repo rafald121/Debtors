@@ -27,33 +27,13 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
     private static final String TAG = AdapterTransacation.class.getSimpleName();
 
     private DatabaseTransactions dbTransactions = null;
-    private DatabaseClients dbClients = null;
     private List<TransactionForClient> listOfTransactions = new ArrayList<>();
 
     private Context context;
 
-
-
-    public AdapterTransactionType(Context context){
-        this.context = context;
-        this.listOfTransactions = getListOfAllTransactions();
-    }
-
-    public AdapterTransactionType(Context context, boolean purchaseOrSale) {
-        this.context = context;
-        this.dbClients = new DatabaseClients(context);
-        this.listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
-    }
-
     public AdapterTransactionType(Context context, List<TransactionForClient> listOfTransactions){
         this.context = context;
         this.listOfTransactions = listOfTransactions;
-    }
-
-    public AdapterTransactionType(Context context, long clientID) {
-        this.context = context;
-        this.dbTransactions = new DatabaseTransactions(context);
-        this.listOfTransactions = dbTransactions.getTransactionFromClient(clientID);
     }
 
     @Override
@@ -123,7 +103,7 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
             TransactionForClient clickedItem = listOfTransactions.get(getLayoutPosition());
 
             if(v.getId() == transactionItemEdit.getId()){
-                //edit
+                //TODO edit
             } else if (v.getId() == transactionItemDelete.getId()){
                 deleteTransaction(clickedItem.getTransactionID());
                 listOfTransactions.remove(clickedItem);
@@ -147,22 +127,6 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
         Client client = dbClients.getClientByID(ID);
 
         return client;
-    }
-
-    private List<TransactionForClient> getListOfAllTransactions(){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
-
-        List<TransactionForClient> list = dbTransactions.getAllTransactions();
-
-        return list;
-    }
-
-    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
-
-        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
-
-        return list;
     }
 
 }

@@ -70,6 +70,7 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         recyclerView.setAdapter(adapterPaymentType);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
                 if (dy > 0  && fab.isShown())
@@ -81,11 +82,12 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
-
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     Log.i(TAG, "onScrollStateChanged: ");
                 }
+
                 super.onScrollStateChanged(recyclerView, newState);
+
             }
         });
 
@@ -100,35 +102,17 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "payments received ", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
                         adapterPaymentType.updateList(getListOfTransactionsByType(true));
-//                        adapterPayment.notifyDataSetChanged();
-//                        adapterPayment = new AdapterPayment(getContext(), true);
-//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_received_recycler);
-////                        setupRecyclerView(recyclerView);
-//                        recyclerView.setAdapter(adapterPayment);
-
-//                        FragmentPaymentsReceived fragmentPaymentsReceived = new FragmentPaymentsReceived();
-//
-//                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-//                                android.R.anim.fade_out);
-//                        fragmentTransaction.replace(R.id.fragment_payments_received_frame, fragmentPaymentsReceived);
-//                        fragmentTransaction.commitAllowingStateLoss();
-
                     }
                 });
+
                 dialogPayment.show();
             }
         });
-
-
-
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -139,9 +123,7 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-
     }
 
     public void onEvent(ToggleFabWhenDrawerMove toggleFabWhenDrawerMove){
@@ -156,7 +138,6 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
         EventBus.getDefault().register(this); // this == your class instance
-
     }
 
     @Override
@@ -165,21 +146,6 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
         EventBus.getDefault().unregister(this);
 
     }
-
-    public void showFAB() {
-        if(!fab.isShown())
-            fab.show();
-        else
-            Log.e(TAG, "showFAB: ");
-    }
-
-    public void hideFAB(){
-        if(fab.isShown())
-            fab.hide();
-        else
-            Log.e(TAG, "hideFAB: ");
-    }
-
 
     @Override
     public void notifyWhenSwitched() {
@@ -196,9 +162,12 @@ public class FragmentPaymentsReceived extends Fragment implements InterfaceViewP
 
     public void onEvent(DialogMenuPaymentsApplyReceivedOrGiven dialogMenuPaymentsApplyReceivedOrGiven) {
         dbPayment = new DatabasePayments(fragmentActivity);
+
         if (dialogMenuPaymentsApplyReceivedOrGiven.getType() == 1) {
+
             listOfPayments = dbPayment.getPaymentsByDateAndRange(dialogMenuPaymentsApplyReceivedOrGiven.getFromDate(), dialogMenuPaymentsApplyReceivedOrGiven.getToDate(), dialogMenuPaymentsApplyReceivedOrGiven.getMinRange(), dialogMenuPaymentsApplyReceivedOrGiven.getMaxRange(), dialogMenuPaymentsApplyReceivedOrGiven.getType());
             adapterPaymentType.updateList(listOfPayments);
+
         } else
             Log.e(TAG, "onEvent: czekam  bo oddaję RECEIVED :)");
 

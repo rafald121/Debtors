@@ -97,7 +97,6 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-        Log.i(TAG, "onCreateView: END");
 
 
         return rootView;
@@ -113,23 +112,17 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: START");
         super.onViewCreated(view, savedInstanceState);
 
         fab = (FloatingActionButton) view.findViewById(R.id.fragment_transactions_purchases_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "transaction purchases", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//
+
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, false, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
                         adapterTransactionType.updateList(getListOfTransactionsByType(false));
-//                        adapterTransacation = new AdapterTransacation(getContext(), false);
-//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_purchases_recycler);
-//                        recyclerView.setAdapter(adapterTransacation);
                     }
                 });
                 dialogTransaction.show();
@@ -138,7 +131,6 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
             }
         });
 
-        Log.i(TAG, "onViewCreated: END");
     }
 
 
@@ -172,17 +164,14 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
 
     @Override
     public void onAttach(Context context) {
-        Log.i(TAG, "onAttach: START");
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
-        Log.i(TAG, "onAttach: END");
         EventBus.getDefault().register(this); // this == your class instance
 
     }
 
     @Override
     public void onDetach() {
-        Log.i(TAG, "onDetach: START");
         super.onDetach();
         EventBus.getDefault().unregister(this);
 
@@ -192,10 +181,10 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     @Override
     public void notifyWhenSwitched() {
 
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
 
         Log.i(TAG, "notifyWhenSwitched: purchases");
-        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.fragmentID);
 
         if (fab != null) {
             fab.show();
@@ -214,11 +203,14 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     }
 
     public void onEvent(DialogMenuTransactionsApplySalesOrPurchases dialogMenuTransactionsApplySalesOrPurchases){
-        Log.i(TAG, "onEvent: hlao tukej SALES !!!!!??");
+
         dbTransactions = new DatabaseTransactions(fragmentActivity);
+
         if(dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions() == 2) {
+
             listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplySalesOrPurchases.getFromDate(), dialogMenuTransactionsApplySalesOrPurchases.getToDate(), dialogMenuTransactionsApplySalesOrPurchases.getMinQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMaxQuantity(), dialogMenuTransactionsApplySalesOrPurchases.getMinTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getMaxTotalAmount(), dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions());
             adapterTransactionType.updateList(listOfTransactions);
+
         } else
             Log.e(TAG, "onEvent: error typeOfTransactions in purchase on Event: " + dialogMenuTransactionsApplySalesOrPurchases.getTypeOfTransactions());
     }

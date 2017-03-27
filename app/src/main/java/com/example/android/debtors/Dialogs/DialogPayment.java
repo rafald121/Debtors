@@ -94,7 +94,7 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO co robi \/?
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_new_payment);
 
@@ -140,8 +140,6 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Client client = (Client) parent.getSelectedItem();
-
-
                 Log.i(TAG, "onItemSelected: "+ client.toString(true));
             }
 
@@ -164,7 +162,6 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             Log.i(TAG, "onClick: ok");
 
             DatabaseOwner dbOwner = new DatabaseOwner(context);
-            DatabaseClients dbClients = new DatabaseClients(context);
 
 //            TODO ZMIENIC RAW OWNER NA ZALOGOWANEGO
             Owner owner = dbOwner.getOwner(1);
@@ -207,7 +204,6 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
             callbackAddInDialog.reloadRecycler();
             Log.i(TAG, "onClick: po");
 
-
 //            TODO add snackbar when client is added
             dismiss();
 
@@ -232,16 +228,6 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         }
 
         return swappedList;
-    }
-
-    private List<Client> getListOfClients(){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        List<Client> listOfClients = new ArrayList<>();
-
-        listOfClients = dbClients.getAllClient();
-
-        return listOfClients;
     }
 
     private Client getClientById(long clientID) {
@@ -271,27 +257,5 @@ public class DialogPayment extends Dialog implements View.OnClickListener{
         return list;
     }
 
-    private List<String> getListOfClientsNames(){
-        DatabaseClients dbClients = new DatabaseClients(context);
 
-        List<String> list = dbClients.getListOfClientsNames();
-
-        return list;
-    }
-
-    private List<HashMap<Integer, String>> getListOfHashMapOfClientsIdAndNames(){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        List<HashMap<Integer, String>> list = dbClients.getListOfMapIntStringOfAllClients();
-
-        return list;
-    }
-
-    private HashMap<Integer, String> getHashMapOfClientsIdAndNames(){
-        DatabaseClients dbClients = new DatabaseClients(context);
-
-        HashMap<Integer, String> map = dbClients.getHashMapIntStringOfAllClients();
-
-        return map;
-    }
 }

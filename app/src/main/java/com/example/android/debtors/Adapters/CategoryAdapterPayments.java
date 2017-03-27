@@ -28,28 +28,28 @@ public class CategoryAdapterPayments extends FragmentPagerAdapter {
         fragmentPaymentsAll = new FragmentPaymentsAll();
         fragmentPaymentsReceived = new FragmentPaymentsReceived();
         fragmentPaymentsGiven = new FragmentPaymentsGiven();
-        MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
+        MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSALL;
     }
 
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSALL;
             if (fragmentPaymentsAll != null) {
                 return fragmentPaymentsAll;
             }
         }
         if(position == 1) {
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSRECEIVED;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSRECEIVED;
             if (fragmentPaymentsReceived !=null) {
                 return fragmentPaymentsReceived;
             }
         }
         if(position == 2) {
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.PAYMENTSGIVEN;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.PAYMENTSGIVEN;
             if (fragmentPaymentsGiven != null) {
                 return fragmentPaymentsGiven;
             }

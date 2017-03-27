@@ -31,32 +31,14 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
 
     private List<Payment> listOfPayments = new ArrayList<>();
     private DatabasePayments dbPayments = null;
-    private DatabaseClients dbClients = null;
     private Context context = null;
 
     private View itemView = null;
 
 
-    public AdapterPaymentType(Context context){
-        this.context = context;
-        this.listOfPayments = getListOfPayments();
-    }
-
     public AdapterPaymentType(Context context, List<Payment> listOfPayments) {
         this.context = context;
         this.listOfPayments = listOfPayments;
-    }
-
-    public AdapterPaymentType(Context context, boolean receivedOrGive) {
-        this.context = context;
-        this.dbClients = new DatabaseClients(context);
-        this.listOfPayments = getListOfTransactionsByType(receivedOrGive);
-    }
-
-    public AdapterPaymentType(Context context, long clientID){
-        this.context = context;
-        this.dbPayments = new DatabasePayments(context);
-        this.listOfPayments = dbPayments.getPaymentsFromClient(clientID);
     }
 
     @Override
@@ -87,19 +69,22 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
         holder.textViewPaymentAmount.setText(String.valueOf(payment.getPaymentAmount()));
 
         if( !title.equals("")  && !(title.length() == 0)) {
-            Log.i(TAG, "onBindViewHolder: for: " + payment.toString());
+
             holder.linearLayout.getLayoutParams().height = LinearLayoutCompat.LayoutParams.WRAP_CONTENT;
             holder.linearLayout.setVisibility(View.VISIBLE);
             holder.textViewDetails.setVisibility(View.VISIBLE);
             holder.textViewDetailsHeader.setVisibility(View.VISIBLE);
             holder.textViewDetails.setText(payment.getPaymentDetails());
+
         } else{
-            Log.i(TAG, "onBindViewHolder: not for: " + payment.toString());
+
             holder.linearLayout.getLayoutParams().height = 0;
             holder.linearLayout.setVisibility(View.INVISIBLE);
             holder.textViewDetails.setVisibility(View.INVISIBLE);
             holder.textViewDetailsHeader.setVisibility(View.INVISIBLE);
+
         }
+
     }
 
     @Override
@@ -155,27 +140,4 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
         return client;
     }
 
-    private List<Payment> getListOfPaymentsByClient(long clientID){
-        DatabasePayments dbPayments = new DatabasePayments(context);
-
-        List<Payment> paymentList = dbPayments.getPaymentsFromClient(clientID);
-
-        return paymentList;
-    }
-
-    private List<Payment> getListOfPayments(){
-        DatabasePayments dbPayments = new DatabasePayments(context);
-
-        List<Payment> list = dbPayments.getAllPayments();
-
-        return list;
-    }
-
-    private List<Payment> getListOfTransactionsByType(boolean receivedOrGive) {
-        DatabasePayments dbPayments = new DatabasePayments(context);
-
-        List<Payment> list = dbPayments.getPaymentsByType(receivedOrGive);
-
-        return list;
-    }
 }

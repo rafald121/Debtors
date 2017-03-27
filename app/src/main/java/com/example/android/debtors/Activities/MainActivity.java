@@ -46,15 +46,11 @@ public class MainActivity extends AppCompatActivity {
     DatabasePayments dbPayment;
     DatabaseTransactions dbTransaction;
 
-//    String[] names = {"rafal", "marek", "karol", "adrian", "tomek", "jan", "andrzejek",
-//            "maniek", "maniok", "chamiok", "krzysztof", "zofia", "alfons", "kamil", "pawel"};
-//    String[] names2 = {"ania", "ula", "ciocia", "marianna", "ola", "ada", "marysia", "izabela"};
-
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
     private ImageView imgNavHeaderBg;
-//            , imgProfile;
+
     private TextView amountForMe, amountMeToOther;
     private Toolbar toolbar;
 
@@ -72,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     // tags used to attach the fragments
     public static int fragmentID = -1 ;
     public static int previousFragmentID = -1;
-    public static int subFragmentID = -1 ;
     public static int previousSubFragmentID = -1;
 
 
@@ -132,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
-            navItemIndex = 0;
+            MainActivity.fragmentID = 0;
 
             previousFragmentID = fragmentID;
             fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
@@ -150,14 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void countWholeDebtsAmounInHeader() {
-        int forme = dbClient.getAmountForMe();
-        int metoother = dbClient.getAmountMeToOther();
 
-        amountForMe.append(String.valueOf(forme));
-        amountMeToOther.append(String.valueOf(metoother));
-
-    }
 
     private void initFragments() {
         fragmentAllClients = new FragmentAllClients();
@@ -172,10 +160,7 @@ public class MainActivity extends AppCompatActivity {
         selectNavigationMenuToBeChecked();
         setToolbarTitle();
 
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
         if (PREVIOUS_TAG == CURRENT_TAG) {
-            Log.i(TAG, "loadSelectedFragment: wtf");
             drawer.closeDrawers();
             fabOn();
             return;
@@ -201,20 +186,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
 
         } else
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
-        //Closing drawer on item click
         drawer.closeDrawers();
 
-//        TODO TEST IT
         invalidateOptionsMenu();
 
-        Log.i(TAG, "loadSelectedFragment: END");
 
     }
 
@@ -262,24 +243,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Fragment getSelectedFragment() {
-        Log.i(TAG, "getSelectedFragment: START");
-        switch (navItemIndex) {
-            case 0:
+
+        switch (MainActivity.fragmentID) {
+
+            case FragmentsIDsAndTags.ALLCLIENTS:
                 return fragmentAllClients;
-            case 1:
+
+            case FragmentsIDsAndTags.DEBTORS:
                 return fragmentDebtors;
-            case 2:
+
+            case FragmentsIDsAndTags.TRANSACTIONS:
                 return fragmentTransactions;
-            case 3:
+
+            case FragmentsIDsAndTags.PAYMENTS:
                 return fragmentPayments;
+
             default:
                 Log.e(TAG, "getSelectedFragment: ERROR");
+                Log.i(TAG, "getSelectedFragment: fragment ID: " + MainActivity.fragmentID);
                 return null;
         }
     }
 
     private void selectNavigationMenuToBeChecked() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+        navigationView.getMenu().getItem(MainActivity.fragmentID).setChecked(true);
     }
 
     private void setToolbarTitle() {
@@ -287,60 +274,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationView() {
-        Log.i(TAG, "setUpNavigationView: START");
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
-            // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 initFragments();
 
                 switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
+
                     case R.id.nav_all_clients:
-                        navItemIndex = 0;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
-                        subFragmentID = FragmentsIDsAndTags.ALLCLIENTS;
 
                         PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_ALL_CLIENTS;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_ALLCLIENTS;
 
                         break;
                     case R.id.nav_debtors:
-                        navItemIndex = 1;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.DEBTORS;
-                        subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
 
                         PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_DEBTORS;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_DEBTORS;
 
                         break;
                     case R.id.nav_transactions:
-                        navItemIndex = 2;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.TRANSACTIONS;
-                        subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_TRANSACTIONS;
 
-                        PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_TRANSACTIONS;
                         break;
 
                     case R.id.nav_payments:
-                        navItemIndex = 3;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.PAYMENTS;
-                        subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
 
                         PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_PAYMENTS;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_PAYMENTS;
 
                         break;
 
@@ -362,12 +338,9 @@ public class MainActivity extends AppCompatActivity {
 
                     default:
                         Log.e(TAG, "onNavigationItemSelected: ERROR");
-                        navItemIndex = 0;
 
                 }
-                Log.i(TAG, "onNavigationItemSelected: selected index: " + navItemIndex);
 
-                //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 } else {
@@ -376,7 +349,6 @@ public class MainActivity extends AppCompatActivity {
                 menuItem.setChecked(true);
 
                 loadSelectedFragment();
-                Log.i(TAG, "onNavigationItemSelected: END");
                 return true;
             }
         });
@@ -400,31 +372,16 @@ public class MainActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(actionBarDrawerToggle);
 
-        //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-        Log.i(TAG, "setUpNavigationView: END");
     }
 
-    //    @Override
-
     private void loadNavHeader() {
-        // name, website
-//        txtName.setText("Rafał Dołęga");
-//        txtWebsite.setText("rafald121@gmail.com");
 
-        // loading header background image
         Glide.with(this).load(urlNavHeaderBg)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgNavHeaderBg);
 
-        // Loading profile image
-//        Glide.with(this).load(urlProfileImg)
-//                .crossFade()
-//                .thumbnail(0.5f)
-//                .bitmapTransform(new CircleTransform(this))
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(imgProfile);
     }
 
     private void fabOn(){
@@ -512,6 +469,14 @@ public class MainActivity extends AppCompatActivity {
 //
 //        super.onBackPressed();
 //    }
+    private void countWholeDebtsAmounInHeader() {
+        int forme = dbClient.getAmountForMe();
+        int metoother = dbClient.getAmountMeToOther();
+
+        amountForMe.append(String.valueOf(forme));
+        amountMeToOther.append(String.valueOf(metoother));
+
+    }
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();

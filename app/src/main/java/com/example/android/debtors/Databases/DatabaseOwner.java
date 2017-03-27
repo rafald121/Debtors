@@ -50,7 +50,6 @@ public class DatabaseOwner extends SQLiteOpenHelper {
     }
 
     public long createOwner(Owner owner){
-        Log.i(TAG, "createOwner: argument: " + owner.toString());
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -60,8 +59,6 @@ public class DatabaseOwner extends SQLiteOpenHelper {
         values.put(OWNER_OWN_AMOUNT, owner.getOwnerOwnAmount());
 
         long ownerID = db.insert(TABLE_OWNER, null, values);
-
-        Log.i(TAG, "createOwner: before return ownerID: " + ownerID);
 
         return ownerID;
     }

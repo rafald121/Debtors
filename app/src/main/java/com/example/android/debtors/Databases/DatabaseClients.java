@@ -174,8 +174,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
                 Client client = new Client();
                 client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
 
-
-
             }while (c.moveToNext());
 
         return clientsList;
@@ -198,8 +196,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
             } while (c.moveToNext());
         }
-
-        Log.i(TAG, "getListOfClientsNames: list to string: " + clientsNamesList.toString());
 
         return clientsNamesList;
     }
@@ -313,34 +309,9 @@ public class DatabaseClients extends SQLiteOpenHelper{
                 clientsList.add(client);
             } while (c.moveToNext());
         }
-
             return clientsList;
-
     }
 
-    public List<Client> getClientWithLeftAmountInRange(int min, int max){
-        List<Client> clientsList = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT  * FROM " + TABLE_CLIENTS;
-
-        Cursor c = db.rawQuery(query, null);
-        if(c.moveToFirst())
-            do {
-                if(     c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) >= min &&
-                        c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)) <= max){
-                    Client client = new Client();
-
-                    client.setClientId(c.getInt(c.getColumnIndex(CLIENT_ID)));
-                    client.setClientName(c.getString(c.getColumnIndex(CLIENT_NAME)));
-                    client.setClientLeftAmount(c.getInt(c.getColumnIndex(CLIENT_LEFT_AMOUNT)));
-
-                    clientsList.add(client);
-                }
-            } while (c.moveToNext());
-
-        return clientsList;
-    }
     public List<Client> getClientWithLeftAmountMoreOrLessZero(boolean flag) {//if true >0, false <0
         List<Client> clientList = new ArrayList<>();
 
@@ -403,9 +374,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
             }while (c.moveToNext());
         }
 
-
-        Log.i(TAG, "getClientWithHighestLeftAmount: najwiekszy indeks: " + indexOfHighest + " najwieksza kwota: " + highestLeftAmount);
-
         return highestLeftAmount;
     }
 
@@ -435,9 +403,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
             }while (c.moveToNext());
         }
 
-
-        Log.i(TAG, "getClientWithLowestLeftAmount: najmniejszy indeks: " + indexOflowest + " najmniejsza kwota: " + lowestLeftAmount);
-
         return lowestLeftAmount;
     }
 
@@ -447,15 +412,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         db.delete(TABLE_CLIENTS, CLIENT_ID + " = ?", new String[]{String.valueOf(clientID)});
     }
-
-    public void deleteClientInRange(long minID, long maxID){
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        for(long i = minID; i<maxID ; i++){
-            db.delete(TABLE_CLIENTS, CLIENT_ID + " = ?", new String[]{String.valueOf(i)});
-        }
-    }
-
 
 
     public int updateClient(Client client){
@@ -482,8 +438,7 @@ public class DatabaseClients extends SQLiteOpenHelper{
 
         Cursor c= db.rawQuery(query, null);
 
-//        HashMap<Integer, String> hashMap = new HashMap<>();
-    int index;
+        int index;
 
         if(c.moveToFirst())
             do{
@@ -493,7 +448,6 @@ public class DatabaseClients extends SQLiteOpenHelper{
                     return true;
                 }
             } while (c.moveToNext());
-
 
         return false;
 

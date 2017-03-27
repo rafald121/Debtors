@@ -91,7 +91,6 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    Log.i(TAG, "onScrollStateChanged: ");
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
@@ -116,16 +115,11 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "transaction sales", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 DialogTransaction dialogTransaction = new DialogTransaction(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
                         adapterTransactionType.updateList(getListOfTransactionsByType(true));
-//                        adapterTransacation = new AdapterTransacation(getContext(), true);
-//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_sales_recycler);
-//                        recyclerView.setAdapter(adapterTransacation);
                     }
                 });
                 dialogTransaction.show();
@@ -181,9 +175,9 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
     @Override
     public void notifyWhenSwitched() {
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
         Log.i(TAG, "notifyWhenSwitched: sales");
-        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.fragmentID);
         if (fab != null) {
             fab.show();
         }else
