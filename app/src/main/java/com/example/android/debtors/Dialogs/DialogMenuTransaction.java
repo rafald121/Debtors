@@ -100,6 +100,7 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
         rangeSeekBarQuantity.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
         rangeSeekBarTotalAmount = (RangeSeekBar) view.findViewById(R.id.dialog_menu_transactions_range_seekbar_totalamount);
+
         //todo najwieksza wartosc z bazy danych    \/
         rangeSeekBarTotalAmount.setRangeValues(0, 2000);
         rangeSeekBarTotalAmount.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
@@ -123,8 +124,6 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         if(v.getId() == buttonApply.getId()){
-            Log.i(TAG, "onClick: apply in transaction menu");
-
 
             fromDay = fromDatePickerDialog.getDayOfMonth();
             fromMonth = fromDatePickerDialog.getMonth();
@@ -156,8 +155,6 @@ public class DialogMenuTransaction extends DialogFragment implements View.OnClic
                 if(maxTotalAmount == (Integer) rangeSeekBarTotalAmount.getAbsoluteMaxValue()){
                     maxTotalAmount = dbTransactions.getHighestTotalAmountOfTransaction();
                 }
-
-                Log.i(TAG, "onClick: typeOfTransactions: " + typeOfTransactions);
 
                 if(typeOfTransactions == 0){
                     EventBus.getDefault().post(new DialogMenuTransactionsApplyAll(dateFrom, dateTo, minQuantity, maxQuantity, minTotalAmount, maxTotalAmount));

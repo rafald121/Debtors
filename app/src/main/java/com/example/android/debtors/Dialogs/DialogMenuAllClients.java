@@ -55,7 +55,6 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         callbackMenuDialog = (CallbackMenuAllclientDialog) getParentFragment();
-//        callbackMenuDialog = fragmentActivity;
     }
 
     @Nullable
@@ -86,8 +85,6 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
-
-//        callbackMenuDialog = (CallbackMenuAllclientDialog) fragmentActivity;
     }
 
     @Override
@@ -95,29 +92,29 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
         if(v.getId() == buttonApply.getId()){
 
             int minAmount = (Integer) rangeSeekBarTextColorWithCode.getSelectedMinValue();
-            Log.i(TAG, "onClick: minAmount: " + minAmount);
 
             int maxAmount = (Integer) rangeSeekBarTextColorWithCode.getSelectedMaxValue();
-            Log.i(TAG, "onClick: maxAmount: " + maxAmount);
 
             if(maxAmount == (Integer) rangeSeekBarTextColorWithCode.getAbsoluteMaxValue()){
+
                 dbClients = new DatabaseClients(fragmentActivity);
                 maxAmount = dbClients.getClientWithHighestLeftAmount();
-                Log.i(TAG, "onClick: a tukej: " + maxAmount);
+
             } else if(minAmount == (Integer) rangeSeekBarTextColorWithCode.getAbsoluteMinValue()){
+
                 dbClients = new DatabaseClients(fragmentActivity);
                 minAmount = dbClients.getClientWithLowestLeftAmount();
-                Log.i(TAG, "onClick: najmniejsza: " + minAmount);
+
             }
 
             callbackMenuDialog.reloadRecycler(minAmount, maxAmount);
-            //query
+
             dismiss();
         } else if(v.getId() == buttonCancel.getId()){
             dismiss();
-            Log.e(TAG, "onClick: eeee????????");
+            Log.i(TAG, "onClick: CANCEL");
         } else {
-            Log.e(TAG, "onClick: eeee");
+            Log.e(TAG, "onClick: ERROR");
         }
     }
 

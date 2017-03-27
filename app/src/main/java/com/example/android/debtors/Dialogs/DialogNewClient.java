@@ -38,13 +38,6 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
     private CallbackAddInDialog callbackAddInDialog = null;
 
-    public DialogNewClient(Context context) {
-        super(context);
-        this.context = context;
-        dbClients = new DatabaseClients(context);
-        type = true;
-    }
-
     public DialogNewClient(Context context, CallbackAddInDialog callback){
         super(context);
         this.context = context;
@@ -53,12 +46,6 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
 
     }
 
-    public DialogNewClient(Context context, boolean type) {
-        super(context);
-        this.context = context;
-        dbClients = new DatabaseClients(context);
-        this.type = type;
-    }
 
     public DialogNewClient(Context context, boolean type, CallbackAddInDialog callback) {
         super(context);
@@ -68,10 +55,7 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
         this.callbackAddInDialog =  callback;
 
     }
-//       if (dbClient.isClientWithNameAlreadyExist("maniek"))
-//    Log.i(TAG, "onCreate: istnieje");
-//    else
-//            Log.i(TAG, "onCreate: nie istnieje");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,15 +148,13 @@ public class DialogNewClient extends Dialog implements View.OnClickListener {
                 newClientError.setText("Name of client must have at least one sign");
                 Log.e(TAG, "onClick: trzeba wpisac imie usera");
             }
-
-
         }
         else if(v.getId() == newClientButtonCancel.getId()) {
             Log.i(TAG, "onClick: CANCEL button clicked");
             dismiss();
         }
         else
-            Log.i(TAG, "onClick: wtf?");
+            Log.i(TAG, "onClick: ERROR");
     }
 
     @Override
