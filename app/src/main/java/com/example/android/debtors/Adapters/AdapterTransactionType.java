@@ -2,9 +2,11 @@ package com.example.android.debtors.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.debtors.Databases.DatabaseClients;
@@ -93,9 +95,10 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
         this.notifyDataSetChanged();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
         private TextView textViewClient, textViewTotalAmount, textViewDate, textViewQuantity, textViewProductvalue, textViewEntryPayment;
+        private ImageButton transactionItemEdit, transactionItemDelete;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +109,38 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
             textViewQuantity = (TextView) itemView.findViewById(R.id.transaction_item_quantity);
             textViewProductvalue = (TextView) itemView.findViewById(R.id.transaction_item_productvalue);
             textViewEntryPayment = (TextView) itemView.findViewById(R.id.transaction_item_entrypayment);
+            transactionItemEdit = (ImageButton) itemView.findViewById(R.id.item_transaction_edit);
+            transactionItemDelete = (ImageButton) itemView.findViewById(R.id.item_transaction_delete);
+
+            itemView.setOnClickListener(this);
+            transactionItemEdit.setOnClickListener(this);
+            transactionItemDelete.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            TransactionForClient clickedItem = listOfTransactions.get(getLayoutPosition());
+
+            if(v.getId() == transactionItemEdit.getId()){
+                //edit
+            } else if (v.getId() == transactionItemDelete.getId()){
+                Log.i(TAG, "onClick: delete");
+                Log.i(TAG, "onClick: transaciton to delete: " + clickedItem.toString());
+                deleteTransaction(clickedItem.getTransactionID());
+                dbTransactions.deleteTransaction(clickedItem.getTransactionID());
+//                notifyItemChanged(getLayoutPosition());
+                listOfTransactions.remove(clickedItem);
+                notifyDataSetChanged();
+
+            } else {
+                Log.i(TAG, "onClick: item view content");
+            }
+        }
+
+        private void deleteTransaction(int id) {
+            dbTransactions = new DatabaseTransactions(context);
+            dbTransactions.deleteTransaction(id);
 
         }
     }

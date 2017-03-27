@@ -444,4 +444,10 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
         return listOfTransactions;
     }
+
+    public void deleteTransaction(long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_TRANSACTIONS, TRANSACTION_ID + " = ?", new String[]{String.valueOf(id)});
+    }
 }
