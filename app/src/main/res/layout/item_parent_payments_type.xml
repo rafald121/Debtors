@@ -23,7 +23,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:weightSum="40">
 
             <TextView
@@ -49,7 +49,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:weightSum="40">
 
             <TextView
@@ -74,7 +74,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="35"
             android:weightSum="40">
 
             <TextView
@@ -96,6 +96,37 @@
                 style="@style/ItemPaymentsInfoTextView"/>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:weightSum="15"
+            android:gravity="end|center"
+            >
+
+            <!--<ImageButton-->
+            <!--android:id="@+id/item_transaction_edit"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--app:srcCompat="@drawable/ic_mode_edit_black_24dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:elevation="5dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--/>-->
+
+            <ImageButton
+                android:id="@+id/item_payments_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_delete_black_24dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+
+                />
         </LinearLayout>
         <!--TODO jak bedzie po wszystkim to wyrzucic TYP ( określony w TabLayout)-->
 

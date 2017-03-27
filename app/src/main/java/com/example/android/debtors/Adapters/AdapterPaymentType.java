@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
  * Created by Rafaello on 2017-02-22.
  */
 
-public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.MyViewHolder>{
+public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.MyViewHolder> {
 
     private static final String TAG = AdapterPayment.class.getSimpleName();
 
@@ -87,14 +87,19 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
         holder.textViewDate.setText(dateString);
         holder.textViewPaymentAmount.setText(String.valueOf(payment.getPaymentAmount()));
 
-        if(!title.equals("")) {
+        if( !title.equals("")  && !(title.length() == 0)) {
+            Log.i(TAG, "onBindViewHolder: for: " + payment.toString());
             holder.linearLayout.getLayoutParams().height = LinearLayoutCompat.LayoutParams.WRAP_CONTENT;
             holder.linearLayout.setVisibility(View.VISIBLE);
             holder.textViewDetails.setVisibility(View.VISIBLE);
             holder.textViewDetailsHeader.setVisibility(View.VISIBLE);
             holder.textViewDetails.setText(payment.getPaymentDetails());
         } else{
+            Log.i(TAG, "onBindViewHolder: not for: " + payment.toString());
+            holder.linearLayout.getLayoutParams().height = 0;
             holder.linearLayout.setVisibility(View.INVISIBLE);
+            holder.textViewDetails.setVisibility(View.INVISIBLE);
+            holder.textViewDetailsHeader.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -103,7 +108,8 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
         return listOfPayments.size();
     }
 
-    public class MyViewHolder  extends RecyclerView.ViewHolder{
+    
+    public class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{ 
 
         private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewDetails, textViewDetailsHeader;
         private LinearLayout linearLayout;
@@ -116,7 +122,18 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
             textViewDetails = (TextView) itemView.findViewById(R.id.payments_item_details);
             textViewDetailsHeader = (TextView) itemView.findViewById(R.id.payments_item_details_header);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.payments_item_linear_details);
+
+            itemView.setOnClickListener(this);
         }
+
+
+        @Override
+        public void onClick(View v) {
+            Log.i(TAG, "onClick: halo");
+            Payment payment = listOfPayments.get(getLayoutPosition());
+            Log.i(TAG, "onClick: payment to string: " + payment.toString());
+        }
+
     }
     private Client getClientByID(long ID){
         DatabaseClients dbClients = new DatabaseClients(context);
