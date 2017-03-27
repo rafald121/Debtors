@@ -181,9 +181,9 @@ public class FragmentTransactionsSales extends Fragment implements InterfaceView
 
     @Override
     public void notifyWhenSwitched() {
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
         Log.i(TAG, "notifyWhenSwitched: sales");
-        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.fragmentID);
         if (fab != null) {
             fab.show();
         }else

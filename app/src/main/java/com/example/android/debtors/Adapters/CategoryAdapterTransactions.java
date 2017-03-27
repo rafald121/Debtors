@@ -27,21 +27,21 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
         fragmentTransactionsAll = new FragmentTransactionsAll();
         fragmentTransactionsSales = new FragmentTransactionsSales();
         fragmentTransactionsPurchases = new FragmentTransactionsPurchases();
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
             if (fragmentTransactionsAll != null) {
                 return fragmentTransactionsAll;
             }
         }
         if (position == 1) {
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
             if (fragmentTransactionsSales != null) {
                 return fragmentTransactionsSales;
             }
@@ -49,8 +49,8 @@ public class CategoryAdapterTransactions extends FragmentPagerAdapter {
         if (position == 2) {
             MainActivity.CURRENT_SUB_TAG = "tagTransactionsPurchases";
 
-            MainActivity.previousSubFragmentID = MainActivity.subFragmentID;
-            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
+            MainActivity.previousFragmentID = MainActivity.fragmentID;
+            MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
             if (fragmentTransactionsPurchases != null) {
                 return fragmentTransactionsPurchases;
             }

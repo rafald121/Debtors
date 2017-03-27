@@ -192,10 +192,10 @@ public class FragmentTransactionsPurchases extends Fragment implements Interface
     @Override
     public void notifyWhenSwitched() {
 
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
 
         Log.i(TAG, "notifyWhenSwitched: purchases");
-        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.fragmentID);
 
         if (fab != null) {
             fab.show();

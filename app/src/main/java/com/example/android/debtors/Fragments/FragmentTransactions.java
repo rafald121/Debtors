@@ -67,7 +67,7 @@ public class FragmentTransactions extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.subFragmentID);
+        Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.fragmentID);
 //        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
 
         super.onViewCreated(view, savedInstanceState);
@@ -100,17 +100,17 @@ public class FragmentTransactions extends Fragment {
                     Log.i(TAG, "onPageSelected: switched to: " + position);
                     switch (position){
                         case 0:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+                            MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
                             intefrace.notifyWhenSwitched();
                             typeOfTransactions = 0;
                             break;
                         case 1:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
+                            MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSSALES;
                             intefrace.notifyWhenSwitched();
                             typeOfTransactions = 1;
                             break;
                         case 2:
-                            MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
+                            MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
                             intefrace.notifyWhenSwitched();
                             typeOfTransactions = 2;
                             Log.i(TAG, "onPageSelected: after notify when switched");
@@ -134,8 +134,8 @@ public class FragmentTransactions extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
         Log.i(TAG, "onViewCreated: 5");
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
-        Log.i(TAG, "onViewCreated: 6, assigned, now subfragment is: " + MainActivity.subFragmentID);
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+        Log.i(TAG, "onViewCreated: 6, assigned, now subfragment is: " + MainActivity.fragmentID);
     }
 
     @Override

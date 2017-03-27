@@ -173,9 +173,9 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
     @Override
     public void notifyWhenSwitched() {
         Log.i(TAG, "notifyWhenSwitched: halo");
-        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+        MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
         Log.i(TAG, "notifyWhenSwitched: all");
-        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.subFragmentID);
+        Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.fragmentID);
         fab.show();
     }
 

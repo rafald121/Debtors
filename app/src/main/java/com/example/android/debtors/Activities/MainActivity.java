@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     // tags used to attach the fragments
     public static int fragmentID = -1 ;
     public static int previousFragmentID = -1;
-    public static int subFragmentID = -1 ;
     public static int previousSubFragmentID = -1;
 
 
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
-            navItemIndex = 0;
+            MainActivity.fragmentID = 0;
 
             previousFragmentID = fragmentID;
             fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
@@ -193,10 +192,8 @@ public class MainActivity extends AppCompatActivity {
         } else
             Log.i(TAG, "loadSelectedFragment: IS NULL ");
 
-        //Closing drawer on item click
         drawer.closeDrawers();
 
-//        TODO TEST IT
         invalidateOptionsMenu();
 
 
@@ -246,24 +243,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Fragment getSelectedFragment() {
-        Log.i(TAG, "getSelectedFragment: START");
-        switch (navItemIndex) {
-            case 0:
+
+        switch (MainActivity.fragmentID) {
+
+            case FragmentsIDsAndTags.ALLCLIENTS:
                 return fragmentAllClients;
-            case 1:
+
+            case FragmentsIDsAndTags.DEBTORS:
                 return fragmentDebtors;
-            case 2:
+
+            case FragmentsIDsAndTags.TRANSACTIONS:
                 return fragmentTransactions;
-            case 3:
+
+            case FragmentsIDsAndTags.PAYMENTS:
                 return fragmentPayments;
+
             default:
                 Log.e(TAG, "getSelectedFragment: ERROR");
+                Log.i(TAG, "getSelectedFragment: fragment ID: " + MainActivity.fragmentID);
                 return null;
         }
     }
 
     private void selectNavigationMenuToBeChecked() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+        navigationView.getMenu().getItem(MainActivity.fragmentID).setChecked(true);
     }
 
     private void setToolbarTitle() {
@@ -282,47 +285,38 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
 
                     case R.id.nav_all_clients:
-                        navItemIndex = 0;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.ALLCLIENTS;
-                        subFragmentID = FragmentsIDsAndTags.ALLCLIENTS;
 
                         PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_ALL_CLIENTS;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_ALLCLIENTS;
 
                         break;
                     case R.id.nav_debtors:
-                        navItemIndex = 1;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.DEBTORS;
-                        subFragmentID = FragmentsIDsAndTags.DEBTORSFORME;
 
                         PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_DEBTORS;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_DEBTORS;
 
                         break;
                     case R.id.nav_transactions:
-                        navItemIndex = 2;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.TRANSACTIONS;
-                        subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_TRANSACTIONS;
 
-                        PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_TRANSACTIONS;
                         break;
 
                     case R.id.nav_payments:
-                        navItemIndex = 3;
 
                         previousFragmentID = fragmentID;
                         fragmentID = FragmentsIDsAndTags.PAYMENTS;
-                        subFragmentID = FragmentsIDsAndTags.PAYMENTSALL;
 
                         PREVIOUS_TAG = CURRENT_TAG;
-                        CURRENT_TAG = TAG_PAYMENTS;
+                        CURRENT_TAG = FragmentsIDsAndTags.TAG_PAYMENTS;
 
                         break;
 
@@ -344,7 +338,6 @@ public class MainActivity extends AppCompatActivity {
 
                     default:
                         Log.e(TAG, "onNavigationItemSelected: ERROR");
-                        navItemIndex = 0;
 
                 }
 
