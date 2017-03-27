@@ -118,10 +118,6 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
                     @Override
                     public void reloadRecycler() {
                     adapterTransaction.updateList(getListOfAllTransactions());
-//                       // zaleznei od ustawien albo domyslnie true albo false    \/
-//                        adapterTransaction = new AdapterTransacation(getContext(), true);
-//                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_transactions_all_recycler);
-//                        recyclerView.setAdapter(adapterTransaction);
                     }
                 });
                 dialogTransaction.show();
@@ -167,23 +163,19 @@ public class FragmentTransactionsAll extends Fragment implements InterfaceViewPa
         d.show(getChildFragmentManager(), FragmentsIDsAndTags.TAG_DIALOG_CREATE_TRASACTIONS);
     }
 
-
-
-
     @Override
     public void notifyWhenSwitched() {
-        Log.i(TAG, "notifyWhenSwitched: halo");
         MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
-        Log.i(TAG, "notifyWhenSwitched: all");
         Log.i(TAG, "notifyWhenSwitched: subfragment: " + MainActivity.fragmentID);
         fab.show();
     }
 
     public void onEvent(DialogMenuTransactionsApplyAll dialogMenuTransactionsApplyAll){
-        Log.i(TAG, "onEvent: hlao tukej??");
+
         dbTransactions = new DatabaseTransactions(fragmentActivity);
         listOfTransactions = dbTransactions.getTransactionsByQueryInMenuDialog(dialogMenuTransactionsApplyAll.getFromDate(), dialogMenuTransactionsApplyAll.getToDate(), dialogMenuTransactionsApplyAll.getMinQuantity(), dialogMenuTransactionsApplyAll.getMaxQuantity(), dialogMenuTransactionsApplyAll.getMinTotalAmount(), dialogMenuTransactionsApplyAll.getMaxTotalAmount());
         adapterTransaction.updateList(listOfTransactions);
+
     }
 
     private List<TransactionForClient> getListOfAllTransactions(){

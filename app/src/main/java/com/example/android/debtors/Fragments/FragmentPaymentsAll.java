@@ -108,20 +108,13 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
             @Override
             public void onClick(View view) {
 
-                Log.i(TAG, "onClick: halo fab");
-//                dodac domyslna wartosc zaleznie od czestotliwosci typu platnosci \/
                 DialogPayment dialogPayment = new DialogPayment(fragmentActivity, true, new CallbackAddInDialog() {
                     @Override
                     public void reloadRecycler() {
-
-                        Log.i(TAG, "reloadRecycler: ");
-                        adapterPayment = new AdapterPayment(getContext());
-                        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_payments_all_recycler);
-                        recyclerView.setAdapter(adapterPayment);
-
+                        adapterPayment.updateList(getAllPayments());
+                        adapterPayment.notifyDataSetChanged();
                     }
                 });
-                Log.i(TAG, "onClick: 4");
                 dialogPayment.show();
             }
         });
@@ -132,7 +125,6 @@ public class FragmentPaymentsAll extends Fragment implements InterfaceViewPager{
         super.onAttach(context);
         fragmentActivity = (FragmentActivity) context;
         EventBus.getDefault().register(this); // this == your class instance
-
     }
 
     @Override

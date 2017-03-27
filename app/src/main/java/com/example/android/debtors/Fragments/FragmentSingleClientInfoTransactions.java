@@ -51,35 +51,28 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
     private RecyclerView recyclerView = null;
     private AdapterTransacation adapterTransacation = null;
 
-    private List<TransactionForClient> listofTransactions = null;
-
     public FragmentSingleClientInfoTransactions() {
-        Log.i(TAG, "FragmentDebtorsForMe: START");
-        // Required empty public constructor
     }
 
     public static Fragment newInstance(long clientID) {
-        Log.i(TAG, "newInstance: start");
         FragmentSingleClientInfoTransactions f = new FragmentSingleClientInfoTransactions();
         f.clientsID = clientID;
-        Log.i(TAG, "newInstance: before return ");
         return f;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate: end");
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: START");
+
 //        TODO make db is reading in another thread \/
 //        TODO if listOfClients = null - zabezpieczyc, tak samo jak w innych fragmentach\/
+
         listOfTransactionsForClient = getTransactionsByClientId(clientsID);
 
         rootView = inflater.inflate(R.layout.fragment_singleclient_transactions, container, false);
@@ -103,14 +96,10 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
 
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    Log.i(TAG, "onScrollStateChanged: ");
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
-
-        Log.i(TAG, "onCreateView: END");
 
         return rootView;
 
@@ -144,11 +133,6 @@ public class FragmentSingleClientInfoTransactions extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private List<TransactionForClient> getTransactionsByClient() {
-
-        List<TransactionForClient> listOfTransactions = new ArrayList<>();
-        return listOfTransactions;
-    }
 
     @Override
     public void onAttach(Context context) {

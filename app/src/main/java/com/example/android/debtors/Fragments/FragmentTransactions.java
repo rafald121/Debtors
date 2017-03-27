@@ -51,42 +51,32 @@ public class FragmentTransactions extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: START");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Log.i(TAG, "onCreate: END");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView: START");
         return inflater.inflate(R.layout.fragment_transactions, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        Log.i(TAG, "onViewCreated: podczas tworzenia FragmentTransactions: " + MainActivity.fragmentID);
-//        MainActivity.subFragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
-
         super.onViewCreated(view, savedInstanceState);
         viewPager = (ViewPager) view.findViewById(R.id.transactions_viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.transactions_tabs);
-        Log.i(TAG, "onViewCreated: 1");
 
         if (categoryAdapterTransactions == null)
             categoryAdapterTransactions = new CategoryAdapterTransactions(getChildFragmentManager());
         else
-            Log.e(TAG, "onViewCreated: 11 ");
-
-        Log.i(TAG, "onViewCreated: 2");
+            Log.e(TAG, "onViewCreated: null ");
 
         if (viewPager != null) {
             viewPager.setAdapter(categoryAdapterTransactions);
         } else
-            Log.e(TAG, "onViewCreated: 22");
-        Log.i(TAG, "onViewCreated: 3");
+            Log.e(TAG, "onViewCreated: null");
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -97,7 +87,7 @@ public class FragmentTransactions extends Fragment {
             public void onPageSelected(final int position) {
                 InterfaceViewPager intefrace = (InterfaceViewPager) categoryAdapterTransactions.instantiateItem(viewPager, position);
                 if (intefrace != null) {
-                    Log.i(TAG, "onPageSelected: switched to: " + position);
+
                     switch (position){
                         case 0:
                             MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
@@ -113,13 +103,10 @@ public class FragmentTransactions extends Fragment {
                             MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSPURCHASES;
                             intefrace.notifyWhenSwitched();
                             typeOfTransactions = 2;
-                            Log.i(TAG, "onPageSelected: after notify when switched");
                             break;
                         default:
-                            Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
                             break;
                     }
-
 
                 } else
                     Log.i(TAG, "onPageSelected: pomocy");
@@ -130,17 +117,14 @@ public class FragmentTransactions extends Fragment {
             }
         });
 
-        Log.i(TAG, "onViewCreated: 4");
-
         tabLayout.setupWithViewPager(viewPager);
-        Log.i(TAG, "onViewCreated: 5");
         MainActivity.fragmentID = FragmentsIDsAndTags.TRANSACTIONSALL;
-        Log.i(TAG, "onViewCreated: 6, assigned, now subfragment is: " + MainActivity.fragmentID);
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.i(TAG, "onCreateOptionsMenu: START");
+
         inflater.inflate(R.menu.menu_transactions, menu);
 
         menuItemArrow = menu.findItem(R.id.arrowtosort_transactions);
@@ -155,7 +139,7 @@ public class FragmentTransactions extends Fragment {
         });
 
         super.onCreateOptionsMenu(menu, inflater);
-        Log.i(TAG, "onCreateOptionsMenu: END");
+
     }
 
     @Override
@@ -266,16 +250,12 @@ public class FragmentTransactions extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        Log.i(TAG, "onAttach: START");
         super.onAttach(context);
-        Log.i(TAG, "onAttach: END");
     }
 
     @Override
     public void onDetach() {
-        Log.i(TAG, "onDetach: START");
         super.onDetach();
     }
-
 
 }

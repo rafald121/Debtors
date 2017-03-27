@@ -40,7 +40,6 @@ public class FragmentSingleClientInfo extends Fragment {
     private long clientID;
 
     public FragmentSingleClientInfo() {
-        // Required empty public constructor
     }
 
 
@@ -53,11 +52,8 @@ public class FragmentSingleClientInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Bundle readenArguments = getArguments();
         clientID = readenArguments.getLong("id");
-        Log.i(TAG, "onCreateView: readen clientID : " + clientID);
-
         return inflater.inflate(R.layout.fragment_singleclient, container, false);
     }
 
@@ -71,7 +67,7 @@ public class FragmentSingleClientInfo extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated: dziauaaa");
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getNameOfClientForID(clientID));
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.clientsinfo_viewpager);
@@ -86,7 +82,6 @@ public class FragmentSingleClientInfo extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_clientinfo, menu);
-        Log.i(TAG, "onCreateOptionsMenu: dziaua?");
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -125,17 +120,6 @@ public class FragmentSingleClientInfo extends Fragment {
         mListener = null;
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

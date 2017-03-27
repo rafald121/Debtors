@@ -48,7 +48,6 @@ public class FragmentSingleClientInfoPayments extends Fragment{
     private List<Payment> listOfPayments = null;
 
     public FragmentSingleClientInfoPayments() {
-
     }
 
     public static Fragment newInstance(long clientID) {
@@ -88,7 +87,6 @@ public class FragmentSingleClientInfoPayments extends Fragment{
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    Log.i(TAG, "onScrollStateChanged: ");
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
@@ -124,8 +122,6 @@ public class FragmentSingleClientInfoPayments extends Fragment{
                 dialogPayment.show();
             }
         });
-
-        Log.i(TAG, "onViewCreated: END");
     }
     @Override
     public void onAttach(Context context) {
