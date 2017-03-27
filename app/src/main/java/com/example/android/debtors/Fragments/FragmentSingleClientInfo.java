@@ -11,6 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,7 +47,7 @@ public class FragmentSingleClientInfo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -68,7 +71,7 @@ public class FragmentSingleClientInfo extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.i(TAG, "onViewCreated: dziauaaa");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getNameOfClientForID(clientID));
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.clientsinfo_viewpager);
@@ -80,7 +83,28 @@ public class FragmentSingleClientInfo extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_clientinfo, menu);
+        Log.i(TAG, "onCreateOptionsMenu: dziaua?");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_clientinfo_delete:
+                Log.i(TAG, "onOptionsItemSelected: client delete");
+                break;
+            case R.id.menu_clientinfo_edit:
+                Log.i(TAG, "onOptionsItemSelected: client edit");
+                break;
+            default:
+                Log.e(TAG, "onOptionsItemSelected: ERROR");
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private String getNameOfClientForID(long clientID) {
         dbClients = new DatabaseClients(fragmentActivity);
