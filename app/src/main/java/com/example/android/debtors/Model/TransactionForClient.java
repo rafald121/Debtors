@@ -11,9 +11,6 @@ public class TransactionForClient extends Transaction {
     private int transactionID;
     private int transactionOwnerID;
     private int transactionClientID;
-    private Owner transactionOwner;
-    private Client transactionClient;
-    private Product transactionProduct; //co
     private int transactionProductValue;
     private int transactionEntryPayment = 0;
 
@@ -23,20 +20,16 @@ public class TransactionForClient extends Transaction {
     boolean transactionBuyOrSell; // if true = sprzedawca = owner, if false = sprzedawca = ktos inny
 
 // TRANSACTION CONSTRUCTOR WITHOUT PAYMENT
-    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int transactionProductValue, boolean transactionBuyOrSell) {
+    public TransactionForClient(String transactionDate, int transactionQuantity, int transactionProductValue, boolean transactionBuyOrSell) {
         super(transactionDate, transactionQuantity);
-        this.transactionOwner = transactionOwner;
-        this.transactionClient = transactionClient;
         this.transactionProductValue = transactionProductValue;
         this.transactionBuyOrSell = transactionBuyOrSell;
     }
 
     // TRANSACTION CONSTRUCTOR WITH PAYMENT
-    public TransactionForClient(String transactionDate, Owner transactionOwner, Client transactionClient, int transactionQuantity, int transactionProductValue, int entryPayment,  boolean transactionBuyOrSell) {
+    public TransactionForClient(String transactionDate, int transactionQuantity, int transactionProductValue, int entryPayment,  boolean transactionBuyOrSell) {
 
         super(transactionDate, transactionQuantity);
-        this.transactionOwner = transactionOwner;
-        this.transactionClient = transactionClient;
         this.transactionProductValue = transactionProductValue;
         this.transactionEntryPayment = entryPayment;
         this.transactionBuyOrSell = transactionBuyOrSell;
@@ -56,7 +49,6 @@ public class TransactionForClient extends Transaction {
         super();
 
     }
-
 
     //GETTERY I SETTERY SUPER Z KLASY TRANSACTION
     public String getTransactionDate(){
@@ -144,24 +136,6 @@ public class TransactionForClient extends Transaction {
         else
             Log.e("TransactionForClient", "setTransactionBuyOrSell: TRANSACTION BUY OR SELL CAN'T BE OTHER THAN 0 or 1!1!" );
     }
-
-    //TRANSACTION OWNER
-    public Owner getTransactionOwner() {
-        return transactionOwner;
-    }
-
-    public void setTransactionOwner(Owner transactionOwner) {
-        this.transactionOwner = transactionOwner;
-    }
-//TRANSACTION CLIENT
-    public Client getTransactionClient() {
-        return transactionClient;
-    }
-
-    public void setTransactionClient(Client transactionClient) {
-        this.transactionClient = transactionClient;
-    }
-
 
     @Override
     public String toString(){

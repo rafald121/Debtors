@@ -11,8 +11,6 @@ public class Payment {
     private String paymentDate; // kiedy zaplacono
     private int paymentOwnerID;
     private int paymentClientID;
-    private Owner paymentOwner;
-    private Client paymentClient; // kto płaci
     private int paymentAmount; // ile zapłacono
     private boolean paymentGotOrGiven; //if true = got
     private String paymentDetails = "";
@@ -22,8 +20,6 @@ public class Payment {
 
     public Payment(String paymentData, Owner paymentOwner, Client paymentClient, int paymentAmount, boolean paymentGotOrGiven) {
         this.paymentDate = paymentData;
-        this.paymentOwner = paymentOwner;
-        this.paymentClient = paymentClient;
         this.paymentAmount = paymentAmount;
         this.paymentGotOrGiven = paymentGotOrGiven;
     }
@@ -76,24 +72,6 @@ public class Payment {
 
     //    WLASCICIEL KTOREMU SIE PLACI
 
-    public Owner getPaymentOwner() {
-        return paymentOwner;
-    }
-
-    public void setPaymentOwner(Owner paymentOwner) {
-        this.paymentOwner = paymentOwner;
-    }
-
-//KLIENT KTOREGO DOTYCZY PLATNOSC
-
-
-    public Client getPaymentClient() {
-        return paymentClient;
-    }
-
-    public void setPaymentClient(Client paymentClient) {
-        this.paymentClient = paymentClient;
-    }
 //KWOTA PLATNOSCI
     public int getPaymentAmount() {
         return paymentAmount;
@@ -129,25 +107,6 @@ public class Payment {
         this.paymentDetails = paymentDetails;
     }
 
-    //    OTHERS
-
-//    @Override
-//    public String toString() {
-//        String revenueOrExpense = "";
-//        if(this.paymentGotOrGiven)
-//            revenueOrExpense = "revenue";
-//        else
-//            revenueOrExpense = "expense";
-//        return "Payment{" +
-//                "paymentID=" + paymentID +
-//                ", paymentData='" + paymentDate + '\'' +
-//                ", paymentOwner=" + paymentOwner +
-//                ", paymentClient=" + paymentClient +
-//                ", paymentAmount=" + paymentAmount +
-//                ", revenueOrExpense? " + revenueOrExpense +
-//                '}';
-//    }
-//IF TO STRING WITH FLAGS WE GET INFO ABOUT PAYMENTS WITH CLIENT AND OWNER ID NOT OBJECT
     public String toString() {
         String revenueOrExpense = "";
         if(this.paymentGotOrGiven)

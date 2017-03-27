@@ -15,9 +15,7 @@ public class Transaction {
     }
 
     public Transaction() {
-
     }
-
 
     public String getTransactionDate() {
         return transactionDate;
