@@ -79,6 +79,10 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
         String date = datearray[0];
         holder.textViewDate.setText(date);
 
+        holder.textViewQuantity.setText(String.valueOf(transaction.getTransactionQuantity()));
+        holder.textViewProductvalue.setText(String.valueOf(transaction.getTransactionProductValue()));
+        holder.textViewEntryPayment.setText(String.valueOf(transaction.getTransactionEntryPayment()));
+
     }
 
     @Override
@@ -94,14 +98,18 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewClient, textViewTotalAmount, textViewDate;
+        private TextView textViewClient, textViewTotalAmount, textViewDate, textViewQuantity, textViewProductvalue, textViewEntryPayment;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             textViewClient = (TextView) itemView.findViewById(R.id.transaction_item_client);
-            textViewTotalAmount = (TextView) itemView.findViewById(R.id.transaction_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.transaction_item_date);
+            textViewTotalAmount = (TextView) itemView.findViewById(R.id.transaction_item_totalamount);
+            textViewQuantity = (TextView) itemView.findViewById(R.id.transaction_item_quantity);
+            textViewProductvalue = (TextView) itemView.findViewById(R.id.transaction_item_productvalue);
+            textViewEntryPayment = (TextView) itemView.findViewById(R.id.transaction_item_entrypayment);
+
         }
     }
 
