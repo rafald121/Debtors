@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -110,7 +112,8 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
 
         private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewDetails, textViewDetailsHeader;
         private LinearLayout linearLayout;
-
+        private ImageButton itemPaymentDelete;
+        
         public MyViewHolder(View itemView) {
             super(itemView);
             textViewClient = (TextView) itemView.findViewById(R.id.payment_item_client);
@@ -119,16 +122,28 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
             textViewDetails = (TextView) itemView.findViewById(R.id.payments_item_details);
             textViewDetailsHeader = (TextView) itemView.findViewById(R.id.payments_item_details_header);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.payments_item_linear_details);
-
+            itemPaymentDelete = (ImageButton) itemView.findViewById(R.id.item_payments_delete);
+            
             itemView.setOnClickListener(this);
+            itemPaymentDelete.setOnClickListener(this);
         }
 
 
         @Override
         public void onClick(View v) {
-            Log.i(TAG, "onClick: halo");
             Payment payment = listOfPayments.get(getLayoutPosition());
-            Log.i(TAG, "onClick: payment to string: " + payment.toString());
+            
+            if(v.getId() == itemPaymentDelete.getId()){
+                deletePayment(payment.getPaymentID());
+                listOfPayments.remove(payment);
+                notifyDataSetChanged();
+            } else
+                Log.i(TAG, "onClick: content");
+        }
+
+        private void deletePayment(int paymentID) {
+            dbPayments = new DatabasePayments(context);
+            dbPayments.deletePayment(paymentID);
         }
 
     }

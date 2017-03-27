@@ -3,9 +3,11 @@ package com.example.android.debtors.Adapters;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -103,10 +105,12 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
         return listOfPayments.size();
     }
 
-    public class MyViewHolder  extends RecyclerView.ViewHolder{
+    public class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private  TextView  textViewClient, textViewPaymentAmount, textViewDate, textViewType, textViewDetails, textViewDetailsHeader;
         private LinearLayout linearLayout;
+        private ImageButton itemPaymentDelete;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -117,6 +121,28 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
             textViewDetails = (TextView) itemView.findViewById(R.id.payments_item_details);
             textViewDetailsHeader = (TextView) itemView.findViewById(R.id.payments_item_details_header);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.payments_item_linear_details);
+            itemPaymentDelete = (ImageButton) itemView.findViewById(R.id.item_payments_delete);
+
+            itemView.setOnClickListener(this);
+            itemPaymentDelete.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            Payment payment = listOfPayments.get(getLayoutPosition());
+
+            if(v.getId() == itemPaymentDelete.getId()){
+                deletePayment(payment.getPaymentID());
+                listOfPayments.remove(payment);
+                notifyDataSetChanged();
+            } else
+                Log.i(TAG, "onClick: content");
+        }
+
+        private void deletePayment(int paymentID) {
+            dbPayments = new DatabasePayments(context);
+            dbPayments.deletePayment(paymentID);
         }
     }
     private Client getClientByID(long ID){

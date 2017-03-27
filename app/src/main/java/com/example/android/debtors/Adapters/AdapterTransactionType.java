@@ -125,11 +125,7 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
             if(v.getId() == transactionItemEdit.getId()){
                 //edit
             } else if (v.getId() == transactionItemDelete.getId()){
-                Log.i(TAG, "onClick: delete");
-                Log.i(TAG, "onClick: transaciton to delete: " + clickedItem.toString());
                 deleteTransaction(clickedItem.getTransactionID());
-                dbTransactions.deleteTransaction(clickedItem.getTransactionID());
-//                notifyItemChanged(getLayoutPosition());
                 listOfTransactions.remove(clickedItem);
                 notifyDataSetChanged();
 
