@@ -36,27 +36,19 @@ public class RealizePaymentHelper {
             Log.e(TAG, "realizePayment: PAYMENT IS NULL");
         } else {
 
-
-//            Owner owner = payment.getPaymentOwner();
-//            Client client = payment.getPaymentClient();
             int ownerID = payment.getPaymentOwnerID();
             int clientID = payment.getPaymentClientID();
 
             Owner owner = dbOwner.getOwner(ownerID);
             Client client = dbClient.getClientByID(clientID);
 
-            Log.i(TAG, "realizePayment: " + owner.toString());
-            Log.i(TAG, "realizePayment: " + client.toString());
-
             int paidAmount = payment.getPaymentAmount();
 
             boolean revenueOrExpense = payment.isPaymentGotOrGiven();
 
             changeOwnerAmount(owner, paidAmount, revenueOrExpense);
-            addPaymentToOwnerList(owner, payment);
 
             changeClientAmount(client, paidAmount, revenueOrExpense);
-            addPaymentToClientList(client, payment);
 
             dbPayment.createPayment(payment);
 
@@ -64,12 +56,7 @@ public class RealizePaymentHelper {
     }
 
 
-
-
     private void changeOwnerAmount(Owner owner, int paidAmount, boolean revenueOrExpense) {
-
-        Log.i(TAG, "changeOwnerAmount: OWNER BEFORE FROM ARGUMENT: " + owner.toString());
-        Log.i(TAG, "changeOwnerAmount: OWNER BEFORE FROM DATABASE: " + dbOwner.getOwner(owner.getOwnerID()));
 
         if(revenueOrExpense)//jesli true = revenue
             owner.changeOwnerAmountWhenPayments(paidAmount);
@@ -77,21 +64,10 @@ public class RealizePaymentHelper {
             owner.changeOwnerAmountWhenPayments(paidAmount*(-1));
 
         dbOwner.updateOwner(owner);
-        Log.i(TAG, "changeOwnerAmount: OWNER AFTER FROM DATABASE: " + dbOwner.getOwner(owner
-                .getOwnerID()));
 
-
-    }
-
-    private void addPaymentToOwnerList(Owner owner, Payment payment) {
-        owner.addPaymentToList(payment);
     }
 
     private void changeClientAmount(Client client, int paidAmount, boolean revenueOrExpense) {
-
-        Log.i(TAG, "changeClientAmount: CLIENT BEFORE FROM ARGUMENT: " + client.toString());
-        Log.i(TAG, "changeClientAmount: CLIENT BEFORE FROM DATABASE: " + dbClient.getClientByID
-                (client.getClientId()));
 
         if(revenueOrExpense) // owner dostaje od clienta, wiec client ma mniejszy dlug
             client.changeClientLeftAmount(paidAmount*(-1));
@@ -99,14 +75,7 @@ public class RealizePaymentHelper {
             client.changeClientLeftAmount(paidAmount);
 
         dbClient.updateClient(client);
-        Log.i(TAG, "changeClientAmount: CLIENT AFTER FROM DATABASE: " + dbClient.getClientByID(client.getClientId
-                ()));
 
     }
 
-    private void addPaymentToClientList(Client client, Payment payment) {
-        Payment payment2 = new Payment(Utils.getDateTime(), payment.getPaymentOwner(), payment.getPaymentClient(), payment.getPaymentAmount(), !payment.isPaymentGotOrGiven());
-
-        client.addPaymentToListOfPayments(payment2);
-    }
 }
