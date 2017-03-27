@@ -3,7 +3,6 @@ package com.example.android.debtors.Adapters;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,8 @@ import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by Rafaello on 2017-02-22.
@@ -62,7 +58,7 @@ public class AdapterPayment extends RecyclerView.Adapter<AdapterPayment.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_payments,
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_payments,
                 parent, false);
 
         return new MyViewHolder(itemView);

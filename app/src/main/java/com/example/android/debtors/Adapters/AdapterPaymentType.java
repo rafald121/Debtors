@@ -16,11 +16,8 @@ import com.example.android.debtors.Model.Client;
 import com.example.android.debtors.Model.Payment;
 import com.example.android.debtors.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by Rafaello on 2017-02-22.
@@ -62,7 +59,7 @@ public class AdapterPaymentType extends RecyclerView.Adapter<AdapterPaymentType.
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_payments_type,
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_payments_type,
                     parent, false);
 
         return new MyViewHolder(itemView);

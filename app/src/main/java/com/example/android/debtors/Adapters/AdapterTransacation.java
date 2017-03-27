@@ -2,7 +2,6 @@ package com.example.android.debtors.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Model.Payment;
-import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 
@@ -58,7 +55,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_transaction, parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction, parent,
                 false);
         return new MyViewHolder(view);
     }
@@ -81,6 +78,13 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             holder.textViewType.setText("Sale");
         else
             holder.textViewType.setText("Purchase");
+
+        holder.textViewQuantity.setText(String.valueOf(transaction.getTransactionQuantity()));
+        holder.textViewProductvalue.setText(String.valueOf(transaction.getTransactionProductValue()));
+        holder.textViewEntryPayment.setText(String.valueOf(transaction.getTransactionEntryPayment()));
+
+        
+
     }
 
     @Override
@@ -96,7 +100,7 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewClient, textViewTotalAmount, textViewDate, textViewType;
+        private TextView textViewClient, textViewTotalAmount, textViewDate, textViewType,  textViewQuantity, textViewProductvalue, textViewEntryPayment;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -105,6 +109,10 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             textViewTotalAmount = (TextView) itemView.findViewById(R.id.transaction_item_totalamount);
             textViewDate = (TextView) itemView.findViewById(R.id.transaction_item_date);
             textViewType = (TextView) itemView.findViewById(R.id.transaction_item_type);
+            textViewQuantity = (TextView) itemView.findViewById(R.id.transaction_item_quantity);
+            textViewProductvalue = (TextView) itemView.findViewById(R.id.transaction_item_productvalue);
+            textViewEntryPayment = (TextView) itemView.findViewById(R.id.transaction_item_entrypayment);
+
         }
     }
 

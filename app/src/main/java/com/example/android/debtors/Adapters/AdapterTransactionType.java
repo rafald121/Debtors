@@ -2,7 +2,6 @@ package com.example.android.debtors.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.example.android.debtors.Databases.DatabaseClients;
 import com.example.android.debtors.Databases.DatabaseTransactions;
 import com.example.android.debtors.Model.Client;
-import com.example.android.debtors.Model.Payment;
-import com.example.android.debtors.Model.Transaction;
 import com.example.android.debtors.Model.TransactionForClient;
 import com.example.android.debtors.R;
 
@@ -59,7 +56,7 @@ public class AdapterTransactionType extends RecyclerView.Adapter<AdapterTransact
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent_tranasction_type, parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tranasction_type, parent,
                 false);
         return new MyViewHolder(view);
     }
