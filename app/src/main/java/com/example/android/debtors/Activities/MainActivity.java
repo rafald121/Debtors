@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    DatabaseClients dbClient;
-    DatabaseOwner dbOwner;
-    DatabasePayments dbPayment;
-    DatabaseTransactions dbTransaction;
+    private DatabaseClients dbClient;
+    private DatabaseOwner dbOwner;
+    private DatabasePayments dbPayment;
+    private DatabaseTransactions dbTransaction;
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -54,16 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView amountForMe, amountMeToOther;
     private Toolbar toolbar;
 
-
     private static final String urlNavHeaderBg = "http://4.bp.blogspot.com/_SJTl75q21RY/TDWCRlNqnTI/AAAAAAAAAMU/3avdZcJHwSw/s1600/money1.jpg";
-    private static final String urlProfileImg = "https://avatars3.githubusercontent.com/u/16782428?v=3&u=d6d5d36732184328f00b7ee90c1ef6f23627005e&s=400";
-
-    public static int navItemIndex = 0;
 
     private String[] activityTitles;
-
-    // flag to load home fragment when user presses back key
-    private boolean shouldLoadHomeFragOnBackPress = true;
 
     // tags used to attach the fragments
     public static int fragmentID = -1 ;
@@ -85,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentDebtors fragmentDebtors;
     private FragmentTransactions fragmentTransactions;
     private FragmentPayments fragmentPayments;
-    private boolean keyboardOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +93,6 @@ public class MainActivity extends AppCompatActivity {
         dbPayment = new DatabasePayments(getApplicationContext());
         dbTransaction = new DatabaseTransactions(getApplicationContext());
 
-
-
-
-
-        Log.e(TAG, "onCreate: OWNER: " + dbOwner.getOwner(1).toString() );
-
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         amountForMe = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_all_amount_for_me);
         amountMeToOther = (TextView) navHeader.findViewById(R.id.navigation_drawer_header_all_amount_me_to_other);
         imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_background);
-//        imgProfile = (ImageView) navHeader.findViewById(R.id.navigation_drawer_header_profile);
 
         loadNavHeader();
         countWholeDebtsAmounInHeader();
@@ -140,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         loadSelectedFragment();
-
-
 
     }
 
@@ -195,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
         drawer.closeDrawers();
 
         invalidateOptionsMenu();
-
 
     }
 
