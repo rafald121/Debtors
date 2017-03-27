@@ -15,7 +15,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="25"
-        android:weightSum="50">
+        android:weightSum="50"
+        android:layout_gravity="center">
 
         <TextView
             android:text="Client"
@@ -42,9 +43,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="25"
-        android:weightSum="50">
+        android:weightSum="50"
+        android:layout_gravity="center">
 
-        <TextView
+
+    <TextView
             android:text="Date"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -70,25 +73,90 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="35"
-        android:weightSum="50">
+        android:weightSum="60">
 
-        <TextView
-            android:text="Transaction amount"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/textView9"
-            android:layout_weight="15"
-            style="@style/ItemTransacationHeaderTextView"
-            />
+            android:layout_weight="20"
+            android:weightSum="25"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Total amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView9"
+                android:layout_weight="15"
+                style="@style/TransactionsThreeHeader"
+                />
 
 
-        <TextView
-            android:text="TextView"
+            <TextView
+                android:text=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/transaction_item_totalamount"
+                android:layout_weight="10"
+                style="@style/ItemTransacationInfoTextView"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/transaction_item_totalamount"
-            android:layout_weight="35"
-            style="@style/ItemTransacationInfoTextView"/>
+            android:layout_weight="20"
+            android:weightSum="25"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView90"
+                android:layout_weight="15"
+                style="@style/TransactionsThreeHeader"
+                />
+
+
+            <TextView
+                android:text=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/transaction_item_quantity"
+                android:layout_weight="10"
+                style="@style/ItemTransacationInfoTextView"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:weightSum="25"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Entry payment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView91"
+                android:layout_weight="15"
+                style="@style/TransactionsThreeHeader"
+                />
+
+
+            <TextView
+                android:text=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/transaction_item_entrypayment"
+                android:layout_weight="10"
+                style="@style/ItemTransacationInfoTextView"/>
+
+        </LinearLayout>
 
 
     </LinearLayout>
