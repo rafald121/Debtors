@@ -29,10 +29,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
     Context context;
 
-    DatabaseClients dbClient = new DatabaseClients(context);
-
-
-
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "paymentsDatabase";
     private static final String TABLE_PAYMENTS = "payments";
@@ -89,8 +85,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(PAYMENT_DATE, payment.getPaymentDate());
-//        values.put(PAYMENT_OWNER, payment.getPaymentOwner().getOwnerID());
-//        values.put(PAYMENT_CLIENT, payment.getPaymentClient().getClientId());
         values.put(PAYMENT_OWNER, payment.getPaymentOwnerID());
         values.put(PAYMENT_CLIENT, payment.getPaymentClientID());
         values.put(PAYMENT_AMOUNT, payment.getPaymentAmount());
@@ -165,23 +159,20 @@ public class DatabasePayments extends SQLiteOpenHelper {
             }while (c.moveToNext());
 
         for (Payment p : paymentList) {
-//            int val = 0;
+
             if(!hashMapWithClients.containsKey(p.getPaymentClientID())) {
+
                 hashMapWithClients.put(p.getPaymentClientID(), 1);
-                Log.e(TAG, "getArrayMapWithMostCommonClients: ERROR? nie powinno sie zdazyc, zbadać!");
+
             } else {
+
                 int val = hashMapWithClients.get(p.getPaymentClientID());
                 hashMapWithClients.put(p.getPaymentClientID(), val+1);
+
             }
         }
-        Log.i(TAG, "getHashMapWithMostCommonClients: unsorted: " + hashMapWithClients.toString());
 
         int[][] sortedArray = Utils.sortByHashMapValue(hashMapWithClients);
-
-        Log.i(TAG, "getHashMapWithMostCommonClients: length: " + sortedArray.length);
-        for(int i = 0 ; i < sortedArray.length ; i++){
-            Log.i(TAG, "for key: " + sortedArray[i][0] + ", value: " + sortedArray[i][1]) ;
-        }
 
         return sortedArray;
     }
@@ -203,7 +194,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return paymentsAmount;
     }
-
 
 //    RETURN LIST OF PAYMENTS THAT CLIENT PAID ,,, BY CLIENT ID
     public List<Payment> getPaymentsFromClient(long clientID){
@@ -263,21 +253,13 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
         return listOfPayments;
     }
+
     public void deletePayment(long paymentID){
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_PAYMENTS, PAYMENT_ID + " = ?", new String[]{String.valueOf(paymentID)});
     }
 
-    public void deletePaymentInRange(long minID, long maxID){
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        for(long i = minID ; i < maxID ; i++){
-            db.delete(TABLE_PAYMENTS, PAYMENT_ID + " = ?" , new String[]{String.valueOf(i)});
-        }
-
-    }
 
     public int getTheHighestPaymentAmount(){
 
@@ -349,15 +331,12 @@ public class DatabasePayments extends SQLiteOpenHelper {
         String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_AMOUNT + " >= " + minRange + " AND " +
                 PAYMENT_AMOUNT + " <= " + maxRange;
 
-        Log.e(TAG, "getPaymentsByDateAndRange: query: " + query );
-
         Cursor c = db.rawQuery(query, null);
 
         if(c.moveToFirst()){
             do{
                 String dateOfPayment = c.getString(c.getColumnIndex(PAYMENT_DATE));
                 Date date = UtilsDate.getDateFromSting(dateOfPayment);
-                Log.e(TAG, "getPaymentsByDateAndRange: DATETOSTRING: " + date.toString());
 
                 if(date.before(toDate) && date.after(fromDate)){
                     Payment payment = new Payment();
@@ -395,15 +374,12 @@ public class DatabasePayments extends SQLiteOpenHelper {
         String query = "SELECT  * FROM " + TABLE_PAYMENTS + " WHERE " + PAYMENT_AMOUNT + " >= " + minRange + " AND " +
                 PAYMENT_AMOUNT + " <= " + maxRange + " AND " + PAYMENT_GOT_OR_GIVEN + " = " + tmpType;
 
-        Log.e(TAG, "getPaymentsByDateAndRange: query: " + query );
-
         Cursor c = db.rawQuery(query, null);
 
         if(c.moveToFirst()){
             do{
                 String dateOfPayment = c.getString(c.getColumnIndex(PAYMENT_DATE));
                 Date date = UtilsDate.getDateFromSting(dateOfPayment);
-                Log.e(TAG, "getPaymentsByDateAndRange: DATETOSTRING: " + date.toString());
 
                 if(date.before(toDate) && date.after(fromDate)){
                     Payment payment = new Payment();
@@ -421,7 +397,6 @@ public class DatabasePayments extends SQLiteOpenHelper {
 
             }while (c.moveToNext());
         }
-
 
         return listOfPayments;
     }

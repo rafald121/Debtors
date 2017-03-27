@@ -68,8 +68,6 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
     public long createTransaction(TransactionForClient transactionForClient){
 
-        Log.i(TAG, "createTransaction: transactionForClient: " + transactionForClient.toString() );
-
         if (transactionForClient == null)
             Log.e(TAG, "createTransaction: TRANSACTION IS NULL" );
         else
@@ -152,22 +150,19 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
         for(TransactionForClient transactionForClient : transactionForClientsList){
             if(!hashMap.containsKey(transactionForClient.getTransactionClientID())){
+
                 hashMap.put(transactionForClient.getTransactionClientID(), 1);
-                Log.e(TAG, "getArrayMapWithMostCommonClients: ERROR? nie powinno sie zdazyc, zbadać!");
+
             } else {
+
                 int val = hashMap.get(transactionForClient.getTransactionClientID());
                 hashMap.put(transactionForClient.getTransactionClientID(), val + 1);
+
             }
+
         }
-        Log.i(TAG, "getArrayMapWithMostCommonClients: before sort: " + hashMap.toString());
 
         int[][] sortedArray = Utils.sortByHashMapValue(hashMap);
-
-        Log.i(TAG, "getArrayMapWithMostCommonClients: after sort,  length: " + sortedArray.length);
-
-        for(int i = 0 ; i < sortedArray.length ; i++){
-            Log.i(TAG, "for key: " + sortedArray[i][0] + ", value: " + sortedArray[i][1]) ;
-        }
 
         return sortedArray;
     }
@@ -252,6 +247,7 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
         return listOfTransaction;
     }
+
 //buyOrSell - TRUE - SALE,   buyOrSell - FALSE - PURCHASE
     public List<TransactionForClient> getTransactionsByType(boolean buyOrSell){
         List<TransactionForClient> listOfTransactions = new ArrayList<>();
@@ -340,7 +336,6 @@ public class DatabaseTransactions extends SQLiteOpenHelper {
 
         return highestTotalAmount;
     }
-
 
     public List<TransactionForClient> getTransactionsByQueryInMenuDialog(Date fromDate, Date toDate, int minQuantity, int maxQuantity, int minTotalAmount, int maxTotalAmount) {
 
