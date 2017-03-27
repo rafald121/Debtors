@@ -30,32 +30,13 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
     private static final String TAG = AdapterTransacation.class.getSimpleName();
 
     private DatabaseTransactions dbTransactions = null;
-    private DatabaseClients dbClients = null;
     private List<TransactionForClient> listOfTransactions = new ArrayList<>();
 
     private Context context;
 
-    public AdapterTransacation(Context context){
-        this.context = context;
-        this.listOfTransactions = getListOfAllTransactions();
-    }
-
-
-    public AdapterTransacation(Context context, boolean purchaseOrSale) {
-        this.context = context;
-        this.dbClients = new DatabaseClients(context);
-        this.listOfTransactions = getListOfTransactionsByType(purchaseOrSale);
-    }
-
     public AdapterTransacation(Context context, List<TransactionForClient> listOfTransactions){
         this.context = context;
         this.listOfTransactions = listOfTransactions;
-    }
-
-    public AdapterTransacation(Context context, long clientID) {
-        this.context = context;
-        this.dbTransactions = new DatabaseTransactions(context);
-        this.listOfTransactions = dbTransactions.getTransactionFromClient(clientID);
     }
 
     @Override
@@ -87,9 +68,6 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         holder.textViewQuantity.setText(String.valueOf(transaction.getTransactionQuantity()));
         holder.textViewProductvalue.setText(String.valueOf(transaction.getTransactionProductValue()));
         holder.textViewEntryPayment.setText(String.valueOf(transaction.getTransactionEntryPayment()));
-
-
-
     }
 
     @Override
@@ -134,11 +112,8 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
             if(v.getId() == transactionItemEdit.getId()){
                 //edit
             } else if (v.getId() == transactionItemDelete.getId()){
-                Log.i(TAG, "onClick: delete");
-                Log.i(TAG, "onClick: transaciton to delete: " + clickedItem.toString());
+
                 deleteTransaction(clickedItem.getTransactionID());
-                dbTransactions.deleteTransaction(clickedItem.getTransactionID());
-//                notifyItemChanged(getLayoutPosition());
                 listOfTransactions.remove(clickedItem);
                 notifyDataSetChanged();
 
@@ -160,22 +135,6 @@ public class AdapterTransacation extends RecyclerView.Adapter<AdapterTransacatio
         Client client = dbClients.getClientByID(ID);
 
         return client;
-    }
-
-    private List<TransactionForClient> getListOfAllTransactions(){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
-
-        List<TransactionForClient> list = dbTransactions.getAllTransactions();
-
-        return list;
-    }
-
-    private List<TransactionForClient> getListOfTransactionsByType(boolean purchaseOrSale){
-        DatabaseTransactions dbTransactions = new DatabaseTransactions(context);
-
-        List<TransactionForClient> list = dbTransactions.getTransactionsByType(purchaseOrSale);
-
-        return list;
     }
 
 }
