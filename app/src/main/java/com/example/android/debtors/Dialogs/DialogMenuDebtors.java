@@ -69,9 +69,9 @@ public class DialogMenuDebtors extends DialogFragment implements View.OnClickLis
 
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
         if(forMeOrMeToOther == 0)
-            rangeSeekBar.setRangeValues(0,5000);
+            rangeSeekBar.setRangeValues(0,3000);
         else
-            rangeSeekBar.setRangeValues(-5000,0);
+            rangeSeekBar.setRangeValues(-3000,0);
 
         rangeSeekBar.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 

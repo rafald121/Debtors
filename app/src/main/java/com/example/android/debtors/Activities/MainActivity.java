@@ -33,6 +33,7 @@ import com.example.android.debtors.Fragments.FragmentAllClients;
 import com.example.android.debtors.Fragments.FragmentDebtors;
 import com.example.android.debtors.Fragments.FragmentPayments;
 import com.example.android.debtors.Fragments.FragmentTransactions;
+import com.example.android.debtors.Model.Owner;
 import com.example.android.debtors.R;
 
 import de.greenrobot.event.EventBus;
@@ -85,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Owner owner = new Owner("rafal", 100);
+        Owner owner1 = new Owner("pawel", 200);
+        dbOwner = new DatabaseOwner(getApplicationContext());
+        dbOwner.createOwner(owner);
+        dbOwner.createOwner(owner1);
 
         initFragments();
 
@@ -387,24 +394,32 @@ public class MainActivity extends AppCompatActivity {
             closeKeyboard();
             return;
         }
+        loadSelectedFragment();
+        super.onBackPressed();
 
-        int count = getFragmentManager().getBackStackEntryCount();
-        Log.i(TAG, "onBackPressed: count: " + count);
-//
+    }
+//        int count = getFragmentManager().getBackStackEntryCount();
+//        Log.i(TAG, "onBackPressed: count: " + count);
+////
 //        if (count == 0) {
 //            super.onBackPressed();
 //        }
-//}
-//            android.app.Fragm2entTransaction ft = getFragmentManager().beginTransaction();
-//            android.app.Fragment prev = getFragmentManager().findFragmentByTag(PREVIOUS_TAG);
-//            android.app.Fragment curr = getFragmentManager().findFragmentByTag(CURRENT_TAG);
-//            if(curr!=null)
-//                ft.remove(curr);
+//        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction = getFragmentManager().beginTransaction();
+//        android.app.Fragment prev = getFragmentManager().findFragmentByTag(PREVIOUS_TAG);
+//        android.app.Fragment curr = getFragmentManager().findFragmentByTag(CURRENT_TAG);
 //
-//            ft.addToBackStack(null);
-//            ft.replace(R.id.frame, prev, PREVIOUS_TAG);
-//            ft.commit();
+////}
+////        android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+////        android.app.Fragment prev = getFragmentManager().findFragmentByTag(PREVIOUS_TAG);
+////        android.app.Fragment curr = getFragmentManager().findFragmentByTag(CURRENT_TAG);
+//        if (curr != null)
+//            ft.remove(curr);
 //
+//        ft.addToBackStack(null);
+//        ft.replace(R.id.frame, prev, PREVIOUS_TAG);
+//        ft.commit();
+//    }
 //
 //            Log.i(TAG, "onBackPressed: current subfragment: " + MainActivity.subFragmentID);
 //            Log.i(TAG, "onBackPressed: current fragment: " + MainActivity.fragmentID);
@@ -415,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
 //            getFragmentManager().popBackStack();
 //        }
 
-    }
+
 
 //    public void onBackPressed() {
 ////        TODO when clicked two times ask if quit app

@@ -67,7 +67,7 @@ public class DialogMenuAllClients extends DialogFragment implements View.OnClick
 
         rangeSeekBarTextColorWithCode = (RangeSeekBar) view.findViewById(R.id.dialog_allclients_menu_rangeseekbar);
         //TODO SHARED PREFERENCES TO MAX HIGH RANGE
-        rangeSeekBarTextColorWithCode.setRangeValues(-5000,5000);
+        rangeSeekBarTextColorWithCode.setRangeValues(-1000,2000);
 
         rangeSeekBarTextColorWithCode.setTextAboveThumbsColorResource(android.R.color.holo_red_dark);
 
