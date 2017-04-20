@@ -4,5 +4,5 @@ Debtors allows you:
 - Store list of payments
 - Store list of transactions
 - Looking for debtors from list of all debtors
-- Filter payments and transaction by various criterium
+- Filter debtors, payments and transaction by various criterium
 
